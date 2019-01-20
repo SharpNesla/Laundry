@@ -13,5 +13,13 @@ namespace Laundry
   /// </summary>
   public partial class App : Application
   {
+    internal new MainWindow MainWindow;
+    protected override void OnStartup(StartupEventArgs e)
+    {
+      base.OnStartup(e);
+      MainWindow window = new MainWindow();
+      this.MainWindow = window;
+      window.Show();
+    }
   }
 }

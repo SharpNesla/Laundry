@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Laundry.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,22 @@ namespace Laundry
     {
       InitializeComponent();
     }
+
+    private void OnLoginButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.contentControl.Content = new DashBoardView();
+    }
+
+    private void ListBoxItem_OnSelected(object sender, RoutedEventArgs e)
+    {
+      this.contentControl.Content = new SettingsView();
+    }
+
+    private void OnDrawerEmployeeSelected(object sender, RoutedEventArgs e)
+    {
+      this.contentControl.Content = new EmployeeDictionary();
+    }
   }
 }
+
+
