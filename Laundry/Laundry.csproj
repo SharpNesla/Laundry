@@ -66,10 +66,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\EmployeeDictionary.xaml.cs">
+      <DependentUpon>EmployeeDictionary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\EmployeeDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EmployeeEditorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -86,8 +93,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\Model.cs" />
-    <Compile Include="Views\EmployeeDictionary.xaml.cs">
-      <DependentUpon>EmployeeDictionary.xaml</DependentUpon>
+    <Compile Include="Views\EmployeeEditorView.xaml.cs">
+      <DependentUpon>EmployeeEditorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DashBoardView.xaml.cs">
       <DependentUpon>DashBoardView.xaml</DependentUpon>

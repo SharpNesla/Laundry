@@ -9,9 +9,9 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for DashBoard.xaml
   /// </summary>
-  public partial class EmployeeDictionary : UserControl
+  public partial class EmployeeDictionaryView: UserControl
   {
-    public EmployeeDictionary()
+    public EmployeeDictionaryView()
     {
       InitializeComponent();
 

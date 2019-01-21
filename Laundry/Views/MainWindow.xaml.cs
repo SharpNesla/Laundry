@@ -24,6 +24,9 @@ namespace Laundry
     public MainWindow()
     {
       InitializeComponent();
+      /*
+       
+       */
     }
 
     private void OnLoginButtonClick(object sender, RoutedEventArgs e)
@@ -38,7 +41,7 @@ namespace Laundry
 
     private void OnDrawerEmployeeSelected(object sender, RoutedEventArgs e)
     {
-      this.contentControl.Content = new EmployeeDictionary();
+      this.contentControl.Content = new EmployeeDictionaryView();
     }
   }
 }

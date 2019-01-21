@@ -14,7 +14,7 @@
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
 
-  <materialDesign:DialogHost>
+  <materialDesign:DialogHost DialogTheme="Inherit">
     <materialDesign:DrawerHost Name="DrawerHost" IsLeftDrawerOpen="False">
       <materialDesign:DrawerHost.LeftDrawerContent>
         <DockPanel MinWidth="212">
