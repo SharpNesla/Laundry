@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Laundry.Views.EmployeeEditorView"
+﻿<UserControl x:Class="Laundry.Views.ClientEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -17,9 +17,7 @@
 
           Style="{StaticResource MaterialDesignHeadlineTextBlock}"
           VerticalAlignment="Center"
-          Margin="8 0 0 0">
-          Рабочий
-        </TextBlock>
+          Margin="8 0 0 0" Text="{StaticResource Client}" />
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom"
@@ -48,47 +46,43 @@
         ОТМЕНИТЬ
       </Button>
     </StackPanel>
+
+
     <StackPanel Margin="32,32,32,24">
-      <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Фамилия"
-               Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-      <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
-               Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-      <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
-               Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-      <ComboBox Margin="0,24,0,8" Width="140" HorizontalAlignment="Left"
-                materialDesign:HintAssist.Hint="Должность">
-        <ComboBoxItem>
-          Приёмщик
-        </ComboBoxItem>
-        <ComboBoxItem>
-          Директор
-        </ComboBoxItem>
-        <ComboBoxItem>
-          Курьер
-        </ComboBoxItem>
-        <ComboBoxItem>
-          Прачечник
-        </ComboBoxItem>
-      </ComboBox>
-      <StackPanel Margin="0,8,0,8">
-        <TextBlock Margin="0,0,0,8"
-                   Style="{StaticResource MaterialDesignSubheadingTextBlock}">
-          Пол
-        </TextBlock>
-        <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}"
-                     Tag="True">
-          М
-        </RadioButton>
-        <RadioButton Style="{StaticResource MaterialDesignRadioButton}"
-                     Tag="True">
-          Ж
-        </RadioButton>
-      </StackPanel>
-      <CheckBox Margin="0,0,0,24"
-        Style="{StaticResource MaterialDesignCheckBox}">
-        Полная занятость
-      </CheckBox>
-      <Separator></Separator>
+      <materialDesign:Card
+        Padding="16"
+        Margin="0,0,0,8"
+        BorderThickness="0">
+        <StackPanel>
+          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Фамилия"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <StackPanel Margin="0,8,0,0">
+            <TextBlock Margin="0,0,0,8"
+                       Style="{StaticResource MaterialDesignSubheadingTextBlock}">
+              Пол
+            </TextBlock>
+            <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}"
+                         Tag="True">
+              М
+            </RadioButton>
+            <RadioButton Style="{StaticResource MaterialDesignRadioButton}"
+                         Tag="True">
+              Ж
+            </RadioButton>
+          </StackPanel>
+          <DatePicker
+
+            materialDesign:HintAssist.Hint="Дата рождения"
+            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16" HorizontalAlignment="Left" />
+        </StackPanel>
+      </materialDesign:Card>
+
     </StackPanel>
 
   </DockPanel>

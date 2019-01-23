@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Laundry.Views.EmployeeDictionary"
+﻿<UserControl x:Class="Laundry.Views.SubsidiaryDictionary"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -20,7 +20,7 @@
           Style="{StaticResource MaterialDesignHeadlineTextBlock}"
           VerticalAlignment="Center"
           Margin="16 0 0 0">
-          Справочник рабочих
+          Справочник филиалов
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>
@@ -29,7 +29,7 @@
       ToolTip="MaterialDesignFloatingActionAccentButton"
             Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
       <Button.CommandParameter>
-        <controls:EmployeeEditor></controls:EmployeeEditor>
+        <controls:SubsidiaryEditor></controls:SubsidiaryEditor>
       </Button.CommandParameter>
       <materialDesign:PackIcon
         Kind="Plus"
@@ -44,7 +44,7 @@
         CanUserAddRows="False"
         AutoGenerateColumns="True"
         materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-        materialDesign:DataGridAssist.ColumnHeaderPadding="8" SelectionChanged="DataGrid_SelectionChanged">
+        materialDesign:DataGridAssist.ColumnHeaderPadding="8">
         <DataGrid.Columns>
           <DataGridCheckBoxColumn
             Binding="{Binding IsSelected}"
@@ -67,10 +67,12 @@
             Binding="{Binding Code}"
             Header="Code"
             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+          <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
           <materialDesign:MaterialDataGridTextColumn
             Binding="{Binding Name}"
             Header="Name"
             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+          <!-- set a max length to get an indicator in the editor -->
           <materialDesign:MaterialDataGridTextColumn
             Binding="{Binding Description}"
             Header="Description"
@@ -110,6 +112,11 @@
               </Style>
             </DataGridTextColumn.ElementStyle>
           </materialDesign:MaterialDataGridTextColumn>
+          <!-- use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo -->
+          <materialDesign:MaterialDataGridComboBoxColumn
+            Header="Food"
+            SelectedValueBinding="{Binding Food}"
+            ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Foods}" />
         </DataGrid.Columns>
       </DataGrid>
 

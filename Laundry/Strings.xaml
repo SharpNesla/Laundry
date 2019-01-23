@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Laundry.Views"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+  <system:String x:Key="OrderEditorTitle">Редактирование заказа</system:String>
+  <system:String x:Key="Client">Клиент</system:String>
+  <system:String x:Key="ClothTypes">Вид одежды</system:String>
+</ResourceDictionary>

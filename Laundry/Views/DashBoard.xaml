@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Laundry.Views.DashBoard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Laundry.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800"
+             Background="{DynamicResource MaterialDesignPaper}">
+  <DockPanel LastChildFill="True">
+    <materialDesign:ColorZone DockPanel.Dock="Top"  materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
+                                Padding="16">
+      <StackPanel Orientation="Horizontal">
+        <ToggleButton Name="MenuToggleButton"
+                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+        <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+            VerticalAlignment="Center"
+            Margin="16 0 0 0">
+            Обзор
+        </TextBlock>
+      </StackPanel>
+    </materialDesign:ColorZone>
+
+    <Grid>
+      <Button DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0 0 16 16" materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+              ToolTip="MaterialDesignFloatingActionAccentButton"
+              Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+        <Button.CommandParameter>
+          <local:OrderEditor></local:OrderEditor>
+        </Button.CommandParameter>
+        <materialDesign:PackIcon
+          Kind="Plus"
+          Height="24"
+          Width="24" />
+      </Button>
+    </Grid>
+  </DockPanel>
+</UserControl>

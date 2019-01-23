@@ -16,13 +16,15 @@ using System.Windows.Shapes;
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for SettingsView.xaml
+  /// Interaction logic for About.xaml
   /// </summary>
-  public partial class SettingsView : UserControl
+  public partial class About : UserControl
   {
-    public SettingsView()
+    public About()
     {
       InitializeComponent();
+
+
       MenuToggleButton.Checked +=
         (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = true;
 

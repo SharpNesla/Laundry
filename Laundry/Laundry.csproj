@@ -66,21 +66,90 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CarDictionary.xaml.cs">
+      <DependentUpon>CarDictionary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CarEditor.xaml.cs">
+      <DependentUpon>CarEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientDictionary.xaml.cs">
+      <DependentUpon>ClientDictionary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClientEditor.xaml.cs">
+      <DependentUpon>ClientEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClothKindEditor.xaml.cs">
+      <DependentUpon>ClothKindEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DiscountSystem.xaml.cs">
+      <DependentUpon>DiscountSystem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EmployeeDictionary.xaml.cs">
       <DependentUpon>EmployeeDictionary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
+    <Compile Include="Views\Actions\GiveOrderCuorier.xaml.cs">
+      <DependentUpon>GiveOrderCuorier.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\OrderEditor.xaml.cs">
+      <DependentUpon>OrderEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubsidiaryDictionary.xaml.cs">
+      <DependentUpon>SubsidiaryDictionary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SubsidiaryEditor.xaml.cs">
+      <DependentUpon>SubsidiaryEditor.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Strings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CarDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CarEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClientEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClothKindEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DiscountSystem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EmployeeDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\EmployeeEditorView.xaml">
+    <Page Include="Views\EmployeeEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DashBoardView.xaml">
+    <Page Include="Views\DashBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Actions\GiveOrderCuorier.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -93,17 +162,29 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\Model.cs" />
-    <Compile Include="Views\EmployeeEditorView.xaml.cs">
-      <DependentUpon>EmployeeEditorView.xaml</DependentUpon>
+    <Compile Include="Views\EmployeeEditor.xaml.cs">
+      <DependentUpon>EmployeeEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DashBoardView.xaml.cs">
-      <DependentUpon>DashBoardView.xaml</DependentUpon>
+    <Compile Include="Views\DashBoard.xaml.cs">
+      <DependentUpon>DashBoard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\SettingsView.xaml">
+    <Page Include="Views\OrderEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubsidiaryDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SubsidiaryEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

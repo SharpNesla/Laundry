@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Laundry.Views.DashBoardView"
+﻿<UserControl x:Class="Laundry.Views.About"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,18 +10,24 @@
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
     <materialDesign:ColorZone DockPanel.Dock="Top"  materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                                Padding="16">
+                              Padding="16">
       <StackPanel Orientation="Horizontal">
         <ToggleButton Name="MenuToggleButton"
-                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
-        <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-            VerticalAlignment="Center"
-            Margin="16 0 0 0">
-            Обзор
+                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+        <TextBlock
+          Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+          VerticalAlignment="Center"
+          Margin="16 0 0 0">
+          О программе
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>
 
-    <Grid />
+    <StackPanel>
+      <StackPanel.Background>
+        <ImageBrush ImageSource="/Laundry;component/Resources/LoginBackground.png" Stretch="UniformToFill"/>
+      </StackPanel.Background>
+      <StackPanel Orientation="Horizontal" Margin="8"/>
+    </StackPanel>
   </DockPanel>
 </UserControl>

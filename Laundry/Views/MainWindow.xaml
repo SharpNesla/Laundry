@@ -25,7 +25,7 @@
                         IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
           </StackPanel>
           <ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16">
-            <ListBoxItem Selected="ListBoxItem_OnSelected">
+            <ListBoxItem Selected="OnDrawerDashboardSelected">
               <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
                 <materialDesign:PackIcon Kind="ViewDashboardOutline" />
                 <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}">
@@ -34,6 +34,15 @@
               </StackPanel>
             </ListBoxItem>
             <Separator/>
+            <ListBoxItem Selected="OnDrawerClientSelected">
+              <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
+                <materialDesign:PackIcon Kind="ManMan" />
+                <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}">
+                  Клиенты
+                </TextBlock>
+              </StackPanel>
+            </ListBoxItem>
+
             <ListBoxItem Selected="OnDrawerEmployeeSelected">
               <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
                 <materialDesign:PackIcon Kind="AccountMultipleOutline" />
@@ -43,7 +52,7 @@
               </StackPanel>
             </ListBoxItem>
 
-            <ListBoxItem Selected="ListBoxItem_OnSelected">
+            <ListBoxItem Selected="OnDrawerSubsidiarySelected">
               <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
                 <materialDesign:PackIcon Kind="HomeVariantOutline" />
                 <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}">
@@ -52,7 +61,7 @@
               </StackPanel>
             </ListBoxItem>
 
-            <ListBoxItem Selected="ListBoxItem_OnSelected">
+            <ListBoxItem Selected="OnDrawerCarDictionary">
               <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
                 <materialDesign:PackIcon Kind="CarEstate" />
                 <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}">
@@ -61,7 +70,7 @@
               </StackPanel>
             </ListBoxItem>
 
-            <ListBoxItem Selected="ListBoxItem_OnSelected">
+            <ListBoxItem Selected="OnDrawerDiscountSystemSelected">
               <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
                 <materialDesign:PackIcon Kind="CardBulleted" />
                 <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}">
@@ -76,6 +85,14 @@
                 <materialDesign:PackIcon Kind="SettingsOutline" />
                 <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}">
                   Настройки
+                </TextBlock>
+              </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem Selected="OnDrawerAboutSelected">
+              <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
+                <materialDesign:PackIcon Kind="About" />
+                <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}">
+                  О приложении
                 </TextBlock>
               </StackPanel>
             </ListBoxItem>

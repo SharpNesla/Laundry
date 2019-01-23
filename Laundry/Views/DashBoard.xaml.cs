@@ -7,11 +7,11 @@ using MaterialDesignThemes.Wpf;
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for DashBoardView.xaml
+  /// Interaction logic for DashBoard.xaml
   /// </summary>
-  public partial class DashBoardView : UserControl
+  public partial class DashBoard : UserControl
   {
-    public DashBoardView()
+    public DashBoard()
     {
       InitializeComponent();
 

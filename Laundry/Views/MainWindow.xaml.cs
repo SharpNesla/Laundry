@@ -31,17 +31,47 @@ namespace Laundry
 
     private void OnLoginButtonClick(object sender, RoutedEventArgs e)
     {
-      this.contentControl.Content = new DashBoardView();
+      this.contentControl.Content = new DashBoard();
     }
 
     private void ListBoxItem_OnSelected(object sender, RoutedEventArgs e)
     {
-      this.contentControl.Content = new SettingsView();
+      this.contentControl.Content = new Settings();
     }
 
     private void OnDrawerEmployeeSelected(object sender, RoutedEventArgs e)
     {
-      this.contentControl.Content = new EmployeeDictionaryView();
+      this.contentControl.Content = new EmployeeDictionary();
+    }
+
+    private void OnDrawerSubsidiarySelected(object sender, RoutedEventArgs e)
+    {
+      this.contentControl.Content = new SubsidiaryDictionary();
+    }
+
+    private void OnDrawerAboutSelected(object sender, RoutedEventArgs e)
+    {
+      this.contentControl.Content = new About();
+    }
+
+    private void OnDrawerDashboardSelected(object sender, RoutedEventArgs e)
+    {
+      this.contentControl.Content = new DashBoard();
+    }
+
+    private void OnDrawerCarDictionary(object sender, RoutedEventArgs e)
+    {
+      this.contentControl.Content = new CarDictionary();
+    }
+
+    private void OnDrawerDiscountSystemSelected(object sender, RoutedEventArgs e)
+    {
+      this.contentControl.Content = new DiscountSystem();
+    }
+
+    private void OnDrawerClientSelected(object sender, RoutedEventArgs e)
+    {
+      this.contentControl.Content = new ClientDictionary();
     }
   }
 }

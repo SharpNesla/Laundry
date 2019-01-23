@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="Laundry.Views.OrderEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Laundry.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="532"
+             Background="{DynamicResource MaterialDesignPaper}">
+  <DockPanel Width="532">
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
+                              Padding="24">
+      <StackPanel Orientation="Horizontal">
+
+        <TextBlock
+
+          Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+          VerticalAlignment="Center"
+          Margin="8 0 0 0" Text="{StaticResource OrderEditorTitle}" />
+      </StackPanel>
+    </materialDesign:ColorZone>
+    <StackPanel Margin="32">
+      <materialDesign:Card
+        Padding="16"
+        Margin="0,0,0,8"
+        BorderThickness="0">
+        <StackPanel>
+          <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                    materialDesign:HintAssist.Hint="{StaticResource Client}">
+            <ComboBoxItem>
+              Анисимов Александр Филипович т.+7 (942) 098-42-08
+            </ComboBoxItem>
+          </ComboBox>
+          <DatePicker
+
+            materialDesign:HintAssist.Hint="Дата исполнения"
+            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16" HorizontalAlignment="Left" />
+          <CheckBox Margin="0,0,0,16"
+                    Style="{StaticResource MaterialDesignCheckBox}">
+            Скидка
+          </CheckBox>
+          <TextBox
+            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+            Margin="1,0,0,0"
+            VerticalAlignment="Top"
+            Height="100"
+            AcceptsReturn="True"
+            TextWrapping="Wrap"
+            VerticalScrollBarVisibility="Auto"
+            materialDesign:HintAssist.Hint="Комментарий"
+            IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+        </StackPanel>
+      </materialDesign:Card>
+      <materialDesign:Card
+        Padding="16"
+        BorderThickness="0">
+
+        <StackPanel>
+          <ScrollViewer MaxHeight="100px" VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Horizontal">
+              <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                        materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
+                <ComboBoxItem IsEnabled="False">
+                  Носки Шерстяные
+                </ComboBoxItem>
+                <ComboBoxItem>
+                  Носки Шерстяные
+                </ComboBoxItem>
+              </ComboBox>
+              <TextBox Text="Номер бирки" />
+              <TextBox Text="Процент износа" />
+              <TextBox />
+              <TextBox Text="Количество" />
+              <TextBlock>шт/ед</TextBlock>
+            </StackPanel>
+          </ScrollViewer>
+          <Button
+            Style="{StaticResource MaterialDesignFlatButton}"
+            HorizontalAlignment="Left"
+            ToolTip="MaterialDesignFloatingActionMiniButton">
+            <materialDesign:PackIcon
+              Kind="Plus"
+              Height="24"
+              Width="24" />
+          </Button>
+        </StackPanel>
+
+      </materialDesign:Card>
+    </StackPanel>
+  </DockPanel>
+</UserControl>
