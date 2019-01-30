@@ -15,7 +15,7 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
 
   <materialDesign:DialogHost DialogTheme="Inherit">
-    <materialDesign:DrawerHost Name="DrawerHost" IsLeftDrawerOpen="False">
+    <materialDesign:DrawerHost Name="DrawerHost" IsLeftDrawerOpen="True">
       <materialDesign:DrawerHost.LeftDrawerContent>
         <DockPanel MinWidth="212">
           <StackPanel DockPanel.Dock="Top">
@@ -70,6 +70,15 @@
               </StackPanel>
             </ListBoxItem>
 
+            <ListBoxItem Selected="OnDrawerClothKindEditorSelected">
+              <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
+                <materialDesign:PackIcon Kind="TShirtCrew" />
+                <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}">
+                  Одежда
+                </TextBlock>
+              </StackPanel>
+
+            </ListBoxItem>
             <ListBoxItem Selected="OnDrawerDiscountSystemSelected">
               <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
                 <materialDesign:PackIcon Kind="CardBulleted" />

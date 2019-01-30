@@ -5,4 +5,5 @@
   <system:String x:Key="OrderEditorTitle">Редактирование заказа</system:String>
   <system:String x:Key="Client">Клиент</system:String>
   <system:String x:Key="ClothTypes">Вид одежды</system:String>
+  <system:String x:Key="ClothKindEditorTitle">Редактор видов одежды</system:String>
 </ResourceDictionary>

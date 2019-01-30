@@ -12,19 +12,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Laundry.Model;
 
 namespace Laundry.Views
 {
-    /// <summary>
-    /// Interaction logic for ClientEditor.xaml
-    /// </summary>
-    public partial class ClientEditor : UserControl
+  /// <summary>
+  /// Interaction logic for ClientEditor.xaml
+  /// </summary>
+  public partial class ClientEditor : UserControl
+  {
+    private UserControl _context;
+
+    public ClientEditor(UserControl context, Client client)
     {
-        public ClientEditor()
-        {
-            InitializeComponent();
-
-
-        }
+      InitializeComponent();
+      this._context = context;
     }
+
+    private void OnDisableButtonClick(object sender, RoutedEventArgs e)
+    {
+      App.CurrentWindow.ChangeView(_context);
+    }
+
+    private void OnApplyButtonClick(object sender, RoutedEventArgs e)
+    {
+      
+    }
+  }
 }

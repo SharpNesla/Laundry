@@ -25,11 +25,7 @@
     <Grid>
       <Button DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0 0 16 16" materialDesign:ShadowAssist.ShadowDepth="Depth3"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-              ToolTip="MaterialDesignFloatingActionAccentButton"
-              Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-        <Button.CommandParameter>
-          <local:OrderEditor></local:OrderEditor>
-        </Button.CommandParameter>
+              ToolTip="MaterialDesignFloatingActionAccentButton" Click="Button_Click">
         <materialDesign:PackIcon
           Kind="Plus"
           Height="24"

@@ -66,11 +66,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Car.cs" />
+    <Compile Include="Model\Client.cs" />
+    <Compile Include="Model\ClothInstance.cs" />
+    <Compile Include="Model\ClothKind.cs" />
+    <Compile Include="Model\Employee.cs" />
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\Subsidiary.cs" />
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CarDictionary.xaml.cs">
       <DependentUpon>CarDictionary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cards\ClientCard.xaml.cs">
+      <DependentUpon>ClientCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CarEditor.xaml.cs">
       <DependentUpon>CarEditor.xaml</DependentUpon>
@@ -80,6 +90,9 @@
     </Compile>
     <Compile Include="Views\ClientEditor.xaml.cs">
       <DependentUpon>ClientEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClothEditor.xaml.cs">
+      <DependentUpon>ClothEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClothKindEditor.xaml.cs">
       <DependentUpon>ClothKindEditor.xaml</DependentUpon>
@@ -92,6 +105,9 @@
     </Compile>
     <Compile Include="Views\Actions\GiveOrderCuorier.xaml.cs">
       <DependentUpon>GiveOrderCuorier.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginScreen.xaml.cs">
+      <DependentUpon>LoginScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OrderEditor.xaml.cs">
       <DependentUpon>OrderEditor.xaml</DependentUpon>
@@ -117,6 +133,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Cards\ClientCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\CarEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ClientEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClothEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -150,6 +174,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Actions\GiveOrderCuorier.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -219,5 +247,6 @@
   <ItemGroup>
     <Resource Include="Resources\LoginBackground.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

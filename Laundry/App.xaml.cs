@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Linq;
@@ -13,12 +14,15 @@ namespace Laundry
   /// </summary>
   public partial class App : Application
   {
+    public static MainWindow CurrentWindow;
     internal new MainWindow MainWindow;
     protected override void OnStartup(StartupEventArgs e)
     {
       base.OnStartup(e);
       MainWindow window = new MainWindow();
-      this.MainWindow = window;
+      //TODO Remove all MainWindow uses
+      MainWindow = window;
+      CurrentWindow = window;
       window.Show();
     }
   }

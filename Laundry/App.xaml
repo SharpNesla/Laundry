@@ -19,8 +19,30 @@
         <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml" />
 
         <ResourceDictionary Source="Strings.xaml" />
+        
+        
       </ResourceDictionary.MergedDictionaries>
       <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />
+      <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}">
+        <Style.Triggers>
+          <Trigger Property="DataGridCell.IsSelected" Value="True">
+            <Setter Property="BorderBrush">
+              <Setter.Value>
+                <SolidColorBrush Color="Transparent"/>
+              </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground"
+                    Value="{DynamicResource
+                                   {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Background">
+              <Setter.Value>
+                <SolidColorBrush Color="Transparent"/>
+              </Setter.Value>
+            </Setter>
+          </Trigger>
+        </Style.Triggers>
+      </Style>
     </ResourceDictionary>
+    
   </Application.Resources>
 </Application>

@@ -24,9 +24,13 @@ namespace Laundry
     public MainWindow()
     {
       InitializeComponent();
-      /*
-       
-       */
+
+
+    }
+
+    public void ChangeView(UserControl view)
+    {
+      this.contentControl.Content = view;
     }
 
     private void OnLoginButtonClick(object sender, RoutedEventArgs e)
@@ -72,6 +76,11 @@ namespace Laundry
     private void OnDrawerClientSelected(object sender, RoutedEventArgs e)
     {
       this.contentControl.Content = new ClientDictionary();
+    }
+
+    private void OnDrawerClothKindEditorSelected(object sender, RoutedEventArgs e)
+    {
+      this.ChangeView(new ClothKindEditor());
     }
   }
 }

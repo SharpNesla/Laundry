@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="532"
+             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="800" d:DesignHeight="800"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel Width="532">
+  <DockPanel VerticalAlignment="Stretch">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="24">
       <StackPanel Orientation="Horizontal">
@@ -20,6 +20,33 @@
           Margin="8 0 0 0" Text="{StaticResource OrderEditorTitle}" />
       </StackPanel>
     </materialDesign:ColorZone>
+    <StackPanel DockPanel.Dock="Bottom"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right" Margin="0,0,24,24">
+      <Button
+        Style="{StaticResource MaterialDesignFlatButton}"
+        IsDefault="True" Margin="0,0,20,0"
+        Command="materialDesign:DialogHost.CloseDialogCommand">
+        <Button.CommandParameter>
+          <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
+            True
+          </system:Boolean>
+        </Button.CommandParameter>
+        ПРИНЯТЬ
+      </Button>
+      <Button
+        Style="{StaticResource MaterialDesignFlatButton}"
+        IsCancel="True"
+        Command="materialDesign:DialogHost.CloseDialogCommand">
+        <Button.CommandParameter>
+          <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
+            False
+          </system:Boolean>
+        </Button.CommandParameter>
+        ОТМЕНИТЬ
+      </Button>
+    </StackPanel>
+    <ScrollViewer>
     <StackPanel Margin="32">
       <materialDesign:Card
         Padding="16"
@@ -42,7 +69,7 @@
           </CheckBox>
           <TextBox
             Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-            Margin="1,0,0,0"
+            Margin="2,0,0,0"
             VerticalAlignment="Top"
             Height="100"
             AcceptsReturn="True"
@@ -52,29 +79,89 @@
             IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
         </StackPanel>
       </materialDesign:Card>
+
       <materialDesign:Card
         Padding="16"
         BorderThickness="0">
 
         <StackPanel>
-          <ScrollViewer MaxHeight="100px" VerticalScrollBarVisibility="Auto">
-            <StackPanel Orientation="Horizontal">
-              <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
-                        materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
-                <ComboBoxItem IsEnabled="False">
-                  Носки Шерстяные
-                </ComboBoxItem>
-                <ComboBoxItem>
-                  Носки Шерстяные
-                </ComboBoxItem>
-              </ComboBox>
-              <TextBox Text="Номер бирки" />
-              <TextBox Text="Процент износа" />
-              <TextBox />
-              <TextBox Text="Количество" />
-              <TextBlock>шт/ед</TextBlock>
-            </StackPanel>
-          </ScrollViewer>
+          <StackPanel Orientation="Horizontal">
+            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                      VerticalAlignment="Bottom"
+                      materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
+              <ComboBoxItem IsEnabled="False">
+                Носки Шерстяные
+              </ComboBoxItem>
+              <ComboBoxItem>
+                Носки Шерстяные
+              </ComboBoxItem>
+            </ComboBox>
+            <TextBox materialDesign:HintAssist.Hint="Номер бирки"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox materialDesign:HintAssist.Hint="Процент износа"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox materialDesign:HintAssist.Hint="Количесто"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBlock VerticalAlignment="Center">шт/ед</TextBlock>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                      VerticalAlignment="Bottom"
+                      materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
+              <ComboBoxItem IsEnabled="False">
+                Носки Шерстяные
+              </ComboBoxItem>
+              <ComboBoxItem>
+                Носки Шерстяные
+              </ComboBoxItem>
+            </ComboBox>
+            <TextBox materialDesign:HintAssist.Hint="Номер бирки"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox materialDesign:HintAssist.Hint="Процент износа"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox materialDesign:HintAssist.Hint="Количесто"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBlock VerticalAlignment="Center">шт/ед</TextBlock>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                      VerticalAlignment="Bottom"
+                      materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
+              <ComboBoxItem IsEnabled="False">
+                Носки Шерстяные
+              </ComboBoxItem>
+              <ComboBoxItem>
+                Носки Шерстяные
+              </ComboBoxItem>
+            </ComboBox>
+            <TextBox materialDesign:HintAssist.Hint="Номер бирки"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox materialDesign:HintAssist.Hint="Процент износа"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox materialDesign:HintAssist.Hint="Количесто"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBlock VerticalAlignment="Center">шт/ед</TextBlock>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal">
+            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                      VerticalAlignment="Bottom"
+                      materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
+              <ComboBoxItem IsEnabled="False">
+                Носки Шерстяные
+              </ComboBoxItem>
+              <ComboBoxItem>
+                Носки Шерстяные
+              </ComboBoxItem>
+            </ComboBox>
+            <TextBox materialDesign:HintAssist.Hint="Номер бирки"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox materialDesign:HintAssist.Hint="Процент износа"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox materialDesign:HintAssist.Hint="Количесто"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBlock VerticalAlignment="Center">шт/ед</TextBlock>
+          </StackPanel>
+
           <Button
             Style="{StaticResource MaterialDesignFlatButton}"
             HorizontalAlignment="Left"
@@ -88,5 +175,6 @@
 
       </materialDesign:Card>
     </StackPanel>
+    </ScrollViewer>
   </DockPanel>
 </UserControl>

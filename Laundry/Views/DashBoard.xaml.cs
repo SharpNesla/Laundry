@@ -22,7 +22,9 @@ namespace Laundry.Views
         (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
     }
 
-
-
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+      (Application.Current as App)?.MainWindow.ChangeView(new OrderEditor());
+    }
   }
 }

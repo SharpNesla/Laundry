@@ -1,5 +1,6 @@
-п»їusing System;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Laundry.Model;
 
 namespace Laundry.Views
 {
@@ -20,6 +22,9 @@ namespace Laundry.Views
   /// </summary>
   public partial class ClientDictionary : UserControl
   {
+
+    public ObservableCollection<Client> Clients { get; set; }
+
     public ClientDictionary()
     {
       InitializeComponent();
@@ -29,6 +34,23 @@ namespace Laundry.Views
 
       MenuToggleButton.Unchecked +=
         (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
+
+      this.DataContext = this;
+      Clients = new ObservableCollection<Client>(
+        new[]
+        {
+          new Client("Андрей", "Карлов", "Иванович"),
+          new Client("Андрей", "Карлов", "Иванович"),
+          new Client("Андрей", "Карлов", "Иванович"),
+          new Client("Андрей", "Карлов", "Иванович"),
+          new Client("Андрей", "Карлов", "Иванович"),
+        }
+      );
+    }
+
+    private void OnAddClientButtonClick(object sender, RoutedEventArgs e)
+    {
+      (Application.Current as App)?.MainWindow.ChangeView(new ClientEditor(this, null));
     }
   }
 }
