@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Laundry.Model
 {
-    class Subsidiary
+  public class Subsidiary
     {
     }
 }

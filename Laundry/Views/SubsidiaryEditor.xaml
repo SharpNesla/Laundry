@@ -49,6 +49,8 @@
       </Button>
     </StackPanel>
     <StackPanel Margin="32,32,32,24">
+
+      <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
       <Expander>
         <Expander.Header>
           <TextBlock>

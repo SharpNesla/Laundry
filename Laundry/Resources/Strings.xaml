@@ -4,11 +4,16 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
   <!--OrderEditor strings-->
   <system:String x:Key="OrderEditor.Title">Редактирование заказа</system:String>
+  <system:String x:Key="OrderEditor.OrderInfo">Информация о заказе</system:String>
+  <system:String x:Key="OrderEditor.ClothInfo">Список одежды</system:String>
   <system:String x:Key="EmployeeEditor.Title">Редактирование работника</system:String>
+  <!--ClothEditor strings-->
 
   <!--Client strings-->
   <system:String x:Key="ClientDictionary.Search">Поиск клиентов</system:String>
   <system:String x:Key="ClientEditor.Title">Клиент</system:String>
+  <system:String x:Key="ClientEditor.MainInfoTitle">Общая информация</system:String>
+  <system:String x:Key="ClientEditor.OrderInfo">Заказы</system:String>
   <system:String x:Key="ClothTypes">Вид одежды</system:String>
   <system:String x:Key="ClothKindEditorTitle">Редактор видов одежды</system:String>
-</ResourceDictionary>
+</ResourceDictionary> 

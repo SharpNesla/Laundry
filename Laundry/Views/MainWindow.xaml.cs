@@ -24,11 +24,9 @@ namespace Laundry
     public MainWindow()
     {
       InitializeComponent();
-
-
     }
 
-    public void ChangeView(UserControl view)
+    public void ChangeView(UserControl view, UserControl context = null)
     {
       this.contentControl.Content = view;
     }

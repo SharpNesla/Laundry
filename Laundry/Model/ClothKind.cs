@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Laundry.Model
 {
-    class ClothKind
+  public class ClothKind
     {
     }
 }

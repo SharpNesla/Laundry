@@ -46,8 +46,9 @@
         Padding="16"
         Margin="0,0,0,8"
         BorderThickness="0">
-        <StackPanel>
-          <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+          <StackPanel>
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{StaticResource OrderEditor.OrderInfo}" />
+            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
                     materialDesign:HintAssist.Hint="{StaticResource ClientEditor.Title}">
             <ComboBoxItem>
               Анисимов Александр Филипович т.+7 (942) 098-42-08
@@ -78,94 +79,9 @@
         Padding="16"
         BorderThickness="0">
 
-        <StackPanel>
-          <StackPanel Orientation="Horizontal">
-            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
-                      VerticalAlignment="Bottom"
-                      materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
-              <ComboBoxItem IsEnabled="False">
-                Носки Шерстяные
-              </ComboBoxItem>
-              <ComboBoxItem>
-                Носки Шерстяные
-              </ComboBoxItem>
-            </ComboBox>
-            <TextBox materialDesign:HintAssist.Hint="Номер бирки"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox materialDesign:HintAssist.Hint="Процент износа"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox materialDesign:HintAssist.Hint="Количесто"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBlock VerticalAlignment="Center">шт/ед</TextBlock>
+          <StackPanel>
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{StaticResource OrderEditor.ClothInfo}" />
           </StackPanel>
-          <StackPanel Orientation="Horizontal">
-            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
-                      VerticalAlignment="Bottom"
-                      materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
-              <ComboBoxItem IsEnabled="False">
-                Носки Шерстяные
-              </ComboBoxItem>
-              <ComboBoxItem>
-                Носки Шерстяные
-              </ComboBoxItem>
-            </ComboBox>
-            <TextBox materialDesign:HintAssist.Hint="Номер бирки"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox materialDesign:HintAssist.Hint="Процент износа"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox materialDesign:HintAssist.Hint="Количесто"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBlock VerticalAlignment="Center">шт/ед</TextBlock>
-          </StackPanel>
-          <StackPanel Orientation="Horizontal">
-            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
-                      VerticalAlignment="Bottom"
-                      materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
-              <ComboBoxItem IsEnabled="False">
-                Носки Шерстяные
-              </ComboBoxItem>
-              <ComboBoxItem>
-                Носки Шерстяные
-              </ComboBoxItem>
-            </ComboBox>
-            <TextBox materialDesign:HintAssist.Hint="Номер бирки"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox materialDesign:HintAssist.Hint="Процент износа"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox materialDesign:HintAssist.Hint="Количесто"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBlock VerticalAlignment="Center">шт/ед</TextBlock>
-          </StackPanel>
-          <StackPanel Orientation="Horizontal">
-            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
-                      VerticalAlignment="Bottom"
-                      materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
-              <ComboBoxItem IsEnabled="False">
-                Носки Шерстяные
-              </ComboBoxItem>
-              <ComboBoxItem>
-                Носки Шерстяные
-              </ComboBoxItem>
-            </ComboBox>
-            <TextBox materialDesign:HintAssist.Hint="Номер бирки"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox materialDesign:HintAssist.Hint="Процент износа"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox materialDesign:HintAssist.Hint="Количесто"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBlock VerticalAlignment="Center">шт/ед</TextBlock>
-          </StackPanel>
-
-          <Button
-            Style="{StaticResource MaterialDesignFlatButton}"
-            HorizontalAlignment="Left"
-            ToolTip="MaterialDesignFloatingActionMiniButton">
-            <materialDesign:PackIcon
-              Kind="Plus"
-              Height="24"
-              Width="24" />
-          </Button>
-        </StackPanel>
 
       </materialDesign:Card>
     </StackPanel>

@@ -6,24 +6,17 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Views" 
-             d:DesignHeight="600" d:DesignWidth="800"
+             xmlns:controls="clr-namespace:Laundry.Views"
+             d:DesignHeight="800" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel>
-    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                              Padding="24">
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid" Padding="24">
       <StackPanel Orientation="Horizontal">
 
-        <TextBlock
-
-          Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-          VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="{StaticResource ClientEditor.Title}" />
+        <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Center" Margin="8 0 0 0" Text="{StaticResource ClientEditor.Title}" />
       </StackPanel>
     </materialDesign:ColorZone>
-    <StackPanel DockPanel.Dock="Bottom"
-                Orientation="Horizontal"
-                HorizontalAlignment="Right" Margin="0,0,24,24">
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
       <Button
         Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0"
         Command="materialDesign:DialogHost.CloseDialogCommand" Click="OnApplyButtonClick">
@@ -40,43 +33,43 @@
       </Button>
     </StackPanel>
 
-
-    <StackPanel Margin="32,32,32,24">
-      <materialDesign:Card
-        Padding="16"
-        Margin="0,0,0,8"
-        BorderThickness="0">
-        <StackPanel>
-          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Фамилия"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <StackPanel Margin="0,8,0,0">
-            <TextBlock Margin="0,0,0,8"
-                       Style="{StaticResource MaterialDesignSubheadingTextBlock}">
-              Пол
-            </TextBlock>
-            <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}"
-                         Tag="True">
-              М
-            </RadioButton>
-            <RadioButton Style="{StaticResource MaterialDesignRadioButton}"
-                         Tag="True">
-              Ж
-            </RadioButton>
+    <ScrollViewer>
+      <StackPanel Margin="32,32,32,24">
+        <materialDesign:Card
+          Padding="16"
+          Margin="0,0,0,8"
+          BorderThickness="0">
+          <StackPanel>
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{StaticResource ClientEditor.MainInfoTitle}" />
+            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Фамилия" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <StackPanel Margin="0,8,0,0">
+              <TextBlock Margin="0,0,0,8"
+                         Style="{StaticResource MaterialDesignSubheadingTextBlock}">
+                Пол
+              </TextBlock>
+              <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}">
+                М
+              </RadioButton>
+              <RadioButton Style="{StaticResource MaterialDesignRadioButton}">
+                Ж
+              </RadioButton>
+            </StackPanel>
+            <DatePicker materialDesign:HintAssist.Hint="Дата рождения" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16"
+              HorizontalAlignment="Left" />
           </StackPanel>
-          <DatePicker
-
-            materialDesign:HintAssist.Hint="Дата рождения"
-            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16" HorizontalAlignment="Left" />
-        </StackPanel>
-      </materialDesign:Card>
-
-    </StackPanel>
-
+        </materialDesign:Card>
+        <materialDesign:Card Padding="16" Margin="0,0,0,8" BorderThickness="0">
+          <StackPanel>
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{StaticResource ClientEditor.OrderInfo}" />
+            <Button Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
+              <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+            </Button>
+          </StackPanel>
+        </materialDesign:Card>
+      </StackPanel>
+    </ScrollViewer>
   </DockPanel>
-</UserControl>
+</UserControl> 

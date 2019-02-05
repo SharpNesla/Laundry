@@ -10,7 +10,7 @@ namespace Laundry.Model
     public string Patronymic { get; set; }
     public DateTime DateBirth { get; set; }
     public ObservableCollection<Order> Orders { get; set; }
-
+    public string PhoneNumber { get; set; }
     public int House { get; set; }
     public string Street { get; set; }
     public string City { get; set; }
@@ -23,7 +23,7 @@ namespace Laundry.Model
       Surname = surname;
       Patronymic = patronymic;
       DateBirth = new DateTime();
-      this.Orders = new ObservableCollection<Order>();
+      Orders = new ObservableCollection<Order>();
     }
   }
 }

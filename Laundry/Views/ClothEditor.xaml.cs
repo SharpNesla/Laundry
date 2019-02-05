@@ -15,14 +15,26 @@ using System.Windows.Shapes;
 
 namespace Laundry.Views
 {
-    /// <summary>
-    /// Interaction logic for ClothEditor.xaml
-    /// </summary>
-    public partial class ClothEditor : UserControl
+  /// <summary>
+  /// Interaction logic for ClothEditor.xaml
+  /// </summary>
+  public partial class ClothEditor : UserControl
+  {
+    private UserControl _context;
+
+    public ClothEditor(UserControl context)
     {
-        public ClothEditor()
-        {
-            InitializeComponent();
-        }
+      InitializeComponent();
+      this._context = context;
     }
+
+    private void OnDisableButtonClick(object sender, RoutedEventArgs e)
+    {
+      App.CurrentWindow.ChangeView(_context);
+    }
+
+    private void OnApplyButtonClick(object sender, RoutedEventArgs e)
+    {
+    }
+  }
 }

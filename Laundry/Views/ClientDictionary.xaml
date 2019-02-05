@@ -24,82 +24,75 @@
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>
-    <StackPanel DockPanel.Dock="Bottom">
-      <Button HorizontalAlignment="Right" Margin="0 0 16 16"
+    <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
+      <Button Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Click="OnAddClientButtonClick">
-        <materialDesign:PackIcon
-          Kind="Plus"
-          Height="24"
-          Width="24" />
+        <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
       </Button>
-      
-      <materialDesign:ColorZone
-      Mode="PrimaryMid"
-      Padding="16">
+      <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
+        Mode="PrimaryMid"
+        Padding="16">
         <DockPanel>
           <StackPanel
-          Orientation="Horizontal"
-          materialDesign:RippleAssist.IsCentered="True">
+            Orientation="Horizontal"
+            materialDesign:RippleAssist.IsCentered="True">
 
-            <materialDesign:PackIcon Kind="AccountCircle" VerticalAlignment="Center" Height="32" Width="32"/>
+            <materialDesign:PackIcon Kind="AccountCircle" VerticalAlignment="Center" Height="32" Width="32" />
             <materialDesign:ColorZone
-            Mode="Standard"
-            Padding="8 4 8 4"
-            CornerRadius="2"
-            Panel.ZIndex="1"
-            Margin="16 0 0 0"
-            materialDesign:ShadowAssist.ShadowDepth="Depth1">
+              Mode="Standard"
+              Padding="8 4 8 4"
+              CornerRadius="2"
+              Panel.ZIndex="1"
+              Margin="16 0 0 0"
+              materialDesign:ShadowAssist.ShadowDepth="Depth1">
               <Grid>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition
-                  Width="Auto" />
+                    Width="Auto" />
                   <ColumnDefinition
-                  Width="*" />
+                    Width="*" />
                   <ColumnDefinition
-                  Width="Auto" />
+                    Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button
-                Style="{DynamicResource MaterialDesignToolButton}">
+                  Style="{DynamicResource MaterialDesignToolButton}">
                   <materialDesign:PackIcon
-                  Kind="Magnify"
-                  Opacity="0.56" />
+                    Kind="Magnify"
+                    Opacity="0.56" />
                 </Button>
                 <TextBox
-                Grid.Column="1"
-                Margin="8 0 0 0"
-                materialDesign:HintAssist.Hint="{StaticResource ClientDictionary.Search}"
-                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                BorderThickness="0"
-                MinWidth="200"
-                VerticalAlignment="Center" />
+                  Grid.Column="1"
+                  Margin="8 0 0 0"
+                  materialDesign:HintAssist.Hint="{StaticResource ClientDictionary.Search}"
+                  materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                  BorderThickness="0"
+                  MinWidth="200"
+                  VerticalAlignment="Center" />
               </Grid>
             </materialDesign:ColorZone>
             <Button
-            Style="{DynamicResource MaterialDesignToolButton}"
-            Margin="8 0 0 0"
-            Panel.ZIndex="0">
+              Style="{DynamicResource MaterialDesignToolButton}"
+              Margin="8 0 0 0"
+              Panel.ZIndex="0">
               <materialDesign:PackIcon
-              Kind="Send" />
+                Kind="Send" />
             </Button>
           </StackPanel>
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Panel.ZIndex="2" Margin="0,0,0,-24">
       <DataGrid
         Margin="16"
         CanUserSortColumns="True"
         CanUserAddRows="False"
-        IsReadOnly="True"
+        CellStyle="{StaticResource CellStyle}"
         AutoGenerateColumns="False"
-        materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-        materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-
+        IsReadOnly="True"
         ItemsSource="{Binding Clients}">
         <DataGrid.Columns>
           <DataGridCheckBoxColumn
-            CellStyle="{StaticResource CellStyle}"
             ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
             EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
             <DataGridCheckBoxColumn.Header>
@@ -122,8 +115,8 @@
           <DataGridTemplateColumn>
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
-                <Button
-                  Style="{DynamicResource MaterialDesignToolButton}">
+                <Button Margin="0"
+                  Style="{StaticResource MaterialDesignFlatButton}">
                   <materialDesign:PackIcon
                     Kind="InfoOutline"
                     Height="24"
@@ -135,7 +128,7 @@
           <DataGridTemplateColumn>
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
-                <Button
+                <Button Margin="0"
                   Style="{DynamicResource MaterialDesignToolButton}">
                   <materialDesign:PackIcon
                     Kind="Edit"

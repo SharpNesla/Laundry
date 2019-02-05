@@ -22,9 +22,18 @@
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>
-      
-    <StackPanel>
-      <StackPanel Orientation="Horizontal" Margin="8"/>
-    </StackPanel>
+
+    <ScrollViewer>
+      <StackPanel Margin="32,32,32,24">
+        <materialDesign:Card
+          Padding="16"
+          Margin="0,0,0,8"
+          BorderThickness="0">
+          <StackPanel>
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{StaticResource ClientEditor.MainInfoTitle}"/>
+          </StackPanel>
+        </materialDesign:Card>
+      </StackPanel>
+    </ScrollViewer>
   </DockPanel>
 </UserControl>

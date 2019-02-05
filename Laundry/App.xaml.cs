@@ -15,6 +15,7 @@ namespace Laundry
   public partial class App : Application
   {
     public static MainWindow CurrentWindow;
+    public static Model.Model Model;
     internal new MainWindow MainWindow;
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -23,6 +24,7 @@ namespace Laundry
       //TODO Remove all MainWindow uses
       MainWindow = window;
       CurrentWindow = window;
+      Model = new Model.Model();
       window.Show();
     }
   }

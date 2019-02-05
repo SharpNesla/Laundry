@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Laundry.Model;
 
 namespace Laundry.Utils
 {
@@ -20,7 +21,15 @@ namespace Laundry.Utils
   /// </summary>
   public class ActivityControl : UserControl
   {
-    public ActivityControl()
+    //Bool props for disabling or enabling neccessary controls that depends on profession status
+
+    public bool IsCourier => App.Model.CurrentUser.Profession == EmployeeProfession.Courier;
+    public bool IsDirector => App.Model.CurrentUser.Profession == EmployeeProfession.Director;
+    public bool IsAdvisor => App.Model.CurrentUser.Profession == EmployeeProfession.Advisor;
+    public bool IsWasher => App.Model.CurrentUser.Profession == EmployeeProfession.Washer;
+
+
+    public ActivityControl(UserControl context = null)
     {
     }
   }
