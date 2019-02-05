@@ -11,12 +11,22 @@ namespace Laundry.Views
   /// </summary>
   public partial class EmployeeEditor : UserControl
   {
-    public EmployeeEditor()
-    {
-      InitializeComponent();
+        private UserControl _context;
+
+        public EmployeeEditor(UserControl context)
+        {
+            InitializeComponent();
+            this._context = context;
+        }
+
+        private void OnDisableButtonClick(object sender, RoutedEventArgs e)
+        {
+            App.CurrentWindow.ChangeView(_context);
+        }
+
+        private void OnApplyButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
-
-
-
-  }
 }

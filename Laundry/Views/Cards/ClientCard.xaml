@@ -17,7 +17,7 @@
 
           Style="{StaticResource MaterialDesignHeadlineTextBlock}"
           VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="{StaticResource Client}" />
+          Margin="8 0 0 0" Text="{StaticResource ClientEditor.Title}" />
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom"

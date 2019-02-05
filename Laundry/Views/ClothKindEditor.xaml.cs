@@ -23,6 +23,12 @@ namespace Laundry.Views
         public ClothKindEditor()
         {
             InitializeComponent();
+
+            MenuToggleButton.Checked +=
+              (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = true;
+
+            MenuToggleButton.Unchecked +=
+              (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
         }
     }
 }

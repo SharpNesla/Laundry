@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Laundry.Views.CarDictionary"
+﻿<utils:ActivityControl x:Class="Laundry.Views.CarDictionary"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,6 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views"
+             xmlns:utils="clr-namespace:Laundry.Utils"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
@@ -24,14 +25,10 @@
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>
-    <Button DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0 0 16 16" materialDesign:ShadowAssist.ShadowDepth="Depth3"
+        <Button DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0 0 16 16" materialDesign:ShadowAssist.ShadowDepth="Depth3"
       Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-      ToolTip="MaterialDesignFloatingActionAccentButton"
-            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-      <Button.CommandParameter>
-        <controls:EmployeeEditor></controls:EmployeeEditor>
-      </Button.CommandParameter>
-      <materialDesign:PackIcon
+      ToolTip="MaterialDesignFloatingActionAccentButton">
+            <materialDesign:PackIcon
         Kind="Plus"
         Height="24"
         Width="24" />
@@ -123,4 +120,5 @@
     </ScrollViewer>
 
   </DockPanel>
-</UserControl>
+</utils:ActivityControl>
+

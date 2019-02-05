@@ -50,7 +50,12 @@ namespace Laundry.Views
 
     private void OnAddClientButtonClick(object sender, RoutedEventArgs e)
     {
-      (Application.Current as App)?.MainWindow.ChangeView(new ClientEditor(this, null));
+      App.CurrentWindow.ChangeView(new ClientEditor(this, null));
     }
-  }
+
+        private void OnClientInfoGridButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="800" d:DesignHeight="800"
+             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="800" d:DesignHeight="600"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel VerticalAlignment="Stretch">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
@@ -17,7 +17,7 @@
 
           Style="{StaticResource MaterialDesignHeadlineTextBlock}"
           VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="{StaticResource OrderEditorTitle}" />
+          Margin="8 0 0 0" Text="{StaticResource OrderEditor.Title}" />
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom"
@@ -34,27 +34,21 @@
         </Button.CommandParameter>
         ПРИНЯТЬ
       </Button>
-      <Button
+            <Button
         Style="{StaticResource MaterialDesignFlatButton}"
-        IsCancel="True"
-        Command="materialDesign:DialogHost.CloseDialogCommand">
-        <Button.CommandParameter>
-          <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
-            False
-          </system:Boolean>
-        </Button.CommandParameter>
-        ОТМЕНИТЬ
+        IsCancel="True" Click="OnDisableButtonClick">
+                ОТМЕНИТЬ
       </Button>
     </StackPanel>
-    <ScrollViewer>
-    <StackPanel Margin="32">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="32">
       <materialDesign:Card
         Padding="16"
         Margin="0,0,0,8"
         BorderThickness="0">
         <StackPanel>
           <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
-                    materialDesign:HintAssist.Hint="{StaticResource Client}">
+                    materialDesign:HintAssist.Hint="{StaticResource ClientEditor.Title}">
             <ComboBoxItem>
               Анисимов Александр Филипович т.+7 (942) 098-42-08
             </ComboBoxItem>

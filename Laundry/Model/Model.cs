@@ -8,5 +8,7 @@ namespace Laundry.Model
 {
     class Model
     {
+      public Employee CurrentUser { get; private set; }
+
     }
 }

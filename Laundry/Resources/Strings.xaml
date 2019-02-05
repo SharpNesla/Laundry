@@ -2,8 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Laundry.Views"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
-  <system:String x:Key="OrderEditorTitle">Редактирование заказа</system:String>
-  <system:String x:Key="Client">Клиент</system:String>
+  <!--OrderEditor strings-->
+  <system:String x:Key="OrderEditor.Title">Редактирование заказа</system:String>
+  <system:String x:Key="EmployeeEditor.Title">Редактирование работника</system:String>
+
+  <!--Client strings-->
+  <system:String x:Key="ClientDictionary.Search">Поиск клиентов</system:String>
+  <system:String x:Key="ClientEditor.Title">Клиент</system:String>
   <system:String x:Key="ClothTypes">Вид одежды</system:String>
   <system:String x:Key="ClothKindEditorTitle">Редактор видов одежды</system:String>
 </ResourceDictionary>

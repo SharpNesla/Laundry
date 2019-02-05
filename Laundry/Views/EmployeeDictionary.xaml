@@ -15,23 +15,16 @@
       <StackPanel Orientation="Horizontal">
         <ToggleButton Name="MenuToggleButton"
                       Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
-        <TextBlock
+                <TextBlock
           
           Style="{StaticResource MaterialDesignHeadlineTextBlock}"
           VerticalAlignment="Center"
-          Margin="16 0 0 0">
-          Справочник рабочих
-        </TextBlock>
-      </StackPanel>
+          Margin="16 0 0 0"><Run Text="Справочник "/><Run Text="работников"/></TextBlock>
+            </StackPanel>
     </materialDesign:ColorZone>
-    <Button DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0 0 16 16" materialDesign:ShadowAssist.ShadowDepth="Depth3"
-      Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-      ToolTip="MaterialDesignFloatingActionAccentButton"
-            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-      <Button.CommandParameter>
-        <controls:EmployeeEditor></controls:EmployeeEditor>
-      </Button.CommandParameter>
-      <materialDesign:PackIcon
+        <Button DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0 0 16 16" materialDesign:ShadowAssist.ShadowDepth="Depth3"
+      Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Click="OnEmployeeAddButtonClick">
+            <materialDesign:PackIcon
         Kind="Plus"
         Height="24"
         Width="24" />
@@ -44,7 +37,7 @@
         CanUserAddRows="False"
         AutoGenerateColumns="True"
         materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-        materialDesign:DataGridAssist.ColumnHeaderPadding="8" SelectionChanged="DataGrid_SelectionChanged">
+        materialDesign:DataGridAssist.ColumnHeaderPadding="8">
         <DataGrid.Columns>
           <DataGridCheckBoxColumn
             Binding="{Binding IsSelected}"

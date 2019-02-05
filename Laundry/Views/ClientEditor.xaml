@@ -18,7 +18,7 @@
 
           Style="{StaticResource MaterialDesignHeadlineTextBlock}"
           VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="{StaticResource Client}" />
+          Margin="8 0 0 0" Text="{StaticResource ClientEditor.Title}" />
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom"
@@ -53,9 +53,9 @@
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
           <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
+                    <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <StackPanel Margin="0,8,0,0">
+                    <StackPanel Margin="0,8,0,0">
             <TextBlock Margin="0,0,0,8"
                        Style="{StaticResource MaterialDesignSubheadingTextBlock}">
               Пол

@@ -18,7 +18,7 @@
 
         <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml" />
 
-        <ResourceDictionary Source="Strings.xaml" />
+        <ResourceDictionary Source="Resources/Strings.xaml" />
         
         
       </ResourceDictionary.MergedDictionaries>

@@ -24,7 +24,7 @@ namespace Laundry.Views
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-      (Application.Current as App)?.MainWindow.ChangeView(new OrderEditor());
+      (Application.Current as App)?.MainWindow.ChangeView(new OrderEditor(this));
     }
   }
 }

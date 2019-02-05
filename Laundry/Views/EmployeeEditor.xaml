@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="532"
+             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="800" d:DesignHeight="600"
              Background="{DynamicResource MaterialDesignPaper}">
-    <DockPanel Width="532">
+    <DockPanel>
         <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="24">
             <StackPanel Orientation="Horizontal">
@@ -17,8 +17,7 @@
 
           Style="{StaticResource MaterialDesignHeadlineTextBlock}"
           VerticalAlignment="Center"
-          Margin="8 0 0 0">
-          Рабочий
+          Margin="8 0 0 0" Text="{StaticResource EmployeeEditor.Title}">
                 </TextBlock>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -38,16 +37,12 @@
             </Button>
             <Button
         Style="{StaticResource MaterialDesignFlatButton}"
-        IsCancel="True"
-        Command="materialDesign:DialogHost.CloseDialogCommand">
-                <Button.CommandParameter>
-                    <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
-                        False
-                    </system:Boolean>
-                </Button.CommandParameter>
+        IsCancel="True" Click="OnDisableButtonClick">
+                
                 ОТМЕНИТЬ
             </Button>
         </StackPanel>
+        <ScrollViewer>
         <StackPanel Margin="32,32,32,24">
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Фамилия"
                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -57,6 +52,16 @@
                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Серия и номер паспорта"
+          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Паспорт выдан"
+          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Код подразделения"
+          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <DatePicker
+        
+        materialDesign:HintAssist.Hint="Дата выдачи"
+        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16" HorizontalAlignment="Left"/>
             <ComboBox Margin="0,24,0,8" Width="140" HorizontalAlignment="Left"
                 materialDesign:HintAssist.Hint="Должность">
                 <ComboBoxItem>
@@ -95,6 +100,6 @@
                 Полная занятость
             </CheckBox>
         </StackPanel>
-
+        </ScrollViewer>
     </DockPanel>
 </UserControl>

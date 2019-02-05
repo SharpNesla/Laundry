@@ -22,9 +22,9 @@ namespace Laundry.Views
         (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
     }
 
-    private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
+        private void OnEmployeeAddButtonClick(object sender, RoutedEventArgs e)
+        {
+            App.CurrentWindow.ChangeView(new EmployeeEditor(this));
+        }
     }
-  }
 }

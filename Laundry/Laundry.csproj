@@ -73,6 +73,7 @@
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Subsidiary.cs" />
+    <Compile Include="Utils\ActivityControl.cs" />
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -103,12 +104,6 @@
     <Compile Include="Views\EmployeeDictionary.xaml.cs">
       <DependentUpon>EmployeeDictionary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Actions\GiveOrderCuorier.xaml.cs">
-      <DependentUpon>GiveOrderCuorier.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LoginScreen.xaml.cs">
-      <DependentUpon>LoginScreen.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\OrderEditor.xaml.cs">
       <DependentUpon>OrderEditor.xaml</DependentUpon>
     </Compile>
@@ -121,7 +116,7 @@
     <Compile Include="Views\SubsidiaryEditor.xaml.cs">
       <DependentUpon>SubsidiaryEditor.xaml</DependentUpon>
     </Compile>
-    <Page Include="Strings.xaml">
+    <Page Include="Resources\Strings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -170,14 +165,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DashBoard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Actions\GiveOrderCuorier.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LoginScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -247,6 +234,8 @@
   <ItemGroup>
     <Resource Include="Resources\LoginBackground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Actions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

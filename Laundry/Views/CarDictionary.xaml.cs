@@ -12,13 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Laundry.Utils;
 
 namespace Laundry.Views
 {
   /// <summary>
   /// Interaction logic for CarDictionary.xaml
   /// </summary>
-  public partial class CarDictionary : UserControl
+  public partial class CarDictionary : ActivityControl
   {
     public CarDictionary()
     {

@@ -24,15 +24,68 @@
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>
-    <Button DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0 0 16 16"
-            materialDesign:ShadowAssist.ShadowDepth="Depth3"
-            Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Click="OnAddClientButtonClick">
-      <materialDesign:PackIcon
-        Kind="Plus"
-        Height="24"
-        Width="24" />
-    </Button>
+    <StackPanel DockPanel.Dock="Bottom">
+      <Button HorizontalAlignment="Right" Margin="0 0 16 16"
+              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Click="OnAddClientButtonClick">
+        <materialDesign:PackIcon
+          Kind="Plus"
+          Height="24"
+          Width="24" />
+      </Button>
+      
+      <materialDesign:ColorZone
+      Mode="PrimaryMid"
+      Padding="16">
+        <DockPanel>
+          <StackPanel
+          Orientation="Horizontal"
+          materialDesign:RippleAssist.IsCentered="True">
 
+            <materialDesign:PackIcon Kind="AccountCircle" VerticalAlignment="Center" Height="32" Width="32"/>
+            <materialDesign:ColorZone
+            Mode="Standard"
+            Padding="8 4 8 4"
+            CornerRadius="2"
+            Panel.ZIndex="1"
+            Margin="16 0 0 0"
+            materialDesign:ShadowAssist.ShadowDepth="Depth1">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition
+                  Width="Auto" />
+                  <ColumnDefinition
+                  Width="*" />
+                  <ColumnDefinition
+                  Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button
+                Style="{DynamicResource MaterialDesignToolButton}">
+                  <materialDesign:PackIcon
+                  Kind="Magnify"
+                  Opacity="0.56" />
+                </Button>
+                <TextBox
+                Grid.Column="1"
+                Margin="8 0 0 0"
+                materialDesign:HintAssist.Hint="{StaticResource ClientDictionary.Search}"
+                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                BorderThickness="0"
+                MinWidth="200"
+                VerticalAlignment="Center" />
+              </Grid>
+            </materialDesign:ColorZone>
+            <Button
+            Style="{DynamicResource MaterialDesignToolButton}"
+            Margin="8 0 0 0"
+            Panel.ZIndex="0">
+              <materialDesign:PackIcon
+              Kind="Send" />
+            </Button>
+          </StackPanel>
+        </DockPanel>
+      </materialDesign:ColorZone>
+    </StackPanel>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
       <DataGrid
         Margin="16"
@@ -50,7 +103,7 @@
             ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
             EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
             <DataGridCheckBoxColumn.Header>
-              <!--padding to allow hit test to pass thru for sorting -->
+
               <Border
                 Background="Transparent"
                 Padding="6 0 6 0"
@@ -59,27 +112,18 @@
               </Border>
             </DataGridCheckBoxColumn.Header>
           </DataGridCheckBoxColumn>
-          <materialDesign:MaterialDataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
-          <materialDesign:MaterialDataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
-          <materialDesign:MaterialDataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
+          <materialDesign:MaterialDataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" />
+          <materialDesign:MaterialDataGridTextColumn Header="Имя" Binding="{Binding Name}" />
+          <materialDesign:MaterialDataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}" />
 
-          <materialDesign:MaterialDataGridTextColumn Header="Адрес" Width="200">
-            <DataGridTextColumn.Binding>
-              <MultiBinding StringFormat="{} г. {0} ул. {1} д. {2} (Индекс: {3})">
-                <Binding Path="City" />
-                <Binding Path="Street" />
-                <Binding Path="House" />
-                <Binding Path="ZipCode" />
-              </MultiBinding>
-            </DataGridTextColumn.Binding>
-          </materialDesign:MaterialDataGridTextColumn>
+          <materialDesign:MaterialDataGridTextColumn Header="Номер телефона" />
           <materialDesign:MaterialDataGridTextColumn Header="Количество заказов" />
           <materialDesign:MaterialDataGridTextColumn Header="Дата рождения" Binding="{Binding DateBirth}" />
           <DataGridTemplateColumn>
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
                 <Button
-                  Style="{StaticResource MaterialDesignFlatButton}">
+                  Style="{DynamicResource MaterialDesignToolButton}">
                   <materialDesign:PackIcon
                     Kind="InfoOutline"
                     Height="24"
@@ -92,7 +136,7 @@
             <DataGridTemplateColumn.CellTemplate>
               <DataTemplate>
                 <Button
-                  Style="{StaticResource MaterialDesignFlatButton}">
+                  Style="{DynamicResource MaterialDesignToolButton}">
                   <materialDesign:PackIcon
                     Kind="Edit"
                     Height="24"

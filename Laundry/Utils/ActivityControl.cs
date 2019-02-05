@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Laundry.Views
+namespace Laundry.Utils
 {
-    /// <summary>
-    /// Interaction logic for LoginScreen.xaml
-    /// </summary>
-    public partial class LoginScreen : UserControl
+  /// <summary>
+  /// Interaction logic for ActivityControl.xaml
+  /// </summary>
+  public class ActivityControl : UserControl
+  {
+    public ActivityControl()
     {
-        public LoginScreen()
-        {
-            InitializeComponent();
-        }
     }
+  }
 }

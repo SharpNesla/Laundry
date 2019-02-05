@@ -20,9 +20,22 @@ namespace Laundry.Views
     /// </summary>
     public partial class OrderEditor : UserControl
     {
-        public OrderEditor()
+        private UserControl _context;
+
+        public OrderEditor(UserControl context)
         {
             InitializeComponent();
+            this._context = context;
+        }
+
+        private void OnDisableButtonClick(object sender, RoutedEventArgs e)
+        {
+            App.CurrentWindow.ChangeView(_context);
+        }
+
+        private void OnApplyButtonClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
