@@ -126,7 +126,7 @@
       </materialDesign:DrawerHost.LeftDrawerContent>
       <ContentControl x:Name="contentControl">
         <DockPanel>
-          <Grid Height="569" VerticalAlignment="Bottom">
+          <Grid VerticalAlignment="Stretch">
             <Grid.Background>
               <ImageBrush ImageSource="/Laundry;component/Resources/LoginBackground.png" Stretch="UniformToFill" />
             </Grid.Background>

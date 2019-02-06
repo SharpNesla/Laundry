@@ -22,7 +22,6 @@ namespace Laundry.Views
   /// </summary>
   public partial class ClientDictionary : UserControl
   {
-
     public ObservableCollection<Client> Clients { get; set; }
 
     public ClientDictionary()
@@ -39,8 +38,8 @@ namespace Laundry.Views
       Clients = new ObservableCollection<Client>(
         new[]
         {
-          new Client("Андрей", "Карлов", "Иванович"),
-          new Client("Андрей", "Карлов", "Иванович"),
+          new Client("Антрипотийединиколей", "Карлов", "Иванович"),
+          new Client("Андрей", "Rjrjh", "Иванович"),
           new Client("Андрей", "Карлов", "Иванович"),
           new Client("Андрей", "Карлов", "Иванович"),
           new Client("Андрей", "Карлов", "Иванович"),
@@ -53,9 +52,8 @@ namespace Laundry.Views
       App.CurrentWindow.ChangeView(new ClientEditor(this, null));
     }
 
-        private void OnClientInfoGridButtonClick(object sender, RoutedEventArgs e)
-        {
-
-        }
+    private void OnClientInfoGridButtonClick(object sender, RoutedEventArgs e)
+    {
     }
+  }
 }
