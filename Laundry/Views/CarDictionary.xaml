@@ -15,110 +15,167 @@
                               Padding="16">
       <StackPanel Orientation="Horizontal">
         <ToggleButton Name="MenuToggleButton"
-                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
         <TextBlock
-          
-          Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+
+          Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
           Margin="16 0 0 0">
-          Автопарк
+          Справочник клиентов
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>
-        <Button DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="0 0 16 16" materialDesign:ShadowAssist.ShadowDepth="Depth3"
-      Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-      ToolTip="MaterialDesignFloatingActionAccentButton">
-            <materialDesign:PackIcon
-        Kind="Plus"
-        Height="24"
-        Width="24" />
-    </Button>
+    <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
+      <Button Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+        <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+      </Button>
+      <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                Mode="PrimaryMid"
+                                Padding="16">
+        <DockPanel>
+          <StackPanel
+            Orientation="Horizontal"
+            materialDesign:RippleAssist.IsCentered="True">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-      <DataGrid
-        Margin="16"
-        CanUserSortColumns="True"
-        CanUserAddRows="False"
-        AutoGenerateColumns="True"
-        materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-        materialDesign:DataGridAssist.ColumnHeaderPadding="8">
-        <DataGrid.Columns>
-          <DataGridCheckBoxColumn
-            Binding="{Binding IsSelected}"
-            ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-            EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-            <DataGridCheckBoxColumn.Header>
-              <!--padding to allow hit test to pass thru for sorting -->
-              <Border
-                Background="Transparent"
-                Padding="6 0 6 0"
-                HorizontalAlignment="Center">
-                <CheckBox
-                  HorizontalAlignment="Center"
-                  DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext}"
-                  IsChecked="{Binding IsAllItems3Selected}" />
-              </Border>
-            </DataGridCheckBoxColumn.Header>
-          </DataGridCheckBoxColumn>
-          <DataGridTextColumn
-            Binding="{Binding Code}"
-            Header="Code"
-            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-          <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
-          <materialDesign:MaterialDataGridTextColumn
-            Binding="{Binding Name}"
-            Header="Name"
-            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-          <!-- set a max length to get an indicator in the editor -->
-          <materialDesign:MaterialDataGridTextColumn
-            Binding="{Binding Description}"
-            Header="Description"
-            MaxLength="255"
-            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-          <materialDesign:MaterialDataGridTextColumn
-            Binding="{Binding Numeric}"
-            Header="Number with long header"
-            Width="300"
-            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-            <DataGridTextColumn.HeaderStyle>
-              <Style
-                TargetType="{x:Type DataGridColumnHeader}"
-                BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                <Setter
-                  Property="HorizontalAlignment"
-                  Value="Right" />
-                <Setter
-                  Property="ContentTemplate">
-                  <Setter.Value>
-                    <DataTemplate>
-                      <TextBlock
-                        TextWrapping="Wrap"
-                        Text="{Binding}"
-                        TextAlignment="Right" />
-                    </DataTemplate>
-                  </Setter.Value>
-                </Setter>
-              </Style>
-            </DataGridTextColumn.HeaderStyle>
-            <DataGridTextColumn.ElementStyle>
-              <Style
-                TargetType="{x:Type TextBlock}">
-                <Setter
-                  Property="HorizontalAlignment"
-                  Value="Right" />
-              </Style>
-            </DataGridTextColumn.ElementStyle>
-          </materialDesign:MaterialDataGridTextColumn>
-          <!-- use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo -->
-          <materialDesign:MaterialDataGridComboBoxColumn
-            Header="Food"
-            SelectedValueBinding="{Binding Food}"
-            ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Foods}" />
-        </DataGrid.Columns>
-      </DataGrid>
+            <materialDesign:PackIcon Kind="CarMultiple" VerticalAlignment="Center" Height="32" Width="32" />
+            <materialDesign:ColorZone
+              Mode="Standard"
+              Padding="8 4 8 4"
+              CornerRadius="2"
+              Panel.ZIndex="1"
+              Margin="16 0 0 0"
+              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="400">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition
+                    Width="Auto" />
+                  <ColumnDefinition
+                    Width="*" />
+                  <ColumnDefinition
+                    Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button
+                  Style="{DynamicResource MaterialDesignToolButton}">
+                  <materialDesign:PackIcon
+                    Kind="Magnify"
+                    Opacity="0.56" />
+                </Button>
+                <TextBox
+                  Grid.Column="1"
+                  Margin="8 0 0 0"
+                  materialDesign:HintAssist.Hint="{StaticResource ClientDictionary.SearchBarTitle}"
+                  materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                  BorderThickness="0"
+                  MinWidth="200"
+                  VerticalAlignment="Center" />
+              </Grid>
+            </materialDesign:ColorZone>
+            <Button Foreground="{StaticResource MaterialDesignDarkForeground}"
+              Style="{DynamicResource MaterialDesignToolButton}"
+              Margin="8 0 0 0"
+              Panel.ZIndex="0">
+              <materialDesign:PackIcon
+                Kind="Send" />
+            </Button>
+          </StackPanel>
+        </DockPanel>
+      </materialDesign:ColorZone>
+    </StackPanel>
+    <DataGrid
+      Margin="16"
+      CanUserSortColumns="True"
+      CanUserAddRows="False"
+      CanUserResizeColumns="True"
+      CellStyle="{StaticResource CellStyle}"
+      AutoGenerateColumns="False"
+      ItemsSource="{Binding Clients}">
+      <DataGrid.Columns>
+        <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
+                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+          <DataGridCheckBoxColumn.Header>
+            <Border
+              Background="Transparent"
+              Padding="9.3 0 0 0"
+              HorizontalAlignment="Center">
+              <CheckBox />
+            </Border>
+          </DataGridCheckBoxColumn.Header>
+        </DataGridCheckBoxColumn>
+        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Surname"
+                                Header="Фамилия">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Surname}" VerticalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Name"
+                                Header="Имя">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Name}" VerticalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Patronymic"
+                                Header="Отчество">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Patronymic}" VerticalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
 
-    </ScrollViewer>
+        <DataGridTemplateColumn MinWidth="128" Header="Номер телефона"  CanUserReorder="True" IsReadOnly="True" SortMemberPath="Patronymic">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
 
+        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True"  SortMemberPath="Patronymic" MinWidth="164" Header="Количество заказов" >
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+
+        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="164"
+                                Header="Дата рождения">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding DateBirth}" VerticalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
+        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal">
+                <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                  <materialDesign:PackIcon
+                    Kind="InfoOutline"
+                    Height="24"
+                    Width="24" />
+                </Button>
+
+                <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                  <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
+                </Button>
+              </StackPanel>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
   </DockPanel>
 </utils:ActivityControl>
 

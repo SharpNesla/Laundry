@@ -39,14 +39,14 @@
             Orientation="Horizontal"
             materialDesign:RippleAssist.IsCentered="True">
 
-            <materialDesign:PackIcon Kind="AccountCircle" VerticalAlignment="Center" Height="32" Width="32" />
+            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="32" Width="32" />
             <materialDesign:ColorZone
               Mode="Standard"
               Padding="8 4 8 4"
               CornerRadius="2"
               Panel.ZIndex="1"
               Margin="16 0 0 0"
-              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="439">
+              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="400">
               <Grid>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition
@@ -65,14 +65,14 @@
                 <TextBox
                   Grid.Column="1"
                   Margin="8 0 0 0"
-                  materialDesign:HintAssist.Hint="{StaticResource ClientDictionary.Search}"
+                  materialDesign:HintAssist.Hint="{StaticResource ClientDictionary.SearchBarTitle}"
                   materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                   BorderThickness="0"
                   MinWidth="200"
                   VerticalAlignment="Center" />
               </Grid>
             </materialDesign:ColorZone>
-            <Button
+            <Button Foreground="{StaticResource MaterialDesignDarkForeground}"
               Style="{DynamicResource MaterialDesignToolButton}"
               Margin="8 0 0 0"
               Panel.ZIndex="0">
@@ -129,8 +129,22 @@
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
 
-        <materialDesign:MaterialDataGridTextColumn MinWidth="128" Header="Номер телефона" />
-        <materialDesign:MaterialDataGridTextColumn MinWidth="164" Header="Количество заказов" />
+        <DataGridTemplateColumn MinWidth="128" Header="Номер телефона"  CanUserReorder="True" IsReadOnly="True" SortMemberPath="Patronymic">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+
+        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True"  SortMemberPath="Patronymic" MinWidth="164" Header="Количество заказов" >
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+
         <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="164"
                                 Header="Дата рождения">
           <DataGridTemplateColumn.CellTemplate>

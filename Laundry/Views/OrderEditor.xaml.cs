@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,30 +13,44 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Laundry.Model;
 
 namespace Laundry.Views
 {
-    /// <summary>
-    /// Interaction logic for OrderEditor.xaml
-    /// </summary>
-    public partial class OrderEditor : UserControl
+  /// <summary>
+  /// Interaction logic for OrderEditor.xaml
+  /// </summary>
+  public partial class OrderEditor : UserControl
+  {
+    private UserControl _context;
+
+    public OrderEditor(UserControl context)
     {
-        private UserControl _context;
+      InitializeComponent();
+      this._context = context;
 
-        public OrderEditor(UserControl context)
+      this.DataContext = this;
+      Clients = new ObservableCollection<Client>(
+        new[]
         {
-            InitializeComponent();
-            this._context = context;
+          new Client("Антрипотийединиколей", "Карлов", "Иванович"),
+          new Client("Андрей", "Rjrjh", "Иванович"),
+          new Client("Андрей", "Карлов", "Иванович"),
+          new Client("Андрей", "Карлов", "Иванович"),
+          new Client("Андрей", "Карлов", "Иванович"),
         }
-
-        private void OnDisableButtonClick(object sender, RoutedEventArgs e)
-        {
-            App.CurrentWindow.ChangeView(_context);
-        }
-
-        private void OnApplyButtonClick(object sender, RoutedEventArgs e)
-        {
-
-        }
+      );
     }
+
+    public ObservableCollection<Client> Clients { get; set; }
+
+    private void OnDisableButtonClick(object sender, RoutedEventArgs e)
+    {
+      App.CurrentWindow.ChangeView(_context);
+    }
+
+    private void OnApplyButtonClick(object sender, RoutedEventArgs e)
+    {
+    }
+  }
 }

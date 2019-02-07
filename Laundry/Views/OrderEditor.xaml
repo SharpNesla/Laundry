@@ -34,21 +34,22 @@
         </Button.CommandParameter>
         ПРИНЯТЬ
       </Button>
-            <Button
+      <Button
         Style="{StaticResource MaterialDesignFlatButton}"
         IsCancel="True" Click="OnDisableButtonClick">
-                ОТМЕНИТЬ
+        ОТМЕНИТЬ
       </Button>
     </StackPanel>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Margin="32">
-      <materialDesign:Card
-        Padding="16"
-        Margin="0,0,0,8"
-        BorderThickness="0">
-          <StackPanel>
-            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{StaticResource OrderEditor.OrderInfo}" />
-            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+    <Grid Margin="32">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="0.6*" />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <materialDesign:Card Padding="16" Margin="0,0,16,0" VerticalAlignment="Stretch">
+        <StackPanel>
+          <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
+                     Text="{StaticResource OrderEditor.OrderInfo}" />
+          <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
                     materialDesign:HintAssist.Hint="{StaticResource ClientEditor.Title}">
             <ComboBoxItem>
               Анисимов Александр Филипович т.+7 (942) 098-42-08
@@ -57,34 +58,114 @@
           <DatePicker
 
             materialDesign:HintAssist.Hint="Дата исполнения"
-            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16" HorizontalAlignment="Left" />
+            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16"
+            HorizontalAlignment="Left" />
           <CheckBox Margin="0,0,0,16"
                     Style="{StaticResource MaterialDesignCheckBox}">
             Скидка
           </CheckBox>
           <TextBox
             Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-            Margin="2,0,0,0"
-            VerticalAlignment="Top"
-            Height="100"
+            Margin="2,0,10,0"
             AcceptsReturn="True"
             TextWrapping="Wrap"
             VerticalScrollBarVisibility="Auto"
             materialDesign:HintAssist.Hint="Комментарий"
-            IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
+            IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}"
+            Height="214" />
         </StackPanel>
       </materialDesign:Card>
-
+      
       <materialDesign:Card
-        Padding="16"
+        Padding="16" Grid.Column="1" VerticalAlignment="Stretch"
         BorderThickness="0">
 
-          <StackPanel>
-            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{StaticResource OrderEditor.ClothInfo}" />
-          </StackPanel>
+        <DockPanel>
+          <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
+                     Text="{StaticResource OrderEditor.ClothInfo}" />
+          <Button DockPanel.Dock="Bottom" HorizontalContentAlignment="Stretch" Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
+            <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+          </Button>
+          <DataGrid
+            Background="{StaticResource MaterialDesignCardBackground}"
+            Margin="0,16,0,0"
+            CanUserSortColumns="True"
+            CanUserAddRows="False"
+            CanUserResizeColumns="True"
+            CellStyle="{StaticResource CellStyle}"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding Clients}">
+            <DataGrid.Columns>
+
+              <DataGridTemplateColumn MinWidth="128" Header="Номер бирки" CanUserReorder="True" IsReadOnly="True"
+                                      SortMemberPath="Patronymic">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Surname"
+                                      Header="Вид">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Surname}" VerticalAlignment="Center" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Name"
+                                      Header="Процент износа">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Name}" VerticalAlignment="Center" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Patronymic"
+                                      Header="Количество">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Patronymic}" VerticalAlignment="Center" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+
+              
+
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="Patronymic"
+                                      MinWidth="164" Header="Количество заказов">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="164"
+                                      Header="Цена">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding DateBirth}" VerticalAlignment="Center" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
+              <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                      <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
+                    </Button>
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+            </DataGrid.Columns>
+          </DataGrid>
+        </DockPanel>
 
       </materialDesign:Card>
-    </StackPanel>
-    </ScrollViewer>
+    </Grid>
   </DockPanel>
 </UserControl>
