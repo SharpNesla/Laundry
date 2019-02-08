@@ -2,19 +2,25 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Laundry.Views"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
-  <!--OrderEditor strings-->
+  <!--Dashboard-->
+
+  <system:String x:Key="Dashboard.Title">Обзор</system:String>
+
+  <!--OrderEditor-->
   <system:String x:Key="OrderEditor.Title">Редактирование заказа</system:String>
   <system:String x:Key="OrderEditor.OrderInfo">Информация о заказе</system:String>
   <system:String x:Key="OrderEditor.ClothInfo">Список одежды</system:String>
   
-  <!--Employee strings-->
+  <!--Employee-->
   <system:String x:Key="EmployeeDictionary.Title">Работники</system:String>
   <system:String x:Key="EmployeeDictionary.SearchbarTitle">Поиск работников</system:String>
   <system:String x:Key="EmployeeEditor.Title">Редактирование работника</system:String>
   
-  <!--ClothEditor strings-->
-
-  <!--Client strings-->
+  <!--ClothEditor-->
+  
+  <!--CarEditor-->
+  
+  <!--Client-->
   <system:String x:Key="ClientDictionary.SearchBarTitle">Поиск клиентов</system:String>
   <system:String x:Key="ClientEditor.Title">Клиент</system:String>
   <system:String x:Key="ClientEditor.MainInfoTitle">Общая информация</system:String>
@@ -22,8 +28,11 @@
   <system:String x:Key="ClothTypes">Вид одежды</system:String>
   <system:String x:Key="ClothKindEditorTitle">Редактор видов одежды</system:String>
   
-  <!--Subsidiary strings-->
+  <!--Subsidiary-->
   <system:String x:Key="SubsidiaryDictionary.Title">Филиал</system:String>
   <system:String x:Key="SubsidiaryDictionary.SearchbarTitle">Поиск филиалов</system:String>
   <system:String x:Key="SubsidiaryEditor.Title">Редактирование филиала</system:String>
+  
+  <!--Settings-->
+  <system:String x:Key="Settings.Title">Настройки</system:String>
 </ResourceDictionary> 

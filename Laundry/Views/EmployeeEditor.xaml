@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="800" d:DesignHeight="600"
+             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="800" d:DesignHeight="800"
              Background="{DynamicResource MaterialDesignPaper}">
     <DockPanel>
         <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
@@ -42,8 +42,18 @@
                 ОТМЕНИТЬ
             </Button>
         </StackPanel>
-        <ScrollViewer>
-        <StackPanel Margin="32,32,32,24">
+        
+
+    <Grid Margin="32">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500"/>
+        <ColumnDefinition Width="371*"/>
+      </Grid.ColumnDefinitions>
+      <materialDesign:Card Margin="0,0,16,0"
+          Padding="16"
+          BorderThickness="0" VerticalAlignment="Stretch">
+        <ScrollViewer FlowDirection="RightToLeft" VerticalScrollBarVisibility="Auto">
+          <StackPanel FlowDirection="LeftToRight">
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Фамилия"
                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
@@ -58,48 +68,49 @@
           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Код подразделения"
           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <DatePicker
-        
-        materialDesign:HintAssist.Hint="Дата выдачи"
-        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16" HorizontalAlignment="Left"/>
             <ComboBox Margin="0,24,0,8" Width="140" HorizontalAlignment="Left"
                 materialDesign:HintAssist.Hint="Должность">
-                <ComboBoxItem>
-                    Приёмщик
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Директор
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Курьер
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Прачечник
-                </ComboBoxItem>
+              <ComboBoxItem>
+                Приёмщик
+              </ComboBoxItem>
+              <ComboBoxItem>
+                Директор
+              </ComboBoxItem>
+              <ComboBoxItem>
+                Курьер
+              </ComboBoxItem>
+              <ComboBoxItem>
+                Прачечник
+              </ComboBoxItem>
             </ComboBox>
             <StackPanel Margin="0,8,0,0">
-                <TextBlock Margin="0,0,0,8"
+              <TextBlock Margin="0,0,0,8"
                    Style="{StaticResource MaterialDesignSubheadingTextBlock}">
           Пол
-                </TextBlock>
-                <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}"
+              </TextBlock>
+              <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}"
                      Tag="True">
-                    М
-                </RadioButton>
-                <RadioButton Style="{StaticResource MaterialDesignRadioButton}"
+                М
+              </RadioButton>
+              <RadioButton Style="{StaticResource MaterialDesignRadioButton}"
                      Tag="True">
-                    Ж
-                </RadioButton>
+                Ж
+              </RadioButton>
             </StackPanel>
             <DatePicker
         
         materialDesign:HintAssist.Hint="Дата рождения"
         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16" HorizontalAlignment="Left"/>
-            <CheckBox Margin="0,0,0,0"
-        Style="{StaticResource MaterialDesignCheckBox}">
-                Полная занятость
-            </CheckBox>
-        </StackPanel>
+          </StackPanel>
         </ScrollViewer>
-    </DockPanel>
+      </materialDesign:Card>
+      <materialDesign:Card
+        Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
+        <DockPanel>
+       
+        </DockPanel>
+
+      </materialDesign:Card>
+    </Grid>
+  </DockPanel>
 </UserControl>

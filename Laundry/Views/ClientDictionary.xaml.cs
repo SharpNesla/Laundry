@@ -14,13 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Laundry.Model;
+using Laundry.Utils;
 
 namespace Laundry.Views
 {
   /// <summary>
   /// Interaction logic for ClientDictionary.xaml
   /// </summary>
-  public partial class ClientDictionary : UserControl
+  public partial class ClientDictionary : ActivityControl
   {
     public ObservableCollection<Client> Clients { get; set; }
 

@@ -10,10 +10,15 @@
              d:DesignHeight="800" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel>
-    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid" Padding="24">
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
+                              Padding="16">
       <StackPanel Orientation="Horizontal">
+        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="32" Width="32"/>
+        <TextBlock
 
-        <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Center" Margin="8 0 0 0" Text="{StaticResource ClientEditor.Title}" />
+          Style="{StaticResource MaterialDesignTitleTextBlock}"
+          VerticalAlignment="Center"
+          Margin="8 0 0 0" Text="{StaticResource ClientEditor.Title}" />
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
@@ -33,43 +38,123 @@
       </Button>
     </StackPanel>
 
-    <ScrollViewer>
-      <StackPanel Margin="32,32,32,24">
-        <materialDesign:Card
+    <Grid Margin="32">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500"/>
+        <ColumnDefinition Width="371*"/>
+      </Grid.ColumnDefinitions>
+      <materialDesign:Card Margin="0,0,16,0"
           Padding="16"
-          Margin="0,0,0,8"
-          BorderThickness="0">
-          <StackPanel>
-            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{StaticResource ClientEditor.MainInfoTitle}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Фамилия" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <StackPanel Margin="0,8,0,0">
-              <TextBlock Margin="0,0,0,8"
+          BorderThickness="0" VerticalAlignment="Stretch">
+        <StackPanel>
+          <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{StaticResource ClientEditor.MainInfoTitle}" />
+          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Фамилия" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <StackPanel Margin="0,8,0,0">
+            <TextBlock Margin="0,0,0,8"
                          Style="{StaticResource MaterialDesignSubheadingTextBlock}">
                 Пол
-              </TextBlock>
-              <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}">
-                М
-              </RadioButton>
-              <RadioButton Style="{StaticResource MaterialDesignRadioButton}">
-                Ж
-              </RadioButton>
-            </StackPanel>
-            <DatePicker materialDesign:HintAssist.Hint="Дата рождения" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16"
+            </TextBlock>
+            <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}">
+              М
+            </RadioButton>
+            <RadioButton Style="{StaticResource MaterialDesignRadioButton}">
+              Ж
+            </RadioButton>
+          </StackPanel>
+          <DatePicker materialDesign:HintAssist.Hint="Дата рождения" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16"
               HorizontalAlignment="Left" />
-          </StackPanel>
-        </materialDesign:Card>
-        <materialDesign:Card Padding="16" Margin="0,0,0,8" BorderThickness="0">
-          <StackPanel>
-            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="{StaticResource ClientEditor.OrderInfo}" />
-            <Button Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
+        </StackPanel>
+      </materialDesign:Card>
+      <materialDesign:Card
+        Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
+        <DockPanel>
+          <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
+                     Text="{StaticResource ClientEditor.OrderInfo}" />
+          <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
+            <Button DockPanel.Dock="Right" Margin="0,0,9,0" Style="{StaticResource MaterialDesignFlatButton}" 
+                    HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
               <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+
             </Button>
-          </StackPanel>
-        </materialDesign:Card>
-      </StackPanel>
-    </ScrollViewer>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignBody2TextBlock}" 
+                         Text="Заказ от 21.01.2019, 13:30. Цена: 1300р"/>
+            </StackPanel>
+          </DockPanel>
+          <DataGrid
+            Background="{StaticResource MaterialDesignCardBackground}"
+            Margin="0,16,0,0"
+            CanUserSortColumns="True"
+            CanUserAddRows="False"
+            CanUserResizeColumns="True"
+            CellStyle="{StaticResource CellStyle}"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding ClothInstances}">
+            <DataGrid.Columns>
+
+              <DataGridTemplateColumn MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"
+                                      SortMemberPath="Patronymic">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Id}" VerticalAlignment="Center" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Surname"
+                                      Header="Вид">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Kind.Name}" VerticalAlignment="Center" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Name"
+                                      Header="Износ">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" 
+                               Text="{Binding WearPercentage, StringFormat={}{0}%}" VerticalAlignment="Center"/>
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Amount"
+                                      Header="Количество">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Amount}" VerticalAlignment="Center" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="48"
+                                      Header="Цена">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Kind.Price}" VerticalAlignment="Center" />
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
+              <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="8">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                      <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
+                    </Button>
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+            </DataGrid.Columns>
+          </DataGrid>
+
+        </DockPanel>
+
+      </materialDesign:Card>
+    </Grid>
   </DockPanel>
 </UserControl> 

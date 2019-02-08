@@ -9,24 +9,25 @@
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
-    <materialDesign:ColorZone DockPanel.Dock="Top"  materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16">
       <StackPanel Orientation="Horizontal">
         <ToggleButton Name="MenuToggleButton"
-                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
         <TextBlock
-                     Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-        VerticalAlignment="Center"
-          Margin="16 0 0 0">
-          Настройки
+
+          Style="{StaticResource MaterialDesignTitleTextBlock}"
+          VerticalAlignment="Center"
+          Margin="16 0 0 0" Text="{StaticResource Settings.Title}">
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>
 
-    <ScrollViewer>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
       <StackPanel Margin="32,32,32,24">
         <materialDesign:Card
           Padding="16"
+          MaxWidth="1200"
           Margin="0,0,0,8"
           BorderThickness="0">
           <StackPanel>

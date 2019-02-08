@@ -23,10 +23,10 @@ namespace Laundry.Utils
   {
     //Bool props for disabling or enabling neccessary controls that depends on profession status
 
-    public bool IsCourier => App.Model.CurrentUser.Profession == EmployeeProfession.Courier;
-    public bool IsDirector => App.Model.CurrentUser.Profession == EmployeeProfession.Director;
-    public bool IsAdvisor => App.Model.CurrentUser.Profession == EmployeeProfession.Advisor;
-    public bool IsWasher => App.Model.CurrentUser.Profession == EmployeeProfession.Washer;
+    public Visibility Courier => App.Model.CurrentUser.Profession == EmployeeProfession.Courier ? Visibility.Visible: Visibility.Hidden;
+    public Visibility Director => App.Model.CurrentUser.Profession == EmployeeProfession.Director ? Visibility.Visible : Visibility.Hidden;
+    public Visibility Washer => App.Model.CurrentUser.Profession == EmployeeProfession.Washer ? Visibility.Visible : Visibility.Hidden;
+    public Visibility Advisor => App.Model.CurrentUser.Profession == EmployeeProfession.Advisor ? Visibility.Visible : Visibility.Hidden;
 
 
     public ActivityControl(UserControl context = null)

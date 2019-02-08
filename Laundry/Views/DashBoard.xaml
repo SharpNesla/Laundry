@@ -9,15 +9,15 @@
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
-    <materialDesign:ColorZone DockPanel.Dock="Top"  materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                                Padding="16">
+
+
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
+                              Padding="16">
       <StackPanel Orientation="Horizontal">
         <ToggleButton Name="MenuToggleButton"
-                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
-        <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-            VerticalAlignment="Center"
-            Margin="16 0 0 0">
-            Обзор
+                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
+        <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center"
+          Text="{StaticResource Dashboard.Title}" Margin="16 0 0 0">
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>

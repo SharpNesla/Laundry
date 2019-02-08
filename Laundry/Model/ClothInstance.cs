@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace Laundry.Model
 {
-    class ClothInstance
-    {
-    }
+  public enum MeasureKind
+  {
+    Kg,
+    Thing,
+    Pair
+  }
+
+  public class ClothInstance
+  {
+    public ClothKind Kind { get; set; }
+    public int WearPercentage { get; set; }
+    public int Amount { get; set; }
+    public int Id { get; set; }
+  }
 }

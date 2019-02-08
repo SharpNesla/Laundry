@@ -23,6 +23,7 @@ namespace Laundry.Views
   public partial class OrderEditor : UserControl
   {
     private UserControl _context;
+    public DateTime DateTime { get; set; }
 
     public OrderEditor(UserControl context)
     {
@@ -40,9 +41,24 @@ namespace Laundry.Views
           new Client("Андрей", "Карлов", "Иванович"),
         }
       );
+
+      var kind = new ClothKind {MeasureKind = MeasureKind.Kg, Name = "Носки"};
+
+      this.ClothInstances = new ObservableCollection<ClothInstance>(
+        new[]
+        {
+          new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
+          new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
+          new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
+          new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
+          new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
+        }
+      );
     }
 
     public ObservableCollection<Client> Clients { get; set; }
+
+    public ObservableCollection<ClothInstance> ClothInstances { get; set; }
 
     private void OnDisableButtonClick(object sender, RoutedEventArgs e)
     {

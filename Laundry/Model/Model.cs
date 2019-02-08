@@ -18,7 +18,7 @@ namespace Laundry.Model
 
     public Model()
     {
-
+      this.CurrentUser = new Employee("F", "f", "D"){Profession = EmployeeProfession.Courier};
     }
   }
 }

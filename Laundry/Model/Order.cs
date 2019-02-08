@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Laundry.Model
 {
   public class Order
-    {
-    }
+  {
+
+  }
 }

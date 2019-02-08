@@ -15,7 +15,7 @@
         <materialDesign:PackIcon Kind="AccountCircle" VerticalAlignment="Center" Height="25" Width="24"/>
         <TextBlock
 
-          Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+          Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
           Margin="8 0 0 0" Text="{StaticResource ClientEditor.Title}" />
       </StackPanel>
