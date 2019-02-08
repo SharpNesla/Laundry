@@ -11,9 +11,9 @@
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel>
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                              Padding="16">
+                              Padding="16,20,20,20">
       <StackPanel Orientation="Horizontal">
-        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="32" Width="32"/>
+        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="24" Width="24"/>
         <TextBlock
 
           Style="{StaticResource MaterialDesignTitleTextBlock}"
