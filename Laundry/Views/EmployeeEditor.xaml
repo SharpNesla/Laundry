@@ -9,19 +9,7 @@
              xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="800" d:DesignHeight="800"
              Background="{DynamicResource MaterialDesignPaper}">
     <DockPanel>
-        <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                              Padding="24">
-            <StackPanel Orientation="Horizontal">
-
-                <TextBlock
-
-          Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-          VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="{StaticResource EmployeeEditor.Title}">
-                </TextBlock>
-            </StackPanel>
-        </materialDesign:ColorZone>
-        <StackPanel DockPanel.Dock="Bottom"
+    <StackPanel DockPanel.Dock="Bottom"
                 Orientation="Horizontal"
                 HorizontalAlignment="Right" Margin="0,0,24,24">
             <Button
@@ -42,18 +30,27 @@
                 ОТМЕНИТЬ
             </Button>
         </StackPanel>
-        
 
+      <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
+                                Padding="16,20,20,20">
+        <StackPanel Orientation="Horizontal">
+          <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="24" Width="24"/>
+          <TextBlock
+
+            Style="{StaticResource MaterialDesignTitleTextBlock}"
+            VerticalAlignment="Center"
+            Margin="8 0 0 0" Text="{StaticResource EmployeeEditor.Title}" />
+        </StackPanel>
+      </materialDesign:ColorZone>
     <Grid Margin="32">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500"/>
         <ColumnDefinition Width="371*"/>
       </Grid.ColumnDefinitions>
       <materialDesign:Card Margin="0,0,16,0"
-          Padding="16"
           BorderThickness="0" VerticalAlignment="Stretch">
-        <ScrollViewer FlowDirection="RightToLeft" VerticalScrollBarVisibility="Auto">
-          <StackPanel FlowDirection="LeftToRight">
+        <ScrollViewer Padding="16" VerticalScrollBarVisibility="Auto">
+          <StackPanel>
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Фамилия"
                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"

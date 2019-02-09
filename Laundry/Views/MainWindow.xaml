@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:Laundry"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800"
+        Title="MainWindow" Height="768" Width="1024"
 
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" MinWidth="600" MinHeight="400">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" MinWidth="800" MinHeight="600">
 
   <materialDesign:DialogHost DialogTheme="Inherit">
     <materialDesign:DrawerHost Name="DrawerHost" IsLeftDrawerOpen="False">

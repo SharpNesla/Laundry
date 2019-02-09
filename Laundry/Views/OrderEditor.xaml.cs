@@ -31,16 +31,6 @@ namespace Laundry.Views
       this._context = context;
 
       this.DataContext = this;
-      Clients = new ObservableCollection<Client>(
-        new[]
-        {
-          new Client("Антрипотийединиколей", "Карлов", "Иванович"),
-          new Client("Андрей", "Rjrjh", "Иванович"),
-          new Client("Андрей", "Карлов", "Иванович"),
-          new Client("Андрей", "Карлов", "Иванович"),
-          new Client("Андрей", "Карлов", "Иванович"),
-        }
-      );
 
       var kind = new ClothKind {MeasureKind = MeasureKind.Kg, Name = "Носки"};
 
@@ -55,8 +45,6 @@ namespace Laundry.Views
         }
       );
     }
-
-    public ObservableCollection<Client> Clients { get; set; }
 
     public ObservableCollection<ClothInstance> ClothInstances { get; set; }
 
