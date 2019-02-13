@@ -51,7 +51,8 @@
           BorderThickness="0" VerticalAlignment="Stretch">
         <ScrollViewer Padding="16" VerticalScrollBarVisibility="Auto">
           <StackPanel>
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Фамилия"
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="Информация о сотруднике" />
+            <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -59,7 +60,7 @@
                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Серия и номер паспорта"
+            <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Серия и номер паспорта"
           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Паспорт выдан"
           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -78,6 +79,9 @@
               </ComboBoxItem>
               <ComboBoxItem>
                 Прачечник
+              </ComboBoxItem>
+              <ComboBoxItem>
+                Водитель
               </ComboBoxItem>
             </ComboBox>
             <StackPanel Margin="0,8,0,0">

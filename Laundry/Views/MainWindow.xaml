@@ -30,15 +30,6 @@
                         IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
                         
                     </StackPanel>
-          <ListBoxItem DockPanel.Dock="Bottom" Selected="OnDrawerClientSelected">
-            <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
-              <materialDesign:PackIcon Kind="ExitToApp" />
-              <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}">
-                Выход
-              </TextBlock>
-            </StackPanel>
-          </ListBoxItem>
-
           <ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16">
             <ListBoxItem Selected="OnDrawerDashboardSelected">
               <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
@@ -120,13 +111,24 @@
                 </TextBlock>
               </StackPanel>
             </ListBoxItem>
+
+            <Separator/>
+
+            <ListBoxItem DockPanel.Dock="Bottom" Selected="OnDrawerClientSelected">
+              <StackPanel Orientation="Horizontal" Margin="32 0 32 0">
+                <materialDesign:PackIcon Kind="ExitToApp" />
+                <TextBlock Margin="8 0 0 0" Style="{StaticResource MaterialDesignBody1TextBlock}">
+                  Выход из системы
+                </TextBlock>
+              </StackPanel>
+            </ListBoxItem>
+
           </ListBox>
           
         </DockPanel>
       </materialDesign:DrawerHost.LeftDrawerContent>
       <ContentControl x:Name="contentControl">
-        <DockPanel>
-          <Grid VerticalAlignment="Stretch">
+        <Grid VerticalAlignment="Stretch">
             <Grid.Background>
               <ImageBrush ImageSource="/Laundry;component/Resources/LoginBackground.png" Stretch="UniformToFill" />
             </Grid.Background>
@@ -177,7 +179,6 @@
               </StackPanel>
             </materialDesign:Card>
           </Grid>
-        </DockPanel>
       </ContentControl>
     </materialDesign:DrawerHost>
   </materialDesign:DialogHost>

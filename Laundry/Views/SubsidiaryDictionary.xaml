@@ -43,7 +43,7 @@
               CornerRadius="2"
               Panel.ZIndex="1"
               Margin="16 0 0 0"
-              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="283">
+              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="400">
               <Grid>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition

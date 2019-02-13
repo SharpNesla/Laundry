@@ -135,6 +135,16 @@
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
+
+        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="164"
+                                Header="Должность">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock TextTrimming="CharacterEllipsis" Text="" VerticalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+
         <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
         <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
           <DataGridTemplateColumn.CellTemplate>

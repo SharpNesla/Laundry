@@ -28,9 +28,11 @@ namespace Laundry.Utils
     public Visibility Washer => App.Model.CurrentUser.Profession == EmployeeProfession.Washer ? Visibility.Visible : Visibility.Hidden;
     public Visibility Advisor => App.Model.CurrentUser.Profession == EmployeeProfession.Advisor ? Visibility.Visible : Visibility.Hidden;
 
+    protected UserControl Context { get;}
 
     public ActivityControl(UserControl context = null)
     {
+      this.Context = context;
     }
   }
 }

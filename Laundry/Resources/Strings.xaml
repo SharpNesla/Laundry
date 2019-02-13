@@ -10,7 +10,7 @@
   <system:String x:Key="OrderEditor.Title">Редактирование заказа</system:String>
   <system:String x:Key="OrderEditor.OrderInfo">Информация о заказе</system:String>
   <system:String x:Key="OrderEditor.ClothInfo">Список одежды</system:String>
-  
+  <system:String x:Key="OrderEditor.AddClothInstanceButtonTooltip">Добавить одежду</system:String>
   <!--Employee-->
   <system:String x:Key="EmployeeDictionary.Title">Работники</system:String>
   <system:String x:Key="EmployeeDictionary.SearchbarTitle">Поиск работников</system:String>
@@ -19,12 +19,17 @@
   <!--ClothEditor-->
   
   <!--CarEditor-->
-  
+  <system:String x:Key="CarDictionary.Title">Автопарк</system:String>
+  <system:String x:Key="CarDictionary.SearchBarTitle">Поиск автомобилей</system:String>
+  <system:String x:Key="CarEditor.Title">Транспортное средство</system:String>
+  <system:String x:Key="CarEditor.MainInfoTitle">Информация о ТС</system:String>
+  <system:String x:Key="CarEditor.CouriersInfo">Курьеры</system:String>
+
   <!--Client-->
   <system:String x:Key="ClientDictionary.SearchBarTitle">Поиск клиентов</system:String>
   <system:String x:Key="ClientEditor.Title">Клиент</system:String>
   <system:String x:Key="ClientEditor.MainInfoTitle">Общая информация</system:String>
-  <system:String x:Key="ClientEditor.OrderInfo">Заказы</system:String>
+  <system:String x:Key="ClientEditor.OrdersInfo">Заказы</system:String>
   <system:String x:Key="ClothTypes">Вид одежды</system:String>
   <system:String x:Key="ClothKindEditorTitle">Редактор видов одежды</system:String>
   

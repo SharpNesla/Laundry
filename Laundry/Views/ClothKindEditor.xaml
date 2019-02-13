@@ -8,6 +8,7 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
+  
   <DockPanel LastChildFill="True">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16">
@@ -59,6 +60,7 @@
       <StackPanel>
         <materialDesign:PopupBox
           Margin="16,0,16,0"
+
           StaysOpen="True">
           <ScrollViewer MaxHeight="400" MinWidth="200" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Horizontal" Margin="32">

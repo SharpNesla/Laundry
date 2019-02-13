@@ -31,5 +31,10 @@ namespace Laundry.Views
       MenuToggleButton.Unchecked +=
         (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
     }
+
+    private void OnAddCarButtonClick(object sender, RoutedEventArgs e)
+    {
+      App.CurrentWindow.ChangeView(new CarEditor(this));
+    }
   }
 }

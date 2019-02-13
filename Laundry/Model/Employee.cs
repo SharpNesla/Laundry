@@ -8,7 +8,8 @@ namespace Laundry.Model
     Courier,
     Director,
     Washer,
-    Advisor
+    Advisor,
+    Driver
   }
 
   public class Employee
@@ -18,11 +19,11 @@ namespace Laundry.Model
     public string Patronymic { get; set; }
     public DateTime DateBirth { get; set; }
     public EmployeeProfession Profession { get; set; }
+
     public int House { get; set; }
     public string Street { get; set; }
     public string City { get; set; }
     public int ZipCode { get; set; }
-    public bool IsPremiumClient { get; set; }
 
     public Employee(string name, string surname, string patronymic)
     {
