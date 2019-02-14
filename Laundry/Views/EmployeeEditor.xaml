@@ -42,7 +42,7 @@
             Margin="8 0 0 0" Text="{StaticResource EmployeeEditor.Title}" />
         </StackPanel>
       </materialDesign:ColorZone>
-    <Grid Margin="32">
+    <Grid Margin="24">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500"/>
         <ColumnDefinition Width="371*"/>
@@ -102,6 +102,31 @@
         
         materialDesign:HintAssist.Hint="Дата рождения"
         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16" HorizontalAlignment="Left"/>
+
+            <Expander Background="{StaticResource MaterialDesignCardBackground}" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+              <Expander.Header>
+                <TextBlock Margin="-24,0,0,0" TextWrapping="Wrap">
+                  <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">
+                      <Binding ElementName="CityTextBox" Path="Text" />
+                      <Binding ElementName="StreetTextBox" Path="Text" />
+                      <Binding ElementName="HouseTextBox" Path="Text" />
+                      <Binding ElementName="ZipCodeTextBox" Path="Text" />
+                    </MultiBinding>
+                  </TextBlock.Text>
+                </TextBlock>
+              </Expander.Header>
+              <StackPanel Margin="16">
+                <TextBox Name="CityTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                <TextBox Name="StreetTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Улица" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                <TextBox Name="HouseTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Дом" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                <TextBox Name="ZipCodeTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Почтовый индекс" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              </StackPanel>
+            </Expander>
+
           </StackPanel>
         </ScrollViewer>
       </materialDesign:Card>

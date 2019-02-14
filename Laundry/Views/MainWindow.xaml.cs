@@ -26,14 +26,9 @@ namespace Laundry
       InitializeComponent();
     }
 
-    public void ChangeView(UserControl view, UserControl context = null)
+    public void ChangeView(UserControl view)
     {
       this.contentControl.Content = view;
-    }
-
-    private void OnLoginButtonClick(object sender, RoutedEventArgs e)
-    {
-      this.contentControl.Content = new DashBoard();
     }
 
     private void ListBoxItem_OnSelected(object sender, RoutedEventArgs e)
@@ -79,6 +74,12 @@ namespace Laundry
     private void OnDrawerClothKindEditorSelected(object sender, RoutedEventArgs e)
     {
       this.ChangeView(new ClothKindEditor());
+    }
+
+    private void OnDrawerExitSelected(object sender, RoutedEventArgs e)
+    {
+      this.ChangeView(new LoginScreen());
+      this.DrawerHost.IsLeftDrawerOpen = false;
     }
   }
 }

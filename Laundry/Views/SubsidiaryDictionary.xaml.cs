@@ -27,6 +27,10 @@ namespace Laundry.Views
       MenuToggleButton.Unchecked +=
         (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
     }
-    
+
+    private void OnAddSubsidiaryButtonCLick(object sender, RoutedEventArgs e)
+    {
+      App.CurrentWindow.ChangeView(new SubsidiaryEditor(this));
+    }
   }
 }

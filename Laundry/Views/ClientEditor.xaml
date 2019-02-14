@@ -38,7 +38,7 @@
       </Button>
     </StackPanel>
 
-    <Grid Margin="32">
+    <Grid Margin="24">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500"/>
         <ColumnDefinition Width="371*"/>
@@ -79,7 +79,7 @@
                      Text="{StaticResource ClientEditor.OrdersInfo}" />
           <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
             <Button DockPanel.Dock="Right" Margin="0,0,9,0" Style="{StaticResource MaterialDesignFlatButton}" 
-                    HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
+                    HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton" Click="OnOrderAddButtonClick">
               <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
 
             </Button>

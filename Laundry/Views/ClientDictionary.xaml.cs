@@ -25,9 +25,13 @@ namespace Laundry.Views
   {
     public ObservableCollection<Client> Clients { get; set; }
 
-    public ClientDictionary()
+    public ClientDictionary() : base(null)
     {
       InitializeComponent();
+      
+      //BindMainDrawerButton(MenuToggleButton);
+
+      this.DataContext = this;
 
       MenuToggleButton.Checked +=
         (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = true;
@@ -35,7 +39,6 @@ namespace Laundry.Views
       MenuToggleButton.Unchecked +=
         (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
 
-      this.DataContext = this;
       Clients = new ObservableCollection<Client>(
         new[]
         {
@@ -54,6 +57,10 @@ namespace Laundry.Views
     }
 
     private void OnClientInfoGridButtonClick(object sender, RoutedEventArgs e)
+    {
+    }
+
+    private void MenuToggleButton_OnClick(object sender, RoutedEventArgs e)
     {
     }
   }

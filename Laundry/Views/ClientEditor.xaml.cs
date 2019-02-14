@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Laundry.Model;
+using Laundry.Utils;
 
 namespace Laundry.Views
 {
@@ -29,6 +30,8 @@ namespace Laundry.Views
     {
       InitializeComponent();
       this.DataContext = this;
+    
+      ActivityControl.BindMainDrawerButton(null);
 
       var kind = new ClothKind { MeasureKind = MeasureKind.Kg, Name = "Носки" };
 
@@ -59,6 +62,11 @@ namespace Laundry.Views
     private void OnApplyButtonClick(object sender, RoutedEventArgs e)
     {
       
+    }
+
+    private void OnOrderAddButtonClick(object sender, RoutedEventArgs e)
+    { 
+      App.CurrentWindow.ChangeView(new OrderEditor(this));
     }
   }
 }

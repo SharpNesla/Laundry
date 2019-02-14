@@ -16,14 +16,19 @@ using Laundry.Utils;
 
 namespace Laundry.Views
 {
-    /// <summary>
-    /// Interaction logic for SubsidiaryEditor.xaml
-    /// </summary>
-    public partial class SubsidiaryEditor : ActivityControl
+  /// <summary>
+  /// Interaction logic for LoginSettings.xaml
+  /// </summary>
+  public partial class LoginSettings : ActivityControl
+  {
+    public LoginSettings() : base(null)
     {
-        public SubsidiaryEditor(UserControl context) : base(context)
-        {
-            InitializeComponent();
-        }
+      InitializeComponent();
     }
+
+    private void OnDisableButtonClick(object sender, RoutedEventArgs e)
+    {
+      
+    }
+  }
 }

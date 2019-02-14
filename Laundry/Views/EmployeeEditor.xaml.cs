@@ -11,6 +11,7 @@ namespace Laundry.Views
   /// </summary>
   public partial class EmployeeEditor : UserControl
   {
+
         private UserControl _context;
 
         public EmployeeEditor(UserControl context)

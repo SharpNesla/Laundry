@@ -15,8 +15,8 @@
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16">
       <StackPanel Orientation="Horizontal">
-        <ToggleButton Name="MenuToggleButton"
-                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
+        <ToggleButton Name="MenuToggleButton" IsChecked="False"
+                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Click="MenuToggleButton_OnClick" Width="32" />
         <TextBlock
 
           Style="{StaticResource MaterialDesignTitleTextBlock}"

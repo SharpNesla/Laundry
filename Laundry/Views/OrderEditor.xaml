@@ -91,7 +91,7 @@
           <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource OrderEditor.ClothInfo}" />
           <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
-            <Button DockPanel.Dock="Right" Margin="0,0,9,0" Style="{StaticResource MaterialDesignFlatButton}" 
+            <Button DockPanel.Dock="Right" Margin="0,0,9,0" Click="OnAddClothButtonClick" Style="{StaticResource MaterialDesignFlatButton}" 
                     HorizontalAlignment="Left" ToolTip="{StaticResource OrderEditor.AddClothInstanceButtonTooltip}">
               <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
             </Button>

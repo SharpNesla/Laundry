@@ -21,7 +21,7 @@ namespace Laundry.Views
   /// </summary>
   public partial class CarDictionary : ActivityControl
   {
-    public CarDictionary()
+    public CarDictionary() : base(null)
     {
       InitializeComponent();
 

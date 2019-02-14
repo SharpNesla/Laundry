@@ -104,6 +104,12 @@
     <Compile Include="Views\EmployeeDictionary.xaml.cs">
       <DependentUpon>EmployeeDictionary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoginScreen.xaml.cs">
+      <DependentUpon>LoginScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginSettings.xaml.cs">
+      <DependentUpon>LoginSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OrderEditor.xaml.cs">
       <DependentUpon>OrderEditor.xaml</DependentUpon>
     </Compile>
@@ -165,6 +171,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DashBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

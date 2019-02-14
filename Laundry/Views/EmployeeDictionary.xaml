@@ -88,7 +88,7 @@
       CanUserResizeColumns="True"
       CellStyle="{StaticResource CellStyle}"
       AutoGenerateColumns="False"
-      ItemsSource="{Binding Clients}">
+      ItemsSource="{Binding Employees}">
       <DataGrid.Columns>
         <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
                                 ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
@@ -127,11 +127,13 @@
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
 
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="164"
+        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="128"
                                 Header="Дата рождения">
+
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding DateBirth}" VerticalAlignment="Center" />
+              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding DateBirth, StringFormat='yyyy.MM.dd'}"
+                         VerticalAlignment="Center" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
@@ -140,7 +142,7 @@
                                 Header="Должность">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="" VerticalAlignment="Center" />
+              <TextBlock TextTrimming="CharacterEllipsis" Text="Курьер" VerticalAlignment="Center" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>

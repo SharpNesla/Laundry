@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Laundry.Model;
+using MaterialDesignThemes.Wpf;
 
 namespace Laundry.Views
 {
@@ -55,6 +56,11 @@ namespace Laundry.Views
 
     private void OnApplyButtonClick(object sender, RoutedEventArgs e)
     {
+    }
+
+    private void OnAddClothButtonClick(object sender, RoutedEventArgs e)
+    {
+      DialogHost.Show(new ClothEditor(this));
     }
   }
 }

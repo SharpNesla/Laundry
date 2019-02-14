@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Laundry.Model;
+using MaterialDesignThemes.Wpf;
 
 namespace Laundry.Utils
 {
@@ -30,9 +32,20 @@ namespace Laundry.Utils
 
     protected UserControl Context { get;}
 
-    public ActivityControl(UserControl context = null)
+    public ActivityControl(UserControl context)
     {
       this.Context = context;
+    }
+
+    protected void ReturnContext()
+    {
+      App.CurrentWindow.ChangeView(Context);
+    }
+
+    public static void BindMainDrawerButton(ToggleButton button)
+    {
+      App.CurrentWindow.DrawerHost.GetBindingExpression(DrawerHost.IsLeftDrawerOpenProperty)
+        ?.UpdateTarget();
     }
   }
 }
