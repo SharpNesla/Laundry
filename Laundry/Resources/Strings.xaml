@@ -2,6 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Laundry.Views"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--Login-->
+    <system:String x:Key="LoginScreen.Title">Прачечная</system:String>
+    <system:String x:Key="LoginScreen.SignInButton">Вход</system:String>
+    <system:String x:Key="LoginSettings.Title">Настройки входа</system:String>
   <!--Dashboard-->
 
   <system:String x:Key="Dashboard.Title">Обзор</system:String>

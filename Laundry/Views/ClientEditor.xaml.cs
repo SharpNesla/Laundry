@@ -29,9 +29,8 @@ namespace Laundry.Views
     public ClientEditor(UserControl context, Client client)
     {
       InitializeComponent();
+
       this.DataContext = this;
-    
-      ActivityControl.BindMainDrawerButton(null);
 
       var kind = new ClothKind { MeasureKind = MeasureKind.Kg, Name = "Носки" };
 
