@@ -33,11 +33,11 @@ namespace Laundry.Views
 
       this.DataContext = this;
 
-      MenuToggleButton.Checked +=
-        (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = true;
+      /*MenuToggleButton.Checked +=
+        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = true;
 
       MenuToggleButton.Unchecked +=
-        (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
+        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = false;*/
 
       Clients = new ObservableCollection<Client>(
         new[]
@@ -53,7 +53,7 @@ namespace Laundry.Views
 
     private void OnAddClientButtonClick(object sender, RoutedEventArgs e)
     {
-      App.CurrentWindow.ChangeView(new ClientEditor(this, null));
+      //App.CurrentWindow.ChangeView(new ClientEditor(this, null));
     }
 
     private void OnClientInfoGridButtonClick(object sender, RoutedEventArgs e)

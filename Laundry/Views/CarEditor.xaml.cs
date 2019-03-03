@@ -28,7 +28,7 @@ namespace Laundry.Views
 
     private void OnDisableButtonClick(object sender, RoutedEventArgs e)
     {
-      App.CurrentWindow.ChangeView(this.Context);
+      //App.CurrentWindow.ChangeView(this.Context);
     }
   }
 }

@@ -3,28 +3,26 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
+using Caliburn.Micro;
+using Laundry.Utils;
 
 namespace Laundry.Views
 {
   /// <summary>
   /// Interaction logic for DashBoard.xaml
   /// </summary>
-  public partial class DashBoard : UserControl
+  public class DashBoardViewModel : DrawerActivityScreen
   {
-    public DashBoard()
+
+    public DashBoardViewModel(IEventAggregator aggregator, Model.MockModel mockModel) : base(aggregator, mockModel)
     {
-      InitializeComponent();
-
-      MenuToggleButton.Checked +=
-        (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = true;
-
-      MenuToggleButton.Unchecked +=
-        (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
+      
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e)
+    public void OpenOrderEditor()
     {
-      App.CurrentWindow.ChangeView(new OrderEditor(this));
+      this.ChangeApplicationScreen(Utils.Screens.OrderEditor);
     }
+
   }
 }

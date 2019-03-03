@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Laundry.Views.LoginScreen"
+﻿<UserControl x:Class="Laundry.Views.LoginScreenView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -16,7 +16,7 @@
       HorizontalAlignment="Right"
       VerticalAlignment="Bottom"
       Style="{StaticResource MaterialDesignFloatingActionButton}"
-      ToolTip="MaterialDesignFloatingActionButton" Margin="0,0,16,18" Click="OnLoginSettingsButtonCLick">
+      ToolTip="MaterialDesignFloatingActionButton" Margin="0,0,16,18" Name="Settings">
       <materialDesign:PackIcon
         Kind="Settings"
         Height="24"
@@ -61,7 +61,7 @@
             <PasswordBox Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}"
                                  materialDesign:HintAssist.Hint="Пароль" Margin="0,0,0,16" />
             <Button
-                      Style="{StaticResource MaterialDesignRaisedButton}" Click="OnLoginButtonClick">
+                      Style="{StaticResource MaterialDesignRaisedButton}" Name="Login">
               Войти
             </Button>
           </StackPanel>

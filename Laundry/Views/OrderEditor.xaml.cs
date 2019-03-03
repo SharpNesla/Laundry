@@ -13,7 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
 using Laundry.Model;
+using Laundry.Utils;
 using MaterialDesignThemes.Wpf;
 
 namespace Laundry.Views
@@ -21,21 +23,19 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for OrderEditor.xaml
   /// </summary>
-  public partial class OrderEditor : UserControl
+  public partial class OrderEditorViewModel : ActivityScreen
   {
-    private UserControl _context;
     public DateTime DateTime { get; set; }
 
-    public OrderEditor(UserControl context)
+
+
+    public BindableCollection<ClothInstance> ClothInstances { get; set; }
+
+    public OrderEditorViewModel(IEventAggregator aggregator, IModel model, ClothEditor editor) : base(aggregator, model)
     {
-      InitializeComponent();
-      this._context = context;
+      var kind = new ClothKind { MeasureKind = MeasureKind.Kg, Name = "Носки" };
 
-      this.DataContext = this;
-
-      var kind = new ClothKind {MeasureKind = MeasureKind.Kg, Name = "Носки"};
-
-      this.ClothInstances = new ObservableCollection<ClothInstance>(
+      this.ClothInstances = new BindableCollection<ClothInstance>(
         new[]
         {
           new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
@@ -47,20 +47,25 @@ namespace Laundry.Views
       );
     }
 
-    public ObservableCollection<ClothInstance> ClothInstances { get; set; }
-
-    private void OnDisableButtonClick(object sender, RoutedEventArgs e)
+    public void Discard()
     {
-      App.CurrentWindow.ChangeView(_context);
+      ChangeApplicationScreen(Screens.DashBoard);
     }
 
     private void OnApplyButtonClick(object sender, RoutedEventArgs e)
     {
     }
 
+    public void AddOrder()
+    {
+
+    }
+
     private void OnAddClothButtonClick(object sender, RoutedEventArgs e)
     {
-      DialogHost.Show(new ClothEditor(this));
+      //DialogHost.Show();
     }
+
+    
   }
 }

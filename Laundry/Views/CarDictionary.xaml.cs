@@ -25,16 +25,16 @@ namespace Laundry.Views
     {
       InitializeComponent();
 
-      MenuToggleButton.Checked +=
-        (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = true;
+      /*MenuToggleButton.Checked +=
+        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = true;
 
       MenuToggleButton.Unchecked +=
-        (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
+        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = false;*/
     }
 
     private void OnAddCarButtonClick(object sender, RoutedEventArgs e)
     {
-      App.CurrentWindow.ChangeView(new CarEditor(this));
+      //App.CurrentWindow.ChangeView(new CarEditor(this));
     }
   }
 }

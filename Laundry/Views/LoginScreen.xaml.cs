@@ -1,39 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
+using Caliburn.Micro;
+using Laundry.Utils;
 
 namespace Laundry.Views
 {
   /// <summary>
   /// Interaction logic for LoginScreen.xaml
   /// </summary>
-  public partial class LoginScreen : UserControl
+  public class LoginScreenViewModel : ActivityScreen
   {
-    public LoginScreen()
+
+    public LoginScreenViewModel(IEventAggregator aggregator, Model.MockModel mockModel) : base(aggregator, mockModel)
     {
-      InitializeComponent();
     }
 
-    private void OnLoginButtonClick(object sender, RoutedEventArgs e)
+    public void Login()
     {
-      App.CurrentWindow.contentControl.Content = new DashBoard();
+      this.ChangeApplicationScreen(Utils.Screens.DashBoard);
     }
 
-    private void OnLoginSettingsButtonCLick(object sender, RoutedEventArgs e)
+    public void Settings()
     {
       DialogHost.Show(new LoginSettings());
     }
+
+    
   }
 }

@@ -22,6 +22,9 @@
 
         <ResourceDictionary Source="Resources/Strings.xaml" />
 
+        <ResourceDictionary>
+          <local:AppBootstrapper x:Key="bootstrapper" />
+        </ResourceDictionary>
 
       </ResourceDictionary.MergedDictionaries>
       <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />

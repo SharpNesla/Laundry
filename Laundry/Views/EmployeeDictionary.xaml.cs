@@ -21,11 +21,11 @@ namespace Laundry.Views
 
       this.DataContext = this;
 
-      MenuToggleButton.Checked +=
-        (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = true;
+      /*MenuToggleButton.Checked +=
+        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = true;
 
       MenuToggleButton.Unchecked +=
-        (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
+        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = false;*/
 
 
       Employees = new ObservableCollection<Employee>(
@@ -42,7 +42,7 @@ namespace Laundry.Views
 
     private void OnEmployeeAddButtonClick(object sender, RoutedEventArgs e)
     {
-      App.CurrentWindow.ChangeView(new EmployeeEditor(this));
+      //App.CurrentWindow.ChangeView(new EmployeeEditor(this));
     }
   }
 }

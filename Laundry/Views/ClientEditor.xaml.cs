@@ -55,7 +55,7 @@ namespace Laundry.Views
 
     private void OnDisableButtonClick(object sender, RoutedEventArgs e)
     {
-      App.CurrentWindow.ChangeView(_context);
+      //App.CurrentWindow.ChangeView(_context);
     }
 
     private void OnApplyButtonClick(object sender, RoutedEventArgs e)
@@ -65,7 +65,7 @@ namespace Laundry.Views
 
     private void OnOrderAddButtonClick(object sender, RoutedEventArgs e)
     { 
-      App.CurrentWindow.ChangeView(new OrderEditor(this));
+      //App.CurrentWindow.ChangeView(new OrderEditor(this));
     }
   }
 }

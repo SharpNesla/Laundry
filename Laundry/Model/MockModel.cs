@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Laundry.Model
 {
-  public class Model
+  public class MockModel : IModel
   {
     public Employee CurrentUser { get; private set; }
     public ReadOnlyObservableCollection<Employee> Employees { get; private set; }
@@ -16,7 +16,7 @@ namespace Laundry.Model
     public ReadOnlyObservableCollection<Car> Cars { get; private set; }
     public ReadOnlyObservableCollection<Subsidiary> Subsidiaries { get; private set; }
 
-    public Model()
+    public MockModel()
     {
       this.CurrentUser = new Employee("F", "f", "D"){Profession = EmployeeProfession.Courier};
     }

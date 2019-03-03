@@ -1,0 +1,69 @@
+﻿<Window x:Class="Laundry.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Laundry.Utils.Controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:views="clr-namespace:Laundry.Views"
+        mc:Ignorable="d"
+        Title="ShellView" Height="768" Width="1024"
+        xmlns:cal="http://www.caliburnproject.org"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" MinWidth="800" MinHeight="600">
+
+  <materialDesign:DialogHost DialogTheme="Inherit">
+    <materialDesign:DrawerHost Name="DrawerHost" IsLeftDrawerOpen="{Binding IsDrawerOpened, Mode=OneWay}">
+      <materialDesign:DrawerHost.LeftDrawerContent >
+        <DockPanel MinWidth="212">
+          <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <StackPanel Margin="16,8,0,0" VerticalAlignment="Center">
+                            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}">Алексеев Пётр Иванович</TextBlock>
+                            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Margin="0,4,0,0"
+                                       IsEnabled="False">Курьер</TextBlock>
+                        </StackPanel>
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
+                                      
+                        HorizontalAlignment="Right" Margin="16"
+                        IsChecked="{Binding IsDrawerOpened}" />
+                        
+                    </StackPanel>
+          <ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16">
+            <controls:DrawerItem Label="Обзор" Kind="ViewDashboardOutline"
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('DASHBOARD')]"/>
+            <Separator/>
+            <controls:DrawerItem Label="Клиенты" Kind="ManMan"
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('CLIENTEDITOR')]"/>
+            <controls:DrawerItem Label="Работники" Kind="AccountMultipleOutline"
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('EMPLOYEEEDITOR')]"/>
+            <controls:DrawerItem Label="Филиалы" Kind="HomeVariantOutline"
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('SUBSIDIARYEDITOR')]"/>
+            <controls:DrawerItem Label="Автопарк" Kind="CarEstate"
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('CAREDITOR')]"/>
+            <controls:DrawerItem Label="Одежда" Kind="TShirtCrew"
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('CLOTHKINDEDITOR')]"/>
+            <controls:DrawerItem Label="Дисконт-система" Kind="CardBulleted"
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('DISCOUNTSYSTEM')]"/>
+
+            <Separator />
+            <controls:DrawerItem Label="Настройки" Kind="Settings"
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('SETTINGS')]"/>
+            <controls:DrawerItem Label="О приложении" Kind="About"
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('ABOUT')]"/>
+
+            <Separator/>
+
+            <controls:DrawerItem Label="Выход из системы" Kind="ExitToApp"
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('LOGIN')]"/>
+
+          </ListBox>
+          
+        </DockPanel>
+      </materialDesign:DrawerHost.LeftDrawerContent>
+      <ContentControl Name="ActiveItem"/>
+    </materialDesign:DrawerHost>
+  </materialDesign:DialogHost>
+</Window>

@@ -14,18 +14,13 @@ namespace Laundry
   /// </summary>
   public partial class App : Application
   {
-    public static MainWindow CurrentWindow;
-    public static Model.Model Model;
-    internal new MainWindow MainWindow;
-    protected override void OnStartup(StartupEventArgs e)
+    public static ShellViewModel CurrentWindow;
+    public static Model.MockModel MockModel;
+    internal new ShellViewModel ShellView;
+
+    public App()
     {
-      base.OnStartup(e);
-      MainWindow window = new MainWindow();
-      //TODO Remove all MainWindow uses
-      MainWindow = window;
-      CurrentWindow = window;
-      Model = new Model.Model();
-      window.Show();
+      InitializeComponent();
     }
   }
 }

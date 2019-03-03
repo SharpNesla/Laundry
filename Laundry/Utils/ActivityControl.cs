@@ -25,10 +25,10 @@ namespace Laundry.Utils
   {
     //Bool props for disabling or enabling neccessary controls that depends on profession status
 
-    public Visibility Courier => App.Model.CurrentUser.Profession == EmployeeProfession.Courier ? Visibility.Visible: Visibility.Hidden;
-    public Visibility Director => App.Model.CurrentUser.Profession == EmployeeProfession.Director ? Visibility.Visible : Visibility.Hidden;
-    public Visibility Washer => App.Model.CurrentUser.Profession == EmployeeProfession.Washer ? Visibility.Visible : Visibility.Hidden;
-    public Visibility Advisor => App.Model.CurrentUser.Profession == EmployeeProfession.Advisor ? Visibility.Visible : Visibility.Hidden;
+    public Visibility Courier => App.MockModel.CurrentUser.Profession == EmployeeProfession.Courier ? Visibility.Visible: Visibility.Hidden;
+    public Visibility Director => App.MockModel.CurrentUser.Profession == EmployeeProfession.Director ? Visibility.Visible : Visibility.Hidden;
+    public Visibility Washer => App.MockModel.CurrentUser.Profession == EmployeeProfession.Washer ? Visibility.Visible : Visibility.Hidden;
+    public Visibility Advisor => App.MockModel.CurrentUser.Profession == EmployeeProfession.Advisor ? Visibility.Visible : Visibility.Hidden;
 
     protected UserControl Context { get;}
 
@@ -39,13 +39,9 @@ namespace Laundry.Utils
 
     protected void ReturnContext()
     {
-      App.CurrentWindow.ChangeView(Context);
+      //App.CurrentWindow.ChangeView(Context);
     }
 
-    public static void BindMainDrawerButton(ToggleButton button)
-    {
-      App.CurrentWindow.DrawerHost.GetBindingExpression(DrawerHost.IsLeftDrawerOpenProperty)
-        ?.UpdateTarget();
-    }
+    
   }
 }

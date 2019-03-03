@@ -35,9 +35,9 @@
         </Button.CommandParameter>
         ПРИНЯТЬ
       </Button>
-      <Button
+      <Button Name="Discard"
         Style="{StaticResource MaterialDesignFlatButton}"
-        IsCancel="True" Click="OnDisableButtonClick">
+        IsCancel="True">
         ОТМЕНИТЬ
       </Button>
     </StackPanel>
@@ -91,7 +91,7 @@
           <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource OrderEditor.ClothInfo}" />
           <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
-            <Button DockPanel.Dock="Right" Margin="0,0,9,0" Click="OnAddClothButtonClick" Style="{StaticResource MaterialDesignFlatButton}" 
+            <Button Name="AddOrder" DockPanel.Dock="Right" Margin="0,0,9,0" Style="{StaticResource MaterialDesignFlatButton}" 
                     HorizontalAlignment="Left" ToolTip="{StaticResource OrderEditor.AddClothInstanceButtonTooltip}">
               <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
             </Button>
@@ -101,14 +101,14 @@
             </StackPanel>
           </DockPanel>
           <DataGrid
+            Name="ClothInstances"
             Background="{StaticResource MaterialDesignCardBackground}"
             Margin="0,16,0,0"
             CanUserSortColumns="True"
             CanUserAddRows="False"
             CanUserResizeColumns="True"
             CellStyle="{StaticResource CellStyle}"
-            AutoGenerateColumns="False"
-            ItemsSource="{Binding ClothInstances}">
+            AutoGenerateColumns="False">
             <DataGrid.Columns>
 
               <DataGridTemplateColumn MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"

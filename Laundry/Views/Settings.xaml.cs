@@ -24,11 +24,11 @@ namespace Laundry.Views
     public Settings()
     {
       InitializeComponent();
-      MenuToggleButton.Checked +=
-        (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = true;
+      /*MenuToggleButton.Checked +=
+        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = true;
 
       MenuToggleButton.Unchecked +=
-        (o, args) => (Application.Current as App).MainWindow.DrawerHost.IsLeftDrawerOpen = false;
+        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = false;*/
     }
     private static void ApplyBase(bool isDark)
     {
