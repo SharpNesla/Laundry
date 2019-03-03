@@ -1,27 +1,15 @@
-﻿using Laundry.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Collections.Generic;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Views;
+
 namespace Laundry
 {
   /// <summary>
   /// Логика взаимодействия для ShellView.xaml
   /// </summary>
-  public class ShellViewModel : Conductor<object>, IShell, IHandle<Utils.Screens>, IHandle<Utils.DrawerState>
+  public class ShellViewModel : Conductor<ActivityScreen>, IShell, IHandle<Screens>, IHandle<DrawerState>
   {
 
     
@@ -37,22 +25,25 @@ namespace Laundry
 
     private bool _isDrawerOpened;
 
-    private readonly Dictionary<Utils.Screens, PropertyChangedBase> _screens;
+    private readonly Dictionary<Screens, ActivityScreen> _screens;
 
-    public ShellViewModel(IEventAggregator eventAggregator, IModel model, LoginScreenViewModel screen, DashBoardViewModel dashboard)
+    public ShellViewModel(IEventAggregator eventAggregator, IModel model,
+      LoginScreenViewModel screen, ClientDictionaryViewModel clientDictionary, DashBoardViewModel dashboard)
     {
-      this._screens = new Dictionary<Utils.Screens, PropertyChangedBase>
+      this._screens = new Dictionary<Screens, ActivityScreen>
       {
-        [Utils.Screens.DashBoard] = dashboard,
-        [Utils.Screens.Login] = screen
+        [Screens.DashBoard] = dashboard,
+        [Screens.Login] = screen,
+        [Screens.ClientDictionary] = clientDictionary
       };
       
       eventAggregator.Subscribe(this);
-      this.Handle(Utils.Screens.Login);
+      this.Handle(Screens.Login);
     }
 
-    public void Handle(Utils.Screens message)
+    public void Handle(Screens message)
     {
+      this._screens[message].Context = ActiveItem;
       this.ActivateItem(this._screens[message]);
     }
 

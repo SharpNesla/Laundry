@@ -1,4 +1,4 @@
-﻿<utils:ActivityControl x:Class="Laundry.Views.ClientDictionary"
+﻿<UserControl x:Class="Laundry.Views.ClientDictionaryView"
                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,8 +15,8 @@
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16">
       <StackPanel Orientation="Horizontal">
-        <ToggleButton Name="MenuToggleButton" IsChecked="False"
-                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Click="MenuToggleButton_OnClick" Width="32" />
+        <ToggleButton Name="MenuToggleButton"
+                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" IsChecked="{Binding IsDrawerButtonChecked}" Width="32" />
         <TextBlock
 
           Style="{StaticResource MaterialDesignTitleTextBlock}"
@@ -27,9 +27,9 @@
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
-      <Button Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+      <Button Name="AddClient"  Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              Style="{StaticResource MaterialDesignFloatingActionAccentButton}" Click="OnAddClientButtonClick">
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
       </Button>
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
@@ -185,4 +185,4 @@
       </DataGrid.Columns>
     </DataGrid>
   </DockPanel>
-</utils:ActivityControl>
+</UserControl>

@@ -36,15 +36,15 @@
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('DASHBOARD')]"/>
             <Separator/>
             <controls:DrawerItem Label="Клиенты" Kind="ManMan"
-                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('CLIENTEDITOR')]"/>
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('CLIENTDICTIONARY')]"/>
             <controls:DrawerItem Label="Работники" Kind="AccountMultipleOutline"
-                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('EMPLOYEEEDITOR')]"/>
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('EMPLOYEDICTIONARY')]"/>
             <controls:DrawerItem Label="Филиалы" Kind="HomeVariantOutline"
-                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('SUBSIDIARYEDITOR')]"/>
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('SUBSIDIARYDICTIONARY')]"/>
             <controls:DrawerItem Label="Автопарк" Kind="CarEstate"
-                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('CAREDITOR')]"/>
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('CAREDICTIONARY')]"/>
             <controls:DrawerItem Label="Одежда" Kind="TShirtCrew"
-                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('CLOTHKINDEDITOR')]"/>
+                                 cal:Message.Attach="[Event Selected] = [Action SetScreen('CLOTHKINDDICTIONARY')]"/>
             <controls:DrawerItem Label="Дисконт-система" Kind="CardBulleted"
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('DISCOUNTSYSTEM')]"/>
 

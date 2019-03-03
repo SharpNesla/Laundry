@@ -13,45 +13,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
 
 namespace Laundry.Views
 {
-  /// <summary>
-  /// Interaction logic for ClientDictionary.xaml
-  /// </summary>
-  public partial class ClientDictionary : ActivityControl
+  public class ClientDictionaryViewModel : DrawerActivityScreen
   {
-    public ObservableCollection<Client> Clients { get; set; }
+    public BindableCollection<Client> Clients { get; set; }
 
-    public ClientDictionary() : base(null)
-    {
-      InitializeComponent();
-      
-      //BindMainDrawerButton(MenuToggleButton);
+    
 
-      this.DataContext = this;
-
-      /*MenuToggleButton.Checked +=
-        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = true;
-
-      MenuToggleButton.Unchecked +=
-        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = false;*/
-
-      Clients = new ObservableCollection<Client>(
-        new[]
-        {
-          new Client("Антрипотийединиколей", "Карлов", "Иванович"),
-          new Client("Андрей", "Rjrjh", "Иванович"),
-          new Client("Андрей", "Карлов", "Иванович"),
-          new Client("Андрей", "Карлов", "Иванович"),
-          new Client("Андрей", "Карлов", "Иванович"),
-        }
-      );
-    }
-
-    private void OnAddClientButtonClick(object sender, RoutedEventArgs e)
+    private void AddClient(object sender, RoutedEventArgs e)
     {
       //App.CurrentWindow.ChangeView(new ClientEditor(this, null));
     }
@@ -62,6 +36,11 @@ namespace Laundry.Views
 
     private void MenuToggleButton_OnClick(object sender, RoutedEventArgs e)
     {
+    }
+
+    public ClientDictionaryViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+    {
+      this.Clients = new BindableCollection<Client>(model.Clients);
     }
   }
 }

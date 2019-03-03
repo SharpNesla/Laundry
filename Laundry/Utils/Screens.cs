@@ -4,6 +4,7 @@
   {
     DashBoard,
     Login,
-    OrderEditor
+    OrderEditor,
+    ClientDictionary
   }
 }
