@@ -23,11 +23,9 @@ namespace Laundry.Views
   {
     public BindableCollection<Client> Clients { get; set; }
 
-    
-
-    private void AddClient(object sender, RoutedEventArgs e)
+    public void AddClient(object sender, RoutedEventArgs e)
     {
-      //App.CurrentWindow.ChangeView(new ClientEditor(this, null));
+      ChangeApplicationScreen(Screens.ClientEditor);
     }
 
     private void OnClientInfoGridButtonClick(object sender, RoutedEventArgs e)

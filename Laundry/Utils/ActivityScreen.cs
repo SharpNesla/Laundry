@@ -10,12 +10,12 @@ using Laundry.Model;
 
 namespace Laundry.Utils
 {
-  public class ActivityScreen : Screen
+  public abstract class ActivityScreen : Screen
   {
     public IEventAggregator EventAggregator { get; private set; }
     public IModel Model { get; private set; }
 
-    public Screen Context { get; set; }  
+    public ActivityScreen Context { get; set; }  
 
     public Visibility Courier => this.Model.CurrentUser.Profession == EmployeeProfession.Courier ? Visibility.Visible : Visibility.Hidden;
     public Visibility Director => this.Model.CurrentUser.Profession == EmployeeProfession.Director ? Visibility.Visible : Visibility.Hidden;

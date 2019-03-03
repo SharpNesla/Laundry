@@ -5,6 +5,11 @@
     DashBoard,
     Login,
     OrderEditor,
-    ClientDictionary
+    ClientDictionary,
+    Context,
+    ClientEditor,
+    About,
+    Settings,
+    EmployeeDictionary
   }
 }

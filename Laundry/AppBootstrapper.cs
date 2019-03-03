@@ -23,11 +23,24 @@ namespace Laundry
       container.Singleton<IWindowManager, WindowManager>();
       container.Singleton<IEventAggregator, EventAggregator>();
       container.Singleton<IModel, MockModel>();
+      
+      container.Handler<IScreenFactory>((container) => new ScreenFactory(container));
 
       container.PerRequest<IShell, ShellViewModel>();
+
+
       container.PerRequest<LoginScreenViewModel>();
       container.PerRequest<DashBoardViewModel>();
+
       container.PerRequest<ClientDictionaryViewModel>();
+      container.PerRequest<ClientEditorViewModel>();
+
+      container.PerRequest<EmployeeDictionaryViewModel>();
+
+      container.PerRequest<OrderEditorViewModel>();
+      container.PerRequest<SettingsViewModel>();
+      container.PerRequest<AboutViewModel>();
+
     }
 
     protected override object GetInstance(Type service, string key)

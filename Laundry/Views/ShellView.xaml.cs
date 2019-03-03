@@ -3,49 +3,29 @@ using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
 using Laundry.Views;
+using PropertyChanged;
 
 namespace Laundry
 {
   /// <summary>
   /// Логика взаимодействия для ShellView.xaml
   /// </summary>
+
   public class ShellViewModel : Conductor<ActivityScreen>, IShell, IHandle<Screens>, IHandle<DrawerState>
   {
+    private IScreenFactory _factory;
 
-    
-    public bool IsDrawerOpened
+    public bool IsDrawerOpened { get; set; }
+
+
+    public ShellViewModel(IEventAggregator eventAggregator, IModel model, IScreenFactory factory)
     {
-      get => _isDrawerOpened;
-      set
-      {
-        _isDrawerOpened = value;
-        NotifyOfPropertyChange(nameof(IsDrawerOpened));
-      }
-    }
-
-    private bool _isDrawerOpened;
-
-    private readonly Dictionary<Screens, ActivityScreen> _screens;
-
-    public ShellViewModel(IEventAggregator eventAggregator, IModel model,
-      LoginScreenViewModel screen, ClientDictionaryViewModel clientDictionary, DashBoardViewModel dashboard)
-    {
-      this._screens = new Dictionary<Screens, ActivityScreen>
-      {
-        [Screens.DashBoard] = dashboard,
-        [Screens.Login] = screen,
-        [Screens.ClientDictionary] = clientDictionary
-      };
-      
       eventAggregator.Subscribe(this);
+      
+      this._factory = factory;
       this.Handle(Screens.Login);
     }
 
-    public void Handle(Screens message)
-    {
-      this._screens[message].Context = ActiveItem;
-      this.ActivateItem(this._screens[message]);
-    }
 
     public void SetScreen(Screens message)
     {
@@ -56,6 +36,21 @@ namespace Laundry
     public void Handle(DrawerState message)
     {
       this.IsDrawerOpened = message == DrawerState.Opened;
+    }
+
+    public void Handle(Screens message)
+    {
+      if (message == Screens.Context)
+      {
+        this.ActivateItem(this.ActiveItem.Context);
+      }
+      else
+      {
+        var screen = _factory.GetScreen(message);
+        screen.Context = ActiveItem;
+        this.ActivateItem(screen);
+      }
+      
     }
   }
 }

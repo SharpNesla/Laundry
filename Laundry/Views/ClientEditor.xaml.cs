@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
 
@@ -21,24 +22,20 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for ClientEditor.xaml
   /// </summary>
-  public partial class ClientEditor : UserControl
+  public class ClientEditorViewModel : ActivityScreen, IHandle<Client>
   {
-    private UserControl _context;
     public Client Client { get; set; }
 
-    public ClientEditor(UserControl context, Client client)
+    public ClientEditorViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
-      InitializeComponent();
-
-      this.DataContext = this;
+      this.EventAggregator.Subscribe(this);
 
       var kind = new ClothKind { MeasureKind = MeasureKind.Kg, Name = "Носки" };
 
-      
-      this._context = context;
+
       this.Client = new Client("Андрей", "Карлов", "Иванович");
 
-      this.Client.Orders.Add(new Order(){});
+      this.Client.Orders.Add(new Order() { });
 
       this.Client.Orders[0].ClothInstances = new ObservableCollection<ClothInstance>(
         new[]
@@ -50,12 +47,12 @@ namespace Laundry.Views
           new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
         }
       );
-      
+
     }
 
-    private void OnDisableButtonClick(object sender, RoutedEventArgs e)
+    public void Discard()
     {
-      //App.CurrentWindow.ChangeView(_context);
+      ChangeApplicationScreen(Screens.Context);
     }
 
     private void OnApplyButtonClick(object sender, RoutedEventArgs e)
@@ -63,9 +60,16 @@ namespace Laundry.Views
       
     }
 
-    private void OnOrderAddButtonClick(object sender, RoutedEventArgs e)
-    { 
-      //App.CurrentWindow.ChangeView(new OrderEditor(this));
+    public void AddOrder(object sender, RoutedEventArgs e)
+    {
+      ChangeApplicationScreen(Screens.OrderEditor);
+    }
+
+
+    public void Handle(Client message)
+    {
+      this.Client = message;
+      this.EventAggregator.Unsubscribe(this);
     }
   }
 }

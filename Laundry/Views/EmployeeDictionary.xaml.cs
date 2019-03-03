@@ -3,7 +3,9 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Caliburn.Micro;
 using Laundry.Model;
+using Laundry.Utils;
 using MaterialDesignThemes.Wpf;
 
 namespace Laundry.Views
@@ -11,23 +13,12 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for DashBoard.xaml
   /// </summary>
-  public partial class EmployeeDictionary : UserControl
+  public partial class EmployeeDictionaryViewModel : DrawerActivityScreen
   {
     public ObservableCollection<Employee> Employees { get; set; }
 
-    public EmployeeDictionary()
+    public EmployeeDictionaryViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
-      InitializeComponent();
-
-      this.DataContext = this;
-
-      /*MenuToggleButton.Checked +=
-        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = true;
-
-      MenuToggleButton.Unchecked +=
-        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = false;*/
-
-
       Employees = new ObservableCollection<Employee>(
         new[]
         {
@@ -44,5 +35,7 @@ namespace Laundry.Views
     {
       //App.CurrentWindow.ChangeView(new EmployeeEditor(this));
     }
+
+    
   }
 }

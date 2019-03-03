@@ -12,37 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
+using Laundry.Model;
 using MaterialDesignThemes.Wpf;
-
+using Laundry.Utils;
 namespace Laundry.Views
 {
   /// <summary>
   /// Interaction logic for Settings.xaml
   /// </summary>
-  public partial class Settings : UserControl
+  public class SettingsViewModel : DrawerActivityScreen
   {
-    public Settings()
-    {
-      InitializeComponent();
-      /*MenuToggleButton.Checked +=
-        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = true;
+    private readonly PaletteHelper _paletteHelper;
 
-      MenuToggleButton.Unchecked +=
-        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = false;*/
-    }
-    private static void ApplyBase(bool isDark)
+    public SettingsViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
-      
+      this._paletteHelper = new PaletteHelper();
+    }
+    
+    public void ChangeColorScheme(bool isDark)
+    {
+      _paletteHelper.SetLightDark(!isDark);
     }
 
-    private void OnDarkModeChecked(object sender, RoutedEventArgs e)
-    {
-      new PaletteHelper().SetLightDark(true);
-    }
 
-    private void OnDarkModeUnChecked(object sender, RoutedEventArgs e)
-    {
-      new PaletteHelper().SetLightDark(false);
-    }
   }
 }

@@ -14,9 +14,8 @@ namespace Laundry
   /// </summary>
   public partial class App : Application
   {
-    public static ShellViewModel CurrentWindow;
     public static Model.MockModel MockModel;
-    internal new ShellViewModel ShellView;
+
 
     public App()
     {

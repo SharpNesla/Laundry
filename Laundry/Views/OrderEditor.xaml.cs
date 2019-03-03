@@ -49,17 +49,14 @@ namespace Laundry.Views
 
     public void Discard()
     {
-      ChangeApplicationScreen(Screens.DashBoard);
+      ChangeApplicationScreen(Screens.Context);
     }
 
     private void OnApplyButtonClick(object sender, RoutedEventArgs e)
     {
     }
 
-    public void AddOrder()
-    {
-
-    }
+    
 
     private void OnAddClothButtonClick(object sender, RoutedEventArgs e)
     {

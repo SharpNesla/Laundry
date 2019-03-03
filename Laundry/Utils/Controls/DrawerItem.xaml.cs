@@ -21,8 +21,6 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public partial class DrawerItem : ListBoxItem
   {
-
-
     public string Label
     {
       get { return (string)GetValue(LabelProperty); }
@@ -32,10 +30,7 @@ namespace Laundry.Utils.Controls
     // Using a DependencyProperty as the backing store for Label.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty LabelProperty =
         DependencyProperty.Register("Label", typeof(string), typeof(DrawerItem));
-
-
-
-
+    
     public PackIconKind Kind
     {
       get { return (PackIconKind)GetValue(KindProperty); }
@@ -50,6 +45,12 @@ namespace Laundry.Utils.Controls
     {
       InitializeComponent();
       DataContext = this;
+    }
+
+    protected override void OnSelected(RoutedEventArgs e)
+    {
+      base.OnSelected(e);
+      this.IsSelected = false;
     }
   }
 }
