@@ -1,4 +1,4 @@
-﻿<utils:ActivityControl x:Class="Laundry.Views.CarEditor"
+﻿<UserControl x:Class="Laundry.Views.CarEditorView"
                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -38,9 +38,9 @@
         </Button.CommandParameter>
         ПРИНЯТЬ
       </Button>
-      <Button
+      <Button Name="Cancel"
         Style="{StaticResource MaterialDesignFlatButton}"
-        IsCancel="True" Click="OnDisableButtonClick">
+        IsCancel="True">
         ОТМЕНИТЬ
       </Button>
     </StackPanel>
@@ -192,4 +192,4 @@
       </dragablz:TabablzControl>
     </Grid>
   </DockPanel>
-</utils:ActivityControl>
+</UserControl>

@@ -35,7 +35,7 @@
         </Button.CommandParameter>
         ПРИНЯТЬ
       </Button>
-      <Button Name="Discard"
+      <Button Name="Cancel"
         Style="{StaticResource MaterialDesignFlatButton}"
         IsCancel="True">
         ОТМЕНИТЬ

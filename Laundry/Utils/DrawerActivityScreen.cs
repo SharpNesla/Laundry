@@ -9,7 +9,7 @@ using PropertyChanged;
 
 namespace Laundry.Utils
 {
-  public class DrawerActivityScreen : ActivityScreen
+  public abstract class DrawerActivityScreen : ActivityScreen
   {
     private bool _isDrawerButtonChecked;
     public bool IsDrawerButtonChecked
@@ -23,8 +23,9 @@ namespace Laundry.Utils
       }
     }
 
-    public DrawerActivityScreen(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+    protected DrawerActivityScreen(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
     }
+
   }
 }

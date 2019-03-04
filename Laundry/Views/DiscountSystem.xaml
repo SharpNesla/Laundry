@@ -1,12 +1,31 @@
-﻿<UserControl x:Class="Laundry.Views.DiscountSystem"
+﻿<UserControl x:Class="Laundry.Views.DiscountSystemView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Laundry.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+  <DockPanel LastChildFill="True">
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
+                              Padding="16">
+      <StackPanel Orientation="Horizontal">
+        <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
+                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
+        <TextBlock
+
+          Style="{StaticResource MaterialDesignTitleTextBlock}"
+          VerticalAlignment="Center"
+          Margin="16 0 0 0" Text="О программе">
+        </TextBlock>
+      </StackPanel>
+    </materialDesign:ColorZone>
+
     <Grid>
-            
+      <Grid.Background>
+        <ImageBrush ImageSource="/Laundry;component/Resources/LoginBackground.png" Stretch="UniformToFill" />
+      </Grid.Background>
     </Grid>
+  </DockPanel>
 </UserControl>

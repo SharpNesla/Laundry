@@ -34,8 +34,10 @@
   <system:String x:Key="ClientEditor.Title">Клиент</system:String>
   <system:String x:Key="ClientEditor.MainInfoTitle">Общая информация</system:String>
   <system:String x:Key="ClientEditor.OrdersInfo">Заказы</system:String>
+  
+
   <system:String x:Key="ClothTypes">Вид одежды</system:String>
-  <system:String x:Key="ClothKindEditorTitle">Редактор видов одежды</system:String>
+  <system:String x:Key="ClothKindEditor.Title">Редактор видов одежды</system:String>
   
   <!--Subsidiary-->
   <system:String x:Key="SubsidiaryDictionary.Title">Филиал</system:String>

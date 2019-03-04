@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,18 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
+using Laundry.Model;
 using Laundry.Utils;
 
 namespace Laundry.Views
 {
-    /// <summary>
-    /// Interaction logic for SubsidiaryEditor.xaml
-    /// </summary>
-    public partial class SubsidiaryEditor : ActivityControl
+  /// <summary>
+  /// Interaction logic for SubsidiaryEditor.xaml
+  /// </summary>
+  public class SubsidiaryEditorViewModel : ActivityScreen
+  {
+    public SubsidiaryEditorViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
-        public SubsidiaryEditor(UserControl context) : base(context)
-        {
-            InitializeComponent();
-        }
     }
+
+    public void Cancel()
+    {
+      ChangeApplicationScreen(Screens.Context);
+    }
+  }
 }

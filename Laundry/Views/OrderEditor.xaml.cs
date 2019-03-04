@@ -23,17 +23,14 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for OrderEditor.xaml
   /// </summary>
-  public partial class OrderEditorViewModel : ActivityScreen
+  public class OrderEditorViewModel : ActivityScreen
   {
     public DateTime DateTime { get; set; }
-
-
-
     public BindableCollection<ClothInstance> ClothInstances { get; set; }
 
     public OrderEditorViewModel(IEventAggregator aggregator, IModel model, ClothEditor editor) : base(aggregator, model)
     {
-      var kind = new ClothKind { MeasureKind = MeasureKind.Kg, Name = "Носки" };
+      var kind = new ClothKind {MeasureKind = MeasureKind.Kg, Name = "Носки"};
 
       this.ClothInstances = new BindableCollection<ClothInstance>(
         new[]
@@ -47,22 +44,9 @@ namespace Laundry.Views
       );
     }
 
-    public void Discard()
+    public void Cancel()
     {
       ChangeApplicationScreen(Screens.Context);
     }
-
-    private void OnApplyButtonClick(object sender, RoutedEventArgs e)
-    {
-    }
-
-    
-
-    private void OnAddClothButtonClick(object sender, RoutedEventArgs e)
-    {
-      //DialogHost.Show();
-    }
-
-    
   }
 }

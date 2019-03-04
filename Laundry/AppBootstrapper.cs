@@ -20,6 +20,8 @@ namespace Laundry
     {
       container = new SimpleContainer();
 
+
+      //Root Laundry level things
       container.Singleton<IWindowManager, WindowManager>();
       container.Singleton<IEventAggregator, EventAggregator>();
       container.Singleton<IModel, MockModel>();
@@ -28,18 +30,29 @@ namespace Laundry
 
       container.PerRequest<IShell, ShellViewModel>();
 
-
+      //ViewModels
       container.PerRequest<LoginScreenViewModel>();
-      container.PerRequest<DashBoardViewModel>();
+      container.Singleton<DashBoardViewModel>();
 
-      container.PerRequest<ClientDictionaryViewModel>();
+      container.Singleton<ClientDictionaryViewModel>();
       container.PerRequest<ClientEditorViewModel>();
 
-      container.PerRequest<EmployeeDictionaryViewModel>();
+      container.Singleton<EmployeeDictionaryViewModel>();
+      container.PerRequest<EmployeeEditorViewModel>();
+
+      container.Singleton<SubsidiaryDictionaryViewModel>();
+      container.PerRequest<SubsidiaryEditorViewModel>();
+
+      container.Singleton<CarDictionaryViewModel>();
+      container.PerRequest<CarEditorViewModel>();
 
       container.PerRequest<OrderEditorViewModel>();
-      container.PerRequest<SettingsViewModel>();
-      container.PerRequest<AboutViewModel>();
+
+      container.Singleton<ClothKindEditorViewModel>();
+
+      container.Singleton<DiscountSystemViewModel>();
+      container.Singleton<SettingsViewModel>();
+      container.Singleton<AboutViewModel>();
 
     }
 

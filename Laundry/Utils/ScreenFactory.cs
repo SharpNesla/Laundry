@@ -41,6 +41,24 @@ namespace Laundry.Utils
           return _container.GetInstance<SettingsViewModel>();
         case Screens.EmployeeDictionary:
           return _container.GetInstance<EmployeeDictionaryViewModel>();
+        case Screens.Analytics:
+          return _container.GetInstance<EmployeeDictionaryViewModel>();
+        case Screens.EmployeeEditor:
+          return _container.GetInstance<EmployeeEditorViewModel>();
+        case Screens.SubsidiaryDictionary:
+          return _container.GetInstance<SubsidiaryDictionaryViewModel>();
+        case Screens.SubsidiaryEditor:
+          return _container.GetInstance<SubsidiaryEditorViewModel>();
+        case Screens.DiscountSystem:
+          return _container.GetInstance<DiscountSystemViewModel>();
+        case Screens.CarDictionary:
+          return _container.GetInstance<CarDictionaryViewModel>();
+        case Screens.CarEditor:
+          return _container.GetInstance<CarEditorViewModel>();
+        case Screens.ClothEditor:
+          return _container.GetInstance<EmployeeDictionaryViewModel>();
+        case Screens.ClothKindEditor:
+          return _container.GetInstance<ClothKindEditorViewModel>();
         default:
           throw new ArgumentOutOfRangeException(nameof(screen), screen, null);
       }

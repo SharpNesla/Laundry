@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
+using Laundry.Model;
 using Laundry.Utils;
 
 namespace Laundry.Views
@@ -19,16 +21,15 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for CarEditor.xaml
   /// </summary>
-  public partial class CarEditor : ActivityControl
+  public class CarEditorViewModel : ActivityScreen
   {
-    public CarEditor(UserControl context) : base(context)
+    public CarEditorViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
-      InitializeComponent();
     }
 
-    private void OnDisableButtonClick(object sender, RoutedEventArgs e)
+    public void Cancel()
     {
-      //App.CurrentWindow.ChangeView(this.Context);
+      ChangeApplicationScreen(Screens.Context);
     }
   }
 }

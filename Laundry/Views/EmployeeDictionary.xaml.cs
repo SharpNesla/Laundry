@@ -31,9 +31,9 @@ namespace Laundry.Views
       );
     }
 
-    private void OnEmployeeAddButtonClick(object sender, RoutedEventArgs e)
+    public void AddEmployee()
     {
-      //App.CurrentWindow.ChangeView(new EmployeeEditor(this));
+      ChangeApplicationScreen(Screens.EmployeeEditor);
     }
 
     

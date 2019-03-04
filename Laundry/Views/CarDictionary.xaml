@@ -1,4 +1,4 @@
-﻿<utils:ActivityControl x:Class="Laundry.Views.CarDictionary"
+﻿<UserControl x:Class="Laundry.Views.CarDictionaryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,7 +14,7 @@
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16">
       <StackPanel Orientation="Horizontal">
-        <ToggleButton Name="MenuToggleButton"
+        <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
                       Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
         <TextBlock
 
@@ -25,10 +25,10 @@
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
-      <Button Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+      <Button Name="AddCar" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-              Click="OnAddCarButtonClick">
+              >
         <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
       </Button>
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
@@ -178,5 +178,5 @@
       </DataGrid.Columns>
     </DataGrid>
   </DockPanel>
-</utils:ActivityControl>
+</UserControl>
 

@@ -22,7 +22,7 @@ namespace Laundry.Utils
     public Visibility Washer => this.Model.CurrentUser.Profession == EmployeeProfession.Washer ? Visibility.Visible : Visibility.Hidden;
     public Visibility Advisor => this.Model.CurrentUser.Profession == EmployeeProfession.Advisor ? Visibility.Visible : Visibility.Hidden;
 
-    public ActivityScreen(IEventAggregator aggregator, IModel model)
+    protected ActivityScreen(IEventAggregator aggregator, IModel model)
     {
       this.EventAggregator = aggregator;
       this.Model = model;
@@ -32,7 +32,7 @@ namespace Laundry.Utils
     {
       this.EventAggregator.PublishOnUIThread(screen);
     }
-    
 
+  
   }
 }

@@ -12,13 +12,13 @@
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16">
       <StackPanel Orientation="Horizontal">
-        <ToggleButton Name="MenuToggleButton" IsChecked="{Binding IsDrawerButtonChecked}"
-                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+        <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
+                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
         <TextBlock
-          Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+
+          Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
-          Margin="16 0 0 0">
-          О программе
+          Margin="16 0 0 0" Text="О программе">
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>

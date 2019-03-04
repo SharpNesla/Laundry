@@ -12,17 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
+using Laundry.Model;
+using Laundry.Utils;
 
 namespace Laundry.Views
 {
     /// <summary>
     /// Interaction logic for DiscountSystem.xaml
     /// </summary>
-    public partial class DiscountSystem : UserControl
+    public class DiscountSystemViewModel : DrawerActivityScreen  
     {
-        public DiscountSystem()
-        {
-            InitializeComponent();
-        }
+      public DiscountSystemViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+      {
+      }
     }
 }

@@ -12,23 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
+using Laundry.Model;
+using Laundry.Utils;
 
 namespace Laundry.Views
 {
     /// <summary>
     /// Interaction logic for ClothKindEditor.xaml
     /// </summary>
-    public partial class ClothKindEditor : UserControl
+    public class ClothKindEditorViewModel : DrawerActivityScreen
     {
-        public ClothKindEditor()
-        {
-            InitializeComponent();
-
-            /*MenuToggleButton.Checked +=
-              (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = true;
-
-            MenuToggleButton.Unchecked +=
-              (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = false;*/
-        }
+      public ClothKindEditorViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+      {
+      }
     }
 }

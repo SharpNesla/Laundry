@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
+using Laundry.Model;
 using Laundry.Utils;
 
 namespace Laundry.Views
@@ -19,22 +21,15 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for CarDictionary.xaml
   /// </summary>
-  public partial class CarDictionary : ActivityControl
+  public class CarDictionaryViewModel : DrawerActivityScreen
   {
-    public CarDictionary() : base(null)
+    public CarDictionaryViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
-      InitializeComponent();
-
-      /*MenuToggleButton.Checked +=
-        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = true;
-
-      MenuToggleButton.Unchecked +=
-        (o, args) => (Application.Current as App).ShellView.DrawerHost.IsLeftDrawerOpen = false;*/
     }
 
-    private void OnAddCarButtonClick(object sender, RoutedEventArgs e)
+    public void AddCar()
     {
-      //App.CurrentWindow.ChangeView(new CarEditor(this));
+      ChangeApplicationScreen(Screens.CarEditor);
     }
   }
 }

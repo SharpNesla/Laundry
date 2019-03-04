@@ -2,14 +2,32 @@
 {
   public enum Screens
   {
-    DashBoard,
     Login,
+    DashBoard,
+    Analytics,
+
     OrderEditor,
-    ClientDictionary,
-    Context,
+    
+    
     ClientEditor,
-    About,
+    ClientDictionary,
+
+    EmployeeDictionary,
+    EmployeeEditor,
+
+    SubsidiaryDictionary,
+    SubsidiaryEditor,
+
+    DiscountSystem,
+
+    CarDictionary,
+    CarEditor,
+
+    ClothEditor,
+    ClothKindEditor,
+
+    Context,
     Settings,
-    EmployeeDictionary
+    About
   }
 }
