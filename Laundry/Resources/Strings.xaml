@@ -10,7 +10,12 @@
 
   <system:String x:Key="Dashboard.Title">Обзор</system:String>
 
+  <!--Analytics-->
+  <system:String x:Key="Analytics.Title">Аналитика и статистика</system:String>
+
   <!--OrderEditor-->
+  <system:String x:Key="OrderDictionary.Title">Справочник заказов</system:String>
+  <system:String x:Key="OrderDictionary.SearchBarTitle">Поиск заказов</system:String>
   <system:String x:Key="OrderEditor.Title">Редактирование заказа</system:String>
   <system:String x:Key="OrderEditor.OrderInfo">Информация о заказе</system:String>
   <system:String x:Key="OrderEditor.ClothInfo">Список одежды</system:String>

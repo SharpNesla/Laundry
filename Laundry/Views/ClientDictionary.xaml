@@ -7,8 +7,9 @@
                        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                        mc:Ignorable="d"
                        xmlns:System="clr-namespace:System;assembly=mscorlib"
-                       xmlns:controls="clr-namespace:Laundry.Views"
+                       xmlns:controls="clr-namespace:Laundry.Utils.Controls"
                        xmlns:utils="clr-namespace:Laundry.Utils"
+                       xmlns:cal="http://www.caliburnproject.org"
                        d:DesignHeight="600" d:DesignWidth="800"
                        Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
@@ -106,78 +107,35 @@
             </Border>
           </DataGridCheckBoxColumn.Header>
         </DataGridCheckBoxColumn>
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Surname"
-                                Header="Фамилия">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Surname}" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Name"
-                                Header="Имя">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Name}" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Patronymic"
-                                Header="Отчество">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Patronymic}" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn MinWidth="128" Header="Номер телефона" CanUserReorder="True" IsReadOnly="True"
-                                SortMemberPath="Patronymic">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="128"
-                                Header="Дата рождения">
-
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding DateBirth, StringFormat='yyyy.MM.dd'}"
-                         VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="Patronymic" MinWidth="86"
-                                Header="Заказы">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Orders.Count}" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
+        <controls:DataGridAdaptiveColumn Binding="{Binding Id}" CanUserReorder="True" IsReadOnly="True" MinWidth="32" SortMemberPath="Surname"
+                                         Header="№" />
+        <controls:DataGridAdaptiveColumn Binding="{Binding Surname}" CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Surname"
+                                         Header="Фамилия" />
+        <controls:DataGridAdaptiveColumn Binding="{Binding Name}" CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Surname"
+                                         Header="Имя" />
+        <controls:DataGridAdaptiveColumn Binding="{Binding Patronymic}" CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Surname"
+                                         Header="Отчество" />
+        <controls:DataGridAdaptiveColumn Binding="{Binding PhoneNumber}" MinWidth="128" Header="Номер телефона" CanUserReorder="True" IsReadOnly="True"
+                                         SortMemberPath="PhoneNumber"/>
+        <controls:DataGridAdaptiveColumn Binding="{Binding DateBirth, StringFormat='yyyy.MM.dd'}" CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="128"
+                                         Header="Дата рождения"/>
+        <controls:DataGridAdaptiveColumn Binding="{Binding Orders.Count}" CanUserReorder="True" IsReadOnly="True" SortMemberPath="Patronymic" MinWidth="86"
+                                         Header="Заказы"/>
 
         <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
+        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <StackPanel Orientation="Horizontal">
                 <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                        Style="{StaticResource MaterialDesignFlatButton}">
-                  <materialDesign:PackIcon
-                    Kind="InfoOutline"
-                    Height="24"
-                    Width="24" />
+                        Style="{StaticResource MaterialDesignFlatButton}" cal:Message.Attach="ShowClientInfo($dataContext)">
+                  <materialDesign:PackIcon Kind="InfoOutline" Height="24" Width="24"/>
                 </Button>
 
-                <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
+                <!--<Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
                         Style="{StaticResource MaterialDesignFlatButton}">
                   <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
-                </Button>
+                </Button>-->
               </StackPanel>
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>

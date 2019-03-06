@@ -20,10 +20,12 @@ using MaterialDesignThemes.Wpf;
 
 namespace Laundry.Views
 {
-  public class ClientDictionaryViewModel : DrawerActivityScreen
+  public class OrderDictionaryViewModel : DrawerActivityScreen
   {
     private ClientCard _card;
     public BindableCollection<Client> Clients { get; set; }
+
+    public bool IsSearchDrawerOpened { get; set; }
 
     public void AddClient(object sender, RoutedEventArgs e)
     {
@@ -36,10 +38,15 @@ namespace Laundry.Views
       await DialogHost.Show(_card);
     }
 
-    public ClientDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCard card) : base(aggregator, model)
+    public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCard card) : base(aggregator, model)
     {
       this.Clients = new BindableCollection<Client>(model.Clients);
       this._card = card;
+    }
+
+    public void ChangeSearchDrawerState()
+    {
+      IsSearchDrawerOpened = !IsSearchDrawerOpened;
     }
   }
 }

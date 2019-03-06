@@ -6,39 +6,79 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="532" d:DesignHeight="300"
+             xmlns:controls="clr-namespace:Laundry.Views"
+             xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
+             d:DesignWidth="800" d:DesignHeight="600"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel Width="532">
+  <DockPanel MinWidth="500">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                              Padding="24">
+                              Padding="16,20,20,20">
       <StackPanel Orientation="Horizontal">
-        <materialDesign:PackIcon Kind="AccountCircle" VerticalAlignment="Center" Height="25" Width="24"/>
+        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="24" Width="24" />
         <TextBlock
 
           Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="{StaticResource ClientEditor.Title}" />
+          Margin="8 0 0 0" Text="{Binding Client.Id, StringFormat='Клиент{0}'}" />
+
+
       </StackPanel>
     </materialDesign:ColorZone>
-    <StackPanel DockPanel.Dock="Bottom"
-                Orientation="Horizontal"
-                HorizontalAlignment="Right" Margin="0,0,24,24">
-      <Button
-        Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0"
-        Command="materialDesign:DialogHost.CloseDialogCommand">
-        <Button.CommandParameter>
-          <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
-            True
-          </system:Boolean>
-        </Button.CommandParameter>
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
+      <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="EditClient"
+              Style="{StaticResource MaterialDesignFlatButton}">
+        РЕДАКТИРОВАТЬ
+      </Button>
+      <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+              Style="{StaticResource MaterialDesignFlatButton}">
         ПРИНЯТЬ
       </Button>
     </StackPanel>
 
 
-    <StackPanel Margin="32,32,32,24">
+    <Grid Margin="24">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
+        <ColumnDefinition Width="371*" />
+      </Grid.ColumnDefinitions>
+      <materialDesign:Card Margin="0,0,16,0"
+                           Padding="16"
+                           BorderThickness="0" VerticalAlignment="Stretch">
 
-    </StackPanel>
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="328"></RowDefinition>
+            <RowDefinition Height="37*"></RowDefinition>
+          </Grid.RowDefinitions>
+          <StackPanel>
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
+                     Text="{StaticResource ClientEditor.MainInfoTitle}" />
+            <StackPanel Margin="0,8,0,0"/>
 
+          </StackPanel>
+        </Grid>
+
+      </materialDesign:Card>
+      <materialDesign:Card
+        Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
+        <DockPanel>
+          <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
+                     Text="{StaticResource ClientEditor.OrdersInfo}" />
+          <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
+            <Button Name="AddOrder" DockPanel.Dock="Right" Margin="0,0,9,0"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton"/>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}"
+                         Text="" />
+            </StackPanel>
+          </DockPanel>
+          <controls1:OrderDataGrid Background="{StaticResource MaterialDesignCardBackground}"/>
+
+        </DockPanel>
+
+      </materialDesign:Card>
+    </Grid>
   </DockPanel>
 </UserControl>

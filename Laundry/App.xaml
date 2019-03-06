@@ -27,8 +27,13 @@
         </ResourceDictionary>
 
       </ResourceDictionary.MergedDictionaries>
-      <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />
-      <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+      <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}">
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryHueDarkBrush}"/>
+      </Style>
+
+      
+
+        <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Style.Triggers>
 
           <Trigger Property="DataGridCell.IsSelected" Value="True">

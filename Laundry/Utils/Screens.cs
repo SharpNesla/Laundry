@@ -6,6 +6,7 @@
     DashBoard,
     Analytics,
 
+    OrderDictionary,
     OrderEditor,
     
     

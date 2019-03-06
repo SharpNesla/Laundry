@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="Laundry.Utils.Controls.OrderDataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Laundry.Utils.Controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             Name="OwnControl">
+  <DataGrid
+    CanUserSortColumns="True"
+    CanUserAddRows="False"
+    CanUserResizeColumns="True"
+    CellStyle="{StaticResource CellStyle}"
+    AutoGenerateColumns="False"
+    ItemsSource="{Binding Orders}"
+    Background="{Binding ElementName=OwnControl, Path=Background}">
+    <DataGrid.Columns>
+
+      <local:DataGridAdaptiveColumn MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"
+                                    SortMemberPath="Id"/>
+      <local:DataGridAdaptiveColumn Binding="{Binding CreationDate, StringFormat='yyyy.MM.dd'}" CanUserReorder="True" 
+                                    IsReadOnly="True" MinWidth="96" SortMemberPath="CreationDate" Header="Дата создания"/>
+      <local:DataGridAdaptiveColumn Binding="{Binding ExecutionDate, StringFormat='yyyy.MM.dd'}" CanUserReorder="True" 
+                                    IsReadOnly="True" MinWidth="96" SortMemberPath="ExecutionDate" Header="Дата исполнения"/>
+      <local:DataGridAdaptiveColumn Binding="{Binding ClothInstances.Count}" CanUserReorder="True" IsReadOnly="True" MinWidth="96"
+                                    SortMemberPath="ClothInstances.Count"
+                                    Header="Кол-во вещей"/>
+      <local:DataGridAdaptiveColumn Binding="{Binding ExecutionDate, StringFormat='yyyy.MM.dd'}" CanUserReorder="True"
+                                    IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="48" Header="Цена"/>
+
+      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
+      <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
+        <DataGridTemplateColumn.CellTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
+                      Style="{StaticResource MaterialDesignFlatButton}">
+                <materialDesign:PackIcon
+                  Kind="InfoOutline"
+                  Height="24"
+                  Width="24" />
+              </Button>
+
+              <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
+                      Style="{StaticResource MaterialDesignFlatButton}">
+                <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
+              </Button>
+            </StackPanel>
+          </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+      </DataGridTemplateColumn>
+    </DataGrid.Columns>
+  </DataGrid>
+</UserControl>

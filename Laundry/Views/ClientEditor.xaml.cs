@@ -54,12 +54,7 @@ namespace Laundry.Views
     {
       ChangeApplicationScreen(Screens.Context);
     }
-
-    private void OnApplyButtonClick(object sender, RoutedEventArgs e)
-    {
-      
-    }
-
+    
     public void AddOrder(object sender, RoutedEventArgs e)
     {
       ChangeApplicationScreen(Screens.OrderEditor);

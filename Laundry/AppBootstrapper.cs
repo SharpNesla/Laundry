@@ -33,6 +33,7 @@ namespace Laundry
       //ViewModels
       container.PerRequest<LoginScreenViewModel>();
       container.Singleton<DashBoardViewModel>();
+      container.Singleton<AnalyticsViewModel>();
 
       container.Singleton<ClientDictionaryViewModel>();
       container.PerRequest<ClientEditorViewModel>();
@@ -46,6 +47,7 @@ namespace Laundry
       container.Singleton<CarDictionaryViewModel>();
       container.PerRequest<CarEditorViewModel>();
 
+      container.Singleton<OrderDictionaryViewModel>();
       container.PerRequest<OrderEditorViewModel>();
 
       container.Singleton<ClothKindEditorViewModel>();
@@ -53,7 +55,10 @@ namespace Laundry
       container.Singleton<DiscountSystemViewModel>();
       container.Singleton<SettingsViewModel>();
       container.Singleton<AboutViewModel>();
-
+      
+      //Non-screen views like dialog views
+      container.Singleton<ClientCard>();
+      container.Singleton<OrderCard>();
     }
 
     protected override object GetInstance(Type service, string key)

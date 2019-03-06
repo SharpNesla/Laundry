@@ -35,6 +35,7 @@ namespace Laundry.Model
           new Client("Андрей", "Карлов", "Иванович"),
         }
       );
+      
     }
   }
 }

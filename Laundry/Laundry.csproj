@@ -54,6 +54,12 @@
     <Reference Include="Dragablz, Version=0.0.3.203, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dragablz.0.0.3.203\lib\net45\Dragablz.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -98,10 +104,15 @@
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Subsidiary.cs" />
-    <Compile Include="Utils\ActivityControl.cs" />
     <Compile Include="Utils\ActivityScreen.cs" />
+    <Compile Include="Utils\Controls\DataGridAdaptiveColumn.xaml.cs">
+      <DependentUpon>DataGridAdaptiveColumn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Controls\DrawerItem.xaml.cs">
       <DependentUpon>DrawerItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Controls\OrderDataGrid.xaml.cs">
+      <DependentUpon>OrderDataGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\DrawerActivityScreen.cs" />
     <Compile Include="Utils\DrawerState.cs" />
@@ -113,11 +124,17 @@
     <Compile Include="Views\CarDictionary.xaml.cs">
       <DependentUpon>CarDictionary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Cards\OrderCard.xaml.cs">
+      <DependentUpon>OrderCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Cards\ClientCard.xaml.cs">
       <DependentUpon>ClientCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CarEditor.xaml.cs">
       <DependentUpon>CarEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrderDictionary.xaml.cs">
+      <DependentUpon>OrderDictionary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClientDictionary.xaml.cs">
       <DependentUpon>ClientDictionary.xaml</DependentUpon>
@@ -149,6 +166,9 @@
     <Compile Include="Views\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Analytics.xaml.cs">
+      <DependentUpon>Analytics.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SubsidiaryDictionary.xaml.cs">
       <DependentUpon>SubsidiaryDictionary.xaml</DependentUpon>
     </Compile>
@@ -159,7 +179,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Utils\Controls\DataGridAdaptiveColumn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Utils\Controls\DrawerItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utils\Controls\OrderDataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,6 +199,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Cards\OrderCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Cards\ClientCard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -178,6 +210,10 @@
     <Page Include="Views\CarEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OrderDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ClientDictionary.xaml">
       <SubType>Designer</SubType>
@@ -245,6 +281,10 @@
     <Page Include="Views\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Analytics.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SubsidiaryDictionary.xaml">
       <SubType>Designer</SubType>

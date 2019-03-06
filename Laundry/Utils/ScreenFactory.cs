@@ -42,7 +42,7 @@ namespace Laundry.Utils
         case Screens.EmployeeDictionary:
           return _container.GetInstance<EmployeeDictionaryViewModel>();
         case Screens.Analytics:
-          return _container.GetInstance<EmployeeDictionaryViewModel>();
+          return _container.GetInstance<AnalyticsViewModel>();
         case Screens.EmployeeEditor:
           return _container.GetInstance<EmployeeEditorViewModel>();
         case Screens.SubsidiaryDictionary:
@@ -59,6 +59,8 @@ namespace Laundry.Utils
           return _container.GetInstance<EmployeeDictionaryViewModel>();
         case Screens.ClothKindEditor:
           return _container.GetInstance<ClothKindEditorViewModel>();
+        case Screens.OrderDictionary:
+          return _container.GetInstance<OrderDictionaryViewModel>();
         default:
           throw new ArgumentOutOfRangeException(nameof(screen), screen, null);
       }

@@ -19,12 +19,12 @@ using MaterialDesignThemes.Wpf;
 
 namespace Laundry.Views
 {
-  public partial class ClientCard
+  public partial class OrderCard
   {
     private readonly IEventAggregator _eventAggregator;
     public Client Client { get; set; }
 
-    public ClientCard(IEventAggregator eventAggregator)
+    public OrderCard(IEventAggregator eventAggregator)
     {
       _eventAggregator = eventAggregator;
       InitializeComponent();

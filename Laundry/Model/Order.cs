@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace Laundry.Model
 {
+  public enum OrderState
+  {
+    Taken,
+    MoveFromSubs,
+    Washing,
+    MoveToSubs,
+    Granted
+  }
   public class Order
   {
     public string Comment { get; set; }

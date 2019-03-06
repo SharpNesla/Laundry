@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Laundry.Views.OrderCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Laundry.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="532" d:DesignHeight="300"
+             Background="{DynamicResource MaterialDesignPaper}">
+  <DockPanel MinWidth="500">
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
+                              Padding="16,20,20,20">
+      <StackPanel Orientation="Horizontal">
+        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="24" Width="24" />
+        <TextBlock
+
+          Style="{StaticResource MaterialDesignTitleTextBlock}"
+          VerticalAlignment="Center"
+          Margin="8 0 0 0" Text="{Binding Client.Id, StringFormat='Клиент{0}'}" />
+
+
+      </StackPanel>
+    </materialDesign:ColorZone>
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
+      <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="EditClient"
+              Style="{StaticResource MaterialDesignFlatButton}">
+        РЕДАКТИРОВАТЬ
+      </Button>
+      <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+              Style="{StaticResource MaterialDesignFlatButton}">
+        ПРИНЯТЬ
+      </Button>
+    </StackPanel>
+
+    <Grid Margin="24">
+      <materialDesign:Card   VerticalAlignment="Stretch" Padding="16">
+        <StackPanel>
+          <TextBlock>
+            <TextBlock.Text>
+              <MultiBinding StringFormat="{}{0} {1} {2}">
+                <Binding Path="Client.Name" />
+                <Binding Path="Client.Surname" />
+                <Binding Path="Client.Patronymic" />
+              </MultiBinding>
+            </TextBlock.Text>
+          </TextBlock>
+        </StackPanel>
+      </materialDesign:Card>
+    </Grid>
+  </DockPanel>
+</UserControl>

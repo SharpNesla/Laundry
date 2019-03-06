@@ -19,9 +19,9 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for LoginSettings.xaml
   /// </summary>
-  public partial class LoginSettings : ActivityControl
+  public partial class LoginSettings : UserControl
   {
-    public LoginSettings() : base(null)
+    public LoginSettings()
     {
       InitializeComponent();
     }
