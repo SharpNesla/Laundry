@@ -16,26 +16,37 @@ using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
 using MaterialDesignThemes.Wpf;
+using PropertyChanged;
 
 namespace Laundry.Views
 {
+  [AddINotifyPropertyChangedInterface]
   public partial class ClientCard
   {
     private readonly IEventAggregator _eventAggregator;
-    public Client Client { get; set; }
+    private Client _client;
+
+    public Client Client
+    {
+      get => _client;
+      set
+      {
+        _client = value;
+        this.DataContext = value;
+      }
+    }
 
     public ClientCard(IEventAggregator eventAggregator)
     {
-      _eventAggregator = eventAggregator;
       InitializeComponent();
-      this.DataContext = this;
+      _eventAggregator = eventAggregator;
+      
     }
 
     private void EditClient(object sender, RoutedEventArgs e)
     {
       _eventAggregator.PublishOnUIThread(Screens.ClientEditor);
       _eventAggregator.PublishOnUIThread(this.Client);
-      
     }
   }
 }

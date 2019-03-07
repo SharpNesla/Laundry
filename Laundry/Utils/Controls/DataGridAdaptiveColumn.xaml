@@ -6,7 +6,7 @@
                         mc:Ignorable="d"
                         >
   <DataGridTextColumn.ElementStyle>
-    <Style TargetType="TextBlock">
+    <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignBody2TextBlock}">
       <Setter Property="VerticalAlignment" Value="Center" />
       <Setter Property="TextTrimming" Value="CharacterEllipsis"></Setter>
     </Style>

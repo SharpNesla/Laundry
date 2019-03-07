@@ -18,6 +18,7 @@ namespace Laundry.Model
     public string City { get; set; }
     public int ZipCode { get; set; }
     public bool IsPremiumClient { get; set; }
+    public string Comment { get; set; }
 
     public Client(string name, string surname, string patronymic)
     {

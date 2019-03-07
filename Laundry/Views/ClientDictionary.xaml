@@ -117,7 +117,7 @@
                                          Header="Отчество" />
         <controls:DataGridAdaptiveColumn Binding="{Binding PhoneNumber}" MinWidth="128" Header="Номер телефона" CanUserReorder="True" IsReadOnly="True"
                                          SortMemberPath="PhoneNumber"/>
-        <controls:DataGridAdaptiveColumn Binding="{Binding DateBirth, StringFormat='yyyy.MM.dd'}" CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="128"
+        <controls:DataGridAdaptiveColumn Binding="{Binding DateBirth, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="128"
                                          Header="Дата рождения"/>
         <controls:DataGridAdaptiveColumn Binding="{Binding Orders.Count}" CanUserReorder="True" IsReadOnly="True" SortMemberPath="Patronymic" MinWidth="86"
                                          Header="Заказы"/>
@@ -131,11 +131,6 @@
                         Style="{StaticResource MaterialDesignFlatButton}" cal:Message.Attach="ShowClientInfo($dataContext)">
                   <materialDesign:PackIcon Kind="InfoOutline" Height="24" Width="24"/>
                 </Button>
-
-                <!--<Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                        Style="{StaticResource MaterialDesignFlatButton}">
-                  <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
-                </Button>-->
               </StackPanel>
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>

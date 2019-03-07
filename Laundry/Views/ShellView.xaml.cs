@@ -24,7 +24,10 @@ namespace Laundry
       
       this._factory = factory;
       this.Handle(Screens.Login);
+      this.CurrentUser = model.CurrentUser;
     }
+
+    public Employee CurrentUser { get; set; }
 
 
     public void SetScreen(Screens message)

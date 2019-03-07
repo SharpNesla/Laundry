@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="532" d:DesignHeight="300"
+             xmlns:controls="clr-namespace:Laundry.Views"
+             xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
+             d:DesignWidth="532" d:DesignHeight="300"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel MinWidth="500">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
@@ -23,7 +25,7 @@
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
-      <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="EditClient"
+      <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="EditOrder"
               Style="{StaticResource MaterialDesignFlatButton}">
         РЕДАКТИРОВАТЬ
       </Button>
@@ -33,19 +35,81 @@
       </Button>
     </StackPanel>
 
+
     <Grid Margin="24">
-      <materialDesign:Card   VerticalAlignment="Stretch" Padding="16">
-        <StackPanel>
-          <TextBlock>
-            <TextBlock.Text>
-              <MultiBinding StringFormat="{}{0} {1} {2}">
-                <Binding Path="Client.Name" />
-                <Binding Path="Client.Surname" />
-                <Binding Path="Client.Patronymic" />
-              </MultiBinding>
-            </TextBlock.Text>
-          </TextBlock>
-        </StackPanel>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
+        <ColumnDefinition Width="371*" />
+      </Grid.ColumnDefinitions>
+      <materialDesign:Card Margin="0,0,16,0"
+                           Padding="16"
+                           BorderThickness="0" VerticalAlignment="Stretch">
+
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="328" />
+            <RowDefinition Height="37*" />
+          </Grid.RowDefinitions>
+          <StackPanel>
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
+                       Text="{StaticResource ClientEditor.MainInfoTitle}" />
+            <StackPanel Margin="0,16,0,0">
+              <TextBlock Margin="0,0,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
+                <TextBlock.Text>
+                  <MultiBinding StringFormat="{}{1} {0} {2}">
+                    <Binding Path="Name" />
+                    <Binding Path="Surname" />
+                    <Binding Path="Patronymic" />
+                  </MultiBinding>
+                </TextBlock.Text>
+              </TextBlock>
+
+              <TextBlock Margin="0,8,0,0" Text="{Binding DateBirth, StringFormat='Дата рождения: dd.MM.yyyy'}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,8,0,0" Text="{Binding PhoneNumber, StringFormat='Номер телефона: {0}'}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,8,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
+                <TextBlock.Text>
+                  <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">
+                    <Binding Path="City" />
+                    <Binding Path="Street" />
+                    <Binding Path="House" />
+                    <Binding Path="ZipCode" />
+                  </MultiBinding>
+                </TextBlock.Text>
+              </TextBlock>
+              <TextBlock Margin="0,8,0,0" Text="Комментарий:" Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,4,0,0" Text="{Binding Comment}" Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+            </StackPanel>
+
+          </StackPanel>
+        </Grid>
+
+      </materialDesign:Card>
+      <materialDesign:Card
+        Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
+        <DockPanel>
+          <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
+                     Text="{StaticResource ClientEditor.OrdersInfo}" />
+          <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
+            <Button Name="AddOrder" DockPanel.Dock="Right" Margin="0,0,9,0"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton" />
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}">
+                <TextBlock.Text>
+                  <MultiBinding StringFormat="{} {0} заказов, из которых N в процессе выполнения">
+                    <Binding Path="Orders.Count" />
+                  </MultiBinding>
+                </TextBlock.Text>
+              </TextBlock>
+            </StackPanel>
+          </DockPanel>
+          <controls1:ClothGrid ClothInstances="{Binding ClothInstances}" Background="{StaticResource MaterialDesignCardBackground}" />
+
+        </DockPanel>
+
       </materialDesign:Card>
     </Grid>
   </DockPanel>

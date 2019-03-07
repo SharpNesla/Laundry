@@ -23,7 +23,7 @@ namespace Laundry.Views
   public class OrderDictionaryViewModel : DrawerActivityScreen
   {
     private ClientCard _card;
-    public BindableCollection<Client> Clients { get; set; }
+    public BindableCollection<Order> Orders { get; set; }
 
     public bool IsSearchDrawerOpened { get; set; }
 
@@ -40,7 +40,7 @@ namespace Laundry.Views
 
     public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCard card) : base(aggregator, model)
     {
-      this.Clients = new BindableCollection<Client>(model.Clients);
+      this.Orders = new BindableCollection<Order>(model.Orders);
       this._card = card;
     }
 

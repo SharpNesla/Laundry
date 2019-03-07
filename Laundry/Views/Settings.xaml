@@ -28,7 +28,7 @@
       <StackPanel Margin="32,32,32,24">
         <materialDesign:Card
           Padding="16"
-          MaxWidth="1200"
+          MaxWidth="1000"
           Margin="0,0,0,8"
           BorderThickness="0">
           <StackPanel>
@@ -37,14 +37,24 @@
         </materialDesign:Card>
         <materialDesign:Card
           Padding="16"
-          MaxWidth="1200"
-          Margin="0,0,0,8"
+          MaxWidth="1000"
+          Margin="0,0,0,0"
           BorderThickness="0">
-          <StackPanel>
-            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="Внешний вид"/>
-            <ToggleButton cal:Message.Attach="[Event Click] = [Action ChangeColorScheme($this.IsChecked)]"
-                          Margin="612,0,0,0"></ToggleButton>
-          </StackPanel>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="3*"></ColumnDefinition>
+              <ColumnDefinition Width="13*"/>
+              <ColumnDefinition Width="16*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition></RowDefinition>
+              <RowDefinition Height="32"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="Внешний вид" Grid.ColumnSpan="2"/>
+            <ToggleButton Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsChecked}" cal:Message.Attach="[Event Click] = [Action ChangeColorScheme($this.IsChecked)]"
+                          HorizontalAlignment="Right" Width="76"></ToggleButton>
+            <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="Тёмный режим" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Grid.ColumnSpan="2" Margin="0,7"/>
+          </Grid>
         </materialDesign:Card>
       </StackPanel>
     </ScrollViewer>

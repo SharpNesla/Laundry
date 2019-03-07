@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Laundry.Utils.Controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Name="OwnControl">
@@ -20,15 +21,15 @@
 
       <local:DataGridAdaptiveColumn MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"
                                     SortMemberPath="Id"/>
-      <local:DataGridAdaptiveColumn Binding="{Binding CreationDate, StringFormat='yyyy.MM.dd'}" CanUserReorder="True" 
+      <local:DataGridAdaptiveColumn Binding="{Binding CreationDate, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" 
                                     IsReadOnly="True" MinWidth="96" SortMemberPath="CreationDate" Header="Дата создания"/>
-      <local:DataGridAdaptiveColumn Binding="{Binding ExecutionDate, StringFormat='yyyy.MM.dd'}" CanUserReorder="True" 
+      <local:DataGridAdaptiveColumn Binding="{Binding ExecutionDate, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" 
                                     IsReadOnly="True" MinWidth="96" SortMemberPath="ExecutionDate" Header="Дата исполнения"/>
       <local:DataGridAdaptiveColumn Binding="{Binding ClothInstances.Count}" CanUserReorder="True" IsReadOnly="True" MinWidth="96"
                                     SortMemberPath="ClothInstances.Count"
                                     Header="Кол-во вещей"/>
-      <local:DataGridAdaptiveColumn Binding="{Binding ExecutionDate, StringFormat='yyyy.MM.dd'}" CanUserReorder="True"
-                                    IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="48" Header="Цена"/>
+      <local:DataGridAdaptiveColumn Binding="{Binding Price}" CanUserReorder="True"
+                                    IsReadOnly="True" SortMemberPath="Price" MinWidth="48" Header="Цена"/>
 
       <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
       <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
