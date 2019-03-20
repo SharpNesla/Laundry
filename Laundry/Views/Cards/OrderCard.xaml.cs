@@ -28,7 +28,7 @@ namespace Laundry.Views
 
     public Order Order
     {
-      get => _order;
+      get { return _order; }
       set
       {
         _order = value;

@@ -4,11 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Laundry.Utils.Controls"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Name="OwnControl">
+    <UserControl.Resources>
+        <converters:OrderStatusConverter x:Key="StatusConverter"></converters:OrderStatusConverter>
+    </UserControl.Resources>
   <DataGrid
     CanUserSortColumns="True"
     CanUserAddRows="False"
@@ -18,35 +22,33 @@
     ItemsSource="{Binding Orders}"
     Background="{Binding ElementName=OwnControl, Path=Background}">
     <DataGrid.Columns>
-
+      
       <local:DataGridAdaptiveColumn MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"
                                     SortMemberPath="Id"/>
       <local:DataGridAdaptiveColumn Binding="{Binding CreationDate, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" 
                                     IsReadOnly="True" MinWidth="96" SortMemberPath="CreationDate" Header="Дата создания"/>
       <local:DataGridAdaptiveColumn Binding="{Binding ExecutionDate, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" 
                                     IsReadOnly="True" MinWidth="96" SortMemberPath="ExecutionDate" Header="Дата исполнения"/>
-      <local:DataGridAdaptiveColumn Binding="{Binding ClothInstances.Count}" CanUserReorder="True" IsReadOnly="True" MinWidth="96"
+      
+      <local:DataGridAdaptiveColumn Binding="{Binding Status, Converter={StaticResource StatusConverter}}" CanUserReorder="True"
+                                    IsReadOnly="True" SortMemberPath="Status" MinWidth="48" Header="Статус"/>
+       <local:DataGridAdaptiveColumn Binding="{Binding Price}" CanUserReorder="True"
+                                    IsReadOnly="True" SortMemberPath="Price" MinWidth="48" Header="Цена"/>
+            <local:DataGridAdaptiveColumn Binding="{Binding ClothInstances.Count}" CanUserReorder="True" IsReadOnly="True" MinWidth="96"
                                     SortMemberPath="ClothInstances.Count"
                                     Header="Кол-во вещей"/>
-      <local:DataGridAdaptiveColumn Binding="{Binding Price}" CanUserReorder="True"
-                                    IsReadOnly="True" SortMemberPath="Price" MinWidth="48" Header="Цена"/>
-
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
+            <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
       <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
               <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                      Style="{StaticResource MaterialDesignFlatButton}">
+                      Style="{StaticResource MaterialDesignFlatButton}"
+                      Click="OnShowClientInfoButtonClick">
                 <materialDesign:PackIcon
                   Kind="InfoOutline"
                   Height="24"
                   Width="24" />
-              </Button>
-
-              <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                      Style="{StaticResource MaterialDesignFlatButton}">
-                <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
               </Button>
             </StackPanel>
           </DataTemplate>

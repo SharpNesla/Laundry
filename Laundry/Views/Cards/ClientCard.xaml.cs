@@ -28,7 +28,7 @@ namespace Laundry.Views
 
     public Client Client
     {
-      get => _client;
+      get { return _client; }
       set
       {
         _client = value;

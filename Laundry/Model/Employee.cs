@@ -26,7 +26,7 @@ namespace Laundry.Model
     public int ZipCode { get; set; }
 
     public Employee(string name, string surname, string patronymic)
-    {
+    { 
       Name = name;
       Surname = surname;
       Patronymic = patronymic;

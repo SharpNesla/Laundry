@@ -17,8 +17,8 @@
           Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
         <ResourceDictionary
           Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Amber.xaml" />
-
-        <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml" />
+        
+        
 
         <ResourceDictionary Source="Resources/Strings.xaml" />
 
@@ -27,13 +27,10 @@
         </ResourceDictionary>
 
       </ResourceDictionary.MergedDictionaries>
-      <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}">
-        <Setter Property="BorderBrush" Value="{StaticResource PrimaryHueDarkBrush}"/>
-      </Style>
 
-      
 
-        <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+
+      <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Style.Triggers>
 
           <Trigger Property="DataGridCell.IsSelected" Value="True">

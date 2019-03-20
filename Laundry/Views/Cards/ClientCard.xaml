@@ -9,7 +9,7 @@
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel MinWidth="500">
+  <DockPanel Height="600" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16,20,20,20">
       <StackPanel Orientation="Horizontal">

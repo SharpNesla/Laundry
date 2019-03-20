@@ -34,25 +34,27 @@ namespace Laundry.Utils.Controls
       get { return (IObservableCollection<Order>)GetValue(OrdersProperty); }
       set
       {
-
         this.DataContext = this;
         SetValue(OrdersProperty, value);
       }
     }
 
+    public event EventHandler<Order> OrderInfoClicked;
+
     // Using a DependencyProperty as the backing store for Orders.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty OrdersProperty =
         DependencyProperty.Register("Orders", typeof(IObservableCollection<Order>), typeof(OrderDataGrid));
 
-    public void ShowOrderInfo(Order context)
-    {
-      //_orderCard.Order = context;
-      //await DialogHost.Show(_orderCard);
-    }
 
     public OrderDataGrid()
     {
       InitializeComponent();
+    }
+
+    public void OnShowClientInfoButtonClick(object sender, EventArgs args)
+    {
+
+      OrderInfoClicked?.Invoke(this, (sender as Button)?.DataContext as Order);
     }
   }
 }

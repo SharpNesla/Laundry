@@ -11,5 +11,27 @@ namespace Laundry.Model
     ReadOnlyObservableCollection<ClothKind> ClothKinds { get; }
     ReadOnlyObservableCollection<Car> Cars { get; }
     ReadOnlyObservableCollection<Subsidiary> Subsidiaries { get; }
+
+    Client AddClient();
+    void RemoveClient(Client client);
+
+    Order AddOrder();
+    void RemoveOrder(Order order);
+
+    Employee AddEmployee();
+    void RemoveEmployee(Employee employee);
+
+    ClothKind AddClothKind();
+    void RemoveClothKind(ClothKind clothKind);
+
+    ClothInstance AddClothInstance();
+    void RemoveClothInstance(ClothInstance clothInstance);
+
+    Subsidiary AddSubsidiary();
+    void RemoveSubsidiary(Subsidiary subsidiary);
+
+    Car AddCar();
+    void RemoveCar(Car car);
+
   }
 }

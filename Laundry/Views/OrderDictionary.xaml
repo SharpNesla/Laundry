@@ -91,6 +91,8 @@
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-    <controls:OrderDataGrid Margin="16"></controls:OrderDataGrid>
+    <controls:OrderDataGrid Margin="16"
+                            cal:Message.Attach="[Event OrderInfoClicked] = [Action ShowOrderInfo()]"
+                            Orders="{Binding Orders}"/>
   </DockPanel>
 </UserControl>

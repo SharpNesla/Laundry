@@ -4,12 +4,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Laundry.Model;
+using PropertyChanged;
 
 namespace Laundry.Model
 {
   public class MockModel : IModel
   {
-    
     public Employee CurrentUser { get; private set; }
     public ReadOnlyObservableCollection<Employee> Employees { get; private set; }
 
@@ -20,20 +21,22 @@ namespace Laundry.Model
     public ReadOnlyObservableCollection<Car> Cars { get; private set; }
     public ReadOnlyObservableCollection<Subsidiary> Subsidiaries { get; private set; }
 
+
     private readonly ObservableCollection<Client> _clients;
     private readonly ObservableCollection<Order> _orders;
 
     public MockModel()
     {
-      this.CurrentUser = new Employee("F", "f", "D"){Profession = EmployeeProfession.Courier};
+      this.CurrentUser = new Employee("F", "f", "D") {Profession = EmployeeProfession.Courier};
 
-      
-      var kind = new ClothKind { MeasureKind = MeasureKind.Kg, Name = "Носки" };
+      var kind = new ClothKind {MeasureKind = MeasureKind.Kg, Name = "Носки"};
 
       this._orders = new ObservableCollection<Order>(
         new[]
         {
-          new Order{ClothInstances = new ObservableCollection<ClothInstance>(
+          new Order
+          {
+            ClothInstances = new ObservableCollection<ClothInstance>(
               new[]
               {
                 new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
@@ -49,13 +52,92 @@ namespace Laundry.Model
         new[]
         {
           new Client("Антрипотийединиколей", "Карлов", "Иванович"),
-          new Client("Андрей", "Rjrjh", "Иванович") {Orders = _orders, PhoneNumber="+79052848432",
-            Comment ="gjiwhgiwohgigwgirworhgwgoiwrhgwgowig\nrwjhighiwgiwr\nwjighwigio"},
+          new Client("Андрей", "Rjrjh", "Иванович")
+          {
+            Orders = _orders,
+            PhoneNumber = "+79052848432",
+            Comment = "gjiwhgiwohgigwgirworhgwgoiwrhgwgowig\nrwjhighiwgiwr\nwjighwigio"
+          },
           new Client("Андрей", "Карлов", "Иванович"),
           new Client("Андрей", "Карлов", "Иванович"),
           new Client("Андрей", "Карлов", "Иванович"),
         }
       );
+    }
+
+    public Client AddClient()
+    {
+      var client = new Client();
+      client.Id = this._clients.Max(x => x.Id) + 1;
+      this._clients.Add(client);
+      return client;
+    }
+
+    public void RemoveClient(Client client)
+    {
+      client.DeletionDate = DateTime.Now;
+    }
+
+    public Order AddOrder()
+    {
+      var order = new Order();
+      order.Id = this._orders.Max(x => x.Id) + 1;
+      return order;
+    }
+
+    public void RemoveOrder(Order order)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Employee AddEmployee()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void RemoveEmployee(Employee employee)
+    {
+      throw new NotImplementedException();
+    }
+
+    public ClothKind AddClothKind()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void RemoveClothKind(ClothKind clothKind)
+    {
+      throw new NotImplementedException();
+    }
+
+    public ClothInstance AddClothInstance()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void RemoveClothInstance(ClothInstance clothInstance)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Subsidiary AddSubsidiary()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void RemoveSubsidiary(Subsidiary subsidiary)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Car AddCar()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void RemoveCar(Car car)
+    {
+      throw new NotImplementedException();
     }
   }
 }

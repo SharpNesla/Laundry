@@ -14,7 +14,7 @@ namespace Laundry.Utils
     private bool _isDrawerButtonChecked;
     public bool IsDrawerButtonChecked
     {
-      get => _isDrawerButtonChecked;
+      get { return _isDrawerButtonChecked; }
       set
       {
         _isDrawerButtonChecked = value;

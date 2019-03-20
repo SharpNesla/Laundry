@@ -1,31 +1,23 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
 using MaterialDesignThemes.Wpf;
+using ICollectionView = Laundry.Utils.ICollectionView;
 
 namespace Laundry.Views
 {
   public class ClientDictionaryViewModel : DrawerActivityScreen
   {
-    private ClientCard _card;
-    public BindableCollection<Client> Clients { get; set; }
+    private readonly ClientCard _card;
+    public ICollectionView Clients { get; set; }
 
-    public void AddClient(object sender, RoutedEventArgs e)
+    public void AddClient()
     {
       ChangeApplicationScreen(Screens.ClientEditor);
     }
@@ -34,12 +26,23 @@ namespace Laundry.Views
     {
       _card.Client = context;
       await DialogHost.Show(_card);
+      
     }
 
-    public ClientDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCard card) : base(aggregator, model)
+    public int Count { get; set; } = 5;
+
+    public ClientDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCard card) : base(aggregator,
+      model)
     {
-      this.Clients = new BindableCollection<Client>(model.Clients);
+      this.Clients = new ICollectionView(this.Model.Clients, 2);
       this._card = card;
+      this.Clients.Filter = ClientsFilter;
+    }
+
+    private bool ClientsFilter(object p)
+    {
+      var client = p as Client;
+      return client.DateBirth == default(DateTime);
     }
   }
 }

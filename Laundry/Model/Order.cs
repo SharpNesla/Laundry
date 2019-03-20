@@ -17,10 +17,12 @@ namespace Laundry.Model
   }
   public class Order
   {
+    public int Id { get; set; }
     public string Comment { get; set; }
     public DateTime CreationDate { get; set; }
     public DateTime ExecutionDate { get; set; }
-    public ObservableCollection<ClothInstance> ClothInstances { get; set; }
+        public OrderState Status { get; set; }
+        public ObservableCollection<ClothInstance> ClothInstances { get; set; }
     public float Price { get; set; }
 
     public Order()

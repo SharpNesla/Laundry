@@ -20,11 +20,19 @@ namespace Laundry.Model
     public bool IsPremiumClient { get; set; }
     public string Comment { get; set; }
 
+    public DateTime DeletionDate { get; set; }
+
     public Client(string name, string surname, string patronymic)
     {
       Name = name;
       Surname = surname;
       Patronymic = patronymic;
+      DateBirth = new DateTime();
+      Orders = new ObservableCollection<Order>();
+    }
+
+    public Client()
+    {
       DateBirth = new DateTime();
       Orders = new ObservableCollection<Order>();
     }

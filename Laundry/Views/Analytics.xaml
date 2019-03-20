@@ -6,13 +6,25 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+             xmlns:controls="clr-namespace:Laundry.Utils.Controls"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                              Padding="16">
-      <StackPanel Orientation="Horizontal">
+                              >
+      <Grid
+        Margin="0,0,0,0"
+      >
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
         <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
                       Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
         <TextBlock
@@ -22,12 +34,19 @@
           Margin="16 0 0 0" Text="{StaticResource Analytics.Title}">
         </TextBlock>
       </StackPanel>
+      
+        <RadioButton
+          Style="{StaticResource MaterialDesignTabRadioButton}"
+          IsChecked="True" Height="42" Grid.Row="1"
+          Content="Таблица"/>
+        <RadioButton Grid.Column="1"
+          Style="{StaticResource MaterialDesignTabRadioButton}"
+          IsChecked="False" Height="42" Grid.Row="1"
+          Content="График" />
+      </Grid>
     </materialDesign:ColorZone>
-    <dragablz:TabablzControl FixedHeaderCount="2">
-      <TabItem Header="Отчёт" IsSelected="True" >
-      </TabItem>
-      <TabItem Header="График">
-      </TabItem>
-    </dragablz:TabablzControl>
+    <TabPanel Background="{StaticResource MaterialDesignPaper}">
+      <controls:OrderDataGrid Margin="16"></controls:OrderDataGrid>
+    </TabPanel>
   </DockPanel>
 </UserControl>

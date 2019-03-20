@@ -23,14 +23,8 @@
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
-      <Button
-        Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0"
-        Command="materialDesign:DialogHost.CloseDialogCommand">
-        <Button.CommandParameter>
-          <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
-            True
-          </system:Boolean>
-        </Button.CommandParameter>
+      <Button Name="ApplyChanges"
+        Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>
       <Button
@@ -38,7 +32,7 @@
         ОТМЕНИТЬ
       </Button>
     </StackPanel>
-
+    
     <Grid Margin="24">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
@@ -50,19 +44,19 @@
 
         <Grid>
           <Grid.RowDefinitions>
-            <RowDefinition Height="328"></RowDefinition>
+            <RowDefinition Height="348"></RowDefinition>
             <RowDefinition></RowDefinition>
           </Grid.RowDefinitions>
           <StackPanel>
             <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource ClientEditor.MainInfoTitle}" />
-            <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
+            <TextBox Name="Surname" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
+            <TextBox Name="Name"  Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
+            <TextBox Name="Patronymic" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
+            <TextBox Name="PhoneNumber" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <StackPanel Margin="0,8,0,0">
               <TextBlock Margin="0,0,0,8"
@@ -76,14 +70,14 @@
                 Ж
               </RadioButton>
             </StackPanel>
-            <DatePicker materialDesign:HintAssist.Hint="Дата рождения"
+            <DatePicker Name="DateBirth"  materialDesign:HintAssist.Hint="Дата рождения"
                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,0"
-                      HorizontalAlignment="Left" />
+                      HorizontalAlignment="Left" Width="252" />
             
           </StackPanel>
-          <TextBox Grid.Row="1"
+          <TextBox Name="Comment" Grid.Row="1"
                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                   Margin="2,16,0,0"
+                   Margin="2,0,0,0"
                    AcceptsReturn="True"
                    TextWrapping="Wrap"
                    VerticalAlignment="Stretch"

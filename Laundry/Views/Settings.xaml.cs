@@ -28,7 +28,7 @@ namespace Laundry.Views
 
     public bool IsChecked
     {
-      get => _isChecked;
+      get { return _isChecked; }
       set
       {
         _isChecked = value; 

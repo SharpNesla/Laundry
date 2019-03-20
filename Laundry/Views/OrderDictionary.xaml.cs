@@ -22,7 +22,7 @@ namespace Laundry.Views
 {
   public class OrderDictionaryViewModel : DrawerActivityScreen
   {
-    private ClientCard _card;
+    private OrderCard _card;
     public BindableCollection<Order> Orders { get; set; }
 
     public bool IsSearchDrawerOpened { get; set; }
@@ -32,13 +32,13 @@ namespace Laundry.Views
       ChangeApplicationScreen(Screens.ClientEditor);
     }
 
-    public async void ShowClientInfo(Client context)
+    public async void ShowOrderInfo()
     {
-      _card.Client = context;
-      await DialogHost.Show(_card);
+      //_card.Order = context;
+      //await DialogHost.Show(_card);
     }
 
-    public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCard card) : base(aggregator, model)
+    public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, OrderCard card) : base(aggregator, model)
     {
       this.Orders = new BindableCollection<Order>(model.Orders);
       this._card = card;
