@@ -16,15 +16,23 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Utils.Controls;
+using PropertyChanged;
 
 namespace Laundry.Views
 {
   /// <summary>
   /// Interaction logic for ClientEditor.xaml
   /// </summary>
-  public class ClientEditorViewModel : ActivityScreen, IHandle<Client>
+  public class ClientEditorViewModel : ActivityScreen, IHandle<int>
   {
+    [AlsoNotifyFor(nameof(EditorTitle))]
     public Client Client { get; set; }
+
+    public string EditorTitle
+    {
+      get { return Client != null ? $"Редактирование клиента №{Client.Id}" : "Редактирование нового клиента"; }
+    }
 
     public string Name { get; set; }
     public string Surname { get; set; }
@@ -39,9 +47,31 @@ namespace Laundry.Views
     public bool IsPremiumClient { get; set; }
     public string Comment { get; set; }
 
-    public ClientEditorViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+    [AlsoNotifyFor(nameof(InfoVisibility))]
+    public bool InfoChecked { get; set; }
+
+    [AlsoNotifyFor(nameof(OrderGridVisibility))]
+    public bool OrderChecked { get; set; }
+
+    public OrderDataGridViewModel OrderGrid { get; set; }
+
+    public Visibility InfoVisibility
+    {
+      get { return InfoChecked ? Visibility.Visible : Visibility.Collapsed; }
+    }
+
+    public Visibility OrderGridVisibility
+    {
+      get { return OrderChecked ? Visibility.Visible : Visibility.Collapsed; }
+    }
+
+    public OrderDataGridView OrderDataGrid { get; set; }
+
+    public ClientEditorViewModel(IEventAggregator aggregator, IModel model, OrderDataGridViewModel grid) : base(
+      aggregator, model)
     {
       this.EventAggregator.Subscribe(this);
+      this.InfoChecked = true;
     }
 
     public void Discard()
@@ -52,13 +82,13 @@ namespace Laundry.Views
     public void AddOrder(object sender, RoutedEventArgs e)
     {
       ChangeApplicationScreen(Screens.OrderEditor);
-      this.EventAggregator.BeginPublishOnUIThread(this.Model.AddOrder());
+      this.EventAggregator.BeginPublishOnUIThread(this.Model);
     }
 
 
-    public void Handle(Client message)
+    public void Handle(int id)
     {
-      this.Client = message;
+      this.Client = this.Model.GetClientById(id);
       this.EventAggregator.Unsubscribe(this);
       CopyClientInfo();
     }
@@ -84,16 +114,17 @@ namespace Laundry.Views
 
     public void ApplyChanges()
     {
-      if (Client == null)
+      var isNewClient = this.Client == null;
+
+      if (isNewClient)
       {
-        Client = Model.AddClient();
+        this.Client = new Client();
       }
 
       Client.Name = this.Name;
       Client.Surname = this.Surname;
       Client.Patronymic = this.Patronymic;
       Client.DateBirth = this.DateBirth;
-      Client.Orders = this.Orders;
       Client.PhoneNumber = this.PhoneNumber;
       Client.House = this.House;
       Client.Street = this.Street;
@@ -101,6 +132,15 @@ namespace Laundry.Views
       Client.ZipCode = this.ZipCode;
       Client.IsPremiumClient = this.IsPremiumClient;
       Client.Comment = this.Comment;
+
+      if (isNewClient)
+      {
+        Model.AddClient(this.Client);
+      }
+      else
+      {
+        Model.UpdateClient(this.Client);
+      }
 
       ChangeApplicationScreen(Screens.Context);
     }

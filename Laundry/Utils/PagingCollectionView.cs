@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace Laundry.Utils
 {
-  public class ICollectionView : CollectionView
+  public class PagingCollectionView : CollectionView
   {
-    private readonly int _itemsPerPage;
-
     private int _currentPage = 1;
 
-    public ICollectionView(IEnumerable innerList, int itemsPerPage)
+    public PagingCollectionView(IEnumerable innerList, int itemsPerPage)
       : base(innerList)
     {
-      this._itemsPerPage = itemsPerPage;
+      this.ItemsPerPage = itemsPerPage;
     }
 
     public int FilteredCount
@@ -35,14 +30,14 @@ namespace Laundry.Utils
         if (FilteredCount == 0) return 0;
         if (this._currentPage < this.PageCount) // page 1..n-1
         {
-          return this._itemsPerPage;
+          return this.ItemsPerPage;
         }
         else // page n
         {
-          var itemsLeft = FilteredCount % this._itemsPerPage;
+          var itemsLeft = FilteredCount % this.ItemsPerPage;
           if (0 == itemsLeft)
           {
-            return this._itemsPerPage; // exactly itemsPerPage left
+            return this.ItemsPerPage; // exactly itemsPerPage left
           }
           else
           {
@@ -63,17 +58,14 @@ namespace Laundry.Utils
       }
     }
 
-    public int ItemsPerPage
-    {
-      get { return this._itemsPerPage; }
-    }
+    public int ItemsPerPage { get; set; }
 
     public int PageCount
     {
       get
       {
-        return (FilteredCount + this._itemsPerPage - 1)
-               / this._itemsPerPage;
+        return (FilteredCount + this.ItemsPerPage - 1)
+               / this.ItemsPerPage;
       }
     }
 
@@ -81,19 +73,19 @@ namespace Laundry.Utils
     {
       get
       {
-        var end = this._currentPage * this._itemsPerPage - 1;
+        var end = this._currentPage * this.ItemsPerPage - 1;
         return (end > FilteredCount) ? FilteredCount : end;
       }
     }
 
     private int StartIndex
     {
-      get { return (this._currentPage - 1) * this._itemsPerPage; }
+      get { return (this._currentPage - 1) * this.ItemsPerPage; }
     }
 
     public override object GetItemAt(int index)
     {
-      var offset = index % (this._itemsPerPage);
+      var offset = index % (this.ItemsPerPage);
       return this.FilteredCollection.ElementAt(this.StartIndex + offset);
     }
 

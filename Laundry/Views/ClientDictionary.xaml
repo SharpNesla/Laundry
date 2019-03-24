@@ -75,29 +75,38 @@
                   VerticalAlignment="Center" />
               </Grid>
             </materialDesign:ColorZone>
-            <Button Foreground="{StaticResource MaterialDesignDarkForeground}"
-                    Style="{DynamicResource MaterialDesignToolButton}"
-                    Margin="8 0 0 0"
-                    Panel.ZIndex="0">
-              <materialDesign:PackIcon
-                Kind="Send" />
-            </Button>
-            <controls:Paginator Orders="{Binding Clients}"
-              FieldName="Клиентов" />
+
+              <materialDesign:ColorZone
+                  Mode="Standard"
+                  Padding="8 4 0 4"
+                  CornerRadius="2"
+                  Panel.ZIndex="1"
+                  Margin="16 0 0 0"
+                  materialDesign:ShadowAssist.ShadowDepth="Depth1" Height="40">
+                            <ContentControl Name="Paginator"/>
+                  </materialDesign:ColorZone>
           </StackPanel>
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
 
     <DataGrid
+      SelectionMode="Single"
       Margin="16"
       CanUserSortColumns="True"
       CanUserAddRows="False"
       CanUserResizeColumns="True"
       CellStyle="{StaticResource CellStyle}"
       AutoGenerateColumns="False"
+      SelectedItem="{Binding SelectedClient}"
       ItemsSource="{Binding Clients}">
-      <DataGrid.Columns>
+        <DataGrid.ContextMenu>
+            <ContextMenu>
+                <MenuItem cal:Message.Attach="[Event Click] = [Action EditClient()]" Header="Изменить"/>
+                <MenuItem cal:Message.Attach="[Event Click] = [Action RemoveClient()]" Header="Удалить"/>
+            </ContextMenu>
+        </DataGrid.ContextMenu>
+            <DataGrid.Columns>
         <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
                                 ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">

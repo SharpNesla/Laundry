@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Utils.Controls;
 using MaterialDesignThemes.Wpf;
 
 namespace Laundry.Views
@@ -23,25 +24,31 @@ namespace Laundry.Views
   public class OrderDictionaryViewModel : DrawerActivityScreen
   {
     private OrderCard _card;
-    public BindableCollection<Order> Orders { get; set; }
+
+    public OrderDataGridViewModel OrdersViewModel { get; private set; }
+
+    public PaginatorViewModel Paginator { get; set; }
 
     public bool IsSearchDrawerOpened { get; set; }
 
-    public void AddClient(object sender, RoutedEventArgs e)
+    public async void ShowOrderInfo(Order context)
     {
-      ChangeApplicationScreen(Screens.ClientEditor);
+      _card.Order = context;
+      await DialogHost.Show(_card);
     }
 
-    public async void ShowOrderInfo()
+    public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, OrderCard card, PaginatorViewModel paginator, OrderDataGridViewModel orderGrid) : base(aggregator, model)
     {
-      //_card.Order = context;
-      //await DialogHost.Show(_card);
-    }
+      orderGrid.Orders = Model.GetOrders(0, 0);
 
-    public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, OrderCard card) : base(aggregator, model)
-    {
-      this.Orders = new BindableCollection<Order>(model.Orders);
       this._card = card;
+
+      this.Paginator = paginator;
+      this.Paginator.ElementsName = "Заказов";
+      this.Paginator.ElementsPerPage = 5;
+
+      this.OrdersViewModel = orderGrid;
+      this.OrdersViewModel.OrderInfoClicked += ShowOrderInfo;
     }
 
     public void ChangeSearchDrawerState()

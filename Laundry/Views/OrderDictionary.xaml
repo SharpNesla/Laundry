@@ -6,12 +6,12 @@
                        xmlns:local="clr-namespace:Laundry.Views"
                        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                        mc:Ignorable="d"
-                       xmlns:System="clr-namespace:System;assembly=mscorlib"
-                       xmlns:controls="clr-namespace:Laundry.Utils.Controls"
+             xmlns:controls="clr-namespace:Laundry.Utils.Controls"
                        xmlns:utils="clr-namespace:Laundry.Utils"
                        xmlns:cal="http://www.caliburnproject.org"
                        d:DesignHeight="600" d:DesignWidth="800"
-                       Background="{DynamicResource MaterialDesignPaper}">
+                       Background="{DynamicResource MaterialDesignPaper}"
+>
   <DockPanel LastChildFill="True">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16">
@@ -73,14 +73,22 @@
                   VerticalAlignment="Center" />
               </Grid>
             </materialDesign:ColorZone>
-
-            <ToggleButton Margin="8,0,0,0"
+              <materialDesign:ColorZone
+                  Mode="Standard"
+                  Padding="8 4 8 4"
+                  CornerRadius="2"
+                  Panel.ZIndex="1"
+                  Margin="16 0 0 0"
+                  materialDesign:ShadowAssist.ShadowDepth="Depth1" Height="40">
+                  <ContentControl Name="Paginator"/>
+              </materialDesign:ColorZone>
+                        <ToggleButton Margin="8,0,0,0"
               Style="{StaticResource MaterialDesignActionToggleButton}"
                           IsChecked="{Binding IsSearchDrawerOpened}"
-              ToolTip="MaterialDesignActionAccentToggleButton">
+              ToolTip="Расширенный поиск">
               <ToggleButton.Content>
                 <materialDesign:PackIcon
-                  Kind="ArrowUp" />
+                  Kind="Search" />
               </ToggleButton.Content>
               <materialDesign:ToggleButtonAssist.OnContent>
                 <materialDesign:PackIcon
@@ -91,8 +99,6 @@
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-    <controls:OrderDataGrid Margin="16"
-                            cal:Message.Attach="[Event OrderInfoClicked] = [Action ShowOrderInfo()]"
-                            Orders="{Binding Orders}"/>
+    <ContentControl Margin="16" Name="OrdersViewModel"/>
   </DockPanel>
 </UserControl>

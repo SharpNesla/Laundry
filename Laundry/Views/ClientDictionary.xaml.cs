@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -7,15 +8,18 @@ using System.Windows.Data;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Utils.Controls;
 using MaterialDesignThemes.Wpf;
-using ICollectionView = Laundry.Utils.ICollectionView;
 
 namespace Laundry.Views
 {
   public class ClientDictionaryViewModel : DrawerActivityScreen
   {
     private readonly ClientCard _card;
-    public ICollectionView Clients { get; set; }
+
+
+    public IList<Client> Clients { get; set; }
+    public Client SelectedClient { get; set; }
 
     public void AddClient()
     {
@@ -26,23 +30,37 @@ namespace Laundry.Views
     {
       _card.Client = context;
       await DialogHost.Show(_card);
-      
     }
 
     public int Count { get; set; } = 5;
 
-    public ClientDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCard card) : base(aggregator,
+    public ClientDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCard card,
+      PaginatorViewModel paginator) : base(aggregator,
       model)
     {
-      this.Clients = new ICollectionView(this.Model.Clients, 2);
       this._card = card;
-      this.Clients.Filter = ClientsFilter;
+
+      this.Paginator = paginator;
+      this.Paginator.ElementsName = "Заказов";
     }
 
-    private bool ClientsFilter(object p)
+    public PaginatorViewModel Paginator { get; set; }
+
+    protected override void OnActivate()
     {
-      var client = p as Client;
-      return client.DateBirth == default(DateTime);
+      this.Clients = Model.GetClients(0, 0);
+    }
+
+    public void RemoveClient()
+    {
+      Model.RemoveClient(SelectedClient);
+      this.Clients = Model.GetClients(0, 0);
+    }
+
+    public void EditClient()
+    {
+      ChangeApplicationScreen(Screens.ClientEditor);
+      EventAggregator.PublishOnUIThread(this.SelectedClient.Id);
     }
   }
 }

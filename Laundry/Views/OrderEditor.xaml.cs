@@ -15,18 +15,7 @@ namespace Laundry.Views
 
     public OrderEditorViewModel(IEventAggregator aggregator, IModel model, ClothEditor editor) : base(aggregator, model)
     {
-      //  var kind = new ClothKind {MeasureKind = MeasureKind.Kg, Name = "Носки"};
 
-      //  this.ClothInstances = new BindableCollection<ClothInstance>(
-      //    new[]
-      //    {
-      //      new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
-      //      new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
-      //      new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
-      //      new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
-      //      new ClothInstance {Amount = 3, Kind = kind, WearPercentage = 0},
-      //    }
-      //  );
     }
 
     public void Cancel()
@@ -36,7 +25,7 @@ namespace Laundry.Views
 
     public void Handle(Order message)
     {
-      throw new NotImplementedException();
+
     }
   }
 }

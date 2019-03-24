@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,59 +25,51 @@ namespace Laundry.Utils.Controls
   /// </summary>
 
   [AddINotifyPropertyChangedInterface]
-  public partial class Paginator: UserControl
+  public class PaginatorViewModel
   {
+
+    private void CheckButtons(object sender, PropertyChangedEventArgs e)
+    {
+      CheckButtons();
+    }
+
+    public string ElementsName { get; set; }
+    public int ElementsPerPage { get; set; }
+
+    public int[] ComboValues { get; }
+
+    public PaginatorViewModel()
+    {
+      this.ComboValues = new int[] {5, 10, 20, 50, 100};
+      this.ElementsPerPage = 5;
+    }
+
+    public bool IsMoveNextEnabled { get; private set; }
+    public bool IsMovePreviousEnabled { get; private set; }
     
-    public string FieldName
+
+
+    public void MoveNext()
     {
-      get { return (string)GetValue(FieldNameProperty); }
-      set { SetValue(FieldNameProperty, value); }
+      this.CheckButtons();
     }
 
-
-
-    public ICollectionView Orders
+    public void ChangeElementsPerPage()
     {
-      get { return (ICollectionView)GetValue(OrdersProperty); }
-      set
-      {
-        this.DataContext = this;
-        SetValue(OrdersProperty, value);
-      }
+     
+      this.CheckButtons();
     }
 
-    // Using a DependencyProperty as the backing store for Orders.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty OrdersProperty =
-      DependencyProperty.Register("Orders", typeof(ICollectionView), typeof(Paginator), new PropertyMetadata(PropChanged));
-
-    public static void PropChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    public void MovePrevious()
     {
-      var value = e.NewValue; //confirm this isn't null
+      //this.PagingCollectionView.MoveToPreviousPage();
+      this.CheckButtons();
     }
 
-    // Using a DependencyProperty as the backing store for FieldName.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty FieldNameProperty =
-        DependencyProperty.Register("FieldName", typeof(string), typeof(Paginator));
-
-
-
-
-    public bool IsMovePreviousEnabled { get; set; } = true;
-    public bool IsMoveNextEnabled { get; set; } = true;
-
-
-    public Paginator()
+    private void CheckButtons()
     {
-      InitializeComponent();
-      this.DataContext = this;
-    }
-    
-    private void OnMovePreviousButtonClick(object sender, RoutedEventArgs e)
-    {
-    }
-
-    private void OnMoveNextButtonClick(object sender, RoutedEventArgs e)
-    {
+      //this.IsMovePreviousEnabled = this.PagingCollectionView.CurrentPage != 1;
+      //this.IsMoveNextEnabled = this.PagingCollectionView.CurrentPage != this.PagingCollectionView.PageCount;
     }
   }
 }

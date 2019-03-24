@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Laundry.Model
 {
@@ -12,11 +13,17 @@ namespace Laundry.Model
     ReadOnlyObservableCollection<Car> Cars { get; }
     ReadOnlyObservableCollection<Subsidiary> Subsidiaries { get; }
 
-    Client AddClient();
+    void AddClient(Client client);
+    Client GetClientById(int id);
+    void UpdateClient(Client client);
     void RemoveClient(Client client);
+    IList<Client> GetClients(int offset, int limit);
 
-    Order AddOrder();
+    void AddOrder(Order order);
+    Order GetOrderById(int id);
+    void UpdateOrder(Order order);
     void RemoveOrder(Order order);
+    IList<Order> GetOrders(int offset, int limit);
 
     Employee AddEmployee();
     void RemoveEmployee(Employee employee);
@@ -32,6 +39,5 @@ namespace Laundry.Model
 
     Car AddCar();
     void RemoveCar(Car car);
-
   }
 }

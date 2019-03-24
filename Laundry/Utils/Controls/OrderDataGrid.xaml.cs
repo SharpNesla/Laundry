@@ -24,37 +24,20 @@ namespace Laundry.Utils.Controls
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
   
-  public partial class OrderDataGrid : UserControl
+  public class OrderDataGridViewModel : UserControl
   {
-    private readonly OrderCard _orderCard;
+    public event Action<Order> OrderInfoClicked;
+    public Client SpecifiedClient { get; set; }
+    public IList<Order> Orders { get; set; }
 
-
-    public IObservableCollection<Order> Orders
+    public OrderDataGridViewModel()
     {
-      get { return (IObservableCollection<Order>)GetValue(OrdersProperty); }
-      set
-      {
-        this.DataContext = this;
-        SetValue(OrdersProperty, value);
-      }
+      
     }
 
-    public event EventHandler<Order> OrderInfoClicked;
-
-    // Using a DependencyProperty as the backing store for Orders.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty OrdersProperty =
-        DependencyProperty.Register("Orders", typeof(IObservableCollection<Order>), typeof(OrderDataGrid));
-
-
-    public OrderDataGrid()
+    public void ShowClientInfo(Order context)
     {
-      InitializeComponent();
-    }
-
-    public void OnShowClientInfoButtonClick(object sender, EventArgs args)
-    {
-
-      OrderInfoClicked?.Invoke(this, (sender as Button)?.DataContext as Order);
+      OrderInfoClicked?.Invoke(context);
     }
   }
 }

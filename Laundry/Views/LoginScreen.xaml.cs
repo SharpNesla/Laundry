@@ -1,5 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Caliburn.Micro;
+using Laundry.Model;
 using Laundry.Utils;
 
 namespace Laundry.Views
@@ -10,7 +11,7 @@ namespace Laundry.Views
   public class LoginScreenViewModel : ActivityScreen
   {
 
-    public LoginScreenViewModel(IEventAggregator aggregator, Model.MockModel mockModel) : base(aggregator, mockModel)
+    public LoginScreenViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
     }
 

@@ -11,42 +11,39 @@
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
-    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
+        <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               >
-      <Grid
+            <Grid
         Margin="0,0,0,0"
       >
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition/>
-          <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition/>
-        </Grid.RowDefinitions>
-        <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
-        <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
+                    <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
                       Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
-        <TextBlock
+                    <TextBlock
 
           Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
           Margin="16 0 0 0" Text="{StaticResource Analytics.Title}">
-        </TextBlock>
-      </StackPanel>
-      
-        <RadioButton
+                    </TextBlock>
+                </StackPanel>
+
+                <RadioButton
           Style="{StaticResource MaterialDesignTabRadioButton}"
           IsChecked="True" Height="42" Grid.Row="1"
           Content="Таблица"/>
-        <RadioButton Grid.Column="1"
+                <RadioButton Grid.Column="1"
           Style="{StaticResource MaterialDesignTabRadioButton}"
           IsChecked="False" Height="42" Grid.Row="1"
           Content="График" />
-      </Grid>
-    </materialDesign:ColorZone>
-    <TabPanel Background="{StaticResource MaterialDesignPaper}">
-      <controls:OrderDataGrid Margin="16"></controls:OrderDataGrid>
-    </TabPanel>
-  </DockPanel>
+            </Grid>
+        </materialDesign:ColorZone>
+    </DockPanel>
 </UserControl>

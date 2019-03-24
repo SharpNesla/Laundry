@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
 using Caliburn.Micro;
+using Laundry.Model;
 using Laundry.Utils;
 
 namespace Laundry.Views
@@ -14,7 +15,7 @@ namespace Laundry.Views
   public class DashBoardViewModel : DrawerActivityScreen
   {
 
-    public DashBoardViewModel(IEventAggregator aggregator, Model.MockModel mockModel) : base(aggregator, mockModel)
+    public DashBoardViewModel(IEventAggregator aggregator, IModel mockModel) : base(aggregator, mockModel)
     {
       
     }

@@ -14,7 +14,6 @@ namespace Laundry
   /// </summary>
   public partial class App : Application
   {
-    public static Model.MockModel MockModel;
     
     public App()
     {

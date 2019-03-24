@@ -5,6 +5,7 @@ using Laundry.Model;
 using Caliburn.Micro;
 namespace Laundry
 {
+  using Laundry.Utils.Controls;
   using Utils;
 
   public class AppBootstrapper : BootstrapperBase
@@ -24,7 +25,7 @@ namespace Laundry
       //Root Laundry level things
       container.Singleton<IWindowManager, WindowManager>();
       container.Singleton<IEventAggregator, EventAggregator>();
-      container.Singleton<IModel, MockModel>();
+      container.Singleton<IModel, DataBaseModel>();
       
       container.Handler<IScreenFactory>((container) => new ScreenFactory(container));
 
@@ -59,6 +60,9 @@ namespace Laundry
       //Non-screen views like dialog views
       container.Singleton<ClientCard>();
       container.Singleton<OrderCard>();
+
+      container.PerRequest<PaginatorViewModel>();
+      container.PerRequest<OrderDataGridViewModel>();
     }
 
     protected override object GetInstance(Type service, string key)
