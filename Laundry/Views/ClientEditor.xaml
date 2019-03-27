@@ -142,6 +142,7 @@
                            Padding="16"
                            BorderThickness="0" VerticalAlignment="Stretch">
                 <ContentControl Name="OrderDataGrid"/>
+              
             </materialDesign:Card>
         </Grid>
     </DockPanel>

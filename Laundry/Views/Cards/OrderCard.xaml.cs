@@ -45,7 +45,7 @@ namespace Laundry.Views
 
     private void EditOrder(object sender, RoutedEventArgs e)
     {
-      _eventAggregator.PublishOnUIThread(Screens.ClientEditor);
+      _eventAggregator.PublishOnUIThread(Screens.OrderEditor);
       _eventAggregator.PublishOnUIThread(this.Order);
     }
   }

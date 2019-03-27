@@ -369,6 +369,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Actions\" />
+    <Folder Include="Views\SearchDialogs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.3.5\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.5\build\Fody.targets')" />

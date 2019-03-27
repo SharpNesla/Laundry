@@ -10,12 +10,13 @@ namespace Laundry.Views
   /// </summary>
   public class OrderEditorViewModel : ActivityScreen, IHandle<Order>
   {
+    public Order Order { get; set; }
     public DateTime DateTime { get; set; }
     public BindableCollection<ClothInstance> ClothInstances { get; set; }
 
     public OrderEditorViewModel(IEventAggregator aggregator, IModel model, ClothEditor editor) : base(aggregator, model)
     {
-
+      
     }
 
     public void Cancel()
@@ -25,7 +26,8 @@ namespace Laundry.Views
 
     public void Handle(Order message)
     {
-
+      this.Order = this.Model.GetOrderById(message.Id);
+      this.EventAggregator.Unsubscribe(this);
     }
   }
 }

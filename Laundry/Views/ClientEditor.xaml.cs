@@ -24,7 +24,7 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for ClientEditor.xaml
   /// </summary>
-  public class ClientEditorViewModel : ActivityScreen, IHandle<int>
+  public class ClientEditorViewModel : ActivityScreen, IHandle<Client>
   {
     [AlsoNotifyFor(nameof(EditorTitle))]
     public Client Client { get; set; }
@@ -53,7 +53,6 @@ namespace Laundry.Views
     [AlsoNotifyFor(nameof(OrderGridVisibility))]
     public bool OrderChecked { get; set; }
 
-    public OrderDataGridViewModel OrderGrid { get; set; }
 
     public Visibility InfoVisibility
     {
@@ -65,13 +64,14 @@ namespace Laundry.Views
       get { return OrderChecked ? Visibility.Visible : Visibility.Collapsed; }
     }
 
-    public OrderDataGridView OrderDataGrid { get; set; }
+    public OrderDataGridViewModel OrderDataGrid { get; set; }
 
     public ClientEditorViewModel(IEventAggregator aggregator, IModel model, OrderDataGridViewModel grid) : base(
       aggregator, model)
     {
       this.EventAggregator.Subscribe(this);
       this.InfoChecked = true;
+      this.OrderDataGrid = grid;
     }
 
     public void Discard()
@@ -86,9 +86,10 @@ namespace Laundry.Views
     }
 
 
-    public void Handle(int id)
+    public void Handle(Client client)
     {
-      this.Client = this.Model.GetClientById(id);
+      this.Client = this.Model.GetClientById(client.Id);
+      this.OrderDataGrid.Orders = Model.GetOrdersForClient(client, 0, 0);
       this.EventAggregator.Unsubscribe(this);
       CopyClientInfo();
     }

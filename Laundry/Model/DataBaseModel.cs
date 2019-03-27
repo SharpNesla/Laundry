@@ -7,39 +7,38 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace Laundry.Model
 {
   class DataBaseModel : IModel
   {
+
     public Employee CurrentUser { get; }
-    public ReadOnlyObservableCollection<Employee> Employees { get; }
-    public ReadOnlyObservableCollection<Client> Clients { get; }
-    public ReadOnlyObservableCollection<Order> Orders { get; }
-    public ReadOnlyObservableCollection<ClothKind> ClothKinds { get; }
-    public ReadOnlyObservableCollection<Car> Cars { get; }
-    public ReadOnlyObservableCollection<Subsidiary> Subsidiaries { get; }
-    
+
     private readonly IMongoDatabase _dataBase;
     private IMongoCollection<Client> _clients;
     private IMongoCollection<Order> _orders;
+    private IMongoCollection<Employee> _employees;
 
     public DataBaseModel()
     {
       string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
-      
+
       MongoClient client = new MongoClient(connectionString);
+
       this._dataBase = client.GetDatabase("laundry");
-      this._clients =  _dataBase.GetCollection<Client>("clients");
-      this._orders = _dataBase.GetCollection<Order>("Orders");
+      this._clients = _dataBase.GetCollection<Client>("clients");
+      this._orders = _dataBase.GetCollection<Order>("orders");
+      this._employees = _dataBase.GetCollection<Employee>("employees");
     }
 
     public Client AddClient()
     {
-     
       return null;
     }
+
 
     public void AddClient(Client client)
     {
@@ -55,7 +54,7 @@ namespace Laundry.Model
       _clients.InsertOne(client);
     }
 
-    public Client GetClientById(int id)
+    public Client GetClientById(long id)
     {
       return _clients.Find(x => x.Id == id).First();
     }
@@ -67,7 +66,8 @@ namespace Laundry.Model
 
     public void RemoveClient(Client client)
     {
-      _clients.UpdateOne(Builders<Client>.Filter.Where(x=>x.Id == client.Id), Builders<Client>.Update.Set(nameof(client.DeletionDate), DateTime.Now));
+      _clients.UpdateOne(Builders<Client>.Filter.Where(x => x.Id == client.Id),
+        Builders<Client>.Update.Set(nameof(client.DeletionDate), DateTime.Now));
     }
 
     public IList<Client> GetClients(int offset, int limit)
@@ -90,10 +90,23 @@ namespace Laundry.Model
     }
 
 
-    public Order GetOrderById(int id)
+    public Order GetOrderById(long id)
     {
-      throw new NotImplementedException();
+      var orderById = _orders.Find(x => x.Id == id).First();
+      orderById.Client = GetClientById(orderById.Id);
+      return orderById;
     }
+
+    public IList<Order> GetOrdersForClient(Client client, int offset, int limit)
+    {
+      var filter = Builders<Order>.Filter.And(
+        Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
+        Builders<Order>.Filter.Eq(nameof(Order.ClientId), client.Id)
+      );
+      var orders = _orders.Find(filter).ToList();
+      return orders;
+    }
+
 
     public void UpdateOrder(Order order)
     {
@@ -107,17 +120,29 @@ namespace Laundry.Model
 
     public IList<Order> GetOrders(int offset, int limit)
     {
-      return _orders.Find(Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false)).ToList();
+      var orders = _orders.Find(Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false)).ToList();
+      foreach (var x in orders) x.Client = GetClientById(x.ClientId);
+      return orders;
     }
 
-    public Employee AddEmployee()
+    public void AddEmployee(Employee employee)
     {
-      throw new NotImplementedException();
+      try
+      {
+        employee.Id = _employees.Aggregate().SortByDescending(x => x.Id).First().Id + 1;
+      }
+      catch
+      {
+        employee.Id = 0;
+      }
+
+      _employees.InsertOne(employee);
     }
 
     public void RemoveEmployee(Employee employee)
     {
-      throw new NotImplementedException();
+      _clients.UpdateOne(Builders<Client>.Filter.Where(x => x.Id == employee.Id),
+        Builders<Client>.Update.Set(nameof(employee.DeletionDate), DateTime.Now));
     }
 
     public ClothKind AddClothKind()
@@ -158,6 +183,11 @@ namespace Laundry.Model
     public void RemoveCar(Car car)
     {
       throw new NotImplementedException();
+    }
+
+    public IList<Employee> GetEmployees(int offset, int limit)
+    {
+      return _employees.Find(Builders<Employee>.Filter.Exists(nameof(Employee.DeletionDate), false)).ToList();
     }
   }
 }

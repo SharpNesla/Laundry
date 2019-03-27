@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
 {
@@ -15,20 +12,56 @@ namespace Laundry.Model
     MoveToSubs,
     Granted
   }
+
   public class Order
   {
+    [BsonIgnoreIfDefault]
     public long Id { get; set; }
+
+    [BsonIgnoreIfNull]
     public string Comment { get; set; }
+
+    [BsonIgnoreIfDefault]
     public DateTime CreationDate { get; set; }
+
+    [BsonIgnoreIfDefault]
     public DateTime ExecutionDate { get; set; }
-        public OrderState Status { get; set; }
-        public ObservableCollection<ClothInstance> ClothInstances { get; set; }
+
+    [BsonIgnoreIfDefault]
+    public OrderState Status { get; set; }
+
+    [BsonIgnoreIfDefault]
     public float Price { get; set; }
+
+    [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
 
-    public Order()
-    {
-      this.ClothInstances = new ObservableCollection<ClothInstance>();
-    }
+    public IList<ClothInstance> ClothInstances { get; set; }
+
+    #region Ids
+
+    [BsonElement("Client")]
+    public long ClientId { get; set; }
+
+    [BsonElement("Obtainer")]
+    public long ObtainerId { get; set; }
+
+    [BsonElement("WasherCourier")]
+    public long WasherCourierId { get; set; }
+
+    [BsonElement("OutWasherCourier")]
+    public long OutWasherCourierId { get; set; }
+
+    [BsonElement("Distributer")]
+    public long DistributerId { get; set; }
+
+    #endregion
+
+    #region Reference Objects
+
+    [BsonIgnore]
+    public Client Client { get; set; }
+
+    #endregion
   }
 }

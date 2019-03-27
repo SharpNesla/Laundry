@@ -60,7 +60,7 @@ namespace Laundry.Views
     public void EditClient()
     {
       ChangeApplicationScreen(Screens.ClientEditor);
-      EventAggregator.PublishOnUIThread(this.SelectedClient.Id);
+      EventAggregator.PublishOnUIThread(this.SelectedClient);
     }
   }
 }

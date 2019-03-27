@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,22 +14,13 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for DashBoard.xaml
   /// </summary>
-  public partial class EmployeeDictionaryViewModel : DrawerActivityScreen
+  public class EmployeeDictionaryViewModel : DrawerActivityScreen
   {
-    public ObservableCollection<Employee> Employees { get; set; }
+    public IList<Employee> Employees { get; set; }
 
     public EmployeeDictionaryViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
-      Employees = new ObservableCollection<Employee>(
-        new[]
-        {
-          new Employee("Антрипотийединиколей", "Карлов", "Иванович") {Profession = EmployeeProfession.Courier},
-          new Employee("Андрей", "Rjrjh", "Иванович"){Profession = EmployeeProfession.Courier},
-          new Employee("Андрей", "Карлов", "Иванович"){Profession = EmployeeProfession.Courier},
-          new Employee("Андрей", "Карлов", "Иванович"){Profession = EmployeeProfession.Courier},
-          new Employee("Андрей", "Карлов", "Иванович"){Profession = EmployeeProfession.Courier},
-        }
-      );
+      this.Employees = Model.GetEmployees(0, 0);
     }
 
     public void AddEmployee()

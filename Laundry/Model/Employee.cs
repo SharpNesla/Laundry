@@ -14,6 +14,7 @@ namespace Laundry.Model
 
   public class Employee
   {
+    public long Id { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
     public string Patronymic { get; set; }
@@ -25,12 +26,6 @@ namespace Laundry.Model
     public string City { get; set; }
     public int ZipCode { get; set; }
 
-    public Employee(string name, string surname, string patronymic)
-    { 
-      Name = name;
-      Surname = surname;
-      Patronymic = patronymic;
-      DateBirth = new DateTime();
-    }
+    public DateTime DeletionDate { get; set; }
   }
 }
