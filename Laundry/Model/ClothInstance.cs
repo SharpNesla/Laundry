@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace Laundry.Model
 {
-  public enum MeasureKind
-  {
-    Kg,
-    Thing,
-    Pair
-  }
+
 
   public class ClothInstance
   {

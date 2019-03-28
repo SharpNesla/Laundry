@@ -27,7 +27,5 @@ namespace Laundry.Views
     {
       ChangeApplicationScreen(Screens.EmployeeEditor);
     }
-
-    
   }
 }

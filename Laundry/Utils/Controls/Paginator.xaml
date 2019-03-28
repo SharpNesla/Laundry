@@ -17,8 +17,8 @@
                    Height="15" Margin="16,0,16,0">
             <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0} из {1}">
-                    <Binding Path="PagingCollectionView.CurrentPage"/>
-                    <Binding Path="PagingCollectionView.PageCount"/>
+                    <Binding Path="CurrentPage"/>
+                    <Binding Path="MaxPages"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>

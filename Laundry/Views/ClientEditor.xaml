@@ -13,44 +13,41 @@
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
 
-      <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-      >
-          <Grid
-              Margin="0,0,0,0"
-          >
-              <Grid.ColumnDefinitions>
-                  <ColumnDefinition/>
-                  <ColumnDefinition/>
-              </Grid.ColumnDefinitions>
-              <Grid.RowDefinitions>
-                  <RowDefinition/>
-                  <RowDefinition/>
-              </Grid.RowDefinitions>
-              <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
-                  <materialDesign:PackIcon Kind="Account" Width="24" Height="24"></materialDesign:PackIcon>
-                    <TextBlock
-                    Style="{StaticResource MaterialDesignTitleTextBlock}"
-                    VerticalAlignment="Center"
-                    Margin="16 0 0 0" Text="{Binding EditorTitle}">
-                    </TextBlock>
-                </StackPanel>
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid">
+      <Grid
+        Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
+          <materialDesign:PackIcon Kind="Account" Width="24" Height="24" />
+          <TextBlock
+            Style="{StaticResource MaterialDesignTitleTextBlock}"
+            VerticalAlignment="Center"
+            Margin="16 0 0 0" Text="{Binding EditorTitle}" />
+        </StackPanel>
 
-              <RadioButton
-                  Style="{StaticResource MaterialDesignTabRadioButton}"
-                  IsChecked="{Binding InfoChecked}" Height="42" Grid.Row="1"
-                  Content="Общая информация"/>
-              <RadioButton IsChecked="{Binding OrderChecked}"  Grid.Column="1"
-                           Style="{StaticResource MaterialDesignTabRadioButton}"
-                           Height="42" Grid.Row="1"
-                           Content="Заказы" />
-              
-          </Grid>
+        <RadioButton
+          Style="{StaticResource MaterialDesignTabRadioButton}"
+          IsChecked="{Binding InfoChecked}" Height="42" Grid.Row="1"
+          Content="Общая информация" />
+        <RadioButton IsChecked="{Binding OrderChecked}" Grid.Column="1"
+                     Style="{StaticResource MaterialDesignTabRadioButton}"
+                     Height="42" Grid.Row="1"
+                     Content="Заказы" />
 
-          
-        </materialDesign:ColorZone>
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
+      </Grid>
+
+
+    </materialDesign:ColorZone>
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
       <Button Name="ApplyChanges"
-        Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
+              Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>
       <Button
@@ -59,91 +56,101 @@
       </Button>
     </StackPanel>
     <Grid>
-        <Grid Margin="24" Visibility="{Binding InfoVisibility}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
-                <ColumnDefinition Width="371*" />
-            </Grid.ColumnDefinitions>
-            <materialDesign:Card Margin="0,0,16,0"
-                           Padding="16"
-                           BorderThickness="0" VerticalAlignment="Stretch">
+      <Grid Margin="24" Visibility="{Binding InfoVisibility}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
+          <ColumnDefinition Width="371*" />
+        </Grid.ColumnDefinitions>
+        <materialDesign:Card Margin="0,0,16,0"
+                             Padding="16"
+                             BorderThickness="0" VerticalAlignment="Stretch">
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="348"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
-                     Text="{StaticResource ClientEditor.MainInfoTitle}" />
-                        <TextBox Name="Surname" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <TextBox Name="Name"  Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <TextBox Name="Patronymic" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <TextBox Name="PhoneNumber" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                        <StackPanel Margin="0,8,0,0">
-                            <TextBlock Margin="0,0,0,8"
-                       Style="{StaticResource MaterialDesignSubheadingTextBlock}">
-              Пол
-                            </TextBlock>
-                            <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}">
-                                М
-                            </RadioButton>
-                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}">
-                                Ж
-                            </RadioButton>
-                        </StackPanel>
-                        <DatePicker Name="DateBirth"  materialDesign:HintAssist.Hint="Дата рождения"
-                      Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,0"
-                      HorizontalAlignment="Left" Width="252" />
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="348" />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel>
+              <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
+                         Text="{StaticResource ClientEditor.MainInfoTitle}" />
+              <TextBox Text="{Binding Client.Surname}" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Text="{Binding Client.Name}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Text="{Binding Client.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Text="{Binding Client.PhoneNumber}" Margin="0,0,0,8"
+                       materialDesign:HintAssist.Hint="Номер телефона"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <StackPanel Margin="0,8,0,0">
+                <TextBlock Margin="0,0,0,8"
+                           Style="{StaticResource MaterialDesignSubheadingTextBlock}">
+                  Пол
+                </TextBlock>
+                <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}">
+                  М
+                </RadioButton>
+                <RadioButton Style="{StaticResource MaterialDesignRadioButton}">
+                  Ж
+                </RadioButton>
+              </StackPanel>
+              <DatePicker SelectedDate="{Binding Client.DateBirth}" materialDesign:HintAssist.Hint="Дата рождения"
+                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,0"
+                          HorizontalAlignment="Left" Width="252" />
 
-                    </StackPanel>
+            </StackPanel>
 
-                </Grid>
+          </Grid>
 
-            </materialDesign:Card>
-            <materialDesign:Card
-        Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
-                <DockPanel>
-                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
-                     Text="Комментарий" />
-                    <TextBox Name="Comment"
+        </materialDesign:Card>
+        <materialDesign:Card
+          Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
+          <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
+                       Text="Комментарий" />
+            <TextBox Text="{Binding Client.Comment}"
                      materialDesign:HintAssist.Hint="Комментарий"
                      Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                      Margin="2,17,0,0"
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
                      VerticalAlignment="Stretch"
-                     VerticalScrollBarVisibility="Auto"
-                     IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}" />
-                    <!--
-                    <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
-                        <Button Name="AddOrder" DockPanel.Dock="Right" Margin="0,0,9,0"
-                    Style="{StaticResource MaterialDesignFlatButton}"
-                    HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
-                            <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+                     VerticalScrollBarVisibility="Auto" />
 
-                        </Button>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
-                         Style="{StaticResource MaterialDesignBody2TextBlock}"
-                         Text="Заказ от 21.01.2019, 13:30. Цена: 1300р" />
-                        </StackPanel>
-                    </DockPanel>-->
+          </DockPanel>
 
-                </DockPanel>
-
-            </materialDesign:Card>
-        </Grid>
-            <materialDesign:Card Margin="24" Visibility="{Binding OrderGridVisibility}"
+        </materialDesign:Card>
+      </Grid>
+      <materialDesign:Card Margin="24" Visibility="{Binding OrderGridVisibility}"
                            Padding="16"
                            BorderThickness="0" VerticalAlignment="Stretch">
-                <ContentControl Name="OrderDataGrid"/>
-              
-            </materialDesign:Card>
-        </Grid>
-    </DockPanel>
+
+        <DockPanel LastChildFill="True">
+          <Grid DockPanel.Dock="Bottom">
+            <DockPanel>
+              <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
+                           Style="{StaticResource MaterialDesignBody2TextBlock}">
+                  <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
+                      <Binding Path="OrderDataGrid.Orders.Count"/>
+                    </MultiBinding>
+                  </TextBlock.Text>
+                  </TextBlock>
+                <!--Заказ от 21.01.2019, 13:30. Цена: 1300р/!-->
+                <Button Name="AddOrder" DockPanel.Dock="Right" Margin="0,0,9,0"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
+                  <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+                </Button>
+              </StackPanel>
+              <ContentControl DockPanel.Dock="Left" Name="Paginator"/>
+            
+          </DockPanel>
+          </Grid>
+        <ContentControl Name="OrderDataGrid" />
+        </DockPanel>
+      </materialDesign:Card>
+    </Grid>
+  </DockPanel>
 </UserControl>

@@ -56,7 +56,7 @@ namespace Laundry.Model
 
     public Client GetClientById(long id)
     {
-      return _clients.Find(x => x.Id == id).First();
+      return _clients.Find(Builders<Client>.Filter.Eq(nameof(Client.Id), id)).First();
     }
 
     public void UpdateClient(Client client)
@@ -72,7 +72,12 @@ namespace Laundry.Model
 
     public IList<Client> GetClients(int offset, int limit)
     {
-      return _clients.Find(Builders<Client>.Filter.Exists(nameof(Client.DeletionDate), false)).ToList();
+      return _clients.Find(Builders<Client>.Filter.Exists(nameof(Client.DeletionDate), false)).Skip(offset).Limit(limit).ToList();
+    }
+
+    public long GetClientsCount()
+    {
+      return _clients.CountDocuments(Builders<Client>.Filter.Exists(nameof(Client.DeletionDate), false));
     }
 
     public void AddOrder(Order order)
@@ -93,7 +98,7 @@ namespace Laundry.Model
     public Order GetOrderById(long id)
     {
       var orderById = _orders.Find(x => x.Id == id).First();
-      orderById.Client = GetClientById(orderById.Id);
+      orderById.Client = GetClientById(orderById.ClientId);
       return orderById;
     }
 
@@ -103,14 +108,28 @@ namespace Laundry.Model
         Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
         Builders<Order>.Filter.Eq(nameof(Order.ClientId), client.Id)
       );
-      var orders = _orders.Find(filter).ToList();
+      var orders = _orders.Find(filter).Skip(offset).Limit(limit).ToList();
       return orders;
+    }
+
+    public long GetOrdersCount()
+    {
+      return _orders.CountDocuments(Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false));
+    }
+
+    public long GetOrdersForClientCount(Client client)
+    {
+      var filter = Builders<Order>.Filter.And(
+        Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
+        Builders<Order>.Filter.Eq(nameof(Order.ClientId), client.Id)
+      );
+      return _orders.CountDocuments(filter);
     }
 
 
     public void UpdateOrder(Order order)
     {
-      throw new NotImplementedException();
+      _orders.ReplaceOne(x => x.Id == order.Id, order);
     }
 
     public void RemoveOrder(Order order)

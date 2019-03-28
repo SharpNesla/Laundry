@@ -62,6 +62,18 @@ namespace Laundry.Model
     [BsonIgnore]
     public Client Client { get; set; }
 
+    [BsonIgnore]
+    public Employee Obtainer { get; set; }
+
+    [BsonIgnore]
+    public Employee WasherCourier { get; set; }
+
+    [BsonIgnore]
+    public Employee OutWasherCourier { get; set; }
+
+    [BsonIgnore]
+    public Employee Distributer { get; set; }
+
     #endregion
   }
 }

@@ -48,7 +48,20 @@ namespace Laundry.Views
       this.Paginator.ElementsPerPage = 5;
 
       this.OrdersViewModel = orderGrid;
-      this.OrdersViewModel.OrderInfoClicked += ShowOrderInfo;
+
+      this.Paginator.Changed += RefreshOrders;
+    }
+
+    protected override void OnActivate()
+    {
+      base.OnActivate();
+      Paginator.Count = Model.GetOrdersCount();
+      RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
+    }
+
+    private void RefreshOrders(int page, int elements)
+    {
+      this.OrdersViewModel.Orders = Model.GetOrders(page * elements, elements);
     }
 
     public void ChangeSearchDrawerState()

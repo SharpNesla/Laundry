@@ -150,7 +150,6 @@
     <Compile Include="Utils\Converters\OrderStatusConverter.cs" />
     <Compile Include="Utils\DrawerActivityScreen.cs" />
     <Compile Include="Utils\DrawerState.cs" />
-    <Compile Include="Utils\PagingCollectionView.cs" />
     <Compile Include="Utils\ScreenFactory.cs" />
     <Compile Include="Utils\Screens.cs" />
     <Compile Include="Views\About.xaml.cs">

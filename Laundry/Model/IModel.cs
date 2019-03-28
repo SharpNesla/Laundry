@@ -12,10 +12,14 @@ namespace Laundry.Model
     void UpdateClient(Client client);
     void RemoveClient(Client client);
     IList<Client> GetClients(int offset, int limit);
+    long GetClientsCount();
+
 
     void AddOrder(Order order);
     Order GetOrderById(long id);
     IList<Order> GetOrdersForClient(Client client, int offset, int limit);
+    long GetOrdersCount();
+    long GetOrdersForClientCount(Client client);
     void UpdateOrder(Order order);
     void RemoveOrder(Order order);
     IList<Order> GetOrders(int offset, int limit);

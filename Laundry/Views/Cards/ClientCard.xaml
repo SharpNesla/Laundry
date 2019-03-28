@@ -76,8 +76,8 @@
                         </StackPanel>
 
                     </StackPanel>
-                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="EditClient"
-              Style="{StaticResource MaterialDesignFlatButton}" Content="РЕДАКТИРОВАТЬ" Margin="0,37,126,0" Height="Auto" Grid.Row="1"/>
+                    <!--<Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="EditClient"
+              Style="{StaticResource MaterialDesignFlatButton}" Content="РЕДАКТИРОВАТЬ" Margin="0,37,126,0" Height="Auto" Grid.Row="1"/>-->
                 </Grid>
 
             </materialDesign:Card>
@@ -88,12 +88,7 @@
                      Text="{StaticResource ClientEditor.OrdersInfo}" />
                     <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
                         <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
-                            <Button DockPanel.Dock="Right" Margin="0,0,9,0"
-                      Style="{StaticResource MaterialDesignFlatButton}"
-                      HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
-                                <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
-
-                            </Button>
+                            
                             <StackPanel Orientation="Horizontal">
                                 <!--<TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
                            Style="{StaticResource MaterialDesignBody2TextBlock}">

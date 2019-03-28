@@ -7,6 +7,13 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
 {
+  public enum MeasureKind
+  {
+    Kg,
+    Thing,
+    Pair
+  }
+
   public class ClothKind
   {
     [BsonIgnoreIfNull]

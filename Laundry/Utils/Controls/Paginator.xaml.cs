@@ -17,6 +17,7 @@ using AutoDependencyPropertyMarker;
 using Caliburn.Micro;
 using Laundry.Model;
 using PropertyChanged;
+using Action = System.Action;
 
 namespace Laundry.Utils.Controls
 {
@@ -27,14 +28,59 @@ namespace Laundry.Utils.Controls
   [AddINotifyPropertyChangedInterface]
   public class PaginatorViewModel
   {
-
-    private void CheckButtons(object sender, PropertyChangedEventArgs e)
-    {
-      CheckButtons();
-    }
+    private int _currentPage;
+    private long _count;
+    private int _elementsPerPage;
 
     public string ElementsName { get; set; }
-    public int ElementsPerPage { get; set; }
+
+    public int ElementsPerPage
+    {
+      get { return _elementsPerPage; }
+      set
+      {
+        _elementsPerPage = value;
+        CheckButtons();
+        this.Changed?.Invoke(this.CurrentPage - 1, this.ElementsPerPage);
+      }
+    }
+
+    public long Count
+    {
+      get { return _count; }
+      set
+      {
+        _count = value;
+        CheckButtons();
+        this.Changed?.Invoke(this.CurrentPage - 1, this.ElementsPerPage);
+      }
+    }
+
+    public int MaxPages
+    {
+      get
+      {
+        if (ElementsPerPage != 0)
+        {
+          return (int) Math.Ceiling((double)Count / ElementsPerPage);
+        }
+        else
+        {
+          return 1;
+        }
+      }
+    }
+
+    public int CurrentPage
+    {
+      get { return _currentPage; }
+      set
+      {
+        _currentPage = value;
+        CheckButtons();
+        this.Changed?.Invoke(this.CurrentPage - 1, this.ElementsPerPage);
+      }
+    }
 
     public int[] ComboValues { get; }
 
@@ -42,34 +88,34 @@ namespace Laundry.Utils.Controls
     {
       this.ComboValues = new int[] {5, 10, 20, 50, 100};
       this.ElementsPerPage = 5;
+      this.CurrentPage = 1;
+      CheckButtons();
     }
 
     public bool IsMoveNextEnabled { get; private set; }
     public bool IsMovePreviousEnabled { get; private set; }
     
-
+    public event Action<int,int> Changed;
 
     public void MoveNext()
     {
-      this.CheckButtons();
+      this.CurrentPage++;
     }
 
     public void ChangeElementsPerPage()
     {
-     
-      this.CheckButtons();
+      this.CurrentPage = 1;
     }
 
     public void MovePrevious()
     {
-      //this.PagingCollectionView.MoveToPreviousPage();
-      this.CheckButtons();
+      this.CurrentPage--;
     }
 
     private void CheckButtons()
-    {
-      //this.IsMovePreviousEnabled = this.PagingCollectionView.CurrentPage != 1;
-      //this.IsMoveNextEnabled = this.PagingCollectionView.CurrentPage != this.PagingCollectionView.PageCount;
+    { 
+      IsMovePreviousEnabled = CurrentPage != 1;
+      IsMoveNextEnabled = CurrentPage != MaxPages;
     }
   }
 }

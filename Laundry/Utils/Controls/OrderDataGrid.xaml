@@ -14,16 +14,24 @@
         <converters:OrderStatusConverter x:Key="StatusConverter"></converters:OrderStatusConverter>
     </UserControl.Resources>
   <DataGrid
+    SelectionMode="Single"
     CanUserSortColumns="True"
     CanUserAddRows="False"
     CanUserResizeColumns="True"
     CellStyle="{StaticResource CellStyle}"
     AutoGenerateColumns="False"
     ItemsSource="{Binding Orders}"
+    SelectedItem="{Binding SelectedOrder}"
     Background="{Binding ElementName=OwnControl, Path=Background}">
+    <DataGrid.ContextMenu>
+      <ContextMenu>
+        <MenuItem cal:Message.Attach="[Event Click] = [Action EditOrder()]" Header="Изменить" />
+        <MenuItem cal:Message.Attach="[Event Click] = [Action RemoveOrder()]" Header="Удалить" />
+      </ContextMenu>
+    </DataGrid.ContextMenu>
     <DataGrid.Columns>
       
-      <local:DataGridAdaptiveColumn MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"
+      <local:DataGridAdaptiveColumn Binding="{Binding Id}" MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"
                                     SortMemberPath="Id"/>
       <local:DataGridAdaptiveColumn Binding="{Binding CreationDate, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" 
                                     IsReadOnly="True" MinWidth="96" SortMemberPath="CreationDate" Header="Дата создания"/>
@@ -38,7 +46,7 @@
                                     SortMemberPath="ClothInstances.Count"
                                     Header="Кол-во вещей"/>
             <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-      <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
+      <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">

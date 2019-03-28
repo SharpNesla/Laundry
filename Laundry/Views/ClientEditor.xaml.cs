@@ -26,6 +26,8 @@ namespace Laundry.Views
   /// </summary>
   public class ClientEditorViewModel : ActivityScreen, IHandle<Client>
   {
+    private bool _isNew;
+
     [AlsoNotifyFor(nameof(EditorTitle))]
     public Client Client { get; set; }
 
@@ -34,18 +36,7 @@ namespace Laundry.Views
       get { return Client != null ? $"Редактирование клиента №{Client.Id}" : "Редактирование нового клиента"; }
     }
 
-    public string Name { get; set; }
-    public string Surname { get; set; }
-    public string Patronymic { get; set; }
-    public DateTime DateBirth { get; set; }
-    public ObservableCollection<Order> Orders { get; set; }
-    public string PhoneNumber { get; set; }
-    public int House { get; set; }
-    public string Street { get; set; }
-    public string City { get; set; }
-    public int ZipCode { get; set; }
-    public bool IsPremiumClient { get; set; }
-    public string Comment { get; set; }
+    #region TabBindings
 
     [AlsoNotifyFor(nameof(InfoVisibility))]
     public bool InfoChecked { get; set; }
@@ -64,15 +55,40 @@ namespace Laundry.Views
       get { return OrderChecked ? Visibility.Visible : Visibility.Collapsed; }
     }
 
+    #endregion
+
     public OrderDataGridViewModel OrderDataGrid { get; set; }
 
-    public ClientEditorViewModel(IEventAggregator aggregator, IModel model, OrderDataGridViewModel grid) : base(
+    public ClientEditorViewModel(IEventAggregator aggregator, IModel model, OrderDataGridViewModel grid, PaginatorViewModel paginator) : base(
       aggregator, model)
     {
       this.EventAggregator.Subscribe(this);
       this.InfoChecked = true;
       this.OrderDataGrid = grid;
+
+      this._isNew = true;
+      this.Client = new Client();
+
+      this.Paginator = paginator;
+      paginator.ElementsName = "Заказов";
+      this.Paginator.Changed += RefreshOrders;
     }
+
+    private void RefreshOrders(int page, int elements)
+    {
+      var client = this.Client;
+      if (client != null)
+        this.OrderDataGrid.Orders = Model.GetOrdersForClient(client, page * elements, elements);
+    }
+
+    protected override void OnActivate()
+    {
+      base.OnActivate();
+      RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
+      this.Paginator.Count = this.Model.GetOrdersForClientCount(this.Client);
+    }
+
+    public PaginatorViewModel Paginator { get; set; }
 
     public void Discard()
     {
@@ -82,59 +98,21 @@ namespace Laundry.Views
     public void AddOrder(object sender, RoutedEventArgs e)
     {
       ChangeApplicationScreen(Screens.OrderEditor);
-      this.EventAggregator.BeginPublishOnUIThread(this.Model);
+      this.EventAggregator.BeginPublishOnUIThread(this.Client);
     }
 
 
     public void Handle(Client client)
     {
       this.Client = this.Model.GetClientById(client.Id);
-      this.OrderDataGrid.Orders = Model.GetOrdersForClient(client, 0, 0);
+      this._isNew = false;
+      RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
       this.EventAggregator.Unsubscribe(this);
-      CopyClientInfo();
-    }
-
-    void CopyClientInfo()
-    {
-      if (Client != null)
-      {
-        this.Name = Client.Name;
-        this.Surname = Client.Surname;
-        this.Patronymic = Client.Patronymic;
-        this.DateBirth = Client.DateBirth;
-        this.Orders = Client.Orders;
-        this.PhoneNumber = Client.PhoneNumber;
-        this.House = Client.House;
-        this.Street = Client.Street;
-        this.City = Client.City;
-        this.ZipCode = Client.ZipCode;
-        this.IsPremiumClient = Client.IsPremiumClient;
-        this.Comment = Client.Comment;
-      }
     }
 
     public void ApplyChanges()
     {
-      var isNewClient = this.Client == null;
-
-      if (isNewClient)
-      {
-        this.Client = new Client();
-      }
-
-      Client.Name = this.Name;
-      Client.Surname = this.Surname;
-      Client.Patronymic = this.Patronymic;
-      Client.DateBirth = this.DateBirth;
-      Client.PhoneNumber = this.PhoneNumber;
-      Client.House = this.House;
-      Client.Street = this.Street;
-      Client.City = this.City;
-      Client.ZipCode = this.ZipCode;
-      Client.IsPremiumClient = this.IsPremiumClient;
-      Client.Comment = this.Comment;
-
-      if (isNewClient)
+      if (_isNew)
       {
         Model.AddClient(this.Client);
       }

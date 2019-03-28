@@ -8,135 +8,152 @@
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="800" d:DesignHeight="800"
              Background="{DynamicResource MaterialDesignPaper}">
-    <DockPanel>
-    <StackPanel DockPanel.Dock="Bottom"
-                Orientation="Horizontal"
-                HorizontalAlignment="Right" Margin="0,0,24,24">
-            <Button
-        Style="{StaticResource MaterialDesignFlatButton}"
-        IsDefault="True" Margin="0,0,20,0"
-        Command="materialDesign:DialogHost.CloseDialogCommand">
-                <Button.CommandParameter>
-                    <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
-                        True
-                    </system:Boolean>
-                </Button.CommandParameter>
-                ПРИНЯТЬ
-            </Button>
-            <Button Name="Cancel"
-        Style="{StaticResource MaterialDesignFlatButton}"
-        IsCancel="True" >
-                
-                ОТМЕНИТЬ
-            </Button>
-        </StackPanel>
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
+      <Button Name="ApplyChanges"
+              Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
+        ПРИНЯТЬ
+      </Button>
+      <Button
+        Style="{StaticResource MaterialDesignFlatButton}" Name="Discard">
+        ОТМЕНИТЬ
+      </Button>
+    </StackPanel>
 
-      <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                                Padding="16,20,20,20">
-        <StackPanel Orientation="Horizontal">
-          <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="24" Width="24"/>
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid">
+      <Grid
+        Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
+          <materialDesign:PackIcon Kind="Account" Width="24" Height="24" />
           <TextBlock
-
             Style="{StaticResource MaterialDesignTitleTextBlock}"
             VerticalAlignment="Center"
-            Margin="8 0 0 0" Text="{StaticResource EmployeeEditor.Title}" />
+            Margin="16 0 0 0" Text="{Binding EditorTitle}" />
         </StackPanel>
-      </materialDesign:ColorZone>
-    <Grid Margin="24">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500"/>
-        <ColumnDefinition Width="371*"/>
-      </Grid.ColumnDefinitions>
-      <materialDesign:Card Margin="0,0,16,0"
-          BorderThickness="0" VerticalAlignment="Stretch">
-        <ScrollViewer Padding="16" VerticalScrollBarVisibility="Auto">
-          <StackPanel>
-            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="Информация о сотруднике" />
-            <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
-               Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
-               Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
-               Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
-          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Серия и номер паспорта"
-          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Паспорт выдан"
-          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Код подразделения"
-          Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <ComboBox Margin="0,24,0,8" Width="140" HorizontalAlignment="Left"
-                materialDesign:HintAssist.Hint="Должность">
-              <ComboBoxItem>
-                Приёмщик
-              </ComboBoxItem>
-              <ComboBoxItem>
-                Директор
-              </ComboBoxItem>
-              <ComboBoxItem>
-                Курьер
-              </ComboBoxItem>
-              <ComboBoxItem>
-                Прачечник
-              </ComboBoxItem>
-              <ComboBoxItem>
-                Водитель
-              </ComboBoxItem>
-            </ComboBox>
-            <StackPanel Margin="0,8,0,0">
-              <TextBlock Margin="0,0,0,8"
-                   Style="{StaticResource MaterialDesignSubheadingTextBlock}">
-          Пол
-              </TextBlock>
-              <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}"
-                     Tag="True">
-                М
-              </RadioButton>
-              <RadioButton Style="{StaticResource MaterialDesignRadioButton}"
-                     Tag="True">
-                Ж
-              </RadioButton>
-            </StackPanel>
-            <DatePicker
-        
-        materialDesign:HintAssist.Hint="Дата рождения"
-        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16" HorizontalAlignment="Left"/>
 
-            <Expander Background="{StaticResource MaterialDesignCardBackground}" materialDesign:ShadowAssist.ShadowDepth="Depth3">
-              <Expander.Header>
-                <TextBlock Margin="-24,0,0,0" TextWrapping="Wrap">
-                  <TextBlock.Text>
-                    <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">
-                      <Binding ElementName="CityTextBox" Path="Text" />
-                      <Binding ElementName="StreetTextBox" Path="Text" />
-                      <Binding ElementName="HouseTextBox" Path="Text" />
-                      <Binding ElementName="ZipCodeTextBox" Path="Text" />
-                    </MultiBinding>
-                  </TextBlock.Text>
+        <RadioButton
+          Style="{StaticResource MaterialDesignTabRadioButton}"
+          IsChecked="{Binding InfoChecked}" Height="42" Grid.Row="1"
+          Content="Общая информация" />
+        <RadioButton IsChecked="{Binding OrderChecked}" Grid.Column="1"
+                     Style="{StaticResource MaterialDesignTabRadioButton}"
+                     Height="42" Grid.Row="1"
+                     Content="Заказы" />
+
+      </Grid>
+
+
+    </materialDesign:ColorZone>
+    <Grid>
+      <Grid Margin="24" Visibility="{Binding InfoVisibility}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
+          <ColumnDefinition Width="371*" />
+        </Grid.ColumnDefinitions>
+        <materialDesign:Card Margin="0,0,16,0"
+                             BorderThickness="0" VerticalAlignment="Stretch">
+          <ScrollViewer Padding="16" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+              <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="Информация о сотруднике" />
+              <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Серия и номер паспорта"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Паспорт выдан"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Код подразделения"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <ComboBox Margin="0,24,0,8" Width="140" HorizontalAlignment="Left"
+                        materialDesign:HintAssist.Hint="Должность">
+                <ComboBoxItem>
+                  Приёмщик
+                </ComboBoxItem>
+                <ComboBoxItem>
+                  Директор
+                </ComboBoxItem>
+                <ComboBoxItem>
+                  Курьер
+                </ComboBoxItem>
+                <ComboBoxItem>
+                  Прачечник
+                </ComboBoxItem>
+                <ComboBoxItem>
+                  Водитель
+                </ComboBoxItem>
+              </ComboBox>
+              <StackPanel Margin="0,8,0,0">
+                <TextBlock Margin="0,0,0,8"
+                           Style="{StaticResource MaterialDesignSubheadingTextBlock}">
+                  Пол
                 </TextBlock>
-              </Expander.Header>
-              <StackPanel Margin="16">
-                <TextBox Name="CityTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-
-                <TextBox Name="StreetTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Улица" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-
-                <TextBox Name="HouseTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Дом" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-
-                <TextBox Name="ZipCodeTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Почтовый индекс" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}"
+                             Tag="True">
+                  М
+                </RadioButton>
+                <RadioButton Style="{StaticResource MaterialDesignRadioButton}"
+                             Tag="True">
+                  Ж
+                </RadioButton>
               </StackPanel>
-            </Expander>
+              <DatePicker
 
-          </StackPanel>
-        </ScrollViewer>
-      </materialDesign:Card>
-      <materialDesign:Card
-        Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
-        <DockPanel>
-       
-        </DockPanel>
+                materialDesign:HintAssist.Hint="Дата рождения"
+                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16"
+                HorizontalAlignment="Left" />
 
-      </materialDesign:Card>
+              <Expander Background="{StaticResource MaterialDesignCardBackground}"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                <Expander.Header>
+                  <TextBlock Margin="-24,0,0,0" TextWrapping="Wrap">
+                    <TextBlock.Text>
+                      <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">
+                        <Binding ElementName="CityTextBox" Path="Text" />
+                        <Binding ElementName="StreetTextBox" Path="Text" />
+                        <Binding ElementName="HouseTextBox" Path="Text" />
+                        <Binding ElementName="ZipCodeTextBox" Path="Text" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
+                </Expander.Header>
+                <StackPanel Margin="16">
+                  <TextBox Name="CityTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город"
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                  <TextBox Name="StreetTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Улица"
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                  <TextBox Name="HouseTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Дом"
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                  <TextBox Name="ZipCodeTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Почтовый индекс"
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </StackPanel>
+              </Expander>
+
+            </StackPanel>
+          </ScrollViewer>
+        </materialDesign:Card>
+        <materialDesign:Card
+          Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
+          <DockPanel />
+
+        </materialDesign:Card>
+      </Grid>
+
     </Grid>
   </DockPanel>
 </UserControl>

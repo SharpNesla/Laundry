@@ -28,7 +28,7 @@ namespace Laundry.Views
 
     public async void ShowClientInfo(Client context)
     {
-      _card.Client = context;
+      this.EventAggregator.PublishOnUIThread(context);
       await DialogHost.Show(_card);
     }
 
@@ -42,19 +42,29 @@ namespace Laundry.Views
 
       this.Paginator = paginator;
       this.Paginator.ElementsName = "Заказов";
+
+      this.Paginator.Changed += RefreshClients;
+    }
+
+    private void RefreshClients(int page, int elements)
+    {
+      this.Clients = Model.GetClients(page * elements, elements);
     }
 
     public PaginatorViewModel Paginator { get; set; }
 
     protected override void OnActivate()
     {
-      this.Clients = Model.GetClients(0, 0);
+      base.OnActivate();
+      Paginator.Count = Model.GetClientsCount();
+      RefreshClients(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 
     public void RemoveClient()
     {
+      this.Paginator.Count = Clients.Count;
       Model.RemoveClient(SelectedClient);
-      this.Clients = Model.GetClients(0, 0);
+      RefreshClients(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 
     public void EditClient()
