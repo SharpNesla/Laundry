@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Laundry.Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
@@ -13,7 +14,7 @@ namespace Laundry.Model
     Granted
   }
 
-  public class Order
+  public class Order : IMongoCollectionElement
   {
     [BsonIgnoreIfDefault]
     public long Id { get; set; }

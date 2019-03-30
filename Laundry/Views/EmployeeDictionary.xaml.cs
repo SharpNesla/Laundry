@@ -20,7 +20,7 @@ namespace Laundry.Views
 
     public EmployeeDictionaryViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
-      this.Employees = Model.GetEmployees(0, 0);
+      this.Employees = Model.Employees.Get(0, 20);
     }
 
     public void AddEmployee()

@@ -34,18 +34,18 @@ namespace Laundry.Views
     {
       if (_isNewOrder)
       {
-        Model.AddOrder(this.Order);
+        Model.Orders.Add(this.Order);
       }
       else
       {
-        Model.UpdateOrder(this.Order);
+        Model.Orders.Update(this.Order);
       }
       ChangeApplicationScreen(Screens.Context);
     }
 
     public void Handle(Order message)
     {
-      this.Order = this.Model.GetOrderById(message.Id);
+      this.Order = this.Model.Orders.GetById(message.Id);
       this._isNewOrder = false;
       this.EventAggregator.Unsubscribe(this);
     }
@@ -55,7 +55,7 @@ namespace Laundry.Views
       this.Order = new Order();
       this._isNewOrder = true;
       this.Order.ClientId = message.Id;
-      this.Order.Client = Model.GetClientById(message.Id);
+      this.Order.Client = Model.Clients.GetById(message.Id);
     }
   }
 }

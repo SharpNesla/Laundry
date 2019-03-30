@@ -12,7 +12,7 @@ namespace Laundry.Utils.Controls
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
   
-  public class OrderDataGridViewModel
+  public class OrderDataGridViewModel : PropertyChangedBase
   {
     private OrderCard _card;
     private IEventAggregator _eventAggregator;

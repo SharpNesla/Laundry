@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -58,8 +59,24 @@
             <TextBox Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
                              materialDesign:HintAssist.Hint="Логин"
                              Margin="0,0,0,16" />
+            <TextBox Text="{Binding Password}" Visibility="Collapsed" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
+                     materialDesign:HintAssist.Hint="Логин"
+                     Margin="0,0,0,16" />
             <PasswordBox Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}"
-                                 materialDesign:HintAssist.Hint="Пароль" Margin="0,0,0,16" />
+                                 materialDesign:HintAssist.Hint="Пароль" Margin="0,0,0,16"
+                         cal:Message.Attach="[Event PasswordChanged] = [Action PasswordChanged($source)]"/>
+            <ToggleButton Visibility="Collapsed"
+              Style="{StaticResource MaterialDesignActionToggleButton}"
+              Margin="0,-90,-212,0">
+              <ToggleButton.Content>
+                <materialDesign:PackIcon
+                  Kind="EyeOff" />
+              </ToggleButton.Content>
+              <materialDesign:ToggleButtonAssist.OnContent>
+                <materialDesign:PackIcon
+                  Kind="Eye" />
+              </materialDesign:ToggleButtonAssist.OnContent>
+            </ToggleButton>
             <Button
                       Style="{StaticResource MaterialDesignRaisedButton}" Name="Login">
               Войти

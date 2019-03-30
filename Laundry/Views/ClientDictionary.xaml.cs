@@ -48,7 +48,7 @@ namespace Laundry.Views
 
     private void RefreshClients(int page, int elements)
     {
-      this.Clients = Model.GetClients(page * elements, elements);
+      this.Clients = Model.Clients.Get(page * elements, elements);
     }
 
     public PaginatorViewModel Paginator { get; set; }
@@ -56,14 +56,14 @@ namespace Laundry.Views
     protected override void OnActivate()
     {
       base.OnActivate();
-      Paginator.Count = Model.GetClientsCount();
+      Paginator.Count = Model.Clients.GetCount();
       RefreshClients(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 
     public void RemoveClient()
     {
       this.Paginator.Count = Clients.Count;
-      Model.RemoveClient(SelectedClient);
+      Model.Clients.Remove(SelectedClient);
       RefreshClients(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 

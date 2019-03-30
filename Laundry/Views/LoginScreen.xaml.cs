@@ -1,4 +1,6 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using System.Security;
+using System.Windows.Controls;
+using MaterialDesignThemes.Wpf;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
@@ -10,6 +12,8 @@ namespace Laundry.Views
   /// </summary>
   public class LoginScreenViewModel : ActivityScreen
   {
+    public SecureString Password { get; set; }
+    
 
     public LoginScreenViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
@@ -25,6 +29,11 @@ namespace Laundry.Views
       DialogHost.Show(new LoginSettings());
     }
 
-    
+
+
+    public void PasswordChanged(PasswordBox box)
+    {
+      Password = box.SecurePassword;
+    }
   }
 }

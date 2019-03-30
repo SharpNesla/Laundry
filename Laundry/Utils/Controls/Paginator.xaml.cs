@@ -60,7 +60,7 @@ namespace Laundry.Utils.Controls
     {
       get
       {
-        if (ElementsPerPage != 0)
+        if (Count != 0)
         {
           return (int) Math.Ceiling((double)Count / ElementsPerPage);
         }

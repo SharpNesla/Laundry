@@ -50,7 +50,7 @@
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
-              <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
+              <Button Margin="0" Foreground="{StaticResource MaterialDesignTextBoxBorder}"
                       Style="{StaticResource MaterialDesignFlatButton}"
                       cal:Message.Attach="ShowClientInfo($dataContext)">
                 <materialDesign:PackIcon

@@ -39,7 +39,7 @@ namespace Laundry.Views
 
     public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, OrderCard card, PaginatorViewModel paginator, OrderDataGridViewModel orderGrid) : base(aggregator, model)
     {
-      orderGrid.Orders = Model.GetOrders(0, 0);
+      orderGrid.Orders = Model.Orders.Get(0, 0);
 
       this._card = card;
 
@@ -55,13 +55,13 @@ namespace Laundry.Views
     protected override void OnActivate()
     {
       base.OnActivate();
-      Paginator.Count = Model.GetOrdersCount();
+      Paginator.Count = Model.Orders.GetCount();
       RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 
     private void RefreshOrders(int page, int elements)
     {
-      this.OrdersViewModel.Orders = Model.GetOrders(page * elements, elements);
+      this.OrdersViewModel.Orders = Model.Orders.Get(page * elements, elements);
     }
 
     public void ChangeSearchDrawerState()

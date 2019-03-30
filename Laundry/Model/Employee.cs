@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Laundry.Model.DatabaseClients;
 
 namespace Laundry.Model
 {
@@ -12,7 +13,7 @@ namespace Laundry.Model
     Driver
   }
 
-  public class Employee
+  public class Employee : IMongoCollectionElement
   {
     public long Id { get; set; }
     public string Name { get; set; }

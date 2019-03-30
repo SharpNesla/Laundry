@@ -126,9 +126,12 @@
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\ClothInstance.cs" />
     <Compile Include="Model\ClothKind.cs" />
+    <Compile Include="Model\DatabaseClients\CollectionActions.cs" />
+    <Compile Include="Model\DatabaseClients\OrderCollectionActions.cs" />
     <Compile Include="Model\DataBaseModel.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\IModel.cs" />
+    <Compile Include="Model\DatabaseClients\IMongoCollectionElement.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Subsidiary.cs" />
     <Compile Include="Utils\ActivityScreen.cs" />

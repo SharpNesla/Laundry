@@ -78,14 +78,13 @@ namespace Laundry.Views
     {
       var client = this.Client;
       if (client != null)
-        this.OrderDataGrid.Orders = Model.GetOrdersForClient(client, page * elements, elements);
+        this.OrderDataGrid.Orders = Model.Orders.GetForClient(client, page * elements, elements);
     }
 
     protected override void OnActivate()
     {
       base.OnActivate();
       RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
-      this.Paginator.Count = this.Model.GetOrdersForClientCount(this.Client);
     }
 
     public PaginatorViewModel Paginator { get; set; }
@@ -104,8 +103,11 @@ namespace Laundry.Views
 
     public void Handle(Client client)
     {
-      this.Client = this.Model.GetClientById(client.Id);
+      this.Client = this.Model.Clients.GetById(client.Id);
       this._isNew = false;
+      
+      if (this.Client != null) Paginator.Count = Model.Orders.GetForClientCount(this.Client);
+
       RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
       this.EventAggregator.Unsubscribe(this);
     }
@@ -114,11 +116,11 @@ namespace Laundry.Views
     {
       if (_isNew)
       {
-        Model.AddClient(this.Client);
+        Model.Clients.Add(this.Client);
       }
       else
       {
-        Model.UpdateClient(this.Client);
+        Model.Clients.Update(this.Client);
       }
 
       ChangeApplicationScreen(Screens.Context);

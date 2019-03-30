@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Laundry.Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
 {
-  public class Client
+  public class Client : IMongoCollectionElement
   {
     [BsonId]
     public long Id { get; set; }
