@@ -7,7 +7,6 @@ namespace Laundry.Model
 {
   public class Client : IMongoCollectionElement
   {
-    [BsonId]
     public long Id { get; set; }
 
     [BsonIgnoreIfNull]
@@ -48,5 +47,8 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
+
+    [BsonIgnore]
+    public long OrdersCount { get; set; }
   }
 }

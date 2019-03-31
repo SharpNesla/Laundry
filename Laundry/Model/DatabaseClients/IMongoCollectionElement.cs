@@ -5,7 +5,6 @@ namespace Laundry.Model.DatabaseClients
 {
   public interface IMongoCollectionElement
   {
-    [BsonIgnoreIfDefault]
     long Id { get; set; }
 
     [BsonIgnoreIfDefault]

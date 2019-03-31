@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using System;
+using System.Security;
 using System.Windows.Controls;
 using MaterialDesignThemes.Wpf;
 using Caliburn.Micro;
@@ -12,8 +13,8 @@ namespace Laundry.Views
   /// </summary>
   public class LoginScreenViewModel : ActivityScreen
   {
-    public SecureString Password { get; set; }
-    
+    public string Password { get; set; }
+    public string Username { get; set; }
 
     public LoginScreenViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
@@ -21,7 +22,16 @@ namespace Laundry.Views
 
     public void Login()
     {
-      this.ChangeApplicationScreen(Utils.Screens.DashBoard);
+      try
+      {
+        this.Model.Connect(Username, Password);
+        ChangeApplicationScreen(Screens.DashBoard);
+      }
+      catch (Exception e)
+      {
+        
+      }
+      
     }
 
     public void Settings()
@@ -29,11 +39,16 @@ namespace Laundry.Views
       DialogHost.Show(new LoginSettings());
     }
 
+    public void SnackBarLoaded(Snackbar bar)
+    {
+      this.SnackBar = bar;
+    }
 
+    public Snackbar SnackBar { get; set; }
 
     public void PasswordChanged(PasswordBox box)
     {
-      Password = box.SecurePassword;
+      Password = box.Password;
     }
   }
 }

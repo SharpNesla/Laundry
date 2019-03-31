@@ -26,14 +26,19 @@ namespace Laundry.Views
   /// </summary>
   public class ClientEditorViewModel : ActivityScreen, IHandle<Client>
   {
-    private bool _isNew;
-
-    [AlsoNotifyFor(nameof(EditorTitle))]
+    
     public Client Client { get; set; }
+
+    [AlsoNotifyFor(nameof(IsOrdersEnabled), nameof(EditorTitle))]
+    public bool IsNew { get; set; }
+    public bool IsOrdersEnabled
+    {
+      get { return !IsNew; }
+    }
 
     public string EditorTitle
     {
-      get { return Client != null ? $"Редактирование клиента №{Client.Id}" : "Редактирование нового клиента"; }
+      get { return !IsNew ? $"Редактирование клиента №{Client.Id}" : "Редактирование нового клиента"; }
     }
 
     #region TabBindings
@@ -66,7 +71,7 @@ namespace Laundry.Views
       this.InfoChecked = true;
       this.OrderDataGrid = grid;
 
-      this._isNew = true;
+      this.IsNew = true;
       this.Client = new Client();
 
       this.Paginator = paginator;
@@ -89,6 +94,7 @@ namespace Laundry.Views
 
     public PaginatorViewModel Paginator { get; set; }
 
+
     public void Discard()
     {
       ChangeApplicationScreen(Screens.Context);
@@ -104,7 +110,7 @@ namespace Laundry.Views
     public void Handle(Client client)
     {
       this.Client = this.Model.Clients.GetById(client.Id);
-      this._isNew = false;
+      this.IsNew = false;
       
       if (this.Client != null) Paginator.Count = Model.Orders.GetForClientCount(this.Client);
 
@@ -114,7 +120,7 @@ namespace Laundry.Views
 
     public void ApplyChanges()
     {
-      if (_isNew)
+      if (IsNew)
       {
         Model.Clients.Add(this.Client);
       }

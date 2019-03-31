@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace Laundry.Model
 {
-
-
   public class ClothInstance
   {
     public ClothKind Kind { get; set; }

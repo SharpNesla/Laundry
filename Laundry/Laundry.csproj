@@ -126,7 +126,9 @@
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\ClothInstance.cs" />
     <Compile Include="Model\ClothKind.cs" />
+    <Compile Include="Model\DatabaseClients\ClientCollectionActions.cs" />
     <Compile Include="Model\DatabaseClients\CollectionActions.cs" />
+    <Compile Include="Model\DatabaseClients\EmployeeCollectionActions.cs" />
     <Compile Include="Model\DatabaseClients\OrderCollectionActions.cs" />
     <Compile Include="Model\DataBaseModel.cs" />
     <Compile Include="Model\Employee.cs" />
@@ -160,6 +162,9 @@
     </Compile>
     <Compile Include="Views\CarDictionary.xaml.cs">
       <DependentUpon>CarDictionary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cards\EmployeeCard.xaml.cs">
+      <DependentUpon>EmployeeCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Cards\OrderCard.xaml.cs">
       <DependentUpon>OrderCard.xaml</DependentUpon>
@@ -243,6 +248,10 @@
     <Page Include="Views\CarDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Cards\EmployeeCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Cards\OrderCard.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -371,7 +380,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Actions\" />
-    <Folder Include="Views\SearchDialogs\" />
+    <Folder Include="Views\SearchPopups\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.3.5\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.5\build\Fody.targets')" />

@@ -104,7 +104,7 @@
       <DataGrid.ContextMenu>
         <ContextMenu>
           <MenuItem cal:Message.Attach="[Event Click] = [Action EditClient()]" Header="Изменить" />
-          <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
+          <MenuItem cal:Message.Attach="[Event Click] = [Action RemoveClient()]" Header="Удалить" />
         </ContextMenu>
       </DataGrid.ContextMenu>
       <DataGrid.Columns>
@@ -138,7 +138,7 @@
         <controls:DataGridAdaptiveColumn Binding="{Binding DateBirth, StringFormat='dd.MM.yyyy'}" CanUserReorder="True"
                                          IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="128"
                                          Header="Дата рождения" />
-        <controls:DataGridAdaptiveColumn Binding="{Binding Orders.Count}" CanUserReorder="True" IsReadOnly="True"
+        <controls:DataGridAdaptiveColumn Binding="{Binding OrdersCount}" CanUserReorder="True" IsReadOnly="True"
                                          SortMemberPath="Patronymic" MinWidth="86"
                                          Header="Заказы" />
 
@@ -150,6 +150,7 @@
                 <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
                         Style="{StaticResource MaterialDesignFlatButton}"
                         cal:Message.Attach="ShowClientInfo($dataContext)">
+
                   <materialDesign:PackIcon Kind="InfoOutline" Height="24" Width="24" />
                 </Button>
               </StackPanel>

@@ -9,12 +9,8 @@ namespace Laundry.Model.DatabaseClients
 {
   public class OrderCollectionActions : CollectionActions<Order>
   {
-    private CollectionActions<Client> _clientCollectionActions;
-
-
-    public OrderCollectionActions(IMongoCollection<Order> collection, CollectionActions<Client> clientCollectionActions) : base(collection)
+    public OrderCollectionActions(IModel model, IMongoCollection<Order> collection) : base(model, collection)
     {
-      this._clientCollectionActions = clientCollectionActions;
     }
 
     public IList<Order> GetForClient(Client client, int offset, int limit)
@@ -29,16 +25,15 @@ namespace Laundry.Model.DatabaseClients
 
     public override Order GetById(long id)
     {
-        var orderById = Collection.Find(x => x.Id == id).First();
-        orderById.Client = _clientCollectionActions.GetById(orderById.ClientId);
-        return orderById;
+      var orderById = base.GetById(id);
+      orderById.Client = Model.Clients.GetById(orderById.ClientId);
+      return orderById;
     }
 
     public override IList<Order> Get(int offset, int limit)
     {
-      var orders = Collection.Find(Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false))
-        .Skip(offset).Limit(limit).ToList();
-      foreach (var x in orders) x.Client = _clientCollectionActions.GetById(x.ClientId);
+      var orders = base.Get(offset, limit);
+      foreach (var x in orders) x.Client = Model.Clients.GetById(x.ClientId);
       return orders;
     }
 

@@ -16,7 +16,6 @@ namespace Laundry.Model
 
   public class Order : IMongoCollectionElement
   {
-    [BsonIgnoreIfDefault]
     public long Id { get; set; }
 
     [BsonIgnoreIfNull]
@@ -36,7 +35,7 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
-
+    [BsonIgnoreIfNull]
     public IList<ClothInstance> ClothInstances { get; set; }
 
     #region Ids

@@ -22,14 +22,14 @@ using PropertyChanged;
 namespace Laundry.Views
 {
   [AddINotifyPropertyChangedInterface]
-  public class ClientCardViewModel : IHandle<Client>
+  public class EmployeeCardViewModel : IHandle<Employee>
   {
     private readonly IEventAggregator _eventAggregator;
     private IModel _model;
     public OrderDataGridViewModel OrderGrid { get; set; }
-    public Client Client { get; set; }
+    public Employee Client { get; set; }
 
-    public ClientCardViewModel(IEventAggregator eventAggregator, IModel model, OrderDataGridViewModel grid)
+    public EmployeeCardViewModel(IEventAggregator eventAggregator, IModel model, OrderDataGridViewModel grid)
     {
       _eventAggregator = eventAggregator;
       eventAggregator.Subscribe(this);
@@ -44,10 +44,9 @@ namespace Laundry.Views
       _eventAggregator.PublishOnUIThread(this.Client);
     }
 
-    public void Handle(Client message)
+    public void Handle(Employee message)
     {
-      this.Client = _model.Clients.GetById(message.Id);
-      this.OrderGrid.Orders = _model.Orders.GetForClient(this.Client, 0, 10);
+      this.Client = _model.Employees.GetById(message.Id);
     }
   }
 }

@@ -58,7 +58,7 @@ namespace Laundry
       container.Singleton<AboutViewModel>();
       
       //Non-screen views like dialog views
-      container.Singleton<ClientCard>();
+      container.Singleton<ClientCardViewModel>();
       container.Singleton<OrderCard>();
 
       container.PerRequest<PaginatorViewModel>();

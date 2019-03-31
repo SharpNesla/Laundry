@@ -15,7 +15,7 @@ namespace Laundry.Views
 {
   public class ClientDictionaryViewModel : DrawerActivityScreen
   {
-    private readonly ClientCard _card;
+    public ClientCardViewModel ClientCard { get; set; }
 
 
     public IList<Client> Clients { get; set; }
@@ -26,19 +26,25 @@ namespace Laundry.Views
       ChangeApplicationScreen(Screens.ClientEditor);
     }
 
-    public async void ShowClientInfo(Client context)
+    public void ShowClientInfo(Client context)
     {
+     
+      //Find view for ClientCard ViewModel and bind ViewModel with View
+      var view = ViewLocator.LocateForModel(ClientCard, null, null);
+      ViewModelBinder.Bind(this.ClientCard, view, null);
+
       this.EventAggregator.PublishOnUIThread(context);
-      await DialogHost.Show(_card);
+
+      DialogHost.Show(view);
     }
 
     public int Count { get; set; } = 5;
 
-    public ClientDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCard card,
-      PaginatorViewModel paginator) : base(aggregator,
+    public ClientDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCardViewModel cardViewModel,
+      PaginatorViewModel paginator, IWindowManager wm) : base(aggregator,
       model)
     {
-      this._card = card;
+      this.ClientCard = cardViewModel;
 
       this.Paginator = paginator;
       this.Paginator.ElementsName = "Заказов";
