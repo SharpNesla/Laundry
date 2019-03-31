@@ -11,9 +11,12 @@ namespace Laundry.Model.DatabaseClients
   {
     protected IMongoCollection<T> Collection;
 
-    public CollectionActions(IMongoCollection<T> collection)
+    protected IModel Model{ get; set; }
+
+    public CollectionActions(IModel model, IMongoCollection<T> collection)
     {
       this.Collection = collection;
+      this.Model = model;
     }
 
     public virtual void Add(T entity)
@@ -48,12 +51,14 @@ namespace Laundry.Model.DatabaseClients
 
     public virtual IList<T> Get(int offset, int limit)
     {
-      return Collection.Find(Builders<T>.Filter.Exists(nameof(IMongoCollectionElement.DeletionDate), false)).Skip(offset).Limit(limit).ToList();
+      return Collection.Find(Builders<T>.Filter.Exists(nameof(IMongoCollectionElement.DeletionDate), false))
+        .Skip(offset).Limit(limit).ToList();
     }
 
     public virtual IList<T> GetFiltered(int offset, int limit, FilterDefinition<T> filter)
-    {
-      return Collection.Find(Builders<T>.Filter.Exists(nameof(IMongoCollectionElement.DeletionDate), false)).Skip(offset).Limit(limit).ToList();
+    { 
+      return Collection.Find(Builders<T>.Filter.Exists(nameof(IMongoCollectionElement.DeletionDate), false))
+        .Skip(offset).Limit(limit).ToList();
     }
 
     public long GetCount()

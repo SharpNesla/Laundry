@@ -36,7 +36,7 @@
           Style="{StaticResource MaterialDesignTabRadioButton}"
           IsChecked="{Binding InfoChecked}" Height="42" Grid.Row="1"
           Content="Общая информация" />
-        <RadioButton IsChecked="{Binding OrderChecked}" Grid.Column="1"
+        <RadioButton IsChecked="{Binding OrderChecked}" IsEnabled="{Binding IsOrdersEnabled}" Grid.Column="1"
                      Style="{StaticResource MaterialDesignTabRadioButton}"
                      Height="42" Grid.Row="1"
                      Content="Заказы" />
@@ -133,7 +133,7 @@
                            Style="{StaticResource MaterialDesignBody2TextBlock}">
                   <TextBlock.Text>
                     <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
-                      <Binding Path="OrderDataGrid.Orders.Count"/>
+                      <Binding Path="Client.OrdersCount"/>
                     </MultiBinding>
                   </TextBlock.Text>
                   </TextBlock>

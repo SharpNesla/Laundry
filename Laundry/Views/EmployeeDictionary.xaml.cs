@@ -7,6 +7,7 @@ using System.Windows.Data;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Utils.Controls;
 using MaterialDesignThemes.Wpf;
 
 namespace Laundry.Views
@@ -18,8 +19,13 @@ namespace Laundry.Views
   {
     public IList<Employee> Employees { get; set; }
 
-    public EmployeeDictionaryViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+    public PaginatorViewModel Paginator { get; set; }
+
+    public EmployeeDictionaryViewModel(IEventAggregator aggregator,PaginatorViewModel paginator, IModel model) : base(aggregator, model)
     {
+      this.Paginator = paginator;
+      this.Paginator.ElementsName = "Работников";
+
       this.Employees = Model.Employees.Get(0, 20);
     }
 

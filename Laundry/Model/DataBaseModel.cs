@@ -15,16 +15,22 @@ namespace Laundry.Model
 {
   class DataBaseModel : IModel
   {
-
-    public Employee CurrentUser { get; }
+    public Employee CurrentUser { get; set; }
     public CollectionActions<Client> Clients { get; set; }
-    public CollectionActions<Employee> Employees { get; set; }
+    public EmployeeCollectionActions Employees { get; set; }
     public OrderCollectionActions Orders { get; set; }
-
-    private readonly IMongoDatabase _dataBase;
+    
+    private IMongoDatabase _dataBase;
     private IMongoCollection<Client> _clients;
     private IMongoCollection<Order> _orders;
     private IMongoCollection<Employee> _employees;
+
+    public void Connect(string username, string password)
+    {
+      this.CurrentUser = this.Employees.GetLoginEmployee(username, password);
+    }
+
+    public event Action ConnectionLost;
 
     public DataBaseModel()
     {
@@ -37,9 +43,9 @@ namespace Laundry.Model
       this._orders = _dataBase.GetCollection<Order>("orders");
       this._employees = _dataBase.GetCollection<Employee>("employees");
 
-      this.Clients = new CollectionActions<Client>(_clients);
-      this.Employees = new CollectionActions<Employee>(_employees);
-      this.Orders = new OrderCollectionActions(_orders, Clients);
+      this.Clients = new ClientCollectionActions(this, _clients);
+      this.Employees = new EmployeeCollectionActions(this, _employees);
+      this.Orders = new OrderCollectionActions(this, _orders);
     }
   }
 }

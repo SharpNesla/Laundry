@@ -23,6 +23,9 @@
         Height="24"
         Width="24" />
     </Button>
+    <materialDesign:Snackbar IsActive="True"
+      Message="Неправильное имя пользователя или пароль"
+      x:Name="SnackbarFour" cal:Message.Attach="[Event Loaded] = [Action SnackBarLoaded($source)]"/>
     <materialDesign:Card Width="300" VerticalAlignment="Center">
       <StackPanel>
         <materialDesign:ColorZone
@@ -56,7 +59,7 @@
         </materialDesign:ColorZone>
         <Border Padding="16">
           <StackPanel>
-            <TextBox Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
+            <TextBox Name="Username" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
                              materialDesign:HintAssist.Hint="Логин"
                              Margin="0,0,0,16" />
             <TextBox Text="{Binding Password}" Visibility="Collapsed" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"

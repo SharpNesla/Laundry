@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Laundry.Model.DatabaseClients;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
 {
@@ -12,7 +13,7 @@ namespace Laundry.Model
     Advisor,
     Driver
   }
-
+  [BsonIgnoreExtraElements]
   public class Employee : IMongoCollectionElement
   {
     public long Id { get; set; }
@@ -26,6 +27,8 @@ namespace Laundry.Model
     public string Street { get; set; }
     public string City { get; set; }
     public int ZipCode { get; set; }
+
+    public string PasswordHash { get; set; }
 
     public DateTime DeletionDate { get; set; }
   }
