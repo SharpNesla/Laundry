@@ -16,10 +16,11 @@ namespace Laundry.Model
   class DataBaseModel : IModel
   {
     public Employee CurrentUser { get; set; }
-    public CollectionActions<Client> Clients { get; set; }
-    public EmployeeCollectionActions Employees { get; set; }
-    public OrderCollectionActions Orders { get; set; }
-    
+    public Repository<Client> Clients { get; set; }
+    public EmployeeRepository Employees { get; set; }
+    public OrderRepository Orders { get; set; }
+    public Repository<Subsidiary> Subsidiaries { get; set; }
+
     private IMongoDatabase _dataBase;
     private IMongoCollection<Client> _clients;
     private IMongoCollection<Order> _orders;
@@ -27,10 +28,12 @@ namespace Laundry.Model
 
     public void Connect(string username, string password)
     {
-      this.CurrentUser = this.Employees.GetLoginEmployee(username, password);
+      this.CurrentUser = this.Employees.GetCurrentEmployee(username, password);
+      Connected?.Invoke(CurrentUser);
     }
 
     public event Action ConnectionLost;
+    public event Action<Employee> Connected;
 
     public DataBaseModel()
     {
@@ -43,9 +46,10 @@ namespace Laundry.Model
       this._orders = _dataBase.GetCollection<Order>("orders");
       this._employees = _dataBase.GetCollection<Employee>("employees");
 
-      this.Clients = new ClientCollectionActions(this, _clients);
-      this.Employees = new EmployeeCollectionActions(this, _employees);
-      this.Orders = new OrderCollectionActions(this, _orders);
+      this.Clients = new ClientRepository(this, _clients);
+      this.Employees = new EmployeeRepository(this, _employees);
+      this.Orders = new OrderRepository(this, _orders);
+      this.Subsidiaries = new Repository<Subsidiary>(this, _dataBase.GetCollection<Subsidiary>("subsidiaries"));
     }
   }
 }

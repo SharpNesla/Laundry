@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="Laundry.Utils.Controls.EmployeeDataGridView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Laundry.Utils.Controls"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             Name="OwnControl">
+  <DataGrid
+    Margin="16"
+    Background="{Binding ElementName=OwnControl, Path=Background}"
+    CanUserSortColumns="True"
+    CanUserAddRows="False"
+    CanUserResizeColumns="True"
+    CellStyle="{StaticResource CellStyle}"
+    SelectionMode="Single"
+    AutoGenerateColumns="False"
+    SelectedItem="{Binding SelectedEmployee}"
+    ItemsSource="{Binding Employees}">
+    <DataGrid.ContextMenu>
+      <ContextMenu>
+        <MenuItem cal:Message.Attach="[Event Click] = [Action EditEmployee()]" Header="Изменить" />
+        <MenuItem cal:Message.Attach="[Event Click] = [Action RemoveEmployee()]" Header="Удалить" />
+      </ContextMenu>
+    </DataGrid.ContextMenu>
+    <DataGrid.Columns>
+      <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
+                              ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                              EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+        <DataGridCheckBoxColumn.Header>
+          <Border
+            Background="Transparent"
+            Padding="9.3 0 0 0"
+            HorizontalAlignment="Center">
+            <CheckBox />
+          </Border>
+        </DataGridCheckBoxColumn.Header>
+      </DataGridCheckBoxColumn>
+      <local:DataGridAdaptiveColumn Binding="{Binding Id}" CanUserReorder="True" IsReadOnly="True" MinWidth="32"
+                                       SortMemberPath="Id"
+                                       Header="№" />
+      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
+                              SortMemberPath="Surname"
+                              Header="Фамилия">
+        <DataGridTemplateColumn.CellTemplate>
+          <DataTemplate>
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Surname}" VerticalAlignment="Center" />
+          </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+      </DataGridTemplateColumn>
+      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Name"
+                              Header="Имя">
+        <DataGridTemplateColumn.CellTemplate>
+          <DataTemplate>
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Name}" VerticalAlignment="Center" />
+          </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+      </DataGridTemplateColumn>
+      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
+                              SortMemberPath="Patronymic"
+                              Header="Отчество">
+        <DataGridTemplateColumn.CellTemplate>
+          <DataTemplate>
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Patronymic}"
+                       VerticalAlignment="Center" />
+          </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+      </DataGridTemplateColumn>
+
+      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth"
+                              MinWidth="164"
+                              Header="Дата рождения">
+        <DataGridTemplateColumn.CellTemplate>
+          <DataTemplate>
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding DateBirth, StringFormat='dd.MM.yyyy'}"
+                       VerticalAlignment="Center" />
+          </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+      </DataGridTemplateColumn>
+
+      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="Profession"
+                              MinWidth="164"
+                              Header="Должность">
+        <DataGridTemplateColumn.CellTemplate>
+          <DataTemplate>
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Profession, Converter={StaticResource ProfessionConverter}}" VerticalAlignment="Center" />
+          </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+      </DataGridTemplateColumn>
+
+      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
+      <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
+        <DataGridTemplateColumn.CellTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
+                      Style="{StaticResource MaterialDesignFlatButton}">
+                <materialDesign:PackIcon
+                  Kind="InfoOutline"
+                  Height="24"
+                  Width="24" />
+              </Button>
+            </StackPanel>
+          </DataTemplate>
+        </DataGridTemplateColumn.CellTemplate>
+      </DataGridTemplateColumn>
+    </DataGrid.Columns>
+  </DataGrid>
+</UserControl>

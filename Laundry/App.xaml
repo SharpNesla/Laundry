@@ -5,7 +5,8 @@
              xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -41,6 +42,12 @@
           </Trigger>
         </Style.Triggers>
       </Style>
+
+
+      <converters:OrderStatusConverter x:Key="StatusConverter"></converters:OrderStatusConverter>
+
+
+      <converters:ProfessionConverter x:Key="ProfessionConverter"></converters:ProfessionConverter>
     </ResourceDictionary>
 
   </Application.Resources>

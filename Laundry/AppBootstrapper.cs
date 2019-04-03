@@ -63,6 +63,9 @@ namespace Laundry
 
       container.PerRequest<PaginatorViewModel>();
       container.PerRequest<OrderDataGridViewModel>();
+      container.PerRequest<EmployeeDataGridViewModel>();
+
+      container.PerRequest<ClientSearchViewModel>();
     }
 
     protected override object GetInstance(Type service, string key)

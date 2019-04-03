@@ -63,13 +63,13 @@
           <ScrollViewer Padding="16" VerticalScrollBarVisibility="Auto">
             <StackPanel>
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="Информация о сотруднике" />
-              <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
+              <TextBox Text="{Binding Employee.Surname}" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
+              <TextBox Text="{Binding Employee.Name}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
+              <TextBox Text="{Binding Employee.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
+              <TextBox Text="{Binding Employee.PhoneNumber}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
               <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Серия и номер паспорта"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />

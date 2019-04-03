@@ -50,5 +50,11 @@ namespace Laundry.Model
 
     [BsonIgnore]
     public long OrdersCount { get; set; }
+
+    [BsonIgnore]
+    public string Signature
+    {
+      get { return $"{this.Id} {this.Name} {this.Surname}"; }
+    }
   }
 }

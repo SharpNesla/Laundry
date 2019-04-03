@@ -51,20 +51,7 @@
           </Grid.ColumnDefinitions>
           <TextBlock Grid.ColumnSpan="2" Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource OrderEditor.OrderInfo}"/>
-          <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Row="1">
-            <TextBlock Height="38" >
-              <TextBlock.Text>
-                <MultiBinding StringFormat="{}Клиент №{0} {1} {2}">
-                  <Binding Path="Order.Client.Id"></Binding>
-                  <Binding Path="Order.Client.Surname"></Binding>
-                  <Binding Path="Order.Client.Name"></Binding>
-                </MultiBinding>
-              </TextBlock.Text>
-            </TextBlock>
-            <materialDesign:PopupBox>
-              <ContentControl Name="ClientSearchPopup"></ContentControl>
-            </materialDesign:PopupBox>
-          </StackPanel>
+          <ContentControl Margin="2,0,0,0" Grid.Row="1" Grid.ColumnSpan="3" Name="ClientCombo"></ContentControl>
           <DatePicker Grid.Row="2" Grid.Column="0"
             materialDesign:HintAssist.Hint="Дата исполнения"
             Style="{StaticResource MaterialDesignFloatingHintDatePicker}"

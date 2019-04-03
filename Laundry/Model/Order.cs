@@ -75,5 +75,10 @@ namespace Laundry.Model
     public Employee Distributer { get; set; }
 
     #endregion
+
+    public Order()
+    {
+      this.ClothInstances = new List<ClothInstance>();
+    }
   }
 }

@@ -102,7 +102,7 @@
       ItemsSource="{Binding Clients}"
       cal:Message.Attach="[Event MouseDoubleClick] = [Action ShowClientInfo($dataContext)]">
       <DataGrid.ContextMenu>
-        <ContextMenu>
+        <ContextMenu Visibility="{Binding Director}">
           <MenuItem cal:Message.Attach="[Event Click] = [Action EditClient()]" Header="Изменить" />
           <MenuItem cal:Message.Attach="[Event Click] = [Action RemoveClient()]" Header="Удалить" />
         </ContextMenu>
@@ -121,7 +121,7 @@
           </DataGridCheckBoxColumn.Header>
         </DataGridCheckBoxColumn>
         <controls:DataGridAdaptiveColumn Binding="{Binding Id}" CanUserReorder="True" IsReadOnly="True" MinWidth="32"
-                                         SortMemberPath="Surname"
+                                         SortMemberPath="Id"
                                          Header="№" />
         <controls:DataGridAdaptiveColumn Binding="{Binding Surname}" CanUserReorder="True" IsReadOnly="True"
                                          MinWidth="96" SortMemberPath="Surname"

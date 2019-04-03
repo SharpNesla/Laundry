@@ -17,6 +17,13 @@ namespace Laundry
 
     public bool IsDrawerOpened { get; set; }
 
+    [AlsoNotifyFor(nameof(CurrentName))]
+    public Employee CurrentEmployee { get; set; }
+
+    public string CurrentName
+    {
+      get { return $"{CurrentEmployee?.Surname ?? ""} {CurrentEmployee?.Name ?? ""} {CurrentEmployee?.Patronymic ?? ""}"; }
+    }
 
     public ShellViewModel(IEventAggregator eventAggregator, IModel model, IScreenFactory factory)
     {
@@ -25,7 +32,14 @@ namespace Laundry
       this._factory = factory;
       this.Handle(Screens.Login);
       this.CurrentUser = model.CurrentUser;
+      model.Connected += OnConnected;
     }
+
+    private void OnConnected(Employee obj)
+    {
+      this.CurrentEmployee = obj;
+    }
+
 
     public Employee CurrentUser { get; set; }
 

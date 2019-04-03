@@ -13,14 +13,24 @@ namespace Laundry.Model
     Advisor,
     Driver
   }
-  [BsonIgnoreExtraElements]
+
   public class Employee : IMongoCollectionElement
   {
     public long Id { get; set; }
+
+    [BsonIgnoreIfNull]
     public string Name { get; set; }
+
+    [BsonIgnoreIfNull]
     public string Surname { get; set; }
+
+    [BsonIgnoreIfNull]
     public string Patronymic { get; set; }
+
+    [BsonIgnoreIfDefault]
     public DateTime DateBirth { get; set; }
+
+    [BsonIgnoreIfDefault]
     public EmployeeProfession Profession { get; set; }
 
     public int House { get; set; }
@@ -28,8 +38,11 @@ namespace Laundry.Model
     public string City { get; set; }
     public int ZipCode { get; set; }
 
-    public string PasswordHash { get; set; }
+    public string Password { get; set; }
 
+    public string Username { get; set; }
+
+    [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
   }
 }

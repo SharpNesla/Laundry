@@ -7,13 +7,13 @@ using MongoDB.Driver;
 
 namespace Laundry.Model.DatabaseClients
 {
-  public class CollectionActions<T> where T : IMongoCollectionElement
+  public class Repository<T> where T : IMongoCollectionElement
   {
     protected IMongoCollection<T> Collection;
 
     protected IModel Model{ get; set; }
 
-    public CollectionActions(IModel model, IMongoCollection<T> collection)
+    public Repository(IModel model, IMongoCollection<T> collection)
     {
       this.Collection = collection;
       this.Model = model;

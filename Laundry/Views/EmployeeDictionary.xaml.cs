@@ -17,21 +17,48 @@ namespace Laundry.Views
   /// </summary>
   public class EmployeeDictionaryViewModel : DrawerActivityScreen
   {
-    public IList<Employee> Employees { get; set; }
-
     public PaginatorViewModel Paginator { get; set; }
-
-    public EmployeeDictionaryViewModel(IEventAggregator aggregator,PaginatorViewModel paginator, IModel model) : base(aggregator, model)
+    public EmployeeDataGridViewModel EmployeeGrid { get; set; }
+    public EmployeeDictionaryViewModel(IEventAggregator aggregator,PaginatorViewModel paginator, IModel model, EmployeeDataGridViewModel employeeGrid) : base(aggregator, model)
     {
       this.Paginator = paginator;
       this.Paginator.ElementsName = "Работников";
 
-      this.Employees = Model.Employees.Get(0, 20);
+      this.EmployeeGrid = employeeGrid;
+
+      this.EmployeeGrid.Employees = Model.Employees.Get(0, 20);
+      this.EmployeeGrid.EditEmployeeClick += EditEmployee;
+      this.EmployeeGrid.RemoveEmployeeClick += RemoveEmployee;
+    }
+
+    protected override void OnActivate()
+    {
+      base.OnActivate();
+      Paginator.Count = Model.Employees.GetCount();
+      RefreshEmployees(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 
     public void AddEmployee()
     {
       ChangeApplicationScreen(Screens.EmployeeEditor);
+    }
+
+    private void RefreshEmployees(int page, int elements)
+    {
+      this.EmployeeGrid.Employees = Model.Employees.Get(page * elements, elements);
+    }
+
+    public void RemoveEmployee(Employee selected)
+    {
+      Model.Employees.Remove(selected);
+      this.Paginator.Count = Model.Employees.GetCount();
+      RefreshEmployees(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
+    }
+
+    public void EditEmployee(Employee selected)
+    {
+      ChangeApplicationScreen(Screens.EmployeeEditor);
+      EventAggregator.PublishOnUIThread(selected);
     }
   }
 }

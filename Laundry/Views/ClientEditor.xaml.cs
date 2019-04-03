@@ -89,6 +89,8 @@ namespace Laundry.Views
     protected override void OnActivate()
     {
       base.OnActivate();
+      this.Paginator.Count = this.Model.Orders.GetForClientCount(this.Client);
+      this.Client.OrdersCount = this.Model.Orders.GetForClientCount(this.Client);
       RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 
@@ -103,6 +105,7 @@ namespace Laundry.Views
     public void AddOrder(object sender, RoutedEventArgs e)
     {
       ChangeApplicationScreen(Screens.OrderEditor);
+      this.Paginator.Count = this.Model.Orders.GetForClientCount(this.Client);
       this.EventAggregator.BeginPublishOnUIThread(this.Client);
     }
 
@@ -112,7 +115,7 @@ namespace Laundry.Views
       this.Client = this.Model.Clients.GetById(client.Id);
       this.IsNew = false;
       
-      if (this.Client != null) Paginator.Count = Model.Orders.GetForClientCount(this.Client);
+      Paginator.Count = Model.Orders.GetForClientCount(this.Client);
 
       RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
       this.EventAggregator.Unsubscribe(this);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using MaterialDesignThemes.Wpf;
 using Caliburn.Micro;
@@ -29,7 +30,11 @@ namespace Laundry.Views
       }
       catch (Exception e)
       {
-        
+        var messageQueue = SnackBar.MessageQueue;
+        var message = "Неправильное имя пользователя или пароль";
+
+        //the message queue can be called from any thread
+        messageQueue.Enqueue(message);
       }
       
     }

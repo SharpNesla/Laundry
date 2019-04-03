@@ -10,9 +10,6 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Name="OwnControl">
-    <UserControl.Resources>
-        <converters:OrderStatusConverter x:Key="StatusConverter"></converters:OrderStatusConverter>
-    </UserControl.Resources>
   <DataGrid
     SelectionMode="Single"
     CanUserSortColumns="True"
@@ -30,7 +27,19 @@
       </ContextMenu>
     </DataGrid.ContextMenu>
     <DataGrid.Columns>
-      
+      <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
+                              ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                              EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+        <DataGridCheckBoxColumn.Header>
+          <Border
+            Background="Transparent"
+            Padding="9.3 0 0 0"
+            HorizontalAlignment="Center">
+            <CheckBox />
+          </Border>
+        </DataGridCheckBoxColumn.Header>
+      </DataGridCheckBoxColumn>
+
       <local:DataGridAdaptiveColumn Binding="{Binding Id}" MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"
                                     SortMemberPath="Id"/>
       <local:DataGridAdaptiveColumn Binding="{Binding CreationDate, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" 

@@ -38,7 +38,7 @@ namespace Laundry.Views
       this._model = model;
     }
 
-    private void EditClient(object sender, RoutedEventArgs e)
+    public void EditClient(object sender, RoutedEventArgs e)
     {
       _eventAggregator.PublishOnUIThread(Screens.ClientEditor);
       _eventAggregator.PublishOnUIThread(this.Client);

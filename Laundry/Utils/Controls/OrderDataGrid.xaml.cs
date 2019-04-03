@@ -18,7 +18,6 @@ namespace Laundry.Utils.Controls
     private IEventAggregator _eventAggregator;
     private IModel _model;
     public event Action<Order> OrderInfoClicked;
-    public Client SpecifiedClient { get; set; }
     public IList<Order> Orders { get; set; }
     public Order SelectedOrder { get; set; }
 

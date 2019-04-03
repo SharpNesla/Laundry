@@ -126,17 +126,20 @@
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\ClothInstance.cs" />
     <Compile Include="Model\ClothKind.cs" />
-    <Compile Include="Model\DatabaseClients\ClientCollectionActions.cs" />
-    <Compile Include="Model\DatabaseClients\CollectionActions.cs" />
-    <Compile Include="Model\DatabaseClients\EmployeeCollectionActions.cs" />
-    <Compile Include="Model\DatabaseClients\OrderCollectionActions.cs" />
+    <Compile Include="Model\CollectionRepositories\ClientRepository.cs" />
+    <Compile Include="Model\CollectionRepositories\OrderRepository.cs" />
+    <Compile Include="Model\CollectionRepositories\Repository.cs" />
+    <Compile Include="Model\CollectionRepositories\EmployeeRepository.cs" />
     <Compile Include="Model\DataBaseModel.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\IModel.cs" />
-    <Compile Include="Model\DatabaseClients\IMongoCollectionElement.cs" />
+    <Compile Include="Model\CollectionRepositories\IMongoCollectionElement.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Subsidiary.cs" />
     <Compile Include="Utils\ActivityScreen.cs" />
+    <Compile Include="Utils\Controls\ClientSearch.xaml.cs">
+      <DependentUpon>ClientSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Controls\DataGridAdaptiveColumn.xaml.cs">
       <DependentUpon>DataGridAdaptiveColumn.xaml</DependentUpon>
     </Compile>
@@ -146,6 +149,9 @@
     <Compile Include="Utils\Controls\ClothGrid.xaml.cs">
       <DependentUpon>ClothGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Controls\EmployeeDataGrid.xaml.cs">
+      <DependentUpon>EmployeeDataGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Controls\OrderDataGrid.xaml.cs">
       <DependentUpon>OrderDataGrid.xaml</DependentUpon>
     </Compile>
@@ -153,6 +159,8 @@
       <DependentUpon>Paginator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Converters\OrderStatusConverter.cs" />
+    <Compile Include="Utils\Converters\ProfessionConverter.cs" />
+    <Compile Include="Utils\Converters\StringToPhoneConverter.cs" />
     <Compile Include="Utils\DrawerActivityScreen.cs" />
     <Compile Include="Utils\DrawerState.cs" />
     <Compile Include="Utils\ScreenFactory.cs" />
@@ -221,6 +229,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Utils\Controls\ClientSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Utils\Controls\DataGridAdaptiveColumn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -232,6 +244,10 @@
     <Page Include="Utils\Controls\ClothGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Utils\Controls\EmployeeDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Utils\Controls\OrderDataGrid.xaml">
       <SubType>Designer</SubType>

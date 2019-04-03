@@ -9,11 +9,13 @@ namespace Laundry.Model
   {
     Employee CurrentUser { get; }
 
-    CollectionActions<Client> Clients { get; set; }
-    EmployeeCollectionActions Employees { get; set; }
-    OrderCollectionActions Orders { get; set; }
+    Repository<Client> Clients { get; set; }
+    EmployeeRepository Employees { get; set; }
+    OrderRepository Orders { get; set; }
+    Repository<Subsidiary> Subsidiaries { get; set; }
 
     void Connect(string username, string password);
     event Action ConnectionLost;
+    event Action<Employee> Connected;
   }
 }

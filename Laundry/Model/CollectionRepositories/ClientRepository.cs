@@ -3,7 +3,7 @@ using MongoDB.Driver;
 
 namespace Laundry.Model.DatabaseClients
 {
-  public class ClientCollectionActions : CollectionActions<Client>
+  public class ClientRepository : Repository<Client>
   {
     public override IList<Client> Get(int offset, int limit)
     {
@@ -23,7 +23,7 @@ namespace Laundry.Model.DatabaseClients
       return client;
     }
 
-    public ClientCollectionActions(IModel model, IMongoCollection<Client> collection) : base(model, collection)
+    public ClientRepository(IModel model, IMongoCollection<Client> collection) : base(model, collection)
     {
     }
   }

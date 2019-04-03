@@ -69,13 +69,15 @@
                   VerticalAlignment="Center" />
               </Grid>
             </materialDesign:ColorZone>
-            <Button Foreground="{StaticResource MaterialDesignDarkForeground}"
-              Style="{DynamicResource MaterialDesignToolButton}"
-              Margin="8 0 0 0"
-              Panel.ZIndex="0">
-              <materialDesign:PackIcon
-                Kind="Send" />
-            </Button>
+            <materialDesign:ColorZone
+              Mode="Standard"
+              Padding="8 4 0 4"
+              CornerRadius="2"
+              Panel.ZIndex="1"
+              Margin="16 0 0 0"
+              materialDesign:ShadowAssist.ShadowDepth="Depth1" Height="40">
+              <ContentControl Name="Paginator" />
+            </materialDesign:ColorZone>
           </StackPanel>
         </DockPanel>
       </materialDesign:ColorZone>

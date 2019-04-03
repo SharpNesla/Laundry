@@ -13,7 +13,7 @@
     <Grid.Background>
       <ImageBrush ImageSource="/Laundry;component/Resources/LoginBackground.png" Stretch="UniformToFill" />
     </Grid.Background>
-    <Button
+    <Button Visibility="Hidden"
       HorizontalAlignment="Right"
       VerticalAlignment="Bottom"
       Style="{StaticResource MaterialDesignFloatingActionButton}"
@@ -23,9 +23,9 @@
         Height="24"
         Width="24" />
     </Button>
-    <materialDesign:Snackbar IsActive="True"
-      Message="Неправильное имя пользователя или пароль"
-      x:Name="SnackbarFour" cal:Message.Attach="[Event Loaded] = [Action SnackBarLoaded($source)]"/>
+    <materialDesign:Snackbar
+      MessageQueue="{materialDesign:MessageQueue}"
+      cal:Message.Attach="[Event Loaded] = [Action SnackBarLoaded($source)]"/>
     <materialDesign:Card Width="300" VerticalAlignment="Center">
       <StackPanel>
         <materialDesign:ColorZone

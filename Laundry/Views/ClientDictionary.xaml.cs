@@ -29,7 +29,7 @@ namespace Laundry.Views
     public void ShowClientInfo(Client context)
     {
      
-      //Find view for ClientCard ViewModel and bind ViewModel with View
+      //»щем View дл€ ViewModel карточки клиента (Caliburn)
       var view = ViewLocator.LocateForModel(ClientCard, null, null);
       ViewModelBinder.Bind(this.ClientCard, view, null);
 
@@ -68,8 +68,8 @@ namespace Laundry.Views
 
     public void RemoveClient()
     {
-      this.Paginator.Count = Clients.Count;
       Model.Clients.Remove(SelectedClient);
+      this.Paginator.Count = Clients.Count;
       RefreshClients(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 

@@ -9,7 +9,7 @@ using MongoDB.Driver;
 
 namespace Laundry.Model.DatabaseClients
 {
-  public class EmployeeCollectionActions : CollectionActions<Employee>
+  public class EmployeeRepository : Repository<Employee>
   {
     /// <summary>
     /// Set Hash of employee password with salt
@@ -36,10 +36,10 @@ namespace Laundry.Model.DatabaseClients
 
     private string GetPasswordHash(Employee employee)
     {
-      return this.GetById(employee.Id).PasswordHash;
+      return this.GetById(employee.Id).Password;
     }
 
-    public Employee GetLoginEmployee(string username, string password)
+    public Employee GetCurrentEmployee(string username, string password)
     {
       var user = this.Collection.Find(Builders<Employee>.Filter.Eq("Username", username)).First();
       byte[] hashBytes = Convert.FromBase64String(GetPasswordHash(user));
@@ -56,7 +56,7 @@ namespace Laundry.Model.DatabaseClients
       return user;
     }
 
-    public EmployeeCollectionActions(IModel model, IMongoCollection<Employee> collection) : base(model, collection)
+    public EmployeeRepository(IModel model, IMongoCollection<Employee> collection) : base(model, collection)
     {
     }
   }
