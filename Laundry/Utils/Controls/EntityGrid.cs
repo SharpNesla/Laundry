@@ -13,8 +13,20 @@ using Action = System.Action;
 
 namespace Laundry.Utils.Controls
 {
-  public class EntityGrid<TEntity, TRepository> : PropertyChangedBase, IPaginable 
-    where TEntity : IRepositoryElement
+  public interface IEntityGrid<TEntity, out TRepository> : IPaginable where TEntity : IRepositoryElement where TRepository : Repository<TEntity>
+  {
+    IList<TEntity> Entities { get; set; }
+    TEntity SelectedEntity { get; set; }
+    TRepository Repo { get; }
+
+    void ShowInfoCard(TEntity context);
+    void Add();
+    void Edit();
+    void Remove();
+    void Refresh();
+  }
+
+  public class EntityGrid<TEntity, TRepository> : PropertyChangedBase, IEntityGrid<TEntity, TRepository> where TEntity : IRepositoryElement
     where TRepository : Repository<TEntity>
   {
     private Card<TEntity> _card;
@@ -23,7 +35,7 @@ namespace Laundry.Utils.Controls
     public IList<TEntity> Entities { get; set; }
     public TEntity SelectedEntity { get; set; }
 
-    public TRepository Repo { get; set; }
+    public TRepository Repo { get; }
 
     public event Action<TEntity> RemoveButtonClick;
 

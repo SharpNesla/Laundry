@@ -11,10 +11,9 @@ using Laundry.Utils.Controls;
 
 namespace Laundry.Utils
 {
-  public class DictionaryScreen<TEntity, TGrid, TRepository> : DrawerActivityScreen
+  public class DictionaryScreen<TEntity, TGrid> : DrawerActivityScreen
     where TEntity : IRepositoryElement
-    where TGrid : EntityGrid<TEntity, TRepository>
-    where TRepository : Repository<TEntity>
+    where TGrid : IEntityGrid<TEntity, Repository<TEntity>>
   {
     public PaginatorViewModel Paginator { get; set; }
     public TGrid EntityGrid { get; set; }

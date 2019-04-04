@@ -16,9 +16,10 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for DashBoard.xaml
   /// </summary>
-  public class EmployeeDictionaryViewModel : DictionaryScreen<Employee, EmployeeDataGridViewModel, EmployeeRepository>
+  public class EmployeeDictionaryViewModel : DictionaryScreen<Employee, EmployeeDataGridViewModel>
   {
-    public EmployeeDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, EmployeeDataGridViewModel entityGrid) : base(aggregator, model, paginator, entityGrid)
+    public EmployeeDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, EmployeeDataGridViewModel entityGrid)
+      : base(aggregator, model, paginator, entityGrid)
     {
       paginator.ElementsName = "Работников";
     }
