@@ -47,7 +47,7 @@ namespace Laundry.Views
     public void Handle(Client message)
     {
       this.Client = _model.Clients.GetById(message.Id);
-      this.OrderGrid.Orders = _model.Orders.GetForClient(this.Client, 0, 10);
+      this.OrderGrid.Entities = _model.Orders.GetForClient(this.Client, 0, 10);
     }
   }
 }

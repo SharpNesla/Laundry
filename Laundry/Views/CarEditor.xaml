@@ -52,9 +52,9 @@
                      Text="{StaticResource CarEditor.MainInfoTitle}" />
           <TextBox Text="{Binding Car.BrandAndModel}" Margin="0,8,0,8" materialDesign:HintAssist.Hint="Марка и модель"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Регистрационный знак"
+          <TextBox Text="{Binding Sing}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Регистрационный знак"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Идентификационный номер (VIN)"
+          <TextBox Text="{Binding VIN}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Идентификационный номер (VIN)"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
           <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Серия и номер ПТС"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />

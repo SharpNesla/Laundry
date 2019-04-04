@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Laundry.Model.CollectionRepositories;
+﻿using System.Collections.Generic;
 using MongoDB.Driver;
 
-namespace Laundry.Model.DatabaseClients
+namespace Laundry.Model.CollectionRepositories
 {
   public class OrderRepository : Repository<Order>
   {

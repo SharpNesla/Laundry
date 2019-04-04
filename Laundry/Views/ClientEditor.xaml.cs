@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
+using Laundry.Model.DatabaseClients;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using PropertyChanged;
@@ -24,21 +25,11 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for ClientEditor.xaml
   /// </summary>
-  public class ClientEditorViewModel : ActivityScreen, IHandle<Client>
+  public class ClientEditorViewModel : EditorScreen<ClientRepository ,Client>
   {
-    
-    public Client Client { get; set; }
-
-    [AlsoNotifyFor(nameof(IsOrdersEnabled), nameof(EditorTitle))]
-    public bool IsNew { get; set; }
     public bool IsOrdersEnabled
     {
       get { return !IsNew; }
-    }
-
-    public string EditorTitle
-    {
-      get { return !IsNew ? $"Редактирование клиента №{Client.Id}" : "Редактирование нового клиента"; }
     }
 
     #region TabBindings
@@ -65,74 +56,54 @@ namespace Laundry.Views
     public OrderDataGridViewModel OrderDataGrid { get; set; }
 
     public ClientEditorViewModel(IEventAggregator aggregator, IModel model, OrderDataGridViewModel grid, PaginatorViewModel paginator) : base(
-      aggregator, model)
+      aggregator, model, model.Clients)
     {
-      this.EventAggregator.Subscribe(this);
-      this.InfoChecked = true;
-      this.OrderDataGrid = grid;
-
-      this.IsNew = true;
-      this.Client = new Client();
-
-      this.Paginator = paginator;
+      InfoChecked = true;
+      OrderDataGrid = grid;
+      
+      Paginator = paginator;
       paginator.ElementsName = "Заказов";
-      this.Paginator.Changed += RefreshOrders;
+      Paginator.RegisterPaginable(OrderDataGrid);
     }
 
     private void RefreshOrders(int page, int elements)
     {
-      var client = this.Client;
+      var client = Client;
       if (client != null)
-        this.OrderDataGrid.Orders = Model.Orders.GetForClient(client, page * elements, elements);
+        OrderDataGrid.Entities = Model.Orders.GetForClient(client, page * elements, elements);
     }
 
     protected override void OnActivate()
     {
       base.OnActivate();
-      this.Paginator.Count = this.Model.Orders.GetForClientCount(this.Client);
-      this.Client.OrdersCount = this.Model.Orders.GetForClientCount(this.Client);
-      RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
+      Paginator.Count = Model.Orders.GetForClientCount(Client);
+      Client.OrdersCount = Model.Orders.GetForClientCount(Client);
+      RefreshOrders(Paginator.CurrentPage - 1, Paginator.ElementsPerPage);
     }
 
     public PaginatorViewModel Paginator { get; set; }
 
-
-    public void Discard()
-    {
-      ChangeApplicationScreen(Screens.Context);
-    }
-
     public void AddOrder(object sender, RoutedEventArgs e)
     {
       ChangeApplicationScreen(Screens.OrderEditor);
-      this.Paginator.Count = this.Model.Orders.GetForClientCount(this.Client);
-      this.EventAggregator.BeginPublishOnUIThread(this.Client);
+      Paginator.Count = Model.Orders.GetForClientCount(Client);
+      RefreshOrders(Paginator.CurrentPage - 1, Paginator.ElementsPerPage);
+      EventAggregator.BeginPublishOnUIThread(Client);
     }
 
-
-    public void Handle(Client client)
+    public void RemoveOrder(Order order)
     {
-      this.Client = this.Model.Clients.GetById(client.Id);
-      this.IsNew = false;
-      
-      Paginator.Count = Model.Orders.GetForClientCount(this.Client);
-
-      RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
-      this.EventAggregator.Unsubscribe(this);
+      Model.Orders.Remove(order);
+      Client.OrdersCount = Model.Orders.GetForClientCount(Client);
+      Paginator.Count = Model.Orders.GetForClientCount(Client);
+      RefreshOrders(Paginator.CurrentPage - 1, Paginator.ElementsPerPage);
     }
-
-    public void ApplyChanges()
+    
+    public override void Handle(Client client)
     {
-      if (IsNew)
-      {
-        Model.Clients.Add(this.Client);
-      }
-      else
-      {
-        Model.Clients.Update(this.Client);
-      }
-
-      ChangeApplicationScreen(Screens.Context);
+      base.Handle(client);
+      Paginator.Count = Model.Orders.GetForClientCount(Client);
+      RefreshOrders(Paginator.CurrentPage - 1, Paginator.ElementsPerPage);
     }
   }
 }

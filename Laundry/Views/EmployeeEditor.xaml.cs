@@ -72,7 +72,7 @@ namespace Laundry.Views
 
     private void RefreshOrders(int page, int elements)
     {
-        this.OrderDataGrid.Orders = Model.Orders.GetForEmployee(this.Employee, page * elements, elements);
+        this.OrderDataGrid.Entities = Model.Orders.GetForEmployee(this.Employee, page * elements, elements);
     }
 
     public void ApplyChanges()

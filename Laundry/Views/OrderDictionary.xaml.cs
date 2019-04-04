@@ -23,7 +23,6 @@ namespace Laundry.Views
 {
   public class OrderDictionaryViewModel : DrawerActivityScreen
   {
-    private OrderCard _card;
 
     public OrderDataGridViewModel OrdersViewModel { get; private set; }
 
@@ -33,15 +32,13 @@ namespace Laundry.Views
 
     public async void ShowOrderInfo(Order context)
     {
-      _card.Order = context;
-      await DialogHost.Show(_card);
+      
     }
 
-    public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, OrderCard card, PaginatorViewModel paginator, OrderDataGridViewModel orderGrid) : base(aggregator, model)
+    public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, OrderDataGridViewModel orderGrid) : base(aggregator, model)
     {
-      orderGrid.Orders = Model.Orders.Get(0, 0);
+      orderGrid.Entities = Model.Orders.Get(0, 0);
 
-      this._card = card;
 
       this.Paginator = paginator;
       this.Paginator.ElementsName = "Заказов";
@@ -61,7 +58,7 @@ namespace Laundry.Views
 
     private void RefreshOrders(int page, int elements)
     {
-      this.OrdersViewModel.Orders = Model.Orders.Get(page * elements, elements);
+      this.OrdersViewModel.Entities = Model.Orders.Get(page * elements, elements);
     }
 
     public void ChangeSearchDrawerState()

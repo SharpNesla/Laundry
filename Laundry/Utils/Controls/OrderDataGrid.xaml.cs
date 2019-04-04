@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using Laundry.Model;
+using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
 using MaterialDesignThemes.Wpf;
 
@@ -11,40 +12,26 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
-  
-  public class OrderDataGridViewModel : PropertyChangedBase
+
+  public class OrderDataGridViewModel : EntityGrid<Order, OrderRepository>
   {
-    private OrderCard _card;
-    private IEventAggregator _eventAggregator;
-    private IModel _model;
-    public event Action<Order> OrderInfoClicked;
-    public IList<Order> Orders { get; set; }
-    public Order SelectedOrder { get; set; }
-
-    public event Action<Order> RemoveOrderButtonClick;
-
-    public OrderDataGridViewModel(OrderCard card, IEventAggregator eventAggregator, IModel model)
+    public Client Client { get; set; }
+    public OrderDataGridViewModel(IEventAggregator eventAggregator,IModel model, OrderCardViewModel card) 
+      : base(eventAggregator, card, model.Orders, Screens.OrderEditor)
     {
-      this._card = card;
-      this._eventAggregator = eventAggregator;
-      this._model = model;
     }
 
-    public void ShowClientInfo(Order context)
+    public override void Refresh(int page, int elements)
     {
-      _card.Order = context;
-      DialogHost.Show(_card);
-    }
-
-    public void EditOrder()
-    {
-      _eventAggregator.PublishOnUIThread(Screens.OrderEditor);
-      _eventAggregator.PublishOnUIThread(this.SelectedOrder);
-    }
-
-    public void RemoveOrder()
-    {
-      RemoveOrderButtonClick?.Invoke(SelectedOrder);
+      
+      if (Client==null)
+      {
+        Refresh(page, elements);
+      }
+      else
+      {
+        Repo.GetForClient(Client ,page * elements, elements);
+      }
     }
   }
 }

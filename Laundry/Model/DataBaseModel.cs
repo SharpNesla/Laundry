@@ -17,7 +17,7 @@ namespace Laundry.Model
   class DataBaseModel : IModel
   {
     public Employee CurrentUser { get; set; }
-    public Repository<Client> Clients { get; set; }
+    public ClientRepository Clients { get; set; }
     public EmployeeRepository Employees { get; set; }
     public OrderRepository Orders { get; set; }
     public Repository<Subsidiary> Subsidiaries { get; set; }

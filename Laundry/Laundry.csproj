@@ -149,6 +149,9 @@
     <Compile Include="Utils\Controls\ClothGrid.xaml.cs">
       <DependentUpon>ClothGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Controls\EntityGrid.cs" />
+    <Compile Include="Utils\DictionaryScreen.cs" />
+    <Compile Include="Utils\EditorActivityScreen.cs" />
     <Compile Include="Utils\Controls\EmployeeDataGrid.xaml.cs">
       <DependentUpon>EmployeeDataGrid.xaml</DependentUpon>
     </Compile>
@@ -171,6 +174,7 @@
     <Compile Include="Views\CarDictionary.xaml.cs">
       <DependentUpon>CarDictionary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Cards\Card.cs" />
     <Compile Include="Views\Cards\EmployeeCard.xaml.cs">
       <DependentUpon>EmployeeCard.xaml</DependentUpon>
     </Compile>

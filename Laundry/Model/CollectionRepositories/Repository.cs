@@ -5,6 +5,10 @@ using MongoDB.Driver;
 
 namespace Laundry.Model.CollectionRepositories
 {
+  /// <summary>
+  /// Базовый класс для работы с коллекциями элементов типа T
+  /// </summary>
+  /// <typeparam name="T">Тип объекта находящегося в коллекции</typeparam>
   public class Repository<T> where T : IRepositoryElement
   {
     protected IMongoCollection<T> Collection;
@@ -16,7 +20,10 @@ namespace Laundry.Model.CollectionRepositories
       this.Collection = collection;
       this.Model = model;
     }
-
+    /// <summary>
+    /// Добавить элемент в текущую коллекцию
+    /// </summary>
+    /// <param name="entity"></param>
     public virtual void Add(T entity)
     {
       try

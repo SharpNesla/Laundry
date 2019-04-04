@@ -24,6 +24,12 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for Paginator.xaml
   /// </summary>
+  public interface IPaginable
+  {
+    long Count { get; }
+    void Refresh(int page, int elements);
+    event Action StateChanged;
+  }
 
   [AddINotifyPropertyChangedInterface]
   public class PaginatorViewModel
@@ -62,7 +68,7 @@ namespace Laundry.Utils.Controls
       {
         if (Count != 0)
         {
-          return (int) Math.Ceiling((double)Count / ElementsPerPage);
+          return (int) Math.Ceiling((double) Count / ElementsPerPage);
         }
         else
         {
@@ -94,8 +100,8 @@ namespace Laundry.Utils.Controls
 
     public bool IsMoveNextEnabled { get; private set; }
     public bool IsMovePreviousEnabled { get; private set; }
-    
-    public event Action<int,int> Changed;
+
+    public event Action<int, int> Changed;
 
     public void MoveNext()
     {
@@ -113,9 +119,27 @@ namespace Laundry.Utils.Controls
     }
 
     private void CheckButtons()
-    { 
+    {
       IsMovePreviousEnabled = CurrentPage != 1;
       IsMoveNextEnabled = CurrentPage != MaxPages;
     }
+
+    public void RegisterPaginable(IPaginable paginable)
+    {
+      this.Paginable = paginable;
+      this.Paginable.StateChanged += OnPaginableOnStateChanged;
+
+      this.Changed += Paginable.Refresh;
+
+      OnPaginableOnStateChanged();
+    }
+
+    private void OnPaginableOnStateChanged()
+    {
+      this.Count = Paginable.Count;
+      Paginable.Refresh(this.CurrentPage - 1, this.ElementsPerPage);
+    }
+
+    public IPaginable Paginable { get; set; }
   }
 }

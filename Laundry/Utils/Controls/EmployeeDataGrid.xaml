@@ -19,12 +19,12 @@
     CellStyle="{StaticResource CellStyle}"
     SelectionMode="Single"
     AutoGenerateColumns="False"
-    SelectedItem="{Binding SelectedEmployee}"
-    ItemsSource="{Binding Employees}">
+    SelectedItem="{Binding SelectedEntity}"
+    ItemsSource="{Binding Entities}">
     <DataGrid.ContextMenu>
       <ContextMenu>
-        <MenuItem cal:Message.Attach="[Event Click] = [Action EditEmployee()]" Header="Изменить" />
-        <MenuItem cal:Message.Attach="[Event Click] = [Action RemoveEmployee()]" Header="Удалить" />
+        <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
+        <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
       </ContextMenu>
     </DataGrid.ContextMenu>
     <DataGrid.Columns>

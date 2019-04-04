@@ -10,7 +10,7 @@ using Laundry.Utils;
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for LoginScreen.xaml
+  /// Окно входа в систему
   /// </summary>
   public class LoginScreenViewModel : ActivityScreen
   {
@@ -32,8 +32,7 @@ namespace Laundry.Views
       {
         var messageQueue = SnackBar.MessageQueue;
         var message = "Неправильное имя пользователя или пароль";
-
-        //the message queue can be called from any thread
+        
         messageQueue.Enqueue(message);
       }
       

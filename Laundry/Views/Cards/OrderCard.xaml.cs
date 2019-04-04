@@ -21,32 +21,10 @@ using PropertyChanged;
 namespace Laundry.Views
 {
   [AddINotifyPropertyChangedInterface]
-  public partial class OrderCard
+  public partial class OrderCardViewModel : Card<Order>
   {
-    private readonly IEventAggregator _eventAggregator;
-    private Order _order;
-
-    public Order Order
+    public OrderCardViewModel(Order entity) : base(entity)
     {
-      get { return _order; }
-      set
-      {
-        _order = value;
-        this.DataContext = value;
-      }
-    }
-
-    public OrderCard(IEventAggregator eventAggregator)
-    {
-      InitializeComponent();
-      _eventAggregator = eventAggregator;
-
-    }
-
-    private void EditOrder(object sender, RoutedEventArgs e)
-    {
-      _eventAggregator.PublishOnUIThread(Screens.OrderEditor);
-      _eventAggregator.PublishOnUIThread(this.Order);
     }
   }
 }

@@ -101,13 +101,23 @@
     </StackPanel>
 
     <DataGrid
+      SelectionMode="Single"
       Margin="16"
       CanUserSortColumns="True"
       CanUserAddRows="False"
       CanUserResizeColumns="True"
       CellStyle="{StaticResource CellStyle}"
       AutoGenerateColumns="False"
-      ItemsSource="{Binding Clients}">
+      SelectedItem="{Binding SelectedCar}"
+      ItemsSource="{Binding Cars}">
+      <DataGrid.ContextMenu>
+        <ContextMenu Visibility="{Binding Director}">
+          <MenuItem cal:Message.Attach="[Event Click] = [Action EditCar()]" Header="Изменить" />
+          <MenuItem cal:Message.Attach="[Event Click] = [Action RemoveCar()]" Header="Удалить" />
+        </ContextMenu>
+      </DataGrid.ContextMenu>
+
+
       <DataGrid.Columns>
         <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
                                 ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"

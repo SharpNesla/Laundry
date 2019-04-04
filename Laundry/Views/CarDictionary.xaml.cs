@@ -35,12 +35,13 @@ namespace Laundry.Views
       this.Paginator = paginator;
       this.Paginator.ElementsName = "Автомобилей";
 
-      this.Paginator.Changed += RefreshClients;
+      this.Paginator.Changed += RefreshCars;
     }
 
-    private void RefreshClients(int page, int elements)
+    private void RefreshCars(int page, int elements)
     {
       this.Cars = Model.Cars.Get(page * elements, elements);
+
     }
 
     public PaginatorViewModel Paginator { get; set; }
@@ -49,14 +50,14 @@ namespace Laundry.Views
     {
       base.OnActivate();
       Paginator.Count = Model.Clients.GetCount();
-      RefreshClients(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
+      RefreshCars(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 
     public void RemoveCar()
     {
       Model.Cars.Remove(SelectedCar);
       this.Paginator.Count = Model.Cars.GetCount();
-      RefreshClients(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
+      RefreshCars(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 
     public void EditCar()

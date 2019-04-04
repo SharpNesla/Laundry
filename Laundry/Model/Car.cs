@@ -33,7 +33,7 @@ namespace Laundry.Model
     [BsonIgnoreIfDefault] public DateTime CreationYear;
 
     [BsonIgnoreIfNull]
-    public string BodyID { get; private set; }
+    public string BodyID { get; set; }
 
     [BsonIgnoreIfNull]
     public string Color { get; set; }
@@ -43,9 +43,9 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
-
+    [BsonElement(nameof(Couriers))]
     public List<long> CourierIds { get; set; }
-
+    [BsonElement(nameof(Drivers))]
     public List<long> DriverIds { get; set; }
     [BsonIgnore]
     public List<Employee> Couriers{ get; set; }

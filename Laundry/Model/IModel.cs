@@ -10,7 +10,7 @@ namespace Laundry.Model
   {
     Employee CurrentUser { get; }
 
-    Repository<Client> Clients { get; set; }
+    ClientRepository Clients { get; set; }
     EmployeeRepository Employees { get; set; }
     OrderRepository Orders { get; set; }
     Repository<Subsidiary> Subsidiaries { get; set; }

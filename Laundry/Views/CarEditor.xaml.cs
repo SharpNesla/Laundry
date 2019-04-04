@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
@@ -23,7 +9,7 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for CarEditor.xaml
   /// </summary>
-  public class CarEditorViewModel : ActivityScreen
+  public class CarEditorViewModel : ActivityScreen, IHandle<Car>
   {
 
     public Car Car{ get; set; }
@@ -71,6 +57,14 @@ namespace Laundry.Views
       }
 
       ChangeApplicationScreen(Screens.Context);
+    }
+
+    public void Handle(Car message)
+    {
+      this.Car = this.Model.Cars.GetById(message.Id);
+      this.IsNew = false;
+
+      this.EventAggregator.Unsubscribe(this);
     }
   }
 }
