@@ -23,7 +23,7 @@ namespace Laundry.Views
     {
       this.Paginator = paginator;
       this.Paginator.ElementsName = "Работников";
-
+      this.Paginator.Changed += RefreshEmployees;
       this.EmployeeGrid = employeeGrid;
 
       this.EmployeeGrid.Employees = Model.Employees.Get(0, 20);

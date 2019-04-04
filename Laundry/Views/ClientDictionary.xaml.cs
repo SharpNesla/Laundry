@@ -28,14 +28,16 @@ namespace Laundry.Views
 
     public void ShowClientInfo(Client context)
     {
-     
-      //»щем View дл€ ViewModel карточки клиента (Caliburn)
-      var view = ViewLocator.LocateForModel(ClientCard, null, null);
-      ViewModelBinder.Bind(this.ClientCard, view, null);
+      if (context != null)
+      {
+        //»щем View дл€ ViewModel карточки клиента (Caliburn)
+        var view = ViewLocator.LocateForModel(ClientCard, null, null);
+        ViewModelBinder.Bind(this.ClientCard, view, null);
 
-      this.EventAggregator.PublishOnUIThread(context);
+        this.EventAggregator.PublishOnUIThread(context);
 
-      DialogHost.Show(view);
+        DialogHost.Show(view);
+      }
     }
 
     public int Count { get; set; } = 5;
@@ -69,7 +71,7 @@ namespace Laundry.Views
     public void RemoveClient()
     {
       Model.Clients.Remove(SelectedClient);
-      this.Paginator.Count = Clients.Count;
+      this.Paginator.Count = Model.Clients.GetCount();
       RefreshClients(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
     }
 

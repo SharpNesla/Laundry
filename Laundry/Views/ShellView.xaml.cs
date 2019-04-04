@@ -3,6 +3,7 @@ using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
 using Laundry.Views;
+using MaterialDesignThemes.Wpf;
 using PropertyChanged;
 
 namespace Laundry
@@ -33,6 +34,7 @@ namespace Laundry
       this.Handle(Screens.Login);
       this.CurrentUser = model.CurrentUser;
       model.Connected += OnConnected;
+      model.ConnectionLost += OnConnectionLost;
     }
 
     private void OnConnected(Employee obj)
@@ -68,6 +70,12 @@ namespace Laundry
         this.ActivateItem(screen);
       }
       
+    }
+
+    public void OnConnectionLost()
+    {
+      var dialogWindow = new ConnectionLostDialog();
+      DialogHost.Show(dialogWindow);
     }
   }
 }

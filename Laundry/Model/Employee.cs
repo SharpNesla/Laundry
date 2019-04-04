@@ -14,7 +14,7 @@ namespace Laundry.Model
     Driver
   }
 
-  public class Employee : IMongoCollectionElement
+  public class Employee : IRepositoryElement
   {
     public long Id { get; set; }
 

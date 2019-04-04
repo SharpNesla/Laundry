@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
 {
-  public class Client : IMongoCollectionElement
+  public class Client : IRepositoryElement
   {
     public long Id { get; set; }
 

@@ -8,6 +8,8 @@
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:utils="clr-namespace:Laundry.Utils"
+             xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
+             xmlns:cal="http://www.caliburnproject.org"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
@@ -20,15 +22,13 @@
 
           Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
-          Margin="16 0 0 0" Text="{StaticResource CarDictionary.Title}">
-        </TextBlock>
+          Margin="16 0 0 0" Text="{StaticResource CarDictionary.Title}" />
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
       <Button Name="AddCar" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-              >
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
       </Button>
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
@@ -72,18 +72,34 @@
                   VerticalAlignment="Center" />
               </Grid>
             </materialDesign:ColorZone>
-            <Button Foreground="{StaticResource MaterialDesignDarkForeground}"
-              Style="{DynamicResource MaterialDesignToolButton}"
-              Margin="8 0 0 0"
-              Panel.ZIndex="0">
-              <materialDesign:PackIcon
-                Kind="Send" />
-            </Button>
+
+            <materialDesign:ColorZone
+              Mode="Standard"
+              Padding="8 4 0 4"
+              CornerRadius="2"
+              Panel.ZIndex="1"
+              Margin="16 0 0 0"
+              materialDesign:ShadowAssist.ShadowDepth="Depth1" Height="40">
+              <ContentControl Name="Paginator" />
+            </materialDesign:ColorZone>
+            <ToggleButton Margin="8,0,0,0"
+                          Style="{StaticResource MaterialDesignActionToggleButton}"
+                          IsChecked="{Binding IsSearchDrawerOpened}"
+                          ToolTip="Расширенный поиск">
+              <ToggleButton.Content>
+                <materialDesign:PackIcon
+                  Kind="Search" />
+              </ToggleButton.Content>
+              <materialDesign:ToggleButtonAssist.OnContent>
+                <materialDesign:PackIcon
+                  Kind="ArrowDown" />
+              </materialDesign:ToggleButtonAssist.OnContent>
+            </ToggleButton>
           </StackPanel>
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-    
+
     <DataGrid
       Margin="16"
       CanUserSortColumns="True"
@@ -105,71 +121,29 @@
             </Border>
           </DataGridCheckBoxColumn.Header>
         </DataGridCheckBoxColumn>
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Surname"
-                                Header="Фамилия">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Surname}" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Name"
-                                Header="Имя">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Name}" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Patronymic"
-                                Header="Отчество">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Patronymic}" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn MinWidth="128" Header="Номер телефона"  CanUserReorder="True" IsReadOnly="True" SortMemberPath="Patronymic">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True"  SortMemberPath="Patronymic" MinWidth="164" Header="Количество заказов" >
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="164"
-                                Header="Дата рождения">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding DateBirth}" VerticalAlignment="Center" />
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
+        <controls1:DataGridAdaptiveColumn Binding="{Binding Id}" MinWidth="48" Header="№" CanUserReorder="True"
+                                      IsReadOnly="True"
+                                      SortMemberPath="Id" />
+        <controls1:DataGridAdaptiveColumn Binding="{Binding BrandAndModel}"
+                                      CanUserReorder="True"
+                                      IsReadOnly="True" SortMemberPath="BrandAndMode" MinWidth="48" Header="Марка и модель" />
+        <controls1:DataGridAdaptiveColumn Binding="{Binding VIN}" CanUserReorder="True"
+                                      IsReadOnly="True" SortMemberPath="VIN" MinWidth="48" Header="VIN" />
+        <controls1:DataGridAdaptiveColumn Binding="{Binding Sign}" CanUserReorder="True" IsReadOnly="True"
+                                      MinWidth="96"
+                                      Header="Номерной знак" />
         <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
+        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <StackPanel Orientation="Horizontal">
-                <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                        Style="{StaticResource MaterialDesignFlatButton}">
+                <Button Margin="0" Foreground="{StaticResource MaterialDesignTextBoxBorder}"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        cal:Message.Attach="ShowCarInfo($dataContext)">
                   <materialDesign:PackIcon
                     Kind="InfoOutline"
                     Height="24"
                     Width="24" />
-                </Button>
-
-                <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                        Style="{StaticResource MaterialDesignFlatButton}">
-                  <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
                 </Button>
               </StackPanel>
             </DataTemplate>
@@ -179,4 +153,3 @@
     </DataGrid>
   </DockPanel>
 </UserControl>
-

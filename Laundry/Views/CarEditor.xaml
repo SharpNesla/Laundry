@@ -27,15 +27,8 @@
     <StackPanel DockPanel.Dock="Bottom"
                 Orientation="Horizontal"
                 HorizontalAlignment="Right" Margin="0,0,24,24">
-      <Button
-        Style="{StaticResource MaterialDesignFlatButton}"
-        IsDefault="True" Margin="0,0,20,0"
-        Command="materialDesign:DialogHost.CloseDialogCommand">
-        <Button.CommandParameter>
-          <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
-            True
-          </system:Boolean>
-        </Button.CommandParameter>
+      <Button Name="ApplyChanges"
+              Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>
       <Button Name="Cancel"
@@ -57,7 +50,7 @@
         <StackPanel>
           <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource CarEditor.MainInfoTitle}" />
-          <TextBox Margin="0,8,0,8" materialDesign:HintAssist.Hint="Марка и модель"
+          <TextBox Text="{Binding Car.BrandAndModel}" Margin="0,8,0,8" materialDesign:HintAssist.Hint="Марка и модель"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
           <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Регистрационный знак"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -87,100 +80,7 @@
                              Text="2 курьера, 1 в процессе доставки" />
             </StackPanel>
           </DockPanel>
-          <DataGrid
-
-                Background="{StaticResource MaterialDesignCardBackground}"
-                CanUserSortColumns="True"
-                CanUserAddRows="False"
-                CanUserResizeColumns="True"
-                CellStyle="{StaticResource CellStyle}"
-                AutoGenerateColumns="False"
-                ItemsSource="{Binding Clients}">
-            <DataGrid.Columns>
-              <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
-                                          ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-                                          EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-                <DataGridCheckBoxColumn.Header>
-                  <Border
-                        Background="Transparent"
-                        Padding="9.3 0 0 0"
-                        HorizontalAlignment="Center">
-                    <CheckBox />
-                  </Border>
-                </DataGridCheckBoxColumn.Header>
-              </DataGridCheckBoxColumn>
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
-                                          SortMemberPath="Surname"
-                                          Header="Фамилия">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Surname}" VerticalAlignment="Center" />
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Name"
-                                          Header="Имя">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Name}" VerticalAlignment="Center" />
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
-                                          SortMemberPath="Patronymic"
-                                          Header="Отчество">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Patronymic}"
-                                   VerticalAlignment="Center" />
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth"
-                                          MinWidth="164"
-                                          Header="Дата рождения">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding DateBirth}"
-                                   VerticalAlignment="Center" />
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth"
-                                          MinWidth="164"
-                                          Header="Статус">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="" VerticalAlignment="Center" />
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-              <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                      <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                                  Style="{StaticResource MaterialDesignFlatButton}">
-                        <materialDesign:PackIcon
-                              Kind="InfoOutline"
-                              Height="24"
-                              Width="24" />
-                      </Button>
-
-                      <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                                  Style="{StaticResource MaterialDesignFlatButton}">
-                        <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
-                      </Button>
-                    </StackPanel>
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-            </DataGrid.Columns>
-          </DataGrid>
+          <ContentControl Name="Couriers"/>
         </DockPanel>
 
       </materialDesign:Card>
@@ -198,100 +98,7 @@
                              Text="2 водителя" />
             </StackPanel>
           </DockPanel>
-          <DataGrid
-
-                Background="{StaticResource MaterialDesignCardBackground}"
-                CanUserSortColumns="True"
-                CanUserAddRows="False"
-                CanUserResizeColumns="True"
-                CellStyle="{StaticResource CellStyle}"
-                AutoGenerateColumns="False"
-                ItemsSource="{Binding Clients}">
-            <DataGrid.Columns>
-              <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
-                                          ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-                                          EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-                <DataGridCheckBoxColumn.Header>
-                  <Border
-                        Background="Transparent"
-                        Padding="9.3 0 0 0"
-                        HorizontalAlignment="Center">
-                    <CheckBox />
-                  </Border>
-                </DataGridCheckBoxColumn.Header>
-              </DataGridCheckBoxColumn>
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
-                                          SortMemberPath="Surname"
-                                          Header="Фамилия">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Surname}" VerticalAlignment="Center" />
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Name"
-                                          Header="Имя">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Name}" VerticalAlignment="Center" />
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
-                                          SortMemberPath="Patronymic"
-                                          Header="Отчество">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Patronymic}"
-                                   VerticalAlignment="Center" />
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth"
-                                          MinWidth="164"
-                                          Header="Дата рождения">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding DateBirth}"
-                                   VerticalAlignment="Center" />
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth"
-                                          MinWidth="164"
-                                          Header="Статус">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <TextBlock TextTrimming="CharacterEllipsis" Text="" VerticalAlignment="Center" />
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-
-              <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-              <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="132">
-                <DataGridTemplateColumn.CellTemplate>
-                  <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                      <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                                  Style="{StaticResource MaterialDesignFlatButton}">
-                        <materialDesign:PackIcon
-                              Kind="InfoOutline"
-                              Height="24"
-                              Width="24" />
-                      </Button>
-
-                      <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                                  Style="{StaticResource MaterialDesignFlatButton}">
-                        <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
-                      </Button>
-                    </StackPanel>
-                  </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-              </DataGridTemplateColumn>
-            </DataGrid.Columns>
-          </DataGrid>
+          <ContentControl Name="Drivers"/>
         </DockPanel>
 
       </materialDesign:Card>

@@ -80,6 +80,19 @@
               materialDesign:ShadowAssist.ShadowDepth="Depth1" Height="40">
               <ContentControl Name="Paginator" />
             </materialDesign:ColorZone>
+            <ToggleButton Margin="8,0,0,0"
+                          Style="{StaticResource MaterialDesignActionToggleButton}"
+                          IsChecked="{Binding IsSearchDrawerOpened}"
+                          ToolTip="Расширенный поиск">
+              <ToggleButton.Content>
+                <materialDesign:PackIcon
+                  Kind="Search" />
+              </ToggleButton.Content>
+              <materialDesign:ToggleButtonAssist.OnContent>
+                <materialDesign:PackIcon
+                  Kind="ArrowDown" />
+              </materialDesign:ToggleButtonAssist.OnContent>
+            </ToggleButton>
           </StackPanel>
         </DockPanel>
       </materialDesign:ColorZone>

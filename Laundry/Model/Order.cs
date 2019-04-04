@@ -14,7 +14,7 @@ namespace Laundry.Model
     Granted
   }
 
-  public class Order : IMongoCollectionElement
+  public class Order : IRepositoryElement
   {
     public long Id { get; set; }
 

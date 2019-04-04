@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Laundry.Model.DatabaseClients;
 using MongoDB.Driver;
 
-namespace Laundry.Model.DatabaseClients
+namespace Laundry.Model.CollectionRepositories
 {
-  public class Repository<T> where T : IMongoCollectionElement
+  public class Repository<T> where T : IRepositoryElement
   {
     protected IMongoCollection<T> Collection;
-
+    internal event Action ConnectionLost;
     protected IModel Model{ get; set; }
 
     public Repository(IModel model, IMongoCollection<T> collection)
@@ -35,7 +33,7 @@ namespace Laundry.Model.DatabaseClients
 
     public virtual T GetById(long id)
     {
-      return Collection.Find(Builders<T>.Filter.Eq(nameof(IMongoCollectionElement.Id), id)).First();
+      return Collection.Find(Builders<T>.Filter.Eq(nameof(IRepositoryElement.Id), id)).First();
     }
 
     public virtual void Update(T entity)
@@ -51,19 +49,37 @@ namespace Laundry.Model.DatabaseClients
 
     public virtual IList<T> Get(int offset, int limit)
     {
-      return Collection.Find(Builders<T>.Filter.Exists(nameof(IMongoCollectionElement.DeletionDate), false))
-        .Skip(offset).Limit(limit).ToList();
+      try
+      {
+        return Collection.Find(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
+          .Skip(offset).Limit(limit).ToList();
+      }
+      catch (Exception e)
+      {
+        ConnectionLost?.Invoke();
+        return null;
+      }
+      
     }
 
     public virtual IList<T> GetFiltered(int offset, int limit, FilterDefinition<T> filter)
     { 
-      return Collection.Find(Builders<T>.Filter.Exists(nameof(IMongoCollectionElement.DeletionDate), false))
+      return Collection.Find(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
         .Skip(offset).Limit(limit).ToList();
     }
 
     public long GetCount()
     {
-      return Collection.CountDocuments(Builders<T>.Filter.Exists(nameof(IMongoCollectionElement.DeletionDate), false));
+      try
+      {
+
+        return Collection.CountDocuments(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false));
+      }
+      catch (Exception e)
+      {
+        ConnectionLost?.Invoke();
+        return 0;
+      }
     }
   }
 }

@@ -133,7 +133,7 @@
     <Compile Include="Model\DataBaseModel.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\IModel.cs" />
-    <Compile Include="Model\CollectionRepositories\IMongoCollectionElement.cs" />
+    <Compile Include="Model\CollectionRepositories\IRepositoryElement.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Subsidiary.cs" />
     <Compile Include="Utils\ActivityScreen.cs" />
@@ -182,6 +182,9 @@
     </Compile>
     <Compile Include="Views\CarEditor.xaml.cs">
       <DependentUpon>CarEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConnectionLostDialog.xaml.cs">
+      <DependentUpon>ConnectionLostDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OrderDictionary.xaml.cs">
       <DependentUpon>OrderDictionary.xaml</DependentUpon>
@@ -278,6 +281,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CarEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConnectionLostDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Laundry.Model.CollectionRepositories;
 using MongoDB.Driver;
 
 namespace Laundry.Model.DatabaseClients

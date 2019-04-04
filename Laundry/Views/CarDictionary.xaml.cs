@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Utils.Controls;
 
 namespace Laundry.Views
 {
@@ -23,8 +24,45 @@ namespace Laundry.Views
   /// </summary>
   public class CarDictionaryViewModel : DrawerActivityScreen
   {
-    public CarDictionaryViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+    public IList<Car> Cars{ get; set; }
+    public Car SelectedCar { get; set; }
+
+    public CarDictionaryViewModel(IEventAggregator aggregator, IModel model, ClientCardViewModel cardViewModel,
+      PaginatorViewModel paginator) : base(aggregator,
+      model)
     {
+
+      this.Paginator = paginator;
+      this.Paginator.ElementsName = "Автомобилей";
+
+      this.Paginator.Changed += RefreshClients;
+    }
+
+    private void RefreshClients(int page, int elements)
+    {
+      this.Cars = Model.Cars.Get(page * elements, elements);
+    }
+
+    public PaginatorViewModel Paginator { get; set; }
+
+    protected override void OnActivate()
+    {
+      base.OnActivate();
+      Paginator.Count = Model.Clients.GetCount();
+      RefreshClients(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
+    }
+
+    public void RemoveCar()
+    {
+      Model.Cars.Remove(SelectedCar);
+      this.Paginator.Count = Model.Cars.GetCount();
+      RefreshClients(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
+    }
+
+    public void EditCar()
+    {
+      ChangeApplicationScreen(Screens.CarEditor);
+      EventAggregator.PublishOnUIThread(this.SelectedCar);
     }
 
     public void AddCar()

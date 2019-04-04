@@ -154,6 +154,36 @@
         </materialDesign:Card>
       </Grid>
 
+      <materialDesign:Card Margin="24" Visibility="{Binding OrderGridVisibility}"
+                           Padding="16"
+                           BorderThickness="0" VerticalAlignment="Stretch">
+
+        <DockPanel LastChildFill="True">
+          <Grid DockPanel.Dock="Bottom">
+            <DockPanel>
+              <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
+                           Style="{StaticResource MaterialDesignBody2TextBlock}">
+                  <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
+                      <Binding Path="Client.OrdersCount"/>
+                    </MultiBinding>
+                  </TextBlock.Text>
+                </TextBlock>
+                <!--Заказ от 21.01.2019, 13:30. Цена: 1300р/!-->
+                <Button Name="AddOrder" DockPanel.Dock="Right" Margin="0,0,9,0"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
+                  <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+                </Button>
+              </StackPanel>
+              <ContentControl DockPanel.Dock="Left" Name="Paginator"/>
+
+            </DockPanel>
+          </Grid>
+          <ContentControl Name="OrderDataGrid" />
+        </DockPanel>
+      </materialDesign:Card>
     </Grid>
   </DockPanel>
 </UserControl>
