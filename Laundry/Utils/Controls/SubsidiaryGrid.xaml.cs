@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
+using Laundry.Views;
 using Laundry.Views.Cards;
 
 namespace Laundry.Utils.Controls
@@ -25,7 +26,8 @@ namespace Laundry.Utils.Controls
   public class SubsidiaryGridViewModel : EntityGrid<Subsidiary, Repository<Subsidiary>, SubsidiaryCardViewModel>
   {
     public SubsidiaryGridViewModel(IEventAggregator eventAggregator, SubsidiaryCardViewModel card,
-      IModel model) : base(eventAggregator, card, model.Subsidiaries, Screens.SubsidiaryEditor)
+      DeleteDialogViewModel deleteDialog,
+      IModel model) : base(eventAggregator, card, model.Subsidiaries, deleteDialog, Screens.SubsidiaryEditor)
     {
     }
   }

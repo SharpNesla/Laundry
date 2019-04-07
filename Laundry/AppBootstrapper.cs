@@ -47,6 +47,7 @@ namespace Laundry
       container.Singleton<EmployeeDictionaryViewModel>();
       container.PerRequest<EmployeeEditorViewModel>();
       container.PerRequest<EmployeeDataGridViewModel>();
+      container.Singleton<EmployeeCardViewModel>();
 
       container.Singleton<SubsidiaryDictionaryViewModel>();
       container.PerRequest<SubsidiaryEditorViewModel>();
@@ -56,10 +57,12 @@ namespace Laundry
       container.Singleton<CarDictionaryViewModel>();
       container.PerRequest<CarEditorViewModel>();
       container.PerRequest<CarDataGridViewModel>();
+      container.Singleton<CarCardViewModel>();
 
       container.Singleton<OrderDictionaryViewModel>();
       container.PerRequest<OrderEditorViewModel>();
       container.PerRequest<OrderDataGridViewModel>();
+      container.Singleton<OrderCardViewModel>();
 
       container.Singleton<ClothKindEditorViewModel>();
 
@@ -72,8 +75,8 @@ namespace Laundry
       //container.Singleton<OrderCard>();
       //
       container.PerRequest<PaginatorViewModel>();
-      
-      
+      container.Singleton<DeleteDialogViewModel>();
+
     }
 
     protected override object GetInstance(Type service, string key)

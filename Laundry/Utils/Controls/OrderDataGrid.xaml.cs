@@ -29,8 +29,24 @@ namespace Laundry.Utils.Controls
         base.Refresh(page, elements);
     }
 
-    public OrderDataGridViewModel(IEventAggregator eventAggregator, OrderCardViewModel card, IModel model
-    ) : base(eventAggregator, card, model.Orders, Screens.OrderEditor)
+    public override long Count
+    {
+      get
+      {
+        if (Client != null)
+          return Repo.GetForClientCount(Client);
+        if (Employee != null)
+        {
+          return Repo.GetForEmployeeCount(Employee);
+        }
+
+        return base.Count;
+      }
+    }
+
+    public OrderDataGridViewModel(IEventAggregator eventAggregator, OrderCardViewModel card,
+      DeleteDialogViewModel deleteDialog, IModel model
+    ) : base(eventAggregator, card, model.Orders, deleteDialog, Screens.OrderEditor)
     {
     }
   }

@@ -68,9 +68,9 @@
             <PasswordBox Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}"
                                  materialDesign:HintAssist.Hint="Пароль" Margin="0,0,0,16"
                          cal:Message.Attach="[Event PasswordChanged] = [Action PasswordChanged($source)]"/>
-            <ToggleButton Visibility="Collapsed"
+            <ToggleButton
               Style="{StaticResource MaterialDesignActionToggleButton}"
-              Margin="0,-90,-212,0">
+              Margin="0,-90,-212,0" Focusable="False">
               <ToggleButton.Content>
                 <materialDesign:PackIcon
                   Kind="EyeOff" />

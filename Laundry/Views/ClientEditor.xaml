@@ -139,18 +139,17 @@
         </materialDesign:Card>
       </Grid>
       <materialDesign:Card Margin="24" Visibility="{Binding OrderGridVisibility}"
-                           Padding="16"
                            BorderThickness="0" VerticalAlignment="Stretch">
 
         <DockPanel LastChildFill="True">
-          <Grid DockPanel.Dock="Bottom">
+          <Grid DockPanel.Dock="Bottom" Margin="16,0,16,16">
             <DockPanel>
               <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                 <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
                            Style="{StaticResource MaterialDesignBody2TextBlock}">
                   <TextBlock.Text>
                     <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
-                      <Binding Path="Entity.OrdersCount" />
+                      <Binding Path="OrderDataGrid.Count" />
                     </MultiBinding>
                   </TextBlock.Text>
                 </TextBlock>
@@ -161,7 +160,7 @@
                   <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
                 </Button>
               </StackPanel>
-              <ContentControl DockPanel.Dock="Left" Name="Paginator" />
+              <ContentControl  DockPanel.Dock="Left" Name="Paginator" />
 
             </DockPanel>
           </Grid>

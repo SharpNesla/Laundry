@@ -47,10 +47,7 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
-
-    [BsonIgnore]
-    public long OrdersCount { get; set; }
-
+    
     [BsonIgnore]
     public string Signature
     {

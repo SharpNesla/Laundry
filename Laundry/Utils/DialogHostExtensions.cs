@@ -18,13 +18,13 @@ namespace Laundry.Utils
     /// </summary>
     /// <typeparam name="T">Тип VM</typeparam>
     /// <param name="viewModel">VM</param>
-    public static void ShowCaliburnVM<T>(T viewModel)
+    public static async Task ShowCaliburnVM<T>(T viewModel)
     {
       //Ищем View для ViewModel карточки клиента (Caliburn)
       var view = ViewLocator.LocateForModel(viewModel, null, null);
       ViewModelBinder.Bind(viewModel, view, null);
 
-      DialogHost.Show(view);
+      await DialogHost.Show(view);
     }
   }
 }

@@ -24,8 +24,8 @@
     Background="{Binding ElementName=OwnControl, Path=Background}">
     <DataGrid.ContextMenu>
       <ContextMenu>
-        <MenuItem cal:Message.Attach="[Event Click] = [Action EditOrder()]" Header="Изменить" />
-        <MenuItem cal:Message.Attach="[Event Click] = [Action RemoveOrder()]" Header="Удалить" />
+        <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
+        <MenuItem cal:Message.Attach="[Event Click] = [Action Remove)]" Header="Удалить" />
       </ContextMenu>
     </DataGrid.ContextMenu>
     <DataGrid.Columns>
@@ -63,7 +63,7 @@
             <StackPanel Orientation="Horizontal">
               <Button Margin="0" Foreground="{StaticResource MaterialDesignTextBoxBorder}"
                       Style="{StaticResource MaterialDesignFlatButton}"
-                      cal:Message.Attach="ShowClientInfo($dataContext)">
+                      cal:Message.Attach="ShowInfoCard($dataContext)">
                 <materialDesign:PackIcon
                   Kind="InfoOutline"
                   Height="24"

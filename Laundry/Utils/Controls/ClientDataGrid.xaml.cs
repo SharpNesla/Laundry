@@ -24,10 +24,10 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class ClientDataGridViewModel : EntityGrid<Client, ClientRepository, ClientCardViewModel>
   {
-    public ClientDataGridViewModel(IEventAggregator eventAggregator, ClientCardViewModel card, IModel model) :
-      base(eventAggregator, card, model.Clients, Screens.ClientEditor)
+    public ClientDataGridViewModel(IEventAggregator eventAggregator, ClientCardViewModel card,
+      DeleteDialogViewModel deleteDialog, IModel model) :
+      base(eventAggregator, card, model.Clients, deleteDialog, Screens.ClientEditor)
     {
-
     }
   }
 }

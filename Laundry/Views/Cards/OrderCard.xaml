@@ -8,21 +8,28 @@
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
+             xmlns:cal="http://www.caliburnproject.org"
              d:DesignWidth="532" d:DesignHeight="300"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel MinWidth="500">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                              Padding="16,20,20,20">
-      <StackPanel Orientation="Horizontal">
-        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="24" Width="24" />
-        <TextBlock
+                              Padding="24,20,24,20">
+      <DockPanel>
+        <Button DockPanel.Dock="Right" Name="EditClient" Style="{StaticResource MaterialDesignToolButton}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                cal:Message.Attach="Edit()">
+          <materialDesign:PackIcon Kind="SquareEditOutline" VerticalAlignment="Center" Height="24" Width="24" />
+        </Button>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+          <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="24" Width="24" />
+          <TextBlock
+            Style="{StaticResource MaterialDesignTitleTextBlock}"
+            VerticalAlignment="Center"
+            Margin="8 0 0 0" Text="{Binding Entity.Id, StringFormat='Заказ №{0}'}" />
+        </StackPanel>
 
-          Style="{StaticResource MaterialDesignTitleTextBlock}"
-          VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="{Binding Client.Id, StringFormat='Клиент{0}'}" />
-
-
-      </StackPanel>
+      </DockPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
       <Button  Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"

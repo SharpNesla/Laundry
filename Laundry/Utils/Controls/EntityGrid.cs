@@ -36,26 +36,31 @@ namespace Laundry.Utils.Controls
     public IReadOnlyList<TEntity> Entities { get; set; }
     public TEntity SelectedEntity { get; set; }
     public FilterDefinition<TEntity> Filter;
+    private readonly DeleteDialogViewModel _shure;
     public TRepository Repo { get; }
 
     public event Action<TEntity> RemoveButtonClick;
 
-    public EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo, Screens editScreen)
+    public EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
+      DeleteDialogViewModel shure, Screens editScreen)
     {
       this._card = card;
       this._editScreen = editScreen;
       this._eventAggregator = eventAggregator;
       this.Repo = repo;
+      this._shure = shure;
     }
 
-    public long Count
+    public virtual long Count
     {
       get { return this.Repo.GetCount(); }
     }
 
     public virtual void Refresh(int page, int elements)
     {
-      var repo = (Filter == null ? Repo.Get(page * elements, elements) : Repo.Get(page * elements, elements, Filter)) as List<TEntity>;
+      var repo =
+        (Filter == null ? Repo.Get(page * elements, elements) : Repo.Get(page * elements, elements, Filter)) as
+        List<TEntity>;
       this.Entities = repo.AsReadOnly();
     }
 
@@ -94,12 +99,14 @@ namespace Laundry.Utils.Controls
       StateChanged?.Invoke();
     }
 
-    public void Remove()
+    public async void Remove()
     {
-      this.Repo.Remove(SelectedEntity);
-      StateChanged?.Invoke();
+      var isDelete = await _shure.AskQuestion();
+      if (isDelete)
+      {
+        this.Repo.Remove(SelectedEntity);
+        StateChanged?.Invoke();
+      }
     }
-
-
   }
 }

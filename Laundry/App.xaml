@@ -35,10 +35,9 @@
         <Style.Triggers>
 
           <Trigger Property="DataGridCell.IsSelected" Value="True">
-
-            <Setter Property="BorderBrush" Value="{StaticResource MaterialDesignSelection}" />
-            <Setter Property="Foreground" Value="{StaticResource MaterialDesignDarkForeground}" />
-            <Setter Property="Background" Value="{StaticResource MaterialDesignSelection}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignSelection}" />
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignDarkForeground}" />
+            <Setter Property="Background" Value="{DynamicResource MaterialDesignSelection}" />
           </Trigger>
         </Style.Triggers>
       </Style>

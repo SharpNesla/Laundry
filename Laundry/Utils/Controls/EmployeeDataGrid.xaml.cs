@@ -13,11 +13,11 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
-
   public class EmployeeDataGridViewModel : EntityGrid<Employee, EmployeeRepository, EmployeeCardViewModel>
   {
-    public EmployeeDataGridViewModel(IEventAggregator eventAggregator, EmployeeCardViewModel card, IModel model)
-      : base(eventAggregator, card, model.Employees, Screens.EmployeeEditor)
+    public EmployeeDataGridViewModel(IEventAggregator eventAggregator, EmployeeCardViewModel card,
+      DeleteDialogViewModel deleteDialog, IModel model)
+      : base(eventAggregator, card, model.Employees, deleteDialog, Screens.EmployeeEditor)
     {
     }
   }

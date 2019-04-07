@@ -242,8 +242,8 @@
     <Compile Include="Views\Analytics.xaml.cs">
       <DependentUpon>Analytics.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShureQuestionDialog.xaml.cs">
-      <DependentUpon>ShureQuestionDialog.xaml</DependentUpon>
+    <Compile Include="Views\DeleteDialog.xaml.cs">
+      <DependentUpon>DeleteDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SubsidiaryDictionary.xaml.cs">
       <DependentUpon>SubsidiaryDictionary.xaml</DependentUpon>
@@ -405,7 +405,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ShureQuestionDialog.xaml">
+    <Page Include="Views\DeleteDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

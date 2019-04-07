@@ -20,7 +20,8 @@
     SelectionMode="Single"
     AutoGenerateColumns="False"
     SelectedItem="{Binding SelectedEntity}"
-    ItemsSource="{Binding Entities}">
+    ItemsSource="{Binding Entities}"
+    cal:Message.Attach="[Event MouseDoubleClick] = [Action ShowInfoCard()]">
     <DataGrid.ContextMenu>
       <ContextMenu>
         <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
@@ -98,7 +99,8 @@
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
               <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                      Style="{StaticResource MaterialDesignFlatButton}">
+                      Style="{StaticResource MaterialDesignFlatButton}"
+                      cal:Message.Attach="ShowInfoCard($dataContext)">
                 <materialDesign:PackIcon
                   Kind="InfoOutline"
                   Height="24"

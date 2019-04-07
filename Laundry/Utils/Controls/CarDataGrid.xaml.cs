@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
+using Laundry.Views;
 using Laundry.Views.Cards;
 
 namespace Laundry.Utils.Controls
@@ -24,8 +25,8 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class CarDataGridViewModel : EntityGrid<Car, Repository<Car>, CarCardViewModel>
   {
-    public CarDataGridViewModel(IEventAggregator eventAggregator, CarCardViewModel card, IModel model) 
-      : base(eventAggregator, card, model.Cars, Screens.CarEditor)
+    public CarDataGridViewModel(IEventAggregator eventAggregator, CarCardViewModel card, DeleteDialogViewModel deleteDialog, IModel model) 
+      : base(eventAggregator, card, model.Cars,deleteDialog, Screens.CarEditor)
     {
     }
   }
