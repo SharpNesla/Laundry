@@ -10,5 +10,7 @@ namespace Laundry.Model.DatabaseClients
 
     [BsonIgnoreIfDefault]
     DateTime DeletionDate { get; set; }
+    [BsonIgnore]
+    string Signature { get; }
   }
 }

@@ -43,6 +43,8 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
+    [BsonIgnore]
+    public string Signature { get; }
 
     [BsonIgnoreIfNull]
     [BsonElement(nameof(Couriers))]

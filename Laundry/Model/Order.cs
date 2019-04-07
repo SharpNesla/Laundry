@@ -36,6 +36,9 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
+
+    public string Signature { get; }
+
     [BsonIgnoreIfNull]
     public IList<ClothInstance> ClothInstances { get; set; }
 

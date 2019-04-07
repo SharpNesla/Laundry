@@ -44,5 +44,7 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
+
+    public string Signature { get; }
   }
 }

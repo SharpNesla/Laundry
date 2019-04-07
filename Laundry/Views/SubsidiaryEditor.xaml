@@ -24,32 +24,16 @@
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>
-    <StackPanel DockPanel.Dock="Bottom"
-                Orientation="Horizontal"
-                HorizontalAlignment="Right" Margin="0,0,24,24">
-      <Button
-        Style="{StaticResource MaterialDesignFlatButton}"
-        IsDefault="True" Margin="0,0,20,0"
-        Command="materialDesign:DialogHost.CloseDialogCommand">
-        <Button.CommandParameter>
-          <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
-            True
-          </system:Boolean>
-        </Button.CommandParameter>
-        ПРИНЯТЬ
-      </Button>
-      <Button Name="Cancel"
-        Style="{StaticResource MaterialDesignFlatButton}"
-        IsCancel="True"
-        Command="materialDesign:DialogHost.CloseDialogCommand">
-        <Button.CommandParameter>
-          <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
-            False
-          </system:Boolean>
-        </Button.CommandParameter>
+    <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="24,0,24,24">
+      <Button IsCancel="True" DockPanel.Dock="Right" MaxWidth="132"
+              Style="{StaticResource MaterialDesignFlatButton}" Name="Discard">
         ОТМЕНИТЬ
       </Button>
-    </StackPanel>
+      <Button Name="ApplyChanges" DockPanel.Dock="Left" MaxWidth="132"
+              Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
+        ПРИНЯТЬ
+      </Button>
+    </DockPanel>
     <StackPanel Margin="32,32,32,24">
 
       <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />

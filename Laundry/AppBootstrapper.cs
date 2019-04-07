@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Laundry.Views;
 using Laundry.Model;
 using Caliburn.Micro;
- 
+using Laundry.Utils.Controls.EntitySearchControls;
+
 namespace Laundry
 {
   using Laundry.Utils.Controls;

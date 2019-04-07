@@ -4,6 +4,7 @@ using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
+using Laundry.Utils.Controls.EntitySearchControls;
 
 namespace Laundry.Views
 {
@@ -23,8 +24,7 @@ namespace Laundry.Views
 
     private void OnClientChanged(Client obj)
     {
-      this.Entity.ClientId = obj.Id;
-      this.Entity.Client = Model.Clients.GetById(obj.Id);
+      
     }
     
     public void Handle(Client message)

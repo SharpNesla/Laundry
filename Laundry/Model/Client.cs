@@ -53,5 +53,7 @@ namespace Laundry.Model
     {
       get { return $"{this.Id} {this.Name} {this.Surname}"; }
     }
+
+    public long OrdersCount { get; internal set; }
   }
 }
