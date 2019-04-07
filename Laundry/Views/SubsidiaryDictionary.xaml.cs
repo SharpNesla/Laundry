@@ -5,19 +5,11 @@ using Laundry.Utils.Controls;
 
 namespace Laundry.Views
 {
-  public class SubsidiaryDictionaryViewModel : DrawerActivityScreen
+  public class SubsidiaryDictionaryViewModel : DictionaryScreen<SubsidiaryGridViewModel>
   {
-    public PaginatorViewModel Paginator { get; set; }
-
-    public SubsidiaryDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator) : base(aggregator, model)
+    public SubsidiaryDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, SubsidiaryGridViewModel entityGrid) 
+      : base(aggregator, model, paginator, entityGrid, "Филиалов")
     {
-      this.Paginator = paginator;
-      paginator.ElementsName = "Филиалов";
-    }
-
-    public void AddSubsidiary()
-    {
-      ChangeApplicationScreen(Screens.SubsidiaryEditor);
     }
   }
 }

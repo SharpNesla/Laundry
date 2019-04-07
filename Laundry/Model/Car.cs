@@ -43,12 +43,18 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
+
+    [BsonIgnoreIfNull]
     [BsonElement(nameof(Couriers))]
     public List<long> CourierIds { get; set; }
+
     [BsonElement(nameof(Drivers))]
+    [BsonIgnoreIfNull]
     public List<long> DriverIds { get; set; }
+
     [BsonIgnore]
-    public List<Employee> Couriers{ get; set; }
+    public List<Employee> Couriers { get; set; }
+
     [BsonIgnore]
     public List<Employee> Drivers { get; set; }
   }

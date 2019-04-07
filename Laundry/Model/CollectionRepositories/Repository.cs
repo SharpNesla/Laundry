@@ -54,33 +54,32 @@ namespace Laundry.Model.CollectionRepositories
         Builders<T>.Update.Set(nameof(entity.DeletionDate), DateTime.Now));
     }
 
-    public virtual IList<T> Get(int offset, int limit)
+    public virtual IReadOnlyList<T> Get(int offset, int limit, FilterDefinition<T> filter = null)
     {
-      try
+      if (filter != null)
       {
         return Collection.Find(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
           .Skip(offset).Limit(limit).ToList();
       }
-      catch (Exception e)
+      else
       {
-        ConnectionLost?.Invoke();
-        return null;
+        return Collection.Find(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
+          .Skip(offset).Limit(limit).ToList();
       }
-      
     }
 
-    public virtual IList<T> GetFiltered(int offset, int limit, FilterDefinition<T> filter)
-    { 
-      return Collection.Find(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
-        .Skip(offset).Limit(limit).ToList();
-    }
-
-    public long GetCount()
+    public long GetCount(FilterDefinition<T> filter = null)
     {
       try
       {
-
-        return Collection.CountDocuments(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false));
+        if (filter == null)
+        {
+          return Collection.CountDocuments(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false));
+        }
+        else
+        {
+          return Collection.CountDocuments(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false));
+        }
       }
       catch (Exception e)
       {

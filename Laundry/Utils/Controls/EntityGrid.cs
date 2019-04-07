@@ -9,37 +9,38 @@ using Laundry.Model.CollectionRepositories;
 using Laundry.Model.DatabaseClients;
 using Laundry.Views;
 using MaterialDesignThemes.Wpf;
+using MongoDB.Driver;
 using Action = System.Action;
 
 namespace Laundry.Utils.Controls
 {
-  public interface IEntityGrid<TEntity, out TRepository> : IPaginable where TEntity : IRepositoryElement where TRepository : Repository<TEntity>
+  public interface IEntityGrid<out TEntity> : IPaginable where TEntity : IRepositoryElement
   {
-    IList<TEntity> Entities { get; set; }
-    TEntity SelectedEntity { get; set; }
-    TRepository Repo { get; }
+    IReadOnlyList<TEntity> Entities { get; }
+    TEntity SelectedEntity { get; }
 
-    void ShowInfoCard(TEntity context);
     void Add();
     void Edit();
     void Remove();
     void Refresh();
   }
 
-  public class EntityGrid<TEntity, TRepository> : PropertyChangedBase, IEntityGrid<TEntity, TRepository> where TEntity : IRepositoryElement
+  public class EntityGrid<TEntity, TRepository, TCard> : PropertyChangedBase, IEntityGrid<TEntity>
+    where TEntity : IRepositoryElement
     where TRepository : Repository<TEntity>
+    where TCard : Card<TEntity>
   {
     private Card<TEntity> _card;
     private IEventAggregator _eventAggregator;
     private Screens _editScreen;
-    public IList<TEntity> Entities { get; set; }
+    public IReadOnlyList<TEntity> Entities { get; set; }
     public TEntity SelectedEntity { get; set; }
-
+    public FilterDefinition<TEntity> Filter;
     public TRepository Repo { get; }
 
     public event Action<TEntity> RemoveButtonClick;
 
-    public EntityGrid(IEventAggregator eventAggregator, Card<TEntity> card, TRepository repo , Screens editScreen)
+    public EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo, Screens editScreen)
     {
       this._card = card;
       this._editScreen = editScreen;
@@ -54,22 +55,29 @@ namespace Laundry.Utils.Controls
 
     public virtual void Refresh(int page, int elements)
     {
-      this.Entities = Repo.Get(page * elements, elements);
+      var repo = (Filter == null ? Repo.Get(page * elements, elements) : Repo.Get(page * elements, elements, Filter)) as List<TEntity>;
+      this.Entities = repo.AsReadOnly();
     }
 
     public event Action StateChanged;
+
+    public void ShowInfoCard()
+    {
+      if (SelectedEntity != null)
+      {
+        _card.Entity = SelectedEntity;
+
+        DialogHostExtensions.ShowCaliburnVM(_card);
+      }
+    }
 
     public void ShowInfoCard(TEntity context)
     {
       if (context != null)
       {
-        //Ищем View для ViewModel карточки клиента (Caliburn)
-        var view = ViewLocator.LocateForModel(_card, null, null);
-        ViewModelBinder.Bind(this._card, view, null);
+        _card.Entity = context;
 
-        this._eventAggregator.PublishOnUIThread(context);
-
-        DialogHost.Show(view);
+        DialogHostExtensions.ShowCaliburnVM(_card);
       }
     }
 
@@ -91,5 +99,7 @@ namespace Laundry.Utils.Controls
       this.Repo.Remove(SelectedEntity);
       StateChanged?.Invoke();
     }
+
+
   }
 }

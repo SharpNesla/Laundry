@@ -48,6 +48,7 @@
 
 
       <converters:ProfessionConverter x:Key="ProfessionConverter"></converters:ProfessionConverter>
+
     </ResourceDictionary>
 
   </Application.Resources>

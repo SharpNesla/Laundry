@@ -20,10 +20,9 @@ using PropertyChanged;
 
 namespace Laundry.Views
 {
-  [AddINotifyPropertyChangedInterface]
-  public partial class OrderCardViewModel : Card<Order>
+  public class OrderCardViewModel : Card<Order>
   {
-    public OrderCardViewModel(Order entity) : base(entity)
+    public OrderCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.OrderEditor)
     {
     }
   }

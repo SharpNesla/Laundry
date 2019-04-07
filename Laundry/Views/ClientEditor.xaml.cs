@@ -54,56 +54,36 @@ namespace Laundry.Views
     #endregion
 
     public OrderDataGridViewModel OrderDataGrid { get; set; }
+    public PaginatorViewModel Paginator { get; set; }
 
     public ClientEditorViewModel(IEventAggregator aggregator, IModel model, OrderDataGridViewModel grid, PaginatorViewModel paginator) : base(
-      aggregator, model, model.Clients)
+      aggregator, model, model.Clients, "клиента")
     {
       InfoChecked = true;
       OrderDataGrid = grid;
       
       Paginator = paginator;
-      paginator.ElementsName = "Заказов";
-      Paginator.RegisterPaginable(OrderDataGrid);
-    }
-
-    private void RefreshOrders(int page, int elements)
-    {
-      var client = Client;
-      if (client != null)
-        OrderDataGrid.Entities = Model.Orders.GetForClient(client, page * elements, elements);
+      Paginator.ElementsName = "Заказов";
+      Paginator.RegisterPaginable(OrderDataGrid, false);
     }
 
     protected override void OnActivate()
     {
       base.OnActivate();
-      Paginator.Count = Model.Orders.GetForClientCount(Client);
-      Client.OrdersCount = Model.Orders.GetForClientCount(Client);
-      RefreshOrders(Paginator.CurrentPage - 1, Paginator.ElementsPerPage);
+      Paginator.RefreshPaginable();
     }
-
-    public PaginatorViewModel Paginator { get; set; }
 
     public void AddOrder(object sender, RoutedEventArgs e)
     {
-      ChangeApplicationScreen(Screens.OrderEditor);
-      Paginator.Count = Model.Orders.GetForClientCount(Client);
-      RefreshOrders(Paginator.CurrentPage - 1, Paginator.ElementsPerPage);
-      EventAggregator.BeginPublishOnUIThread(Client);
+      OrderDataGrid.Add();
+      EventAggregator.BeginPublishOnUIThread(Entity);
     }
 
-    public void RemoveOrder(Order order)
-    {
-      Model.Orders.Remove(order);
-      Client.OrdersCount = Model.Orders.GetForClientCount(Client);
-      Paginator.Count = Model.Orders.GetForClientCount(Client);
-      RefreshOrders(Paginator.CurrentPage - 1, Paginator.ElementsPerPage);
-    }
-    
     public override void Handle(Client client)
     {
       base.Handle(client);
-      Paginator.Count = Model.Orders.GetForClientCount(Client);
-      RefreshOrders(Paginator.CurrentPage - 1, Paginator.ElementsPerPage);
+      OrderDataGrid.Client = client;
+      Paginator.RefreshPaginable();
     }
   }
 }

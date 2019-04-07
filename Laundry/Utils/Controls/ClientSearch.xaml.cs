@@ -41,7 +41,7 @@ namespace Laundry.Utils.Controls
     public ClientSearchViewModel(IModel model)
     {
       this._model = model;
-      this.Clients = model.Clients.Get(0, 10);
+      //this.Clients = model.Clients.Get(0, 10);
     }
 
     public void OnTextInput(ComboBox box)

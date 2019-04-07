@@ -16,6 +16,7 @@ namespace Laundry.Model
 
   public class Order : IRepositoryElement
   {
+    private Client _client;
     public long Id { get; set; }
 
     [BsonIgnoreIfNull]
@@ -60,7 +61,15 @@ namespace Laundry.Model
     #region Reference Objects
 
     [BsonIgnore]
-    public Client Client { get; set; }
+    public Client Client
+    {
+      get { return _client; }
+      set
+      {
+        _client = value;
+        this.ClientId = _client.Id;
+      }
+    }
 
     [BsonIgnore]
     public Employee Obtainer { get; set; }

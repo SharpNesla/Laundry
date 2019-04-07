@@ -1,14 +1,24 @@
-﻿using Laundry.Model.DatabaseClients;
+﻿using Caliburn.Micro;
+using Laundry.Model.DatabaseClients;
+using Laundry.Utils;
 
 namespace Laundry.Views
 {
-  public class Card<TEntity> where TEntity : IRepositoryElement
+  public class Card<TEntity> : PropertyChangedBase where TEntity : IRepositoryElement
   {
-    public TEntity Entity { get; set; }
-    public Card(TEntity entity)
+    private Screens _editorScreen;
+    private readonly IEventAggregator _eventAggregator;
+    public virtual TEntity Entity { get; set; }
+    public Card(IEventAggregator eventAggregator,  Screens editorScreen)
     {
-      this.Entity = entity;
+      this._eventAggregator = eventAggregator;
+      this._editorScreen = editorScreen;
     }
-    
+
+    public void Edit()
+    {
+      _eventAggregator.PublishOnUIThread(Screens.ClientEditor);
+      _eventAggregator.PublishOnUIThread(this.Entity);
+    }
   }
 }

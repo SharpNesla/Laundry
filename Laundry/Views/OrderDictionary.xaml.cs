@@ -21,49 +21,11 @@ using MaterialDesignThemes.Wpf;
 
 namespace Laundry.Views
 {
-  public class OrderDictionaryViewModel : DrawerActivityScreen
+  public class OrderDictionaryViewModel : DictionaryScreen<OrderDataGridViewModel>
   {
-
-    public OrderDataGridViewModel OrdersViewModel { get; private set; }
-
-    public PaginatorViewModel Paginator { get; set; }
-
-    public bool IsSearchDrawerOpened { get; set; }
-
-    public async void ShowOrderInfo(Order context)
+    public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, 
+      OrderDataGridViewModel entityGrid) : base(aggregator, model, paginator, entityGrid, "Заказов")
     {
-      
-    }
-
-    public OrderDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, OrderDataGridViewModel orderGrid) : base(aggregator, model)
-    {
-      orderGrid.Entities = Model.Orders.Get(0, 0);
-
-
-      this.Paginator = paginator;
-      this.Paginator.ElementsName = "Заказов";
-      this.Paginator.ElementsPerPage = 5;
-
-      this.OrdersViewModel = orderGrid;
-
-      this.Paginator.Changed += RefreshOrders;
-    }
-
-    protected override void OnActivate()
-    {
-      base.OnActivate();
-      Paginator.Count = Model.Orders.GetCount();
-      RefreshOrders(this.Paginator.CurrentPage - 1, this.Paginator.ElementsPerPage);
-    }
-
-    private void RefreshOrders(int page, int elements)
-    {
-      this.OrdersViewModel.Entities = Model.Orders.Get(page * elements, elements);
-    }
-
-    public void ChangeSearchDrawerState()
-    {
-      IsSearchDrawerOpened = !IsSearchDrawerOpened;
     }
   }
 }

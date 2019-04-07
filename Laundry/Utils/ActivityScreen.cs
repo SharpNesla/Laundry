@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using Caliburn.Micro;
 using Laundry.Model;
@@ -33,6 +34,10 @@ namespace Laundry.Utils
       this.EventAggregator.PublishOnUIThread(screen);
     }
 
-  
+    public void ShowActivityMenu(Button button)
+    {
+      if (button.ContextMenu != null) button.ContextMenu.IsOpen = true;
+    }
+
   }
 }

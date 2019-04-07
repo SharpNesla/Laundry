@@ -22,31 +22,35 @@ using PropertyChanged;
 namespace Laundry.Views
 {
   [AddINotifyPropertyChangedInterface]
-  public class EmployeeCardViewModel : IHandle<Employee>
+  public class EmployeeCardViewModel : Card<Employee>
   {
-    private readonly IEventAggregator _eventAggregator;
-    private IModel _model;
-    public OrderDataGridViewModel OrderGrid { get; set; }
-    public Employee Client { get; set; }
+    //private readonly IEventAggregator _eventAggregator;
+    //private IModel _model;
+    //public OrderDataGridViewModel OrderGrid { get; set; }
+    //public Employee Client { get; set; }
 
-    public EmployeeCardViewModel(IEventAggregator eventAggregator, IModel model, OrderDataGridViewModel grid)
+    //public EmployeeCardViewModel(IEventAggregator eventAggregator, IModel model, OrderDataGridViewModel grid)
+    //{
+    //  _eventAggregator = eventAggregator;
+    //  eventAggregator.Subscribe(this);
+
+    //  this.OrderGrid = grid;
+    //  this._model = model;
+    //}
+
+    //private void EditClient(object sender, RoutedEventArgs e)
+    //{
+    //  _eventAggregator.PublishOnUIThread(Screens.ClientEditor);
+    //  _eventAggregator.PublishOnUIThread(this.Client);
+    //}
+
+    //public void Handle(Employee message)
+    //{
+    //  this.Client = _model.Employees.GetById(message.Id);
+    //}
+
+    public EmployeeCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.EmployeeEditor)
     {
-      _eventAggregator = eventAggregator;
-      eventAggregator.Subscribe(this);
-
-      this.OrderGrid = grid;
-      this._model = model;
-    }
-
-    private void EditClient(object sender, RoutedEventArgs e)
-    {
-      _eventAggregator.PublishOnUIThread(Screens.ClientEditor);
-      _eventAggregator.PublishOnUIThread(this.Client);
-    }
-
-    public void Handle(Employee message)
-    {
-      this.Client = _model.Employees.GetById(message.Id);
     }
   }
 }

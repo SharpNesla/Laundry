@@ -15,17 +15,15 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
-using Laundry.Utils.Controls;
 
-namespace Laundry.Views
+namespace Laundry.Views.Cards
 {
   /// <summary>
-  /// Interaction logic for CarDictionary.xaml
+  /// Interaction logic for CarCard.xaml
   /// </summary>
-  public class CarDictionaryViewModel : DictionaryScreen<CarDataGridViewModel>
+  public class CarCardViewModel : Card<Car>
   {
-    public CarDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, CarDataGridViewModel entityGrid) :
-      base(aggregator, model, paginator, entityGrid, "Машин")
+    public CarCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.CarEditor)
     {
     }
   }

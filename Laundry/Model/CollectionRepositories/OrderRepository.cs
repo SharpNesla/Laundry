@@ -9,7 +9,7 @@ namespace Laundry.Model.CollectionRepositories
     {
     }
 
-    public IList<Order> GetForClient(Client client, int offset, int limit)
+    public IReadOnlyList<Order> GetForClient(Client client, int offset, int limit)
     {
       var filter = Builders<Order>.Filter.And(
         Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
@@ -26,12 +26,13 @@ namespace Laundry.Model.CollectionRepositories
       return orderById;
     }
 
-    public override IList<Order> Get(int offset, int limit)
+    public override IReadOnlyList<Order> Get(int offset, int limit, FilterDefinition<Order> filter = null)
     {
-      var orders = base.Get(offset, limit);
+      var orders = base.Get(offset, limit, filter);
       foreach (var x in orders) x.Client = Model.Clients.GetById(x.ClientId);
       return orders;
     }
+
 
     public long GetForClientCount(Client client)
     {
@@ -42,7 +43,7 @@ namespace Laundry.Model.CollectionRepositories
       return Collection.CountDocuments(filter);
     }
 
-    public IList<Order> GetForEmployee(Employee employee, int offset, int limit)
+    public IReadOnlyList<Order> GetForEmployee(Employee employee, int offset, int limit)
     {
       var filter = Builders<Order>.Filter.And(
         Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),

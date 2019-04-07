@@ -137,6 +137,12 @@
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Subsidiary.cs" />
     <Compile Include="Utils\ActivityScreen.cs" />
+    <Compile Include="Utils\Controls\CarDataGrid.xaml.cs">
+      <DependentUpon>CarDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Controls\ClientDataGrid.xaml.cs">
+      <DependentUpon>ClientDataGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Controls\ClientSearch.xaml.cs">
       <DependentUpon>ClientSearch.xaml</DependentUpon>
     </Compile>
@@ -150,6 +156,10 @@
       <DependentUpon>ClothGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Controls\EntityGrid.cs" />
+    <Compile Include="Utils\Controls\SubsidiaryGrid.xaml.cs">
+      <DependentUpon>SubsidiaryGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\DialogHostExtensions.cs" />
     <Compile Include="Utils\DictionaryScreen.cs" />
     <Compile Include="Utils\EditorActivityScreen.cs" />
     <Compile Include="Utils\Controls\EmployeeDataGrid.xaml.cs">
@@ -174,6 +184,9 @@
     <Compile Include="Views\CarDictionary.xaml.cs">
       <DependentUpon>CarDictionary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Cards\CarCard.xaml.cs">
+      <DependentUpon>CarCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Cards\Card.cs" />
     <Compile Include="Views\Cards\EmployeeCard.xaml.cs">
       <DependentUpon>EmployeeCard.xaml</DependentUpon>
@@ -183,6 +196,9 @@
     </Compile>
     <Compile Include="Views\Cards\ClientCard.xaml.cs">
       <DependentUpon>ClientCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cards\SubsidiaryCard.xaml.cs">
+      <DependentUpon>SubsidiaryCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CarEditor.xaml.cs">
       <DependentUpon>CarEditor.xaml</DependentUpon>
@@ -226,6 +242,9 @@
     <Compile Include="Views\Analytics.xaml.cs">
       <DependentUpon>Analytics.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ShureQuestionDialog.xaml.cs">
+      <DependentUpon>ShureQuestionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SubsidiaryDictionary.xaml.cs">
       <DependentUpon>SubsidiaryDictionary.xaml</DependentUpon>
     </Compile>
@@ -233,6 +252,14 @@
       <DependentUpon>SubsidiaryEditor.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Strings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utils\Controls\CarDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utils\Controls\ClientDataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -264,11 +291,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Utils\Controls\SubsidiaryGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CarDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Cards\CarCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -283,6 +318,10 @@
     <Page Include="Views\Cards\ClientCard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Cards\SubsidiaryCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CarEditor.xaml">
       <SubType>Designer</SubType>
@@ -365,6 +404,10 @@
     <Page Include="Views\Analytics.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ShureQuestionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SubsidiaryDictionary.xaml">
       <SubType>Designer</SubType>

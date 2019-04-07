@@ -6,9 +6,9 @@ namespace Laundry.Model.DatabaseClients
 {
   public class ClientRepository : Repository<Client>
   {
-    public override IList<Client> Get(int offset, int limit)
+    public override IReadOnlyList<Client> Get(int offset, int limit, FilterDefinition<Client> filter = null)
     {
-      var clients = base.Get(offset, limit);
+      var clients = base.Get(offset, limit, filter);
       foreach (var client in clients)
       {
         client.OrdersCount = Model.Orders.GetForClientCount(client);

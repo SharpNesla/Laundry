@@ -12,26 +12,26 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
-
-  public class OrderDataGridViewModel : EntityGrid<Order, OrderRepository>
+  public class OrderDataGridViewModel : EntityGrid<Order, OrderRepository, OrderCardViewModel>
   {
     public Client Client { get; set; }
-    public OrderDataGridViewModel(IEventAggregator eventAggregator,IModel model, OrderCardViewModel card) 
-      : base(eventAggregator, card, model.Orders, Screens.OrderEditor)
-    {
-    }
+    public Employee Employee { get; set; }
 
     public override void Refresh(int page, int elements)
     {
-      
-      if (Client==null)
+      if (Client != null)
+        this.Entities = Repo.GetForClient(Client, page * elements, elements);
+      if (Employee != null)
       {
-        Refresh(page, elements);
+        this.Entities = Repo.GetForEmployee(Employee, page * elements, elements);
       }
       else
-      {
-        Repo.GetForClient(Client ,page * elements, elements);
-      }
+        base.Refresh(page, elements);
+    }
+
+    public OrderDataGridViewModel(IEventAggregator eventAggregator, OrderCardViewModel card, IModel model
+    ) : base(eventAggregator, card, model.Orders, Screens.OrderEditor)
+    {
     }
   }
 }

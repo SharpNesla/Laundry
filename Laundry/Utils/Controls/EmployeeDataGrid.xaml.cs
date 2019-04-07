@@ -14,9 +14,10 @@ namespace Laundry.Utils.Controls
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
 
-  public class EmployeeDataGridViewModel : EntityGrid<Employee, EmployeeRepository>
+  public class EmployeeDataGridViewModel : EntityGrid<Employee, EmployeeRepository, EmployeeCardViewModel>
   {
-    public EmployeeDataGridViewModel(IEventAggregator eventAggregator, Card<Employee> card, IModel model) : base(eventAggregator, card, model.Employees, Screens.EmployeeEditor)
+    public EmployeeDataGridViewModel(IEventAggregator eventAggregator, EmployeeCardViewModel card, IModel model)
+      : base(eventAggregator, card, model.Employees, Screens.EmployeeEditor)
     {
     }
   }

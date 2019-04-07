@@ -27,7 +27,7 @@
             Style="{StaticResource MaterialDesignFlatButton}">
       <materialDesign:PackIcon Kind="ArrowLeft" Height="24" Width="20" />
     </Button>
-        <Button  Name="MoveNext" Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}" 
+        <Button  Name="MoveNext" Margin="0,0,4,0" Foreground="{StaticResource MaterialDesignBodyLight}" 
             IsEnabled="{Binding IsMoveNextEnabled}"
             Style="{StaticResource MaterialDesignFlatButton}">
             <materialDesign:PackIcon Kind="ArrowRight" Height="24" Width="20" />

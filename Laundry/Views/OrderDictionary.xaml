@@ -99,6 +99,6 @@
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-    <ContentControl Margin="16" Name="OrdersViewModel"/>
+    <ContentControl Name="EntityGrid"/>
   </DockPanel>
 </UserControl>

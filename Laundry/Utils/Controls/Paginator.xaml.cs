@@ -124,17 +124,18 @@ namespace Laundry.Utils.Controls
       IsMoveNextEnabled = CurrentPage != MaxPages;
     }
 
-    public void RegisterPaginable(IPaginable paginable)
+    public void RegisterPaginable(IPaginable paginable, bool refreshOnRegister = true)
     {
       this.Paginable = paginable;
-      this.Paginable.StateChanged += OnPaginableOnStateChanged;
-
+      this.Paginable.StateChanged += RefreshPaginable;
       this.Changed += Paginable.Refresh;
-
-      OnPaginableOnStateChanged();
+      if (refreshOnRegister)
+      {
+        RefreshPaginable();
+      }
     }
 
-    private void OnPaginableOnStateChanged()
+    public void RefreshPaginable()
     {
       this.Count = Paginable.Count;
       Paginable.Refresh(this.CurrentPage - 1, this.ElementsPerPage);

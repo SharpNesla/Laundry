@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using Laundry.Views;
 using Laundry.Model;
 using Caliburn.Micro;
+ 
 namespace Laundry
 {
   using Laundry.Utils.Controls;
+  using Laundry.Views.Cards;
   using Utils;
 
   public class AppBootstrapper : BootstrapperBase
@@ -38,18 +40,26 @@ namespace Laundry
 
       container.Singleton<ClientDictionaryViewModel>();
       container.PerRequest<ClientEditorViewModel>();
+      container.PerRequest<ClientDataGridViewModel>();
+      container.Singleton<ClientCardViewModel>();
+      container.PerRequest<ClientSearchViewModel>();
 
       container.Singleton<EmployeeDictionaryViewModel>();
       container.PerRequest<EmployeeEditorViewModel>();
+      container.PerRequest<EmployeeDataGridViewModel>();
 
       container.Singleton<SubsidiaryDictionaryViewModel>();
       container.PerRequest<SubsidiaryEditorViewModel>();
+      container.PerRequest<SubsidiaryGridViewModel>();
+      container.Singleton<SubsidiaryCardViewModel>();
 
       container.Singleton<CarDictionaryViewModel>();
       container.PerRequest<CarEditorViewModel>();
+      container.PerRequest<CarDataGridViewModel>();
 
       container.Singleton<OrderDictionaryViewModel>();
       container.PerRequest<OrderEditorViewModel>();
+      container.PerRequest<OrderDataGridViewModel>();
 
       container.Singleton<ClothKindEditorViewModel>();
 
@@ -58,14 +68,12 @@ namespace Laundry
       container.Singleton<AboutViewModel>();
       
       //Non-screen views like dialog views
-      container.Singleton<ClientCardViewModel>();
+      
       //container.Singleton<OrderCard>();
-
+      //
       container.PerRequest<PaginatorViewModel>();
-      container.PerRequest<OrderDataGridViewModel>();
-      container.PerRequest<EmployeeDataGridViewModel>();
-
-      container.PerRequest<ClientSearchViewModel>();
+      
+      
     }
 
     protected override object GetInstance(Type service, string key)

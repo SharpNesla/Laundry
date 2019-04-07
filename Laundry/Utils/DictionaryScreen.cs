@@ -11,26 +11,27 @@ using Laundry.Utils.Controls;
 
 namespace Laundry.Utils
 {
-  public class DictionaryScreen<TEntity, TGrid> : DrawerActivityScreen
-    where TEntity : IRepositoryElement
-    where TGrid : IEntityGrid<TEntity, Repository<TEntity>>
+  public class DictionaryScreen< TGrid> : DrawerActivityScreen
+    where TGrid : IEntityGrid<IRepositoryElement>
   {
     public PaginatorViewModel Paginator { get; set; }
     public TGrid EntityGrid { get; set; }
 
-    public DictionaryScreen(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, TGrid entityGrid) :
+    public DictionaryScreen(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator,
+      TGrid entityGrid, string paginatorLabel = "Объектов") :
       base(aggregator, model)
     {
       this.EntityGrid = entityGrid;
 
       this.Paginator = paginator;
-      this.Paginator.ElementsName = "Объектов";
+      this.Paginator.ElementsName = paginatorLabel;
       this.Paginator.RegisterPaginable(entityGrid);
     }
 
     protected override void OnActivate()
     {
       base.OnActivate();
+      this.Paginator.RefreshPaginable();
     }
 
     public void AddEntity()

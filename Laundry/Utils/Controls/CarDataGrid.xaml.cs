@@ -14,18 +14,18 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
-using Laundry.Utils;
-using Laundry.Utils.Controls;
+using Laundry.Model.CollectionRepositories;
+using Laundry.Views.Cards;
 
-namespace Laundry.Views
+namespace Laundry.Utils.Controls
 {
   /// <summary>
-  /// Interaction logic for CarDictionary.xaml
+  /// Interaction logic for CarDataGrid.xaml
   /// </summary>
-  public class CarDictionaryViewModel : DictionaryScreen<CarDataGridViewModel>
+  public class CarDataGridViewModel : EntityGrid<Car, Repository<Car>, CarCardViewModel>
   {
-    public CarDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, CarDataGridViewModel entityGrid) :
-      base(aggregator, model, paginator, entityGrid, "Машин")
+    public CarDataGridViewModel(IEventAggregator eventAggregator, CarCardViewModel card, IModel model) 
+      : base(eventAggregator, card, model.Cars, Screens.CarEditor)
     {
     }
   }

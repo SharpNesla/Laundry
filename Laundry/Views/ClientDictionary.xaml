@@ -29,7 +29,7 @@
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
-      <Button Name="AddClient" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+      <Button Name="AddEntity" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
@@ -102,75 +102,6 @@
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-
-    <DataGrid
-      SelectionMode="Single"
-      Margin="16"
-      CanUserSortColumns="True"
-      CanUserAddRows="False"
-      CanUserResizeColumns="True"
-      CellStyle="{StaticResource CellStyle}"
-      AutoGenerateColumns="False"
-      SelectedItem="{Binding SelectedClient}"
-      ItemsSource="{Binding Clients}"
-      cal:Message.Attach="[Event MouseDoubleClick] = [Action ShowClientInfo($dataContext)]">
-      <DataGrid.ContextMenu>
-        <ContextMenu Visibility="{Binding Director}">
-          <MenuItem cal:Message.Attach="[Event Click] = [Action EditClient()]" Header="Изменить" />
-          <MenuItem cal:Message.Attach="[Event Click] = [Action RemoveClient()]" Header="Удалить" />
-        </ContextMenu>
-      </DataGrid.ContextMenu>
-      <DataGrid.Columns>
-        <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
-                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-                                EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-          <DataGridCheckBoxColumn.Header>
-            <Border
-              Background="Transparent"
-              Padding="9.3 0 0 0"
-              HorizontalAlignment="Center">
-              <CheckBox />
-            </Border>
-          </DataGridCheckBoxColumn.Header>
-        </DataGridCheckBoxColumn>
-        <controls:DataGridAdaptiveColumn Binding="{Binding Id}" CanUserReorder="True" IsReadOnly="True" MinWidth="32"
-                                         SortMemberPath="Id"
-                                         Header="№" />
-        <controls:DataGridAdaptiveColumn Binding="{Binding Surname}" CanUserReorder="True" IsReadOnly="True"
-                                         MinWidth="96" SortMemberPath="Surname"
-                                         Header="Фамилия" />
-        <controls:DataGridAdaptiveColumn Binding="{Binding Name}" CanUserReorder="True" IsReadOnly="True" MinWidth="96"
-                                         SortMemberPath="Surname"
-                                         Header="Имя" />
-        <controls:DataGridAdaptiveColumn Binding="{Binding Patronymic}" CanUserReorder="True" IsReadOnly="True"
-                                         MinWidth="96" SortMemberPath="Surname"
-                                         Header="Отчество" />
-        <controls:DataGridAdaptiveColumn Binding="{Binding PhoneNumber}" MinWidth="128" Header="Номер телефона"
-                                         CanUserReorder="True" IsReadOnly="True"
-                                         SortMemberPath="PhoneNumber" />
-        <controls:DataGridAdaptiveColumn Binding="{Binding DateBirth, StringFormat='dd.MM.yyyy'}" CanUserReorder="True"
-                                         IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="128"
-                                         Header="Дата рождения" />
-        <controls:DataGridAdaptiveColumn Binding="{Binding OrdersCount}" CanUserReorder="True" IsReadOnly="True"
-                                         SortMemberPath="Patronymic" MinWidth="86"
-                                         Header="Заказы" />
-
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <StackPanel Orientation="Horizontal">
-                <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        cal:Message.Attach="ShowClientInfo($dataContext)">
-
-                  <materialDesign:PackIcon Kind="InfoOutline" Height="24" Width="24" />
-                </Button>
-              </StackPanel>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-      </DataGrid.Columns>
-    </DataGrid>
+    <ContentControl Name="EntityGrid"></ContentControl>
   </DockPanel>
 </UserControl>

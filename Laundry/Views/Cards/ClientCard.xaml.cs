@@ -21,33 +21,28 @@ using PropertyChanged;
 
 namespace Laundry.Views
 {
-  [AddINotifyPropertyChangedInterface]
-  public class ClientCardViewModel : IHandle<Client>
+  public class ClientCardViewModel : Card<Client>
   {
-    private readonly IEventAggregator _eventAggregator;
-    private IModel _model;
+
+    public override Client Entity
+    {
+      get
+      {
+        return base.Entity;
+      }
+
+      set
+      {
+        base.Entity = value;
+        this.OrderGrid.Client = value;
+        this.OrderGrid.Refresh(0,10);
+      }
+    }
     public OrderDataGridViewModel OrderGrid { get; set; }
-    public Client Client { get; set; }
-
-    public ClientCardViewModel(IEventAggregator eventAggregator, IModel model, OrderDataGridViewModel grid)
+    public ClientCardViewModel(IEventAggregator eventAggregator, OrderDataGridViewModel orderGrid) : base(eventAggregator, Screens.ClientEditor)
     {
-      _eventAggregator = eventAggregator;
-      eventAggregator.Subscribe(this);
-
-      this.OrderGrid = grid;
-      this._model = model;
+      this.OrderGrid = orderGrid;
     }
-
-    public void EditClient(object sender, RoutedEventArgs e)
-    {
-      _eventAggregator.PublishOnUIThread(Screens.ClientEditor);
-      _eventAggregator.PublishOnUIThread(this.Client);
-    }
-
-    public void Handle(Client message)
-    {
-      this.Client = _model.Clients.GetById(message.Id);
-      this.OrderGrid.Entities = _model.Orders.GetForClient(this.Client, 0, 10);
-    }
+    
   }
 }

@@ -8,6 +8,7 @@
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
+             xmlns:cal="http://www.caliburnproject.org"
              Background="{DynamicResource MaterialDesignPaper}"
              Height="500" Width="970">
   <DockPanel Height="500" Width="970">
@@ -16,16 +17,16 @@
       <DockPanel>
         <Button DockPanel.Dock="Right" Name="EditClient" Style="{StaticResource MaterialDesignToolButton}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
-                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                cal:Message.Attach="Edit()">
           <materialDesign:PackIcon Kind="SquareEditOutline" VerticalAlignment="Center" Height="24" Width="24" />
         </Button>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
           <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="24" Width="24" />
           <TextBlock
-
             Style="{StaticResource MaterialDesignTitleTextBlock}"
             VerticalAlignment="Center"
-            Margin="8 0 0 0" Text="{Binding Client.Id, StringFormat='Клиент №{0}'}" />
+            Margin="8 0 0 0" Text="{Binding Entity.Id, StringFormat='Клиент №{0}'}" />
         </StackPanel>
 
       </DockPanel>
@@ -57,29 +58,29 @@
               <TextBlock Margin="0,0,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
                 <TextBlock.Text>
                   <MultiBinding StringFormat="{}{1} {0} {2}">
-                    <Binding Path="Client.Name" />
-                    <Binding Path="Client.Surname" />
-                    <Binding Path="Client.Patronymic" />
+                    <Binding Path="Entity.Name" />
+                    <Binding Path="Entity.Surname" />
+                    <Binding Path="Entity.Patronymic" />
                   </MultiBinding>
                 </TextBlock.Text>
               </TextBlock>
 
-              <TextBlock Margin="0,8,0,0" Text="{Binding Client.DateBirth, StringFormat='Дата рождения: dd.MM.yyyy'}"
+              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.DateBirth, StringFormat='Дата рождения: dd.MM.yyyy'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,8,0,0" Text="{Binding Client.PhoneNumber, StringFormat='Номер телефона: {0}'}"
+              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.PhoneNumber, StringFormat='Номер телефона: {0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,8,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
                 <TextBlock.Text>
                   <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">
-                    <Binding Path="Client.City" />
-                    <Binding Path="Client.Street" />
-                    <Binding Path="Client.House" />
-                    <Binding Path="Client.ZipCode" />
+                    <Binding Path="Entity.City" />
+                    <Binding Path="Entity.Street" />
+                    <Binding Path="Entity.House" />
+                    <Binding Path="Entity.ZipCode" />
                   </MultiBinding>
                 </TextBlock.Text>
               </TextBlock>
               <TextBlock Margin="0,8,0,0" Text="Комментарий:" Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,4,0,0" Text="{Binding Client.Comment}"
+              <TextBlock Margin="0,4,0,0" Text="{Binding Entity.Comment}"
                          Style="{StaticResource MaterialDesignBody1TextBlock}" />
             </StackPanel>
 

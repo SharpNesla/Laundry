@@ -26,9 +26,10 @@
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
-      <Button Name="AddCar" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+      <Button Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+              cal:Message.Attach="AddEntity()">
         <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
       </Button>
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
@@ -99,67 +100,6 @@
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-
-    <DataGrid
-      SelectionMode="Single"
-      Margin="16"
-      CanUserSortColumns="True"
-      CanUserAddRows="False"
-      CanUserResizeColumns="True"
-      CellStyle="{StaticResource CellStyle}"
-      AutoGenerateColumns="False"
-      SelectedItem="{Binding SelectedCar}"
-      ItemsSource="{Binding Cars}">
-      <DataGrid.ContextMenu>
-        <ContextMenu Visibility="{Binding Director}">
-          <MenuItem cal:Message.Attach="[Event Click] = [Action EditCar()]" Header="Изменить" />
-          <MenuItem cal:Message.Attach="[Event Click] = [Action RemoveCar()]" Header="Удалить" />
-        </ContextMenu>
-      </DataGrid.ContextMenu>
-
-
-      <DataGrid.Columns>
-        <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
-                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-                                EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-          <DataGridCheckBoxColumn.Header>
-            <Border
-              Background="Transparent"
-              Padding="9.3 0 0 0"
-              HorizontalAlignment="Center">
-              <CheckBox />
-            </Border>
-          </DataGridCheckBoxColumn.Header>
-        </DataGridCheckBoxColumn>
-        <controls1:DataGridAdaptiveColumn Binding="{Binding Id}" MinWidth="48" Header="№" CanUserReorder="True"
-                                      IsReadOnly="True"
-                                      SortMemberPath="Id" />
-        <controls1:DataGridAdaptiveColumn Binding="{Binding BrandAndModel}"
-                                      CanUserReorder="True"
-                                      IsReadOnly="True" SortMemberPath="BrandAndMode" MinWidth="48" Header="Марка и модель" />
-        <controls1:DataGridAdaptiveColumn Binding="{Binding VIN}" CanUserReorder="True"
-                                      IsReadOnly="True" SortMemberPath="VIN" MinWidth="48" Header="VIN" />
-        <controls1:DataGridAdaptiveColumn Binding="{Binding Sign}" CanUserReorder="True" IsReadOnly="True"
-                                      MinWidth="96"
-                                      Header="Номерной знак" />
-        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
-          <DataGridTemplateColumn.CellTemplate>
-            <DataTemplate>
-              <StackPanel Orientation="Horizontal">
-                <Button Margin="0" Foreground="{StaticResource MaterialDesignTextBoxBorder}"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        cal:Message.Attach="ShowCarInfo($dataContext)">
-                  <materialDesign:PackIcon
-                    Kind="InfoOutline"
-                    Height="24"
-                    Width="24" />
-                </Button>
-              </StackPanel>
-            </DataTemplate>
-          </DataGridTemplateColumn.CellTemplate>
-        </DataGridTemplateColumn>
-      </DataGrid.Columns>
-    </DataGrid>
+    <ContentControl Name="EntityGrid"></ContentControl>
   </DockPanel>
 </UserControl>

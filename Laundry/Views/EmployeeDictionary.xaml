@@ -25,7 +25,8 @@
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
-      <Button Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32" Name="Add"
+      <Button Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+              cal:Message.Attach="AddEntity()"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />

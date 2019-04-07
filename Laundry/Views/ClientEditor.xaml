@@ -9,6 +9,7 @@
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
              xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+             xmlns:cal="http://www.caliburnproject.org"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
@@ -32,17 +33,21 @@
             VerticalAlignment="Center"
             Margin="16 0 0 0" Text="{Binding EditorTitle}" />
         </StackPanel>
-        <materialDesign:PopupBox Grid.Column="2" Grid.Row="0"
-                                 StaysOpen="True"
-                                 Visibility="{Binding OrderGridVisibility}">
-          <Menu>
-            <MenuItem Header="Экспортировать как">
-              <MenuItem Header="*.csv" />
-              <MenuItem Header="*.xlsx" />
-            </MenuItem>
-            <MenuItem Header="Удалить выбраное" />
-          </Menu>
-        </materialDesign:PopupBox>
+        <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"
+                Style="{StaticResource MaterialDesignToolButton}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
+                cal:Message.Attach="ShowActivityMenu($source)">
+          <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
+          <Button.ContextMenu>
+            <ContextMenu>
+              <MenuItem Header="Экспортировать как">
+                <MenuItem Header="*.csv" />
+                <MenuItem Header="*.xlsx" />
+              </MenuItem>
+              <MenuItem Header="Удалить выбраное" />
+            </ContextMenu>
+          </Button.ContextMenu>
+        </Button>
         <RadioButton
           Style="{StaticResource MaterialDesignTabRadioButton}"
           IsChecked="{Binding InfoChecked}" Height="42" Grid.Row="1"
@@ -56,16 +61,16 @@
 
 
     </materialDesign:ColorZone>
-    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
-      <Button Name="ApplyChanges"
-              Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
-        ПРИНЯТЬ
-      </Button>
-      <Button IsCancel="True"
+    <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="24,0,24,24">
+      <Button IsCancel="True" DockPanel.Dock="Right" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Name="Discard">
         ОТМЕНИТЬ
       </Button>
-    </StackPanel>
+      <Button Name="ApplyChanges" DockPanel.Dock="Left" MaxWidth="132"
+              Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
+        ПРИНЯТЬ
+      </Button>
+    </DockPanel>
     <Grid>
       <Grid Margin="24" Visibility="{Binding InfoVisibility}">
         <Grid.ColumnDefinitions>
@@ -84,13 +89,13 @@
             <StackPanel>
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                          Text="{StaticResource ClientEditor.MainInfoTitle}" />
-              <TextBox Text="{Binding Client.Surname}" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
+              <TextBox Text="{Binding Entity.Surname}" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Client.Name}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
+              <TextBox Text="{Binding Entity.Name}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Client.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
+              <TextBox Text="{Binding Entity.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Client.PhoneNumber}"
+              <TextBox Text="{Binding Entity.PhoneNumber}"
                        Margin="0,0,0,8"
                        materialDesign:HintAssist.Hint="Номер телефона"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -106,7 +111,7 @@
                   Ж
                 </RadioButton>
               </StackPanel>
-              <DatePicker SelectedDate="{Binding Client.DateBirth}" materialDesign:HintAssist.Hint="Дата рождения"
+              <DatePicker SelectedDate="{Binding Entity.DateBirth}" materialDesign:HintAssist.Hint="Дата рождения"
                           Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,0"
                           HorizontalAlignment="Left" Width="252" />
 
@@ -145,7 +150,7 @@
                            Style="{StaticResource MaterialDesignBody2TextBlock}">
                   <TextBlock.Text>
                     <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
-                      <Binding Path="Client.OrdersCount" />
+                      <Binding Path="Entity.OrdersCount" />
                     </MultiBinding>
                   </TextBlock.Text>
                 </TextBlock>

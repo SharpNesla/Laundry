@@ -13,20 +13,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
-using Laundry.Model;
-using Laundry.Utils;
-using Laundry.Utils.Controls;
 
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for CarDictionary.xaml
+  /// Interaction logic for ShureQuestionDialog.xaml
   /// </summary>
-  public class CarDictionaryViewModel : DictionaryScreen<CarDataGridViewModel>
+  public class ShureQuestionDialogViewModel : PropertyChangedBase
   {
-    public CarDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, CarDataGridViewModel entityGrid) :
-      base(aggregator, model, paginator, entityGrid, "Машин")
-    {
-    }
   }
 }
