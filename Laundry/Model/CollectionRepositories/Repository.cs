@@ -58,8 +58,11 @@ namespace Laundry.Model.CollectionRepositories
     {
       if (filter != null)
       {
-        return Collection.Find(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
-          .Skip(offset).Limit(limit).ToList();
+        var filters = Builders<T>.Filter.And(
+          Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+          filter);
+        return Collection.Find(filters).Skip(offset).Limit(limit).ToList();
+        
       }
       else
       {

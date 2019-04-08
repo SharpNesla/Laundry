@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
+using Laundry.Model.CollectionRepositories;
 using Laundry.Utils;
 
 namespace Laundry.Views
@@ -21,15 +22,11 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for SubsidiaryEditor.xaml
   /// </summary>
-  public class SubsidiaryEditorViewModel : ActivityScreen
+  public class SubsidiaryEditorViewModel : EditorScreen<Repository<Subsidiary>, Subsidiary>
   {
-    public SubsidiaryEditorViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+    public SubsidiaryEditorViewModel(IEventAggregator aggregator, IModel model, Repository<Subsidiary> entityRepo, 
+      string entityTitleName = "Филиала") : base(aggregator, model, entityRepo, entityTitleName)
     {
-    }
-
-    public void Cancel()
-    {
-      ChangeApplicationScreen(Screens.Context);
     }
   }
 }

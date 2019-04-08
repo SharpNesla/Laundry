@@ -89,12 +89,11 @@
         </Grid>
 
       </materialDesign:Card>
-      <materialDesign:Card
-        Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
+      <materialDesign:Card Grid.Column="1" VerticalAlignment="Stretch">
         <DockPanel>
-          <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
+          <TextBlock Margin="16,16,16,0" DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource ClientEditor.OrdersInfo}" />
-          <ContentControl Name="OrderGrid" Margin="0,16,0,0" />
+          <ContentControl Name="OrderGrid"/>
         </DockPanel>
 
       </materialDesign:Card>

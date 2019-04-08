@@ -34,7 +34,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
         }
         else
         {
-          return "";
+          return _entityText;
         }
       }
       set
@@ -59,7 +59,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     protected EntitySearchBox(TRepository repository)
     {
       this.Repository = repository;
-      this.Entities = new List<TEntity>(Repository.Get(0, 10));
+      //this.Entities = new List<TEntity>(Repository.Get(0, 10));
     }
 
     public void OnInputChanged(ComboBox box)
