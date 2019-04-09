@@ -127,6 +127,7 @@
     <Compile Include="Model\ClothInstance.cs" />
     <Compile Include="Model\ClothKind.cs" />
     <Compile Include="Model\CollectionRepositories\ClientRepository.cs" />
+    <Compile Include="Model\CollectionRepositories\ClothInstancesRepository.cs" />
     <Compile Include="Model\CollectionRepositories\OrderRepository.cs" />
     <Compile Include="Model\CollectionRepositories\Repository.cs" />
     <Compile Include="Model\CollectionRepositories\EmployeeRepository.cs" />
@@ -152,14 +153,15 @@
     <Compile Include="Utils\Controls\DrawerItem.xaml.cs">
       <DependentUpon>DrawerItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils\Controls\ClothGrid.xaml.cs">
-      <DependentUpon>ClothGrid.xaml</DependentUpon>
+    <Compile Include="Utils\Controls\ClothDataGrid.xaml.cs">
+      <DependentUpon>ClothDataGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Controls\EntityGrid.cs" />
     <Compile Include="Utils\Controls\EntitySearchControls\EntitySearchBox.cs" />
     <Compile Include="Utils\Controls\SubsidiaryGrid.xaml.cs">
       <DependentUpon>SubsidiaryGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Converters\BoolVisibilityConverter.cs" />
     <Compile Include="Utils\DialogHostExtensions.cs" />
     <Compile Include="Utils\DictionaryScreen.cs" />
     <Compile Include="Utils\EditorActivityScreen.cs" />
@@ -189,6 +191,9 @@
       <DependentUpon>CarCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Cards\Card.cs" />
+    <Compile Include="Views\Cards\ClothInstanceCard.xaml.cs">
+      <DependentUpon>ClothInstanceCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Cards\EmployeeCard.xaml.cs">
       <DependentUpon>EmployeeCard.xaml</DependentUpon>
     </Compile>
@@ -276,7 +281,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Utils\Controls\ClothGrid.xaml">
+    <Page Include="Utils\Controls\ClothDataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -305,6 +310,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Cards\CarCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Cards\ClothInstanceCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -35,7 +35,7 @@ namespace Laundry.Utils
       this.Entity = new TEntity();
     }
 
-    public void Discard()
+    public virtual void Discard()
     {
       ChangeApplicationScreen(Screens.Context);
     }
@@ -47,7 +47,7 @@ namespace Laundry.Utils
       this.EventAggregator.Unsubscribe(this);
     }
 
-    public void ApplyChanges()
+    public virtual void ApplyChanges()
     {
       if (IsNew)
       {

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Laundry.Views.ConnectionLostDialog"
+﻿<UserControl x:Class="Laundry.Views.ConnectionLostDialogView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
              mc:Ignorable="d" Background="{StaticResource MaterialDesignPaper}" >
   <StackPanel>
     <TextBlock Text="Потеряно соединение с базой данных"></TextBlock>
-    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+    <Button Name="Accept" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
             Style="{StaticResource MaterialDesignFlatButton}" Content="ПРИНЯТЬ" />
   </StackPanel>
 </UserControl>

@@ -31,7 +31,7 @@
       </DockPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
-      <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+      <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" IsCancel="True"
               Style="{StaticResource MaterialDesignFlatButton}" Content="ПРИНЯТЬ" />
     </StackPanel>
 

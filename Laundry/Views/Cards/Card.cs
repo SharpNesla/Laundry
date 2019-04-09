@@ -15,7 +15,7 @@ namespace Laundry.Views
       this._editorScreen = editorScreen;
     }
 
-    public void Edit()
+    public virtual void Edit()
     {
       _eventAggregator.PublishOnUIThread(_editorScreen);
       _eventAggregator.PublishOnUIThread(this.Entity);

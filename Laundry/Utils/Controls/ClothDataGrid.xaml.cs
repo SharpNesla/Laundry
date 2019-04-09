@@ -15,17 +15,20 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
-using Laundry.Utils;
+using Laundry.Views;
+using Laundry.Views.Cards;
+using PropertyChanged;
 
-namespace Laundry.Views
+namespace Laundry.Utils.Controls
 {
   /// <summary>
-  /// Interaction logic for ClothEditor.xaml
+  /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
-  public class ClothEditorViewModel : EditorScreen<ClothInstancesRepository, ClothInstance>
+  
+  public class ClothDataGridViewModel : EntityGrid<ClothInstance, ClothInstancesRepository, ClothInstanceCardViewModel>
   {
-    public ClothEditorViewModel(IEventAggregator aggregator, IModel model) :
-      base(aggregator, model, model.ClothInstances, "предмета одежды")
+    public ClothDataGridViewModel(IEventAggregator eventAggregator, ClothInstanceCardViewModel card, IModel model,
+      DeleteDialogViewModel shure) : base(eventAggregator, card, model.ClothInstances, shure, Screens.About)
     {
     }
   }

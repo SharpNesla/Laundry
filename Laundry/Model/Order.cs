@@ -38,10 +38,7 @@ namespace Laundry.Model
     public DateTime DeletionDate { get; set; }
 
     public string Signature { get; }
-
-    [BsonIgnoreIfNull]
-    public IList<ClothInstance> ClothInstances { get; set; }
-
+    
     #region Ids
 
     [BsonElement("Client")]
@@ -87,10 +84,5 @@ namespace Laundry.Model
     public Employee Distributer { get; set; }
 
     #endregion
-
-    public Order()
-    {
-      this.ClothInstances = new List<ClothInstance>();
-    }
   }
 }

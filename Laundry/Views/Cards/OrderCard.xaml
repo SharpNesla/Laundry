@@ -113,7 +113,6 @@
               </TextBlock>
             </StackPanel>
           </DockPanel>
-          <controls1:ClothGrid ClothInstances="{Binding ClothInstances}" Background="{StaticResource MaterialDesignCardBackground}" />
 
         </DockPanel>
 

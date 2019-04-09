@@ -10,7 +10,8 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Name="OwnControl">
-  <DataGrid
+  <StackPanel>
+    <DataGrid
     SelectionMode="Single"
     CanUserSortColumns="True"
     CanUserAddRows="False"
@@ -22,57 +23,65 @@
     SelectedItem="{Binding SelectedEntity}"
     cal:Message.Attach="[Event MouseDoubleClick] = [Action ShowInfoCard()]"
     Background="{Binding ElementName=OwnControl, Path=Background}">
-    <DataGrid.ContextMenu>
-      <ContextMenu>
-        <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
-        <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
-      </ContextMenu>
-    </DataGrid.ContextMenu>
-    <DataGrid.Columns>
-      <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
+      <DataGrid.ContextMenu>
+
+        <ContextMenu>
+          <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
+          <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
+        </ContextMenu>
+      </DataGrid.ContextMenu>
+      <DataGrid.Resources>
+        <converters:BindingProxy x:Key="proxy" Data="{Binding}"/>
+      </DataGrid.Resources>
+      <DataGrid.Columns>
+
+        <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
+                              Visibility="{Binding Data.DisplaySelectionColumn, Source={StaticResource proxy}, Converter={StaticResource BoolVisibilityConverter}}"
                               ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                               EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-        <DataGridCheckBoxColumn.Header>
-          <Border
+          <DataGridCheckBoxColumn.Header>
+            <Border
             Background="Transparent"
             Padding="9.3 0 0 0"
             HorizontalAlignment="Center">
-            <CheckBox />
-          </Border>
-        </DataGridCheckBoxColumn.Header>
-      </DataGridCheckBoxColumn>
+              <CheckBox />
+            </Border>
+          </DataGridCheckBoxColumn.Header>
+        </DataGridCheckBoxColumn>
 
-      <local:DataGridAdaptiveColumn Binding="{Binding Id}" MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"
+        <local:DataGridAdaptiveColumn Binding="{Binding Id}" MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"
                                     SortMemberPath="Id"/>
-      <local:DataGridAdaptiveColumn Binding="{Binding CreationDate, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" 
+        <local:DataGridAdaptiveColumn Binding="{Binding CreationDate, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" 
                                     IsReadOnly="True" MinWidth="96" SortMemberPath="CreationDate" Header="Дата создания"/>
-      <local:DataGridAdaptiveColumn Binding="{Binding ExecutionDate, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" 
+        <local:DataGridAdaptiveColumn Binding="{Binding ExecutionDate, StringFormat='dd.MM.yyyy'}" CanUserReorder="True" 
                                     IsReadOnly="True" MinWidth="96" SortMemberPath="ExecutionDate" Header="Дата исполнения"/>
-      
-      <local:DataGridAdaptiveColumn Binding="{Binding Status, Converter={StaticResource StatusConverter}}" CanUserReorder="True"
+
+        <local:DataGridAdaptiveColumn Binding="{Binding Status, Converter={StaticResource StatusConverter}}" CanUserReorder="True"
                                     IsReadOnly="True" SortMemberPath="Status" MinWidth="48" Header="Статус"/>
-       <local:DataGridAdaptiveColumn Binding="{Binding Price}" CanUserReorder="True"
+        <local:DataGridAdaptiveColumn Binding="{Binding Price}" CanUserReorder="True"
                                     IsReadOnly="True" SortMemberPath="Price" MinWidth="48" Header="Цена"/>
-            <local:DataGridAdaptiveColumn Binding="{Binding ClothInstances.Count}" CanUserReorder="True" IsReadOnly="True" MinWidth="96"
+        <local:DataGridAdaptiveColumn Binding="{Binding ClothInstances.Count}" CanUserReorder="True" IsReadOnly="True" MinWidth="96"
                                     SortMemberPath="ClothInstances.Count"
                                     Header="Кол-во вещей"/>
-            <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-      <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
-        <DataGridTemplateColumn.CellTemplate>
-          <DataTemplate>
-            <StackPanel Orientation="Horizontal">
-              <Button Margin="0" Foreground="{StaticResource MaterialDesignTextBoxBorder}"
+        <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
+        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal">
+                <Button Margin="0" Foreground="{StaticResource MaterialDesignTextBoxBorder}"
                       Style="{StaticResource MaterialDesignFlatButton}"
                       cal:Message.Attach="ShowInfoCard($dataContext)">
-                <materialDesign:PackIcon
+                  <materialDesign:PackIcon
                   Kind="InfoOutline"
                   Height="24"
                   Width="24" />
-              </Button>
-            </StackPanel>
-          </DataTemplate>
-        </DataGridTemplateColumn.CellTemplate>
-      </DataGridTemplateColumn>
-    </DataGrid.Columns>
-  </DataGrid>
+                </Button>
+              </StackPanel>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+  </StackPanel>
+  
 </UserControl>

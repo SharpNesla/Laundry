@@ -11,7 +11,7 @@ namespace Laundry.Model.CollectionRepositories
   /// <typeparam name="T">Тип объекта находящегося в коллекции</typeparam>
   public class Repository<T> where T : IRepositoryElement
   {
-    protected IMongoCollection<T> Collection;
+    public IMongoCollection<T> Collection{ get; protected set; }
     internal event Action ConnectionLost;
     protected IModel Model{ get; set; }
 
@@ -37,7 +37,11 @@ namespace Laundry.Model.CollectionRepositories
 
       Collection.InsertOne(entity);
     }
-
+    /// <summary>
+    /// Получить элемент из коллекции по id
+    /// </summary>
+    /// <param name="id">id</param>
+    /// <returns></returns>
     public virtual T GetById(long id)
     {
       return Collection.Find(Builders<T>.Filter.Eq(nameof(IRepositoryElement.Id), id)).First();
@@ -56,19 +60,28 @@ namespace Laundry.Model.CollectionRepositories
 
     public virtual IReadOnlyList<T> Get(int offset, int limit, FilterDefinition<T> filter = null)
     {
-      if (filter != null)
+      try
       {
-        var filters = Builders<T>.Filter.And(
-          Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
-          filter);
-        return Collection.Find(filters).Skip(offset).Limit(limit).ToList();
-        
+        if (filter != null)
+        {
+          var filters = Builders<T>.Filter.And(
+            Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+            filter);
+          return Collection.Find(filters).Skip(offset).Limit(limit).ToList();
+
+        }
+        else
+        {
+          return Collection.Find(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
+            .Skip(offset).Limit(limit).ToList();
+        }
       }
-      else
+      catch (Exception e)
       {
-        return Collection.Find(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
-          .Skip(offset).Limit(limit).ToList();
+        ConnectionLost?.Invoke();
+        return null;
       }
+      
     }
 
     public long GetCount(FilterDefinition<T> filter = null)

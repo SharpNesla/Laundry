@@ -18,8 +18,7 @@
           Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.BlueGrey.xaml" />
         <ResourceDictionary
           Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Amber.xaml" />
-        
-        
+
 
         <ResourceDictionary Source="Resources/Strings.xaml" />
 
@@ -43,11 +42,13 @@
       </Style>
 
 
+      <SolidColorBrush x:Key="RemoveColor" Color="#b71c1c"/>
+
       <converters:OrderStatusConverter x:Key="StatusConverter"></converters:OrderStatusConverter>
 
 
       <converters:ProfessionConverter x:Key="ProfessionConverter"></converters:ProfessionConverter>
-
+      <converters:BoolVisibilityConverter x:Key="BoolVisibilityConverter"></converters:BoolVisibilityConverter>
     </ResourceDictionary>
 
   </Application.Resources>

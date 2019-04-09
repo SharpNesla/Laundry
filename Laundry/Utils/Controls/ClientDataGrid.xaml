@@ -28,7 +28,8 @@
       </ContextMenu>
     </DataGrid.ContextMenu>
     <DataGrid.Columns>
-      <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
+      <DataGridCheckBoxColumn Visibility="{Binding DisplaySelectionColumn ,Converter={StaticResource BoolVisibilityConverter}}"
+                              CanUserReorder="False" MinWidth="64" Width="64"
                               ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                               EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
         <DataGridCheckBoxColumn.Header>

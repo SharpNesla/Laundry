@@ -16,13 +16,18 @@ using System.Windows.Shapes;
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for ConnectionLostDialog.xaml
+  /// Interaction logic for ConnectionLostDialogViewModel.xaml
   /// </summary>
-  public partial class ConnectionLostDialog : UserControl
+  public class ConnectionLostDialogViewModel : UserControl
   {
-    public ConnectionLostDialog()
+    public ConnectionLostDialogViewModel()
     {
-      InitializeComponent();
+      
+    }
+
+    public void Accept()
+    {
+
     }
   }
 }

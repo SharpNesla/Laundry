@@ -20,14 +20,12 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     public override void OnEntitySearch(string entityText)
     {
       //var searchChunks = entityText.Split();
-      //var filter = Builders<Client>.Filter;
+      //var filter = Builders<Client>.Filter.Empty;
       //foreach (var searchChunk in searchChunks)
       //{
-        
       //}
 
-      this.Entities = new List<Client>(this.Repository.Get(0, 10,
-        Builders<Client>.Filter.Regex(nameof(Client.Name), new MongoDB.Bson.BsonRegularExpression($@"^.*{entityText}.*$"))));
+      this.Entities = new List<Client>(this.Repository.Get(0,10,Builders<Client>.Filter.Text(entityText, "russian")));
     }
   }
 }

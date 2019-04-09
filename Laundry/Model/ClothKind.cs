@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Laundry.Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
@@ -14,7 +15,7 @@ namespace Laundry.Model
     Pair
   }
 
-  public class ClothKind
+  public class ClothKind : IRepositoryElement
   {
     [BsonIgnoreIfNull]
     public string Name { get; set; }
@@ -27,5 +28,10 @@ namespace Laundry.Model
 
     [BsonIgnoreIfNull]
     public string Comment { get; set; }
+    [BsonId]
+    public long Id { get; set; }
+    [BsonIgnoreIfDefault]
+    public DateTime DeletionDate { get; set; }
+    public string Signature { get; }
   }
 }

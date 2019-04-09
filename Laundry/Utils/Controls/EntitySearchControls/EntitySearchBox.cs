@@ -40,7 +40,16 @@ namespace Laundry.Utils.Controls.EntitySearchControls
       set
       {
         _entityText = value;
-        OnEntitySearch(_entityText);
+        
+        if (value == String.Empty)
+        {
+
+          this.Entities = new List<TEntity>(Repository.Get(0, 10));
+        }
+        else
+        {
+          OnEntitySearch(_entityText);
+        }
       }
     }
 
@@ -59,7 +68,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     protected EntitySearchBox(TRepository repository)
     {
       this.Repository = repository;
-      //this.Entities = new List<TEntity>(Repository.Get(0, 10));
+      this.Entities = new List<TEntity>(Repository.Get(0, 10));
     }
 
     public void OnInputChanged(ComboBox box)

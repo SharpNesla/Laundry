@@ -12,7 +12,7 @@ namespace Laundry.Utils.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var val =  (OrderState) value;
+          var val = (OrderState) value;
 
             switch (val)
             {

@@ -10,12 +10,13 @@ namespace Laundry.Model
   {
     Employee CurrentUser { get; }
 
-    ClientRepository Clients { get; set; }
-    EmployeeRepository Employees { get; set; }
-    OrderRepository Orders { get; set; }
-    Repository<Subsidiary> Subsidiaries { get; set; }
-    Repository<Car> Cars { get; set; }
-
+    ClientRepository Clients { get; }
+    EmployeeRepository Employees { get; }
+    OrderRepository Orders { get; }
+    ClothInstancesRepository ClothInstances { get; }
+    Repository<Subsidiary> Subsidiaries { get; }
+    Repository<Car> Cars { get; }
+    
     void Connect(string username, string password);
     event Action ConnectionLost;
     event Action<Employee> Connected;

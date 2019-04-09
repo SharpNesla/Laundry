@@ -20,6 +20,7 @@ namespace Laundry.Model
     public ClientRepository Clients { get; set; }
     public EmployeeRepository Employees { get; set; }
     public OrderRepository Orders { get; set; }
+    public ClothInstancesRepository ClothInstances { get; set; }
     public Repository<Subsidiary> Subsidiaries { get; set; }
     public Repository<Car> Cars { get; set; }
 
@@ -29,15 +30,6 @@ namespace Laundry.Model
     private IMongoCollection<Employee> _employees;
 
     public void Connect(string username, string password)
-    {
-      this.CurrentUser = this.Employees.GetCurrentEmployee(username, password);
-      Connected?.Invoke(CurrentUser);
-    }
-
-    public event Action ConnectionLost;
-    public event Action<Employee> Connected;
-
-    public DataBaseModel()
     {
       string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
 
@@ -49,12 +41,20 @@ namespace Laundry.Model
       this._employees = _dataBase.GetCollection<Employee>("employees");
 
       this.Clients = new ClientRepository(this, _clients);
+      this.Clients.ConnectionLost += ConnectionLost;
+
       this.Employees = new EmployeeRepository(this, _employees);
       this.Orders = new OrderRepository(this, _orders);
       this.Subsidiaries = new Repository<Subsidiary>(this, _dataBase.GetCollection<Subsidiary>("subsidiaries"));
       this.Cars = new Repository<Car>(this, _dataBase.GetCollection<Car>("cars"));
+      this.ClothInstances = new ClothInstancesRepository(this, _dataBase.GetCollection<ClothInstance>("clothinstances"));
 
-      this.Clients.ConnectionLost += ConnectionLost;
+      this.CurrentUser = this.Employees.GetCurrentEmployee(username, password);
+
+      Connected?.Invoke(CurrentUser);
     }
+
+    public event Action ConnectionLost;
+    public event Action<Employee> Connected;
   }
 }

@@ -64,9 +64,10 @@ namespace Laundry
       container.PerRequest<OrderEditorViewModel>();
       container.PerRequest<OrderDataGridViewModel>();
       container.Singleton<OrderCardViewModel>();
-
-      container.Singleton<ClothKindEditorViewModel>();
-
+      
+      container.Singleton<ClothDataGridViewModel>();
+      container.Singleton<ClothInstanceCardViewModel>();
+      container.Singleton<ClothEditorViewModel>();
       container.Singleton<DiscountSystemViewModel>();
       container.Singleton<SettingsViewModel>();
       container.Singleton<AboutViewModel>();
@@ -74,10 +75,9 @@ namespace Laundry
       //Non-screen views like dialog views
       
       //container.Singleton<OrderCard>();
-      //
       container.PerRequest<PaginatorViewModel>();
       container.Singleton<DeleteDialogViewModel>();
-
+      container.Singleton<ConnectionLostDialogViewModel>();
     }
 
     protected override object GetInstance(Type service, string key)

@@ -39,16 +39,19 @@ namespace Laundry.Utils.Controls
     private readonly DeleteDialogViewModel _shure;
     public TRepository Repo { get; }
 
+    public bool DisplaySelectionColumn { get; set; }
+
     public event Action<TEntity> RemoveButtonClick;
 
     public EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
-      DeleteDialogViewModel shure, Screens editScreen)
+      DeleteDialogViewModel shure, Screens editScreen, bool displaySelectColumn = true)
     {
       this._card = card;
       this._editScreen = editScreen;
       this._eventAggregator = eventAggregator;
       this.Repo = repo;
       this._shure = shure;
+      this.DisplaySelectionColumn = displaySelectColumn;
     }
 
     public virtual long Count

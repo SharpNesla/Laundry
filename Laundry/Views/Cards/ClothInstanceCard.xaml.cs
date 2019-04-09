@@ -14,19 +14,19 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
-using Laundry.Model.CollectionRepositories;
 using Laundry.Utils;
 
-namespace Laundry.Views
+namespace Laundry.Views.Cards
 {
   /// <summary>
-  /// Interaction logic for ClothEditor.xaml
+  /// Interaction logic for ClothInstanceCard.xaml
   /// </summary>
-  public class ClothEditorViewModel : EditorScreen<ClothInstancesRepository, ClothInstance>
+  public class ClothInstanceCardViewModel : Card<ClothInstance>
   {
-    public ClothEditorViewModel(IEventAggregator aggregator, IModel model) :
-      base(aggregator, model, model.ClothInstances, "предмета одежды")
+    public ClothInstanceCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.About)
     {
     }
+
+    
   }
 }

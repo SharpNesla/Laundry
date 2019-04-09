@@ -15,6 +15,7 @@ namespace Laundry
   public class ShellViewModel : Conductor<ActivityScreen>, IShell, IHandle<Screens>, IHandle<DrawerState>
   {
     private IScreenFactory _factory;
+    private ConnectionLostDialogViewModel _connectionLostDialog;
 
     public bool IsDrawerOpened { get; set; }
 
@@ -26,11 +27,12 @@ namespace Laundry
       get { return $"{CurrentEmployee?.Surname ?? ""} {CurrentEmployee?.Name ?? ""} {CurrentEmployee?.Patronymic ?? ""}"; }
     }
 
-    public ShellViewModel(IEventAggregator eventAggregator, IModel model, IScreenFactory factory)
+    public ShellViewModel(IEventAggregator eventAggregator, ConnectionLostDialogViewModel connectionLostDialog, IModel model, IScreenFactory factory)
     {
       eventAggregator.Subscribe(this);
       
       this._factory = factory;
+      this._connectionLostDialog = connectionLostDialog;
       this.Handle(Screens.Login);
       this.CurrentUser = model.CurrentUser;
       model.Connected += OnConnected;
@@ -72,10 +74,10 @@ namespace Laundry
       
     }
 
-    public void OnConnectionLost()
+    public async void OnConnectionLost()
     {
-      var dialogWindow = new ConnectionLostDialog();
-      DialogHost.Show(dialogWindow);
+      await DialogHostExtensions.ShowCaliburnVM(_connectionLostDialog);
+      this.Handle(Screens.Login);
     }
   }
 }

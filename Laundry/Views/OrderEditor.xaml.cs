@@ -13,13 +13,29 @@ namespace Laundry.Views
   /// </summary>
   public class OrderEditorViewModel : EditorScreen<OrderRepository, Order>, IHandle<Client>
   {
+    private readonly ClothEditorViewModel _clothKindEditor;
     public ClientSearchViewModel ClientCombo { get; set; }
-    public OrderEditorViewModel(IEventAggregator aggregator, IModel model,ClientSearchViewModel clientSearch , ClothEditor editor) 
+    public ClothDataGridViewModel ClothInstancesGrid { get; set; }
+    public PaginatorViewModel Paginator { get; set; }
+    public OrderEditorViewModel(IEventAggregator aggregator, IModel model,ClientSearchViewModel clientSearch,
+      ClothEditorViewModel editor, ClothDataGridViewModel clothGrid, PaginatorViewModel paginator) 
       : base(aggregator, model, model.Orders, "заказа")
     {
       aggregator.Subscribe(this);
+      this._clothKindEditor = editor;
+      this.ClothInstancesGrid = clothGrid;
+
+      this.Paginator = paginator;
+      this.Paginator.ElementsName = "Вещей";
+      this.Paginator.RegisterPaginable(this.ClothInstancesGrid);
+
       this.ClientCombo = clientSearch;
       this.ClientCombo.ClientChanged += OnClientChanged;
+    }
+
+    public async void AddOrder()
+    {
+      await DialogHostExtensions.ShowCaliburnVM(_clothKindEditor);
     }
 
     private void OnClientChanged(Client obj)
