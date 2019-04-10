@@ -92,7 +92,7 @@
                   <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
                 </Button>
               </StackPanel>
-              <ContentControl  DockPanel.Dock="Left" Name="Paginator" />
+              <TextBlock VerticalAlignment="Center" Text="Заказ от 21.01.2019, 13:30. Цена: 1300р"/>
 
             </DockPanel>
           </Grid>

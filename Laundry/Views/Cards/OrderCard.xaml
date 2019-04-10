@@ -9,9 +9,8 @@
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
              xmlns:cal="http://www.caliburnproject.org"
-             d:DesignWidth="532" d:DesignHeight="300"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel MinWidth="500">
+  <DockPanel Height="500" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="24,20,24,20">
       <DockPanel>
@@ -32,12 +31,8 @@
       </DockPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
-      <Button  Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-              Style="{StaticResource MaterialDesignFlatButton}">
-        РЕДАКТИРОВАТЬ
-      </Button>
       <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-              Style="{StaticResource MaterialDesignFlatButton}">
+              Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True">
         ПРИНЯТЬ
       </Button>
     </StackPanel>
@@ -63,10 +58,10 @@
             <StackPanel Margin="0,16,0,0">
               <TextBlock Margin="0,0,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
                 <TextBlock.Text>
-                  <MultiBinding StringFormat="{}{1} {0} {2}">
+                  <MultiBinding StringFormat="{}Принял: {0} {1} {2}">
+                    <Binding Path="Id" />
                     <Binding Path="Name" />
                     <Binding Path="Surname" />
-                    <Binding Path="Patronymic" />
                   </MultiBinding>
                 </TextBlock.Text>
               </TextBlock>
@@ -93,26 +88,34 @@
         </Grid>
 
       </materialDesign:Card>
-      <materialDesign:Card
-        Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
+      <materialDesign:Card Grid.Column="1" VerticalAlignment="Stretch">
         <DockPanel>
-          <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
-                     Text="{StaticResource ClientEditor.OrdersInfo}" />
-          <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
-            <Button Name="AddOrder" DockPanel.Dock="Right" Margin="0,0,9,0"
-                    Style="{StaticResource MaterialDesignFlatButton}"
-                    HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton" />
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
-                         Style="{StaticResource MaterialDesignBody2TextBlock}">
-                <TextBlock.Text>
-                  <MultiBinding StringFormat="{} {0} заказов, из которых N в процессе выполнения">
-                    <Binding Path="Orders.Count" />
-                  </MultiBinding>
-                </TextBlock.Text>
-              </TextBlock>
-            </StackPanel>
-          </DockPanel>
+          <TextBlock Margin="16,16,16,0" DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
+                     Text="{StaticResource OrderEditor.ClothInfo}" />
+          <Grid DockPanel.Dock="Bottom" Margin="16,0,16,16">
+            <DockPanel>
+              <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
+                           Style="{StaticResource MaterialDesignBody2TextBlock}">
+                  <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
+                      <Binding Path="OrderDataGrid.Count" />
+                    </MultiBinding>
+                  </TextBlock.Text>
+                </TextBlock>
+                <!--Заказ от 21.01.2019, 13:30. Цена: 1300р/!-->
+                <Button Name="AddOrder" DockPanel.Dock="Right" Margin="0,0,9,0"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        HorizontalAlignment="Left" ToolTip="Просмотреть все предметы одежды этого заказа">
+                  <materialDesign:PackIcon Kind="ViewAgenda" Height="24" Width="24" />
+                </Button>
+              </StackPanel>
+              <StackPanel  DockPanel.Dock="Left"/>
+
+            </DockPanel>
+          </Grid>
+
+          <ContentControl Margin="0,16,0,0" Name="ClothInstancesGrid"></ContentControl>
 
         </DockPanel>
 

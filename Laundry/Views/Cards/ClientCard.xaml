@@ -93,6 +93,27 @@
         <DockPanel>
           <TextBlock Margin="16,16,16,0" DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource ClientEditor.OrdersInfo}" />
+          
+          <DockPanel DockPanel.Dock="Bottom" Margin="16">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+              <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}">
+                <TextBlock.Text>
+                  <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
+                    <Binding Path="OrderDataGrid.Count" />
+                  </MultiBinding>
+                </TextBlock.Text>
+              </TextBlock>
+              <!--Заказ от 21.01.2019, 13:30. Цена: 1300р/!-->
+              <Button Name="ShowOrdersForClint" DockPanel.Dock="Right" Margin="0,0,9,0"
+                      Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                      Style="{StaticResource MaterialDesignFlatButton}"
+                      HorizontalAlignment="Left" ToolTip="Просмотреть все заказы данного клиента">
+                <materialDesign:PackIcon Kind="ViewAgenda" Height="24" Width="24" />
+              </Button>
+            </StackPanel>
+            <StackPanel  DockPanel.Dock="Left"/>
+          </DockPanel>
           <ContentControl Name="OrderGrid"/>
         </DockPanel>
 

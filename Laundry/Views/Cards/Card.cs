@@ -7,7 +7,7 @@ namespace Laundry.Views
   public class Card<TEntity> : PropertyChangedBase where TEntity : IRepositoryElement
   {
     private Screens _editorScreen;
-    private readonly IEventAggregator _eventAggregator;
+    protected IEventAggregator _eventAggregator;
     public virtual TEntity Entity { get; set; }
     public Card(IEventAggregator eventAggregator,  Screens editorScreen)
     {

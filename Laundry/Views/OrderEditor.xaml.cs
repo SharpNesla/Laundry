@@ -17,6 +17,7 @@ namespace Laundry.Views
     public ClientSearchViewModel ClientCombo { get; set; }
     public ClothDataGridViewModel ClothInstancesGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
+    public Client Client { get; set; }
     public OrderEditorViewModel(IEventAggregator aggregator, IModel model,ClientSearchViewModel clientSearch,
       ClothEditorViewModel editor, ClothDataGridViewModel clothGrid, PaginatorViewModel paginator) 
       : base(aggregator, model, model.Orders, "заказа")
@@ -47,7 +48,7 @@ namespace Laundry.Views
     {
       this.Entity = new Order();
       this.IsNew = true;
-      this.Entity.Client = Model.Clients.GetById(message.Id);
+      this.Client = Model.Clients.GetById(message.Id);
     }
   }
 }

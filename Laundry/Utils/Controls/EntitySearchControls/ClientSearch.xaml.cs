@@ -16,16 +16,5 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     public ClientSearchViewModel(IModel model) : base(model.Clients)
     {
     }
-
-    public override void OnEntitySearch(string entityText)
-    {
-      //var searchChunks = entityText.Split();
-      //var filter = Builders<Client>.Filter.Empty;
-      //foreach (var searchChunk in searchChunks)
-      //{
-      //}
-
-      this.Entities = new List<Client>(this.Repository.Get(0,10,Builders<Client>.Filter.Text(entityText, "russian")));
-    }
   }
 }

@@ -57,32 +57,5 @@ namespace Laundry.Model
     public long DistributerId { get; set; }
 
     #endregion
-
-    #region Reference Objects
-
-    [BsonIgnore]
-    public Client Client
-    {
-      get { return _client; }
-      set
-      {
-        _client = value;
-        this.ClientId = _client.Id;
-      }
     }
-
-    [BsonIgnore]
-    public Employee Obtainer { get; set; }
-
-    [BsonIgnore]
-    public Employee WasherCourier { get; set; }
-
-    [BsonIgnore]
-    public Employee OutWasherCourier { get; set; }
-
-    [BsonIgnore]
-    public Employee Distributer { get; set; }
-
-    #endregion
-  }
 }

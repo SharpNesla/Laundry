@@ -13,7 +13,7 @@ using MongoDB.Driver;
 
 namespace Laundry.Utils.Controls.EntitySearchControls
 {
-  public abstract class EntitySearchBox<TEntity, TRepository> : PropertyChangedBase
+  public class EntitySearchBox<TEntity, TRepository> : PropertyChangedBase
     where TEntity : IRepositoryElement
     where TRepository : Repository<TEntity>
   {
@@ -64,7 +64,11 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     }
 
     public event Action<TEntity> ClientChanged;
-    public abstract void OnEntitySearch(string entityText);
+
+    public void OnEntitySearch(string entityText)
+    {
+      this.Entities = (IList<TEntity>) Repository.GetBySearchString(entityText);
+    }
     protected EntitySearchBox(TRepository repository)
     {
       this.Repository = repository;

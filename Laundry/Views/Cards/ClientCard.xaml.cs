@@ -23,27 +23,32 @@ namespace Laundry.Views
 {
   public class ClientCardViewModel : Card<Client>
   {
-
     public override Client Entity
     {
-      get
-      {
-        return base.Entity;
-      }
+      get { return base.Entity; }
 
       set
       {
         base.Entity = value;
         this.OrderGrid.Client = value;
-        this.OrderGrid.Refresh(0,10);
+        this.OrderGrid.Refresh(0, 10);
       }
     }
+
     public OrderDataGridViewModel OrderGrid { get; set; }
-    public ClientCardViewModel(IEventAggregator eventAggregator, OrderDataGridViewModel orderGrid) : base(eventAggregator, Screens.ClientEditor)
+
+    public ClientCardViewModel(IEventAggregator eventAggregator, OrderDataGridViewModel orderGrid) : base(
+      eventAggregator, Screens.ClientEditor)
     {
       this.OrderGrid = orderGrid;
       orderGrid.DisplaySelectionColumn = false;
+      this._eventAggregator = eventAggregator;
     }
-    
+
+    public void ShowOrdersForClint()
+    {
+      this._eventAggregator.PublishOnUIThread(Screens.OrderDictionary);
+      this._eventAggregator.PublishOnUIThread(this.Entity);
+    }
   }
 }

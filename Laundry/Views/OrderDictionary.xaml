@@ -27,11 +27,7 @@
       </StackPanel>
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
-      <materialDesign:DrawerHost Name="DrawerHost" IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
-        <materialDesign:DrawerHost.BottomDrawerContent>
-          <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}"></StackPanel>
-        </materialDesign:DrawerHost.BottomDrawerContent>
-      </materialDesign:DrawerHost>
+      
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
                                 Mode="PrimaryMid"
                                 Padding="16">
@@ -84,7 +80,7 @@
               </materialDesign:ColorZone>
                         <ToggleButton Margin="8,0,0,0"
               Style="{StaticResource MaterialDesignActionToggleButton}"
-                          IsChecked="{Binding IsSearchDrawerOpened}"
+                          IsChecked="{Binding EntityGrid.IsSearchDrawerOpened}"
               ToolTip="Расширенный поиск">
               <ToggleButton.Content>
                 <materialDesign:PackIcon

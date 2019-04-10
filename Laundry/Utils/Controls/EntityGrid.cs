@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
@@ -38,6 +39,8 @@ namespace Laundry.Utils.Controls
     public FilterDefinition<TEntity> Filter;
     private readonly DeleteDialogViewModel _shure;
     public TRepository Repo { get; }
+
+    public bool IsSearchDrawerOpened { get; set; }
 
     public bool DisplaySelectionColumn { get; set; }
 
@@ -110,6 +113,18 @@ namespace Laundry.Utils.Controls
         this.Repo.Remove(SelectedEntity);
         StateChanged?.Invoke();
       }
+    }
+
+    private void chkItems_CheckedChanged(object sender, EventArgs e)
+    {
+      //foreach (DataGridViewRow row in GridView1.Rows)
+      //{
+      //  DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[1];
+      //  if (chk.Selected == false)
+      //  {
+      //    chk.Selected = true;
+      //  }
+      //}
     }
   }
 }

@@ -10,7 +10,16 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Name="OwnControl">
-  <StackPanel>
+  <DockPanel LastChildFill="True">
+    <!--{Binding IsSearchDrawerOpened}-->
+    <materialDesign:DrawerHost DockPanel.Dock="Bottom" Name="DrawerHost" IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
+      <materialDesign:DrawerHost.BottomDrawerContent>
+        <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}" materialDesign:ShadowAssist.ShadowDepth="Depth5">
+
+        </StackPanel>
+      </materialDesign:DrawerHost.BottomDrawerContent>
+
+    </materialDesign:DrawerHost>
     <DataGrid
     SelectionMode="Single"
     CanUserSortColumns="True"
@@ -82,6 +91,6 @@
         </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
-  </StackPanel>
+  </DockPanel>
   
 </UserControl>

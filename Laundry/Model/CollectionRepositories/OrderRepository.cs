@@ -19,20 +19,6 @@ namespace Laundry.Model.CollectionRepositories
       return orders;
     }
 
-    public override Order GetById(long id)
-    {
-      var orderById = base.GetById(id);
-      orderById.Client = Model.Clients.GetById(orderById.ClientId);
-      return orderById;
-    }
-
-    public override IReadOnlyList<Order> Get(int offset, int limit, FilterDefinition<Order> filter = null)
-    {
-      var orders = base.Get(offset, limit, filter);
-      foreach (var x in orders) x.Client = Model.Clients.GetById(x.ClientId);
-      return orders;
-    }
-
 
     public long GetForClientCount(Client client)
     {
@@ -47,7 +33,7 @@ namespace Laundry.Model.CollectionRepositories
     {
       var filter = Builders<Order>.Filter.And(
         Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
-        Builders<Order>.Filter.Eq(nameof(Order.Distributer), employee.Id)
+        Builders<Order>.Filter.Eq(nameof(Order.DistributerId), employee.Id)
       );
       var orders = Collection.Find(filter).Skip(offset).Limit(limit).ToList();
       return orders;
