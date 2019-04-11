@@ -54,7 +54,8 @@ namespace Laundry.Model
     {
       get { return $"{this.Id} {this.Name} {this.Surname}"; }
     }
-
+    [BsonIgnoreIfDefault]
+    public bool IsCorporative { get; set; }
     public long OrdersCount { get; internal set; }
   }
 }

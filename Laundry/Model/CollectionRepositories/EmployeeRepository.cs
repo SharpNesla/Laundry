@@ -62,7 +62,8 @@ namespace Laundry.Model.DatabaseClients
     {
     }
 
-    public override IReadOnlyList<Employee> GetBySearchString(string searchString,int offset = 0, int capLimit = 10)
+    public override IReadOnlyList<Employee> GetBySearchString(string searchString, FilterDefinition<Employee> filter,
+      int offset = 0, int capLimit = 10)
     {
       var searchChunks = searchString.Split(' ');
 
@@ -91,8 +92,9 @@ namespace Laundry.Model.DatabaseClients
               " ",
               "$Surname"
             })));
-
+      var filterdef = filter ?? Builders<Employee>.Filter.Empty;
       return Collection.Aggregate()
+        .Match(filterdef)
         .AppendStage<BsonDocument>(addfields)
         .AppendStage<BsonDocument>(match)
         .Skip(offset)

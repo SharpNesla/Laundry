@@ -48,7 +48,7 @@ namespace Laundry.Model
       this.Subsidiaries = new Repository<Subsidiary>(this, _dataBase.GetCollection<Subsidiary>("subsidiaries"));
       this.Cars = new Repository<Car>(this, _dataBase.GetCollection<Car>("cars"));
       this.ClothInstances = new ClothInstancesRepository(this, _dataBase.GetCollection<ClothInstance>("clothinstances"));
-
+      
       this.CurrentUser = this.Employees.GetCurrentEmployee(username, password);
 
       Connected?.Invoke(CurrentUser);

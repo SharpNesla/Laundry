@@ -17,11 +17,9 @@ using Laundry.Model.DatabaseClients;
 
 namespace Laundry.Utils.Controls.EntitySearchControls
 {
-
-  class EmployeeSearchViewModel : EntitySearchBox<Employee, EmployeeRepository>
+  public class EmployeeSearchViewModel : EntitySearchBox<Employee, EmployeeRepository>
   {
-    public string EmployeeRole { get; set; }
-    protected EmployeeSearchViewModel(IModel model) : base(model.Employees)
+    public EmployeeSearchViewModel(IModel model) : base(model.Employees)
     {
     }
   }

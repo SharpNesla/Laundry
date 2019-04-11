@@ -49,6 +49,7 @@
 
       <converters:ProfessionConverter x:Key="ProfessionConverter"></converters:ProfessionConverter>
       <converters:BoolVisibilityConverter x:Key="BoolVisibilityConverter"></converters:BoolVisibilityConverter>
+      <converters:BoolNotVisibilityConverter x:Key="BoolNotVisibilityConverter"></converters:BoolNotVisibilityConverter>
     </ResourceDictionary>
 
   </Application.Resources>

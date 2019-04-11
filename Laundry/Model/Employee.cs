@@ -45,6 +45,10 @@ namespace Laundry.Model
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
 
-    public string Signature { get; }
+    [BsonIgnore]
+    public string Signature
+    {
+      get { return $"{this.Id} {this.Name} {this.Surname}"; }
+    }
   }
 }

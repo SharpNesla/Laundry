@@ -20,7 +20,11 @@ namespace Laundry.Utils.Controls
     public override void Refresh(int page, int elements)
     {
       if (Client != null)
+      {
         this.Entities = Repo.GetForClient(Client, page * elements, elements);
+        return;
+      }
+
       if (Employee != null)
       {
         this.Entities = Repo.GetForEmployee(Employee, page * elements, elements);

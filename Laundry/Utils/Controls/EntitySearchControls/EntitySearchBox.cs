@@ -20,7 +20,11 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     private TEntity _selectedEntity;
     protected readonly TRepository Repository;
     private string _entityText;
+
+    public FilterDefinition<TEntity> Filter { get; set; }
     public IList<TEntity> Entities { get; set; }
+
+    public string Label { get; set; }
 
     public string EntityText
     {
@@ -59,20 +63,21 @@ namespace Laundry.Utils.Controls.EntitySearchControls
       set
       {
         _selectedEntity = value;
-        ClientChanged?.Invoke(value);
+        EntityChanged?.Invoke(value);
       }
     }
 
-    public event Action<TEntity> ClientChanged;
+    public event Action<TEntity> EntityChanged;
 
     public void OnEntitySearch(string entityText)
     {
-      this.Entities = (IList<TEntity>) Repository.GetBySearchString(entityText);
+      this.Entities = (IList<TEntity>) Repository.GetBySearchString(entityText, Filter);
     }
-    protected EntitySearchBox(TRepository repository)
+    protected EntitySearchBox(TRepository repository, string label = "Объект")
     {
       this.Repository = repository;
-      this.Entities = new List<TEntity>(Repository.Get(0, 10));
+      this.Label = label;
+      this.Entities = new List<TEntity>(Repository.Get(0, 10, Filter));
     }
 
     public void OnInputChanged(ComboBox box)

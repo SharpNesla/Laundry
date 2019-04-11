@@ -38,20 +38,32 @@ namespace Laundry.Model
     public DateTime DeletionDate { get; set; }
 
     public string Signature { get; }
-    
+    [BsonIgnoreIfDefault]
+    public bool IsCorporative { get; set; }
+    [BsonIgnoreIfDefault]
+    public bool IsDiscount { get; set; }
     #region Ids
 
     [BsonElement("Client")]
-    public long ClientId { get; set; }
+    public long ClientId { get; internal set; }
+
+    [BsonElement("InCourier")]
+    public long InCourierId { get; set; }
 
     [BsonElement("Obtainer")]
     public long ObtainerId { get; set; }
 
+    [BsonElement("CorpObtainer")]
+    public long CorpObtainerId { get; set; }
+
     [BsonElement("WasherCourier")]
     public long WasherCourierId { get; set; }
 
-    [BsonElement("OutWasherCourier")]
-    public long OutWasherCourierId { get; set; }
+    [BsonElement("OutCourier")]
+    public long OutCourierId { get; set; }
+
+    [BsonElement("CorpDistributer")]
+    public long CorpDistributerId { get; set; }
 
     [BsonElement("Distributer")]
     public long DistributerId { get; set; }

@@ -104,9 +104,9 @@ namespace Laundry.Model.CollectionRepositories
       }
     }
 
-    public virtual IReadOnlyList<T> GetBySearchString(string searchString,int offset = 0, int capLimit = 10)
+    public virtual IReadOnlyList<T> GetBySearchString(string searchString,FilterDefinition<T> filter,int offset = 0, int capLimit = 10)
     {
-      return this.Get(0, 10);
+      return this.Get(0, 10,filter);
     }
   }
 }

@@ -13,7 +13,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
   /// </summary>
   public class ClientSearchViewModel : EntitySearchBox<Client, ClientRepository>
   {
-    public ClientSearchViewModel(IModel model) : base(model.Clients)
+    public ClientSearchViewModel(IModel model, string label = "Клиент") : base(model.Clients, label)
     {
     }
   }

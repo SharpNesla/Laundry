@@ -149,8 +149,22 @@
         </materialDesign:Card>
         <materialDesign:Card
           Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
-          <DockPanel />
+          <DockPanel>
+            <StackPanel>
+            <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
+                       Text="Комментарий" 
+                       Margin="0,0,0,16"/>
+            </StackPanel>
+            <TextBox Text="{Binding Client.Comment}"
+                     materialDesign:HintAssist.Hint="Комментарий"
+                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                     Margin="2,17,0,0"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Stretch"
+                     VerticalScrollBarVisibility="Auto" />
 
+          </DockPanel>
         </materialDesign:Card>
       </Grid>
 

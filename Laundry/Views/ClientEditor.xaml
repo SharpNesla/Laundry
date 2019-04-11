@@ -79,12 +79,11 @@
           <ColumnDefinition Width="371*" />
         </Grid.ColumnDefinitions>
         <materialDesign:Card Margin="0,0,16,0"
-                             Padding="16"
-                             BorderThickness="0" VerticalAlignment="Stretch">
+                             Padding="16" VerticalAlignment="Stretch">
 
           <Grid>
             <Grid.RowDefinitions>
-              <RowDefinition Height="348" />
+              <RowDefinition Height="370" />
               <RowDefinition />
             </Grid.RowDefinitions>
             <StackPanel>
@@ -113,9 +112,12 @@
                 </RadioButton>
               </StackPanel>
               <DatePicker SelectedDate="{Binding Entity.DateBirth}" materialDesign:HintAssist.Hint="Дата рождения"
-                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,0"
+                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
                           HorizontalAlignment="Left" Width="252" />
-
+              <CheckBox 
+                Style="{StaticResource MaterialDesignCheckBox}" IsChecked="{Binding Entity.IsCorporative}">
+                Корпоративный клиент
+              </CheckBox>
             </StackPanel>
 
           </Grid>
@@ -126,7 +128,7 @@
           <DockPanel>
             <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
                        Text="Комментарий" />
-            <TextBox Text="{Binding Client.Comment}"
+            <TextBox Text="{Binding Entity.Comment}"
                      materialDesign:HintAssist.Hint="Комментарий"
                      Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                      Margin="2,17,0,0"
