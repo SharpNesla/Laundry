@@ -25,6 +25,8 @@ namespace Laundry.Views
     public OrderDataGridViewModel OrderDataGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
 
+    public string Password { get; set; }
+
     #region TabBindings
 
     [AlsoNotifyFor(nameof(InfoVisibility))]
@@ -56,6 +58,20 @@ namespace Laundry.Views
       this.Paginator = paginator;
       paginator.ElementsName = "Заказов";
       paginator.RegisterPaginable(OrderDataGrid, false);
+    }
+
+    public override void ApplyChanges()
+    {
+      base.ApplyChanges();
+      if (!string.IsNullOrEmpty(Password))
+      {
+        this.EntityRepository.SetPassword(this.Entity, Password);
+      }
+    }
+
+    public void PasswordChanged(PasswordBox box)
+    {
+      Password = box.Password;
     }
   }
 }

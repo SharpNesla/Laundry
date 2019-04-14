@@ -48,7 +48,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
         if (value == String.Empty)
         {
 
-          this.Entities = new List<TEntity>(Repository.Get(0, 10));
+          this.Entities = new List<TEntity>(Repository.Get(0, 10, Filter));
         }
         else
         {
@@ -73,10 +73,11 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     {
       this.Entities = (IList<TEntity>) Repository.GetBySearchString(entityText, Filter);
     }
-    protected EntitySearchBox(TRepository repository, string label = "Объект")
+    protected EntitySearchBox(TRepository repository, string label = "Объект", FilterDefinition<TEntity> filter = null)
     {
       this.Repository = repository;
       this.Label = label;
+      this.Filter = filter;
       this.Entities = new List<TEntity>(Repository.Get(0, 10, Filter));
     }
 

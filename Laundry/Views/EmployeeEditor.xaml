@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Views" d:DesignWidth="800" d:DesignHeight="800"
+             xmlns:controls="clr-namespace:Laundry.Views"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
+             xmlns:model="clr-namespace:Laundry.Model"
+             xmlns:cal="http://www.caliburnproject.org"
+             d:DesignWidth="800" d:DesignHeight="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel>
     <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="24,0,24,24">
@@ -50,7 +54,6 @@
 
       </Grid>
 
-
     </materialDesign:ColorZone>
     <Grid>
       <Grid Margin="24" Visibility="{Binding InfoVisibility}">
@@ -63,13 +66,14 @@
           <ScrollViewer Padding="16" VerticalScrollBarVisibility="Auto">
             <StackPanel>
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="Информация о сотруднике" />
-              <TextBox Text="{Binding Employee.Surname}" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
+              <TextBox Text="{Binding Entity.Surname}" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Employee.Name}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
+              <TextBox Text="{Binding Entity.Name}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Employee.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
+              <TextBox Text="{Binding Entity.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Employee.PhoneNumber}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
+              <TextBox Text="{Binding Entity.PhoneNumber}" Margin="0,0,0,8"
+                       materialDesign:HintAssist.Hint="Номер телефона"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
               <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Серия и номер паспорта"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -77,24 +81,6 @@
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
               <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Код подразделения"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <ComboBox Margin="0,24,0,8" Width="140" HorizontalAlignment="Left"
-                        materialDesign:HintAssist.Hint="Должность">
-                <ComboBoxItem>
-                  Приёмщик
-                </ComboBoxItem>
-                <ComboBoxItem>
-                  Директор
-                </ComboBoxItem>
-                <ComboBoxItem>
-                  Курьер
-                </ComboBoxItem>
-                <ComboBoxItem>
-                  Прачечник
-                </ComboBoxItem>
-                <ComboBoxItem>
-                  Водитель
-                </ComboBoxItem>
-              </ComboBox>
               <StackPanel Margin="0,8,0,0">
                 <TextBlock Margin="0,0,0,8"
                            Style="{StaticResource MaterialDesignSubheadingTextBlock}">
@@ -109,11 +95,9 @@
                   Ж
                 </RadioButton>
               </StackPanel>
-              <DatePicker
-
-                materialDesign:HintAssist.Hint="Дата рождения"
-                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16"
-                HorizontalAlignment="Left" />
+              <DatePicker SelectedDate="{Binding Entity.DateBirth}" materialDesign:HintAssist.Hint="Дата рождения"
+                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                          HorizontalAlignment="Left" Width="252" />
 
               <Expander Background="{StaticResource MaterialDesignCardBackground}"
                         materialDesign:ShadowAssist.ShadowDepth="Depth3">
@@ -131,16 +115,20 @@
                 </Expander.Header>
                 <StackPanel Margin="16">
                   <TextBox Name="CityTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город"
-                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                           Text="{Binding Entity.City}" />
 
                   <TextBox Name="StreetTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Улица"
-                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                           Text="{Binding Entity.Street}" />
 
                   <TextBox Name="HouseTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Дом"
-                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                           Text="{Binding Entity.House}" />
 
                   <TextBox Name="ZipCodeTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Почтовый индекс"
-                           Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                           Text="{Binding Entity.ZipCode}" />
                 </StackPanel>
               </Expander>
 
@@ -149,22 +137,44 @@
         </materialDesign:Card>
         <materialDesign:Card
           Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
-          <DockPanel>
-            <StackPanel>
-            <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
-                       Text="Комментарий" 
-                       Margin="0,0,0,16"/>
-            </StackPanel>
-            <TextBox Text="{Binding Client.Comment}"
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="38" />
+              <RowDefinition Height="38" />
+              <RowDefinition Height="38" />
+              <RowDefinition Height="80" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="275"/>
+              <ColumnDefinition Width="275"/>
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.ColumnSpan="3" Style="{StaticResource MaterialDesignTitleTextBlock}"
+                       Text="Комментарий" />
+            <ComboBox Margin="2,0,16,0" Grid.Row="1" Grid.Column="0"
+                      materialDesign:HintAssist.Hint="Должность"
+
+                      ItemsSource="{Binding Source={converters:Enumeration {x:Type model:EmployeeProfession}}}"
+                      DisplayMemberPath="Description"
+                      SelectedValue="{Binding Entity.Profession}"
+                      SelectedValuePath="Value" />
+            <TextBox Grid.Row="3" Grid.Column="0" Text="{Binding Entity.Username}"  Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                     materialDesign:HintAssist.Hint="Логин" Margin="2,0,16,16" />
+            <PasswordBox Grid.Row="3" Grid.Column="1"  Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
+                         materialDesign:HintAssist.Hint="Пароль" Margin="2,0,0,16" 
+                         cal:Message.Attach="[Event PasswordChanged] = [Action PasswordChanged($source)]" />
+            
+            <TextBox Grid.ColumnSpan="3" Grid.Row="4" Grid.Column="0"
+                     Text="{Binding Entity.Comment}"
                      materialDesign:HintAssist.Hint="Комментарий"
                      Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                     Margin="2,17,0,0"
+                     Margin="2,0,0,0"
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
                      VerticalAlignment="Stretch"
                      VerticalScrollBarVisibility="Auto" />
-
-          </DockPanel>
+          </Grid>
         </materialDesign:Card>
       </Grid>
 
@@ -180,7 +190,7 @@
                            Style="{StaticResource MaterialDesignBody2TextBlock}">
                   <TextBlock.Text>
                     <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
-                      <Binding Path="Client.OrdersCount"/>
+                      <Binding Path="Client.OrdersCount" />
                     </MultiBinding>
                   </TextBlock.Text>
                 </TextBlock>
@@ -191,7 +201,7 @@
                   <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
                 </Button>
               </StackPanel>
-              <ContentControl DockPanel.Dock="Left" Name="Paginator"/>
+              <ContentControl DockPanel.Dock="Left" Name="Paginator" />
 
             </DockPanel>
           </Grid>

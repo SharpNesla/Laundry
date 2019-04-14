@@ -128,6 +128,7 @@
     <Compile Include="Model\ClothKind.cs" />
     <Compile Include="Model\CollectionRepositories\ClientRepository.cs" />
     <Compile Include="Model\CollectionRepositories\ClothInstancesRepository.cs" />
+    <Compile Include="Model\CollectionRepositories\ClothKindRepository.cs" />
     <Compile Include="Model\CollectionRepositories\OrderRepository.cs" />
     <Compile Include="Model\CollectionRepositories\Repository.cs" />
     <Compile Include="Model\CollectionRepositories\EmployeeRepository.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\CollectionRepositories\IRepositoryElement.cs" />
     <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Subsidiary.cs" />
     <Compile Include="Utils\ActivityScreen.cs" />
     <Compile Include="Utils\Controls\CarDataGrid.xaml.cs">
@@ -143,6 +145,9 @@
     </Compile>
     <Compile Include="Utils\Controls\ClientDataGrid.xaml.cs">
       <DependentUpon>ClientDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Controls\ClothKindGrid.xaml.cs">
+      <DependentUpon>ClothKindGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Controls\EntitySearchControls\ClientSearch.xaml.cs">
       <DependentUpon>ClientSearch.xaml</DependentUpon>
@@ -197,6 +202,9 @@
     <Compile Include="Views\Cards\ClothInstanceCard.xaml.cs">
       <DependentUpon>ClothInstanceCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Cards\ClothKindCard.xaml.cs">
+      <DependentUpon>ClothKindCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Cards\EmployeeCard.xaml.cs">
       <DependentUpon>EmployeeCard.xaml</DependentUpon>
     </Compile>
@@ -227,8 +235,8 @@
     <Compile Include="Views\ClothEditor.xaml.cs">
       <DependentUpon>ClothEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ClothKindEditor.xaml.cs">
-      <DependentUpon>ClothKindEditor.xaml</DependentUpon>
+    <Compile Include="Views\ClothKindDictionary.xaml.cs">
+      <DependentUpon>ClothKindDictionary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DiscountSystem.xaml.cs">
       <DependentUpon>DiscountSystem.xaml</DependentUpon>
@@ -269,6 +277,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Utils\Controls\ClientDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utils\Controls\ClothKindGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -324,6 +336,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Cards\ClothKindCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Cards\EmployeeCard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -364,7 +380,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ClothKindEditor.xaml">
+    <Page Include="Views\ClothKindDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -470,13 +486,13 @@
     <Folder Include="Views\Actions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Fody.3.3.5\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.5\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.3.3.5\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.3.5\build\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\Costura.Fody.3.3.2\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.3.3.2\build\Costura.Fody.props'))" />
     <Error Condition="!Exists('..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\Fody.4.2.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.4.2.1\build\Fody.targets'))" />
   </Target>
+  <Import Project="..\packages\Fody.4.2.1\build\Fody.targets" Condition="Exists('..\packages\Fody.4.2.1\build\Fody.targets')" />
 </Project>

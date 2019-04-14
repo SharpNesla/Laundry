@@ -43,8 +43,8 @@ namespace Laundry.Views
       this.ClientCombo.EntityChanged += OnEntityChanged;
 
       this.ObtainerCombo = new EmployeeSearchViewModel(model){Label="Приёмщик"};
-      this.CorpObtainerCombo = new ClientSearchViewModel(model, "Приёмщик (корпоративный)");
-      this.InCourierCombo = new EmployeeSearchViewModel(model) { Label= "Курьер, забирающий заказ" };
+      this.CorpObtainerCombo = new ClientSearchViewModel(model, "Приёмщик (корпоративный)", Builders<Client>.Filter.Eq(nameof(Client.IsCorporative), true));
+      this.InCourierCombo = new EmployeeSearchViewModel(model, "Курьер, забирающий заказ", Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Courier));
       this.WasherCombo = new EmployeeSearchViewModel(model) { Label= "Прачечник"};
       this.OutCourierCombo = new EmployeeSearchViewModel(model) { Label= "Курьер, вовзращающий заказ" };
       this.CorpDistributerCombo = new ClientSearchViewModel(model, "Приёмщик (корпоративный), принимающий заказ");

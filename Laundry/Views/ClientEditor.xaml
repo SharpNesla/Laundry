@@ -61,17 +61,17 @@
 
 
     </materialDesign:ColorZone>
-    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right" Margin="24,0,24,24">
-      <Button Name="ApplyChanges" MaxWidth="132"
-              Style="{StaticResource MaterialDesignFlatButton}" >
-        ПРИНЯТЬ
-      </Button>
-      <Button IsCancel="True" MaxWidth="132" Foreground="{StaticResource RemoveColor}"
+
+    <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="24,0,24,24">
+      <Button IsCancel="True" DockPanel.Dock="Right" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Name="Discard">
         ОТМЕНИТЬ
       </Button>
-      
-    </StackPanel>
+      <Button Name="ApplyChanges" DockPanel.Dock="Left" MaxWidth="132"
+              Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
+        ПРИНЯТЬ
+      </Button>
+    </DockPanel>
     <Grid>
       <Grid Margin="24" Visibility="{Binding InfoVisibility}">
         <Grid.ColumnDefinitions>

@@ -12,15 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MongoDB.Driver;
+using Caliburn.Micro;
 using Laundry.Model;
-using Laundry.Model.DatabaseClients;
+using Laundry.Utils;
 
-namespace Laundry.Utils.Controls.EntitySearchControls
+namespace Laundry.Views.Cards
 {
-  public class EmployeeSearchViewModel : EntitySearchBox<Employee, EmployeeRepository>
+  /// <summary>
+  /// Interaction logic for ClothKindCard.xaml
+  /// </summary>
+  public class ClothKindCardViewModel : Card<ClothKind>
   {
-    public EmployeeSearchViewModel(IModel model, string label="Работник", FilterDefinition<Employee> filter = null) : base(model.Employees, label, filter)
+    public ClothKindCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.About)
     {
     }
   }

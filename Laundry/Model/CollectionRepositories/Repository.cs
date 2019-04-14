@@ -11,15 +11,16 @@ namespace Laundry.Model.CollectionRepositories
   /// <typeparam name="T">Тип объекта находящегося в коллекции</typeparam>
   public class Repository<T> where T : IRepositoryElement
   {
-    public IMongoCollection<T> Collection{ get; protected set; }
+    public IMongoCollection<T> Collection { get; protected set; }
     internal event Action ConnectionLost;
-    protected IModel Model{ get; set; }
+    protected IModel Model { get; set; }
 
     public Repository(IModel model, IMongoCollection<T> collection)
     {
       this.Collection = collection;
       this.Model = model;
     }
+
     /// <summary>
     /// Добавить элемент в текущую коллекцию
     /// </summary>
@@ -37,6 +38,7 @@ namespace Laundry.Model.CollectionRepositories
 
       Collection.InsertOne(entity);
     }
+
     /// <summary>
     /// Получить элемент из коллекции по id
     /// </summary>
@@ -62,40 +64,27 @@ namespace Laundry.Model.CollectionRepositories
     {
       try
       {
-        if (filter != null)
-        {
-          var filters = Builders<T>.Filter.And(
-            Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
-            filter);
-          return Collection.Find(filters).Skip(offset).Limit(limit).ToList();
-
-        }
-        else
-        {
-          return Collection.Find(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
-            .Skip(offset).Limit(limit).ToList();
-        }
+        var filters = Builders<T>.Filter.And(
+          Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+          filter ?? Builders<T>.Filter.Empty);
+        return Collection.Find(filters).Skip(offset).Limit(limit).ToList();
       }
       catch (Exception e)
       {
+        throw;
         ConnectionLost?.Invoke();
         return null;
       }
-      
     }
 
-    public long GetCount(FilterDefinition<T> filter = null)
+    public virtual long GetCount(FilterDefinition<T> filter = null)
     {
       try
       {
-        if (filter == null)
-        {
-          return Collection.CountDocuments(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false));
-        }
-        else
-        {
-          return Collection.CountDocuments(Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false));
-        }
+        var filters = Builders<T>.Filter.And(
+          Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+          filter ?? Builders<T>.Filter.Empty);
+        return Collection.CountDocuments(filters);
       }
       catch (Exception e)
       {
@@ -104,9 +93,10 @@ namespace Laundry.Model.CollectionRepositories
       }
     }
 
-    public virtual IReadOnlyList<T> GetBySearchString(string searchString,FilterDefinition<T> filter,int offset = 0, int capLimit = 10)
+    public virtual IReadOnlyList<T> GetBySearchString(string searchString, FilterDefinition<T> filter, int offset = 0,
+      int capLimit = 10)
     {
-      return this.Get(0, 10,filter);
+      return this.Get(0, 10, filter);
     }
   }
 }

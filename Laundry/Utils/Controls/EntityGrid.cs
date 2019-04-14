@@ -64,10 +64,7 @@ namespace Laundry.Utils.Controls
 
     public virtual void Refresh(int page, int elements)
     {
-      var repo =
-        (Filter == null ? Repo.Get(page * elements, elements) : Repo.Get(page * elements, elements, Filter)) as
-        List<TEntity>;
-      this.Entities = repo.AsReadOnly();
+      this.Entities = Repo.Get(page, elements);
     }
 
     public event Action StateChanged;
@@ -102,7 +99,6 @@ namespace Laundry.Utils.Controls
     {
       _eventAggregator.PublishOnUIThread(_editScreen);
       _eventAggregator.PublishOnUIThread(SelectedEntity);
-      StateChanged?.Invoke();
     }
 
     public async void Remove()

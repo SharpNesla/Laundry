@@ -23,6 +23,7 @@ namespace Laundry.Model
     public ClothInstancesRepository ClothInstances { get; set; }
     public Repository<Subsidiary> Subsidiaries { get; set; }
     public Repository<Car> Cars { get; set; }
+    public ClothKindRepository ClothKinds { get; set; }
 
     private IMongoDatabase _dataBase;
     private IMongoCollection<Client> _clients;
@@ -48,7 +49,7 @@ namespace Laundry.Model
       this.Subsidiaries = new Repository<Subsidiary>(this, _dataBase.GetCollection<Subsidiary>("subsidiaries"));
       this.Cars = new Repository<Car>(this, _dataBase.GetCollection<Car>("cars"));
       this.ClothInstances = new ClothInstancesRepository(this, _dataBase.GetCollection<ClothInstance>("clothinstances"));
-      
+      this.ClothKinds = new ClothKindRepository(this, _dataBase.GetCollection<ClothKind>("clothkinds"));
       this.CurrentUser = this.Employees.GetCurrentEmployee(username, password);
 
       Connected?.Invoke(CurrentUser);

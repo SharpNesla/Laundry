@@ -12,7 +12,10 @@ namespace Laundry.Model.CollectionRepositories
 
     public void SetClient(Order order, Client client)
     {
-      order.ClientId = client.Id;
+      if (client != null)
+      {
+        order.ClientId = client.Id;
+      }
     }
 
     public Client GetClient(Order order)

@@ -58,7 +58,7 @@ namespace Laundry.Utils
         case Screens.ClothEditor:
           return _container.GetInstance<EmployeeDictionaryViewModel>();
         case Screens.ClothKindEditor:
-          return _container.GetInstance<ClothKindEditorViewModel>();
+          return _container.GetInstance<ClothKindDictionaryViewModel>();
         case Screens.OrderDictionary:
           return _container.GetInstance<OrderDictionaryViewModel>();
         default:

@@ -5,11 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace Laundry.Utils.Converters
 {
+  public class BoolRowDetailsVizConverter : IValueConverter
+  {
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+      var val = (bool)value;
 
+      return val ? DataGridRowDetailsVisibilityMode.VisibleWhenSelected: DataGridRowDetailsVisibilityMode.Collapsed;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+      throw new NotImplementedException();
+    }
+  }
   public class BindingProxy : Freezable
   {
     #region Overrides of Freezable

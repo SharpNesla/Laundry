@@ -72,16 +72,9 @@
         </DataGridTemplateColumn.CellTemplate>
       </DataGridTemplateColumn>
 
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="DateBirth"
-                              MinWidth="164"
-                              Header="Дата рождения">
-        <DataGridTemplateColumn.CellTemplate>
-          <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding DateBirth, StringFormat='dd.MM.yyyy'}"
-                       VerticalAlignment="Center" />
-          </DataTemplate>
-        </DataGridTemplateColumn.CellTemplate>
-      </DataGridTemplateColumn>
+      <local:DataGridAdaptiveColumn Binding="{Binding DateBirth, StringFormat='dd.MM.yyyy'}" CanUserReorder="True"
+                                    IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="128"
+                                    Header="Дата рождения" />
 
       <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="Profession"
                               MinWidth="164"

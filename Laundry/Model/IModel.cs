@@ -16,7 +16,8 @@ namespace Laundry.Model
     ClothInstancesRepository ClothInstances { get; }
     Repository<Subsidiary> Subsidiaries { get; }
     Repository<Car> Cars { get; }
-    
+    ClothKindRepository ClothKinds { get; set; }
+
     void Connect(string username, string password);
     event Action ConnectionLost;
     event Action<Employee> Connected;
