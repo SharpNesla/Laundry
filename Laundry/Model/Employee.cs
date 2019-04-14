@@ -22,18 +22,20 @@ namespace Laundry.Model
 
   public class Employee : Person
   {
-   public EmployeeProfession Profession { get; set; }
+    public int Subsidiary{ get; internal set; }
+    public EmployeeProfession Profession { get; set; }
 
-
-
-    public string Password { get; set; }
-
+   
     public string Username { get; set; }
+
+
 
     [BsonIgnore]
     public override string Signature
     {
       get { return $"{this.Id} {this.Name} {this.Surname}"; }
     }
+
+    public string Password { get; set; }
   }
 }

@@ -73,74 +73,6 @@
       </Button>
     </DockPanel>
     <Grid>
-      <Grid Margin="24" Visibility="{Binding InfoVisibility}">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
-          <ColumnDefinition Width="371*" />
-        </Grid.ColumnDefinitions>
-        <materialDesign:Card Margin="0,0,16,0"
-                             Padding="16" VerticalAlignment="Stretch">
-
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="370" />
-              <RowDefinition />
-            </Grid.RowDefinitions>
-            <StackPanel>
-              <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
-                         Text="{StaticResource ClientEditor.MainInfoTitle}" />
-              <TextBox Text="{Binding Entity.Surname}" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Entity.Name}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Entity.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Entity.PhoneNumber}"
-                       Margin="0,0,0,8"
-                       materialDesign:HintAssist.Hint="Номер телефона"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <StackPanel Margin="0,8,0,0">
-                <TextBlock Margin="0,0,0,8"
-                           Style="{StaticResource MaterialDesignSubheadingTextBlock}">
-                  Пол
-                </TextBlock>
-                <RadioButton Margin="0,0,0,4" Style="{StaticResource MaterialDesignRadioButton}">
-                  М
-                </RadioButton>
-                <RadioButton Style="{StaticResource MaterialDesignRadioButton}">
-                  Ж
-                </RadioButton>
-              </StackPanel>
-              <DatePicker SelectedDate="{Binding Entity.DateBirth}" materialDesign:HintAssist.Hint="Дата рождения"
-                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
-                          HorizontalAlignment="Left" Width="252" />
-              <CheckBox 
-                Style="{StaticResource MaterialDesignCheckBox}" IsChecked="{Binding Entity.IsCorporative}">
-                Корпоративный клиент
-              </CheckBox>
-            </StackPanel>
-
-          </Grid>
-
-        </materialDesign:Card>
-        <materialDesign:Card
-          Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
-          <DockPanel>
-            <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
-                       Text="Комментарий" />
-            <TextBox Text="{Binding Entity.Comment}"
-                     materialDesign:HintAssist.Hint="Комментарий"
-                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                     Margin="2,17,0,0"
-                     AcceptsReturn="True"
-                     TextWrapping="Wrap"
-                     VerticalAlignment="Stretch"
-                     VerticalScrollBarVisibility="Auto" />
-
-          </DockPanel>
-
-        </materialDesign:Card>
-      </Grid>
       <materialDesign:Card Margin="24" Visibility="{Binding OrderGridVisibility}"
                            BorderThickness="0" VerticalAlignment="Stretch">
 
@@ -163,13 +95,113 @@
                   <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
                 </Button>
               </StackPanel>
-              <ContentControl  DockPanel.Dock="Left" Name="Paginator" />
+              <ContentControl DockPanel.Dock="Left" Name="Paginator" />
 
             </DockPanel>
           </Grid>
           <ContentControl Name="OrderDataGrid" />
         </DockPanel>
       </materialDesign:Card>
+      <Grid Margin="24" Visibility="{Binding InfoVisibility}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
+          <ColumnDefinition Width="371*" />
+        </Grid.ColumnDefinitions>
+        <materialDesign:Card Margin="0,0,16,0" VerticalAlignment="Stretch">
+
+          <ScrollViewer Padding="16" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+              <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
+                         Text="{StaticResource ClientEditor.MainInfoTitle}" />
+              <TextBox Text="{Binding Entity.Surname}" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Text="{Binding Entity.Name}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Text="{Binding Entity.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Text="{Binding Entity.PhoneNumber}"
+                       Margin="0,0,0,8"
+                       materialDesign:HintAssist.Hint="Номер телефона"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <StackPanel Margin="0,8,0,0" Orientation="Horizontal">
+                <TextBlock Margin="0,2,8,8">
+                  Пол
+                </TextBlock>
+                <RadioButton Margin="0,0,8,4" Style="{StaticResource MaterialDesignRadioButton}"
+                             Tag="True">
+                  Мужской
+                </RadioButton>
+                <RadioButton Style="{StaticResource MaterialDesignRadioButton}"
+                             Tag="True">
+                  Женский
+                </RadioButton>
+              </StackPanel>
+              <DatePicker SelectedDate="{Binding Entity.DateBirth}" materialDesign:HintAssist.Hint="Дата рождения"
+                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                          HorizontalAlignment="Left" Width="252" />
+              <Expander Background="{StaticResource MaterialDesignCardBackground}"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth3">
+
+                <Expander.Header>
+                  <TextBlock Margin="-24,0,0,0" TextWrapping="Wrap">
+                    <TextBlock.Text>
+                      <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">
+                        <Binding ElementName="CityTextBox" Path="Text" />
+                        <Binding ElementName="StreetTextBox" Path="Text" />
+                        <Binding ElementName="HouseTextBox" Path="Text" />
+                        <Binding ElementName="ZipCodeTextBox" Path="Text" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
+                </Expander.Header>
+                <StackPanel Margin="8,0,8,0">
+                  <TextBox Name="CityTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город"
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                           Text="{Binding Entity.City}" />
+
+                  <TextBox Name="StreetTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Улица"
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                           Text="{Binding Entity.Street}" />
+
+                  <TextBox Name="HouseTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Дом"
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                           Text="{Binding Entity.House}" />
+
+                  <TextBox Name="FlatTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Квартира"
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                           Text="{Binding Entity.Flat}" />
+
+                  <TextBox Name="ZipCodeTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Почтовый индекс"
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                           Text="{Binding Entity.ZipCode}" />
+                </StackPanel>
+              </Expander>
+
+              <CheckBox
+                Style="{StaticResource MaterialDesignCheckBox}" IsChecked="{Binding Entity.IsCorporative}">
+                Корпоративный клиент
+              </CheckBox>
+            </StackPanel>
+          </ScrollViewer>
+        </materialDesign:Card>
+        <materialDesign:Card
+          Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
+          <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
+                       Text="Комментарий" />
+            <TextBox Text="{Binding Entity.Comment}"
+                     materialDesign:HintAssist.Hint="Комментарий"
+                     Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                     Margin="2,17,0,0"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Stretch"
+                     VerticalScrollBarVisibility="Auto" />
+
+          </DockPanel>
+
+        </materialDesign:Card>
+      </Grid>
     </Grid>
   </DockPanel>
 </UserControl>

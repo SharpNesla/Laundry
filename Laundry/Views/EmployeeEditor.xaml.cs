@@ -22,11 +22,13 @@ namespace Laundry.Views
       get { return !IsNew; }
     }
 
+    public bool  ChangePassword { get; set; }
+
     public OrderDataGridViewModel OrderDataGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
 
     public string Password { get; set; }
-
+    public string AdditionalPassword { get; set; }
     #region TabBindings
 
     [AlsoNotifyFor(nameof(InfoVisibility))]
@@ -63,10 +65,15 @@ namespace Laundry.Views
     public override void ApplyChanges()
     {
       base.ApplyChanges();
-      if (!string.IsNullOrEmpty(Password))
+      if (ChangePassword && (string.IsNullOrEmpty(Password) && string.IsNullOrEmpty(AdditionalPassword)) && AdditionalPassword == Password)
       {
         this.EntityRepository.SetPassword(this.Entity, Password);
       }
+    }
+
+    public void AdditionalPasswordChanged(PasswordBox box)
+    {
+      Password = box.Password;
     }
 
     public void PasswordChanged(PasswordBox box)

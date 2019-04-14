@@ -37,6 +37,9 @@ namespace Laundry.Model
     public string City { get; set; }
 
     [BsonIgnoreIfNull]
+    public string Flat { get; set; }
+
+    [BsonIgnoreIfNull]
     public string ZipCode { get; set; }
 
     [BsonIgnoreIfDefault]

@@ -16,6 +16,9 @@ using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Utils;
+using Laundry.Utils.Controls;
+using Laundry.Utils.Controls.EntitySearchControls;
+using MongoDB.Driver;
 
 namespace Laundry.Views
 {
@@ -24,9 +27,26 @@ namespace Laundry.Views
   /// </summary>
   public class SubsidiaryEditorViewModel : EditorScreen<Repository<Subsidiary>, Subsidiary>
   {
-    public SubsidiaryEditorViewModel(IEventAggregator aggregator, IModel model, Repository<Subsidiary> entityRepo, 
-      string entityTitleName = "Филиала") : base(aggregator, model, entityRepo, entityTitleName)
+    public EmployeeSearchViewModel MainAdvisor { get; }
+    public EmployeeSearchViewModel AdvisorSearch { get; }
+
+    public EmployeeDataGridViewModel AdvisorGrid { get; }
+
+    public SubsidiaryEditorViewModel(IEventAggregator aggregator, EmployeeDataGridViewModel employeeGrid, IModel model,
+      string entityTitleName = "Филиала") : base(aggregator, model, model.Subsidiaries, entityTitleName)
     {
+      AdvisorSearch = new EmployeeSearchViewModel(model, "Добавляемый приёмщик",
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor));
+
+      MainAdvisor = new EmployeeSearchViewModel(model, "Добавляемый приёмщик",
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor));
+
+      AdvisorGrid = employeeGrid;
+    }
+
+    public override void Handle(Subsidiary message)
+    {
+      AdvisorGrid.Filter = Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), message.Id);
     }
   }
 }

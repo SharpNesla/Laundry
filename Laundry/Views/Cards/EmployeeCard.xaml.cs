@@ -49,8 +49,31 @@ namespace Laundry.Views
     //  this.Client = _model.Employees.GetById(message.Id);
     //}
 
-    public EmployeeCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.EmployeeEditor)
+    public EmployeeCardViewModel(IEventAggregator eventAggregator, OrderDataGridViewModel orderGrid) : base(eventAggregator, Screens.EmployeeEditor)
     {
+      this.OrderGrid = orderGrid;
+      orderGrid.DisplaySelectionColumn = false;
+      this._eventAggregator = eventAggregator;
+    }
+
+    public override Employee Entity
+    {
+      get { return base.Entity; }
+
+      set
+      {
+        base.Entity = value;
+        this.OrderGrid.Employee = value;
+        this.OrderGrid.Refresh(0, 10);
+      }
+    }
+
+    public OrderDataGridViewModel OrderGrid { get; set; }
+
+    public void ShowOrdersForClint()
+    {
+      this._eventAggregator.PublishOnUIThread(Screens.OrderDictionary);
+      this._eventAggregator.PublishOnUIThread(this.Entity);
     }
   }
 }

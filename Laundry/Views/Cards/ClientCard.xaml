@@ -10,7 +10,7 @@
              xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
              xmlns:cal="http://www.caliburnproject.org"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel Height="500" Width="970">
+  <DockPanel Height="600" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="24,20,24,20">
       <DockPanel>

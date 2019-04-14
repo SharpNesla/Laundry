@@ -43,8 +43,7 @@
         <StackPanel>
           <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="Общая информация" />
-          <TextBox Text="{Binding Car.BrandAndModel}" Margin="0,8,0,8" materialDesign:HintAssist.Hint="Марка и модель"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <ContentControl Name="MainAdvisorSearch" Width="250"></ContentControl>
           <TextBox Text="{Binding Sing}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Регистрационный знак"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
           <TextBox Text="{Binding VIN}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Идентификационный номер (VIN)"
@@ -68,12 +67,10 @@
 
             </Button>
             <StackPanel Orientation="Horizontal">
-              <TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
-                             Style="{StaticResource MaterialDesignBody2TextBlock}"
-                             Text="" />
+              <ContentControl Name="AdvisorSearch" Width="250"></ContentControl>
             </StackPanel>
           </DockPanel>
-          <ContentControl Name="Couriers"/>
+          <ContentControl Name="Advisors"/>
         </DockPanel>
 
       </materialDesign:Card>

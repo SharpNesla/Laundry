@@ -18,11 +18,6 @@ namespace Laundry.Utils
 
     public ActivityScreen Context { get; set; }  
 
-    public Visibility Courier => this.Model.CurrentUser.Profession == EmployeeProfession.Courier ? Visibility.Visible : Visibility.Hidden;
-    public Visibility Director => this.Model.CurrentUser.Profession == EmployeeProfession.Director ? Visibility.Visible : Visibility.Hidden;
-    public Visibility Washer => this.Model.CurrentUser.Profession == EmployeeProfession.Washer ? Visibility.Visible : Visibility.Hidden;
-    public Visibility Advisor => this.Model.CurrentUser.Profession == EmployeeProfession.Advisor ? Visibility.Visible : Visibility.Hidden;
-
     protected ActivityScreen(IEventAggregator aggregator, IModel model)
     {
       this.EventAggregator = aggregator;
