@@ -7,6 +7,7 @@
              xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:model="clr-namespace:Laundry.Model"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Name="OwnControl">
@@ -14,8 +15,42 @@
     <!--{Binding IsSearchDrawerOpened}-->
     <materialDesign:DrawerHost DockPanel.Dock="Bottom" Name="DrawerHost" IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
       <materialDesign:DrawerHost.BottomDrawerContent>
-        <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}" materialDesign:ShadowAssist.ShadowDepth="Depth5">
+        <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}" Orientation="Horizontal">
+          <StackPanel Width="200" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <CheckBox IsChecked="{Binding IsByClient}">По клиенту</CheckBox>
+            <CheckBox IsChecked="{Binding IsCorporative}" Margin="0,16,0,0"
+                      IsEnabled="{Binding IsByClient}">Корпоративный клиент</CheckBox>
+            <ContentControl Height="38" IsEnabled="{Binding IsByClient}" cal:View.Model="{Binding ClientCombo}" />
+          </StackPanel>
+          <StackPanel Width="200" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <CheckBox IsChecked="{Binding IsByEmployee}">По работнику</CheckBox>
+            <ComboBox Margin="2,0,16,0" Grid.Row="1" Grid.Column="0"
+                      materialDesign:HintAssist.Hint="Должность"
 
+                      ItemsSource="{Binding Source={converters:Enumeration {x:Type model:EmployeeProfession}}}"
+                      DisplayMemberPath="Description"
+                      SelectedValue="{Binding Profession}"
+                      SelectedValuePath="Value" />
+            <ContentControl Height="38" IsEnabled="{Binding IsByEmployee}" cal:View.Model="{Binding EmployeeCombo}" />
+          </StackPanel>
+          <StackPanel Width="150" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <CheckBox IsChecked="{Binding IsByCreationDate}">По дате приёма</CheckBox>
+            <DatePicker SelectedDate="{Binding LowDateBirthBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                        HorizontalAlignment="Stretch" IsEnabled="{Binding IsByCreationDate}"/>
+            <DatePicker SelectedDate="{Binding HighDateBirthBound}" materialDesign:HintAssist.Hint="Верхняя граница"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                        HorizontalAlignment="Stretch" IsEnabled="{Binding IsByCreationDate}"/>
+          </StackPanel>
+          <StackPanel Width="150" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <CheckBox IsChecked="{Binding IsByExecutionDate}">По дате исполнения</CheckBox>
+            <DatePicker SelectedDate="{Binding LowDateBirthBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                        HorizontalAlignment="Stretch" IsEnabled="{Binding IsByExecutionDate}"/>
+            <DatePicker SelectedDate="{Binding HighDateBirthBound}" materialDesign:HintAssist.Hint="Верхняя граница"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                        HorizontalAlignment="Stretch" IsEnabled="{Binding IsByExecutionDate}"/>
+          </StackPanel>
         </StackPanel>
       </materialDesign:DrawerHost.BottomDrawerContent>
 

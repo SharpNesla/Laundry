@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.DatabaseClients;
+using Laundry.Utils.Controls.EntitySearchControls;
 using Laundry.Views;
 
 namespace Laundry.Utils.Controls
@@ -24,10 +25,20 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class ClientDataGridViewModel : EntityGrid<Client, ClientRepository, ClientCardViewModel>
   {
+
+    public Client Client { get; set; }
+
+    public bool IsByDateBirth { get; set; }
+
+    public DateTime? LowDateBirthBound { get; set; }
+    public DateTime? HighDateBirthBound { get; set; }
+
     public ClientDataGridViewModel(IEventAggregator eventAggregator, ClientCardViewModel card,
       DeleteDialogViewModel deleteDialog, IModel model) :
       base(eventAggregator, card, model.Clients, deleteDialog, Screens.ClientEditor)
     {
+      
     }
+
   }
 }

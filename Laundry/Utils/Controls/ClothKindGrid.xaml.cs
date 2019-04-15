@@ -27,6 +27,8 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class ClothKindGridViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>
   {
+    public float NameWidth { get; set; }
+
     public ClothKindGridViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
       IModel model, DeleteDialogViewModel shure)
       : base(eventAggregator, card, model.ClothKinds, shure, Screens.About)

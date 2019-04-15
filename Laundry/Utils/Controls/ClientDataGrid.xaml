@@ -8,12 +8,20 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" Name="OwnControl">
-
+  <!--{Binding IsSearchDrawerOpened}-->
   <DockPanel LastChildFill="True">
-    <materialDesign:DrawerHost DockPanel.Dock="Bottom" Name="DrawerHost" IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
+    <materialDesign:DrawerHost DockPanel.Dock="Bottom" materialDesign:ShadowAssist.ShadowDepth="Depth5" Name="DrawerHost" IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
       <materialDesign:DrawerHost.BottomDrawerContent>
-        <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}" materialDesign:ShadowAssist.ShadowDepth="Depth5">
-
+        <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}">
+          <StackPanel Width="200" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <CheckBox IsChecked="{Binding IsByDateBirth}">По дате рождения</CheckBox>
+            <DatePicker SelectedDate="{Binding LowDateBirthBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                        HorizontalAlignment="Stretch" IsEnabled="{Binding IsByDateBirth}"/>
+            <DatePicker SelectedDate="{Binding HighDateBirthBound}" materialDesign:HintAssist.Hint="Верхняя граница"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                        HorizontalAlignment="Stretch" IsEnabled="{Binding IsByDateBirth}"/>
+          </StackPanel>
         </StackPanel>
       </materialDesign:DrawerHost.BottomDrawerContent>
 

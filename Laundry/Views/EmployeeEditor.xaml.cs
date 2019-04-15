@@ -71,6 +71,13 @@ namespace Laundry.Views
       }
     }
 
+    public override void Handle(Employee message)
+    {
+      base.Handle(message);
+      OrderDataGrid.Employee = Entity;
+      Paginator.RefreshPaginable();
+    }
+
     public void AdditionalPasswordChanged(PasswordBox box)
     {
       Password = box.Password;

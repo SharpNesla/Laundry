@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
 {
-  public class Person : IRepositoryElement
+  public class Person : IRepositoryElement, IDataErrorInfo
   {
     public long Id { get; set; }
 
@@ -50,5 +51,23 @@ namespace Laundry.Model
     {
       get { return $"{this.Id} {this.Name} {this.Surname}"; }
     }
+
+    public string this[string columnName]
+    {
+      get
+      {
+        string error = string.Empty;
+        switch (columnName)
+        {
+          case nameof(this.Name):
+            error += string.IsNullOrEmpty(Name) ? "Имя не правильно" : string.Empty;
+            break;
+        }
+
+        return error;
+      }
+    }
+
+    public string Error { get; }
   }
 }

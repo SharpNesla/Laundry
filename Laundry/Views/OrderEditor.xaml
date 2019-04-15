@@ -90,6 +90,7 @@
                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                    Margin="2,16,0,0"
                    AcceptsReturn="True"
+                   TextAlignment="Left"
                    TextWrapping="Wrap"
                    VerticalScrollBarVisibility="Auto"
                    Text="{Binding Entity.Comment}"

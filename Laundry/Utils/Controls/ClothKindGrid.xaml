@@ -81,6 +81,7 @@
                                           Header="№" />
             <local:DataGridAdaptiveColumn Binding="{Binding Name}" CanUserReorder="True" IsReadOnly="True"
                                           MinWidth="32"
+                                          Width="{Binding NameWidth}"
                                           SortMemberPath="Name"
                                           Header="Name" />
 
