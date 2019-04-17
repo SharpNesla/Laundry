@@ -33,7 +33,6 @@ namespace Laundry.Utils
 
       this.IsNew = true;
       this.Entity = new TEntity();
-      this.Entity.Id = EntityRepository.GetCount();
     }
 
     public virtual void Discard()

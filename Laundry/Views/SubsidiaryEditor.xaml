@@ -44,17 +44,25 @@
           <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="Общая информация" />
           <ContentControl Name="MainAdvisorSearch" Width="250"></ContentControl>
-          <TextBox Text="{Binding Sing}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Регистрационный знак"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Text="{Binding VIN}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Идентификационный номер (VIN)"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Серия и номер ПТС"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Цвет"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <DatePicker materialDesign:HintAssist.Hint="Год выпуска"
-                      Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16"
-                      HorizontalAlignment="Left" />
+          <TextBox Name="CityTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                   Text="{Binding Entity.City}" />
+
+          <TextBox Name="StreetTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Улица"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                   Text="{Binding Entity.Street}" />
+
+          <TextBox Name="HouseTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Дом"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                   Text="{Binding Entity.House}" />
+
+          <TextBox Name="FlatTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Квартира"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                   Text="{Binding Entity.Flat}" />
+
+          <TextBox Name="ZipCodeTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Почтовый индекс"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                   Text="{Binding Entity.ZipCode}" />
         </StackPanel>
       </materialDesign:Card>
 

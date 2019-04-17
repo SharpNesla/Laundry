@@ -61,7 +61,7 @@ namespace Laundry.Model
         switch (columnName)
         {
           case nameof(this.Name):
-            if (string.IsNullOrWhiteSpace(Name))
+            if (this.Name == null)
               error = "Имя не может быть пустым полем";
             else if(!Regex.IsMatch(this.Name, @"^[а-яА-Я-а-яА-Я ]*([а-я])$")) { 
               error = "Имя содержит не правильные символы";

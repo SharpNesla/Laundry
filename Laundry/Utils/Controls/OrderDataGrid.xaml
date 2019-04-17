@@ -13,7 +13,7 @@
              Name="OwnControl">
   <DockPanel LastChildFill="True">
     <!--{Binding IsSearchDrawerOpened}-->
-    <materialDesign:DrawerHost DockPanel.Dock="Bottom" Name="DrawerHost" IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
+    <materialDesign:DrawerHost DockPanel.Dock="Bottom" Name="DrawerHost" IsBottomDrawerOpen="True">
       <materialDesign:DrawerHost.BottomDrawerContent>
         <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}" Orientation="Horizontal">
           <StackPanel Width="200" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">

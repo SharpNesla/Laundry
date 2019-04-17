@@ -37,24 +37,30 @@ namespace Laundry.Utils.Controls
     public DateTime? LowDateBirthBound { get; set; }
     public DateTime? HighDateBirthBound { get; set; }
 
+    public override FilterDefinition<Client> Filter
+    {
+      get
+      {
+        var filter = BaseFilter;
+
+        if (this.IsByDateBirth)
+        {
+          filter = Builders<Client>.Filter.And(
+            this.BaseFilter,
+            Builders<Client>.Filter.Gte(nameof(Client.DateBirth), this.LowDateBirthBound ?? DateTime.MinValue),
+            Builders<Client>.Filter.Lte(nameof(Client.DateBirth), this.HighDateBirthBound?? DateTime.MaxValue));
+        }
+
+        return filter;
+      }
+
+      set { base.Filter = value; }
+    }
+
     public ClientDataGridViewModel(IEventAggregator eventAggregator, ClientCardViewModel card,
       DeleteDialogViewModel deleteDialog, IModel model) :
       base(eventAggregator, card, model.Clients, deleteDialog, Screens.ClientEditor)
     {
-    }
-
-    public override void Refresh(int page, int elements)
-    {
-      var filter = this.Filter ?? Builders<Client>.Filter.Empty;
-
-      if (this.IsByDateBirth)
-      {
-        filter = 
-          Builders<Client>.Filter.And(this.Filter,
-          Builders<Client>.Filter.Gte(nameof(Client.DateBirth), this.LowDateBirthBound));
-      }
-
-      base.Refresh(page, elements);
     }
 
     public override void ExportToExcel()

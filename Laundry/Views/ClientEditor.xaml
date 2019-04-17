@@ -11,6 +11,7 @@
              xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
              xmlns:cal="http://www.caliburnproject.org"
              d:DesignHeight="600" d:DesignWidth="800"
+             
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
 

@@ -17,6 +17,13 @@ namespace Laundry.Views
     public Visibility Driver => _model.CurrentUser.Profession == EmployeeProfession.Driver ? Visibility.Visible : Visibility.Collapsed;
     public Visibility Washer => _model.CurrentUser.Profession == EmployeeProfession.Washer ? Visibility.Visible : Visibility.Collapsed;
     public Visibility Director => _model.CurrentUser.Profession == EmployeeProfession.Director ? Visibility.Visible : Visibility.Collapsed;
+    
+
+    public Visibility DirectorAdvisor =>
+      _model.CurrentUser.Profession == EmployeeProfession.Director ||
+      _model.CurrentUser.Profession == EmployeeProfession.Advisor
+        ? Visibility.Visible
+        : Visibility.Collapsed;
 
     public Visibilities(IModel model)
     {

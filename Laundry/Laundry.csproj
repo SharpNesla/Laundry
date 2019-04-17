@@ -185,6 +185,8 @@
       <DependentUpon>SubsidiaryGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Converters\BoolVisibilityConverter.cs" />
+    <Compile Include="Utils\Converters\LevelToMargin.cs" />
+    <Compile Include="Utils\Converters\MeasureKindConverter.cs" />
     <Compile Include="Utils\DialogHostExtensions.cs" />
     <Compile Include="Utils\DictionaryScreen.cs" />
     <Compile Include="Utils\EditorActivityScreen.cs" />
@@ -234,6 +236,9 @@
     </Compile>
     <Compile Include="Views\CarEditor.xaml.cs">
       <DependentUpon>CarEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClothKindEditor.xaml.cs">
+      <DependentUpon>ClothKindEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConnectionLostDialog.xaml.cs">
       <DependentUpon>ConnectionLostDialog.xaml</DependentUpon>
@@ -375,6 +380,10 @@
     <Page Include="Views\CarEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ClothKindEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ConnectionLostDialog.xaml">
       <SubType>Designer</SubType>

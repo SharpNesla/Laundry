@@ -24,7 +24,7 @@
           Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
           Margin="16 0 0 0">
-          Справочник клиентов
+          Справочник видов одежды
         </TextBlock>
       </StackPanel>
     </materialDesign:ColorZone>
@@ -38,11 +38,11 @@
                                 Mode="PrimaryMid"
                                 Padding="16">
         <DockPanel>
-          <StackPanel
+          <StackPanel Visibility="Hidden"
             Orientation="Horizontal"
             materialDesign:RippleAssist.IsCentered="True">
 
-            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="32" Width="32" />
+            <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="32" Width="32" />
             <materialDesign:ColorZone
               Mode="Standard"
               Padding="8 4 8 4"
@@ -102,6 +102,6 @@
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-    <ContentControl Margin="16,16,16,-24" Name="EntityGrid"></ContentControl>
+    <ContentControl Margin="0,0,0,-24" Name="EntityGrid"></ContentControl>
   </DockPanel>
 </UserControl>

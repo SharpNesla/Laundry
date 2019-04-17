@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,44 +22,71 @@ using Laundry.Views.Cards;
 
 namespace Laundry.Utils.Controls
 {
-
   /// <summary>
   /// Interaction logic for ClothKindGrid.xaml
   /// </summary>
   public class ClothKindGridViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>
   {
     public float NameWidth { get; set; }
+    public ObservableCollection<ClothKind> EditableEntities { get; private set; }
+
 
     public ClothKindGridViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
       IModel model, DeleteDialogViewModel shure)
       : base(eventAggregator, card, model.ClothKinds, shure, Screens.About)
     {
+      this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
     }
 
     public void ShowHideDetails(ToggleButton button, ClothKind clothKind)
     {
-      for (var vis = button as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+      if (button.IsChecked.Value)
       {
-        if (vis is DataGridRow)
+        this.Repo.FetchChildren(clothKind);
+
+        foreach (var kind in clothKind.Children)
         {
-          var row = (DataGridRow)vis;
-          row.DetailsVisibility =
-            row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-          break;
+          kind.Level = clothKind.Level + 1;
+          this.EditableEntities.Insert(EditableEntities.IndexOf(clothKind) + 1, kind);
         }
       }
 
-      this.Repo.FetchChildren(clothKind);
+      else
+      {
+        RemoveChildren(clothKind);
+      }
+
+      //for (var vis = button as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+      //{
+      //  if (vis is DataGridRow)
+      //  {
+      //    var row = (DataGridRow)vis;
+      //    row.DetailsVisibility =
+      //      row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+      //    break;
+      //  }
+      //}
+    }
+
+    public void RemoveChildren(ClothKind clothKind)
+    {
+      if (clothKind.HasChildren && clothKind.Children != null)
+      {
+        foreach (var kind in clothKind.Children)
+        {
+          this.EditableEntities.Remove(kind);
+          RemoveChildren(kind);
+        }
+      }
     }
 
     public override void Refresh(int page, int elements)
     {
-      this.Entities = new[] {Repo.GetById(0)};
+      this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
     }
 
     public override void ExportToExcel()
     {
-      throw new NotImplementedException();
     }
 
     public void CheckBranch(ToggleButton button)

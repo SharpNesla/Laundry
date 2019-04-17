@@ -51,6 +51,8 @@
       <converters:BoolVisibilityConverter x:Key="BoolVisibilityConverter"></converters:BoolVisibilityConverter>
       <converters:BoolNotVisibilityConverter x:Key="BoolNotVisibilityConverter"></converters:BoolNotVisibilityConverter>
       <converters:BoolRowDetailsVizConverter x:Key="BoolRowDetailsVizConverter"></converters:BoolRowDetailsVizConverter>
+      <converters:LevelToMargin x:Key="LevelToMarginConverter"></converters:LevelToMargin>
+      <converters:MeasureKindConverter x:Key="MeasureKindConverter"></converters:MeasureKindConverter>
     </ResourceDictionary>
 
   </Application.Resources>

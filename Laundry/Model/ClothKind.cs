@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +9,14 @@ using MongoDB.Bson.Serialization.Attributes;
 using PropertyChanged;
 namespace Laundry.Model
 {
+
   public enum MeasureKind
   {
+    [Description("кг")]
     Kg,
+    [Description("шт")]
     Thing,
+    [Description("пар")]
     Pair
   }
 
@@ -39,9 +44,11 @@ namespace Laundry.Model
     {
       get { return ChildrenCount != 0; }
     }
-    public IReadOnlyList<ClothKind> MyCollection { get; internal set; }
+    public IReadOnlyList<ClothKind> Children { get; internal set; }
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
     public string Signature { get; }
+
+    public int Level { get; set; }
   }
 }

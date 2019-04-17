@@ -43,19 +43,19 @@
                                        SortMemberPath="Id"
                                        Header="№" />
       <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
-                              SortMemberPath="Surname"
-                              Header="Фамилия">
+                              SortMemberPath="House"
+                              Header="Дом">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Surname}" VerticalAlignment="Center" />
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding House}" VerticalAlignment="Center" />
           </DataTemplate>
         </DataGridTemplateColumn.CellTemplate>
       </DataGridTemplateColumn>
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Name"
-                              Header="Имя">
+      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Street"
+                              Header="Улица">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Name}" VerticalAlignment="Center" />
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Street}" VerticalAlignment="Center" />
           </DataTemplate>
         </DataGridTemplateColumn.CellTemplate>
       </DataGridTemplateColumn>

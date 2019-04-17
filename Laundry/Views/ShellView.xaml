@@ -21,8 +21,8 @@
       <materialDesign:DrawerHost.LeftDrawerContent>
         <DockPanel MinWidth="212">
           <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <ListBoxItem Margin="16,8,0,0"  MinWidth="200" VerticalAlignment="Center">
-            <StackPanel>
+            <ListBoxItem  MinWidth="200" VerticalAlignment="Center" cal:Message.Attach="[Event Selected] = [Action ShowSelfUserCard()]" >
+              <StackPanel Margin="16,8,0,0" >
               <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Text="{Binding CurrentName}"/>
               <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Margin="0,4,0,0"
                          IsEnabled="False" Text="{Binding CurrentEmployee.Profession, Converter={StaticResource ProfessionConverter}}"/>

@@ -27,9 +27,25 @@ namespace Laundry.Utils.Controls
   
   public class ClothDataGridViewModel : EntityGrid<ClothInstance, ClothInstancesRepository, ClothInstanceCardViewModel>
   {
+    public bool IsNewOrder { get; set; }
+    public Order Order { get; set; }
+
     public ClothDataGridViewModel(IEventAggregator eventAggregator, ClothInstanceCardViewModel card, IModel model,
       DeleteDialogViewModel shure) : base(eventAggregator, card, model.ClothInstances, shure, Screens.About)
     {
+    }
+
+    public override void Add()
+    {
+      if (IsNewOrder)
+      {
+        
+      }
+
+      else
+      {
+        base.Add();
+      }
     }
 
     public override void ExportToExcel()

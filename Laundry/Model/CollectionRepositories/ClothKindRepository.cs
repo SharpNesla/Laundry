@@ -37,7 +37,7 @@ namespace Laundry.Model.CollectionRepositories
 
     public void FetchChildren(ClothKind clothKind)
     {
-      clothKind.MyCollection =
+      clothKind.Children =
         this.Get(0, int.MaxValue, Builders<ClothKind>.Filter.Eq(nameof(ClothKind.Parent), clothKind.Id));
     }
     

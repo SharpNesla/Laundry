@@ -12,99 +12,19 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
   <DataGrid SelectionMode="Single"
+            Margin="16"
             Width="{Binding ElementName=OwnControl, Path=ActualWidth}"
-            CanUserSortColumns="True"
+            CanUserSortColumns="False"
             CanUserAddRows="False"
             CanUserResizeColumns="True"
             CellStyle="{StaticResource CellStyle}"
             AutoGenerateColumns="False"
             Name="MainGrid"
             RowDetailsVisibilityMode="Collapsed"
-            ItemsSource="{Binding Entities}"
+            ItemsSource="{Binding EditableEntities}"
             SelectedItem="{Binding SelectedEntity}"
             Background="{Binding ElementName=OwnControl, Path=Background}">
-    <DataGrid.RowDetailsTemplate>
 
-      <HierarchicalDataTemplate ItemsSource="{Binding MyCollection}">
-        <DataGrid SelectionMode="Single"
-                  CanUserSortColumns="True"
-                  CanUserAddRows="False"
-                  CanUserResizeColumns="True"
-                  CellStyle="{StaticResource CellStyle}"
-                  AutoGenerateColumns="False"
-                  Width="{Binding ElementName=OwnControl, Path=ActualWidth}"
-                  SelectedItem="{Binding OwnControl.DataContext.SelectedEntity}"
-                  RowDetailsVisibilityMode="Collapsed"
-                  HeadersVisibility="None"
-                  RowDetailsTemplate="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}},Path=RowDetailsTemplate}"
-                  ItemsSource="{Binding MyCollection}" d:DataContext="{x:Type local:ClothKindGridViewModel}">
-          <DataGrid.Columns>
-            <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
-              <DataGridTemplateColumn.CellTemplate>
-                <DataTemplate DataType="model:ClothKind">
-                  <StackPanel Orientation="Horizontal">
-                    <ToggleButton
-                      Background="Transparent"
-                      Name="Buttons"
-                      Visibility="{Binding HasChildren, Converter={StaticResource BoolVisibilityConverter}}"
-                      cal:Message.Attach="[Event Click] = [Action ShowHideDetails($source, $dataContext)]"
-                      Style="{StaticResource MaterialDesignActionToggleButton}"
-                      ToolTip="Развернуть поддерево">
-                      <materialDesign:PackIcon
-                        Kind="ArrowRightDropCircleOutline" />
-                      <materialDesign:ToggleButtonAssist.OnContent>
-                        <materialDesign:PackIcon
-                          Kind="ArrowDownDropCircleOutline" />
-                      </materialDesign:ToggleButtonAssist.OnContent>
-                    </ToggleButton>
-                  </StackPanel>
-                </DataTemplate>
-              </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-            <DataGridCheckBoxColumn
-              Visibility="{Binding DisplaySelectionColumn ,Converter={StaticResource BoolVisibilityConverter}}"
-              CanUserReorder="False" MinWidth="64" Width="64"
-              ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-              EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
-              <DataGridCheckBoxColumn.Header>
-                <Border
-                  Background="Transparent"
-                  Padding="9.3 0 0 0"
-                  HorizontalAlignment="Center">
-                  <CheckBox />
-                </Border>
-              </DataGridCheckBoxColumn.Header>
-            </DataGridCheckBoxColumn>
-            <local:DataGridAdaptiveColumn Binding="{Binding Id}" CanUserReorder="True" IsReadOnly="True"
-                                          MinWidth="32"
-                                          SortMemberPath="Id"
-                                          Header="№" />
-            <local:DataGridAdaptiveColumn Binding="{Binding Name}" CanUserReorder="True" IsReadOnly="True"
-                                          MinWidth="32"
-                                          Width="{Binding NameWidth}"
-                                          SortMemberPath="Name"
-                                          Header="Name" />
-
-            <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-            <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
-              <DataGridTemplateColumn.CellTemplate>
-                <DataTemplate>
-                  <StackPanel Orientation="Horizontal">
-                    <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                            Style="{StaticResource MaterialDesignFlatButton}"
-                            cal:Message.Attach="ShowInfoCard($dataContext)">
-
-                      <materialDesign:PackIcon Kind="InfoOutline" Height="24" Width="24" />
-                    </Button>
-                  </StackPanel>
-                </DataTemplate>
-              </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-          </DataGrid.Columns>
-        </DataGrid>
-
-      </HierarchicalDataTemplate>
-    </DataGrid.RowDetailsTemplate>
     <DataGrid.Columns>
       <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
         <DataGridTemplateColumn.CellTemplate>
@@ -113,6 +33,7 @@
               <ToggleButton
                 Background="Transparent"
                 Name="Buttons"
+                Margin="{Binding Level, Converter={StaticResource LevelToMarginConverter}}"
                 Visibility="{Binding HasChildren, Converter={StaticResource BoolVisibilityConverter}}"
                 cal:Message.Attach="[Event Click] = [Action ShowHideDetails($source, $dataContext)]"
                 Style="{StaticResource MaterialDesignActionToggleButton}"
@@ -148,8 +69,13 @@
       <local:DataGridAdaptiveColumn Binding="{Binding Name}" CanUserReorder="True" IsReadOnly="True" MinWidth="32"
                                     SortMemberPath="Name"
                                     Header="Название" />
-
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
+      <local:DataGridAdaptiveColumn Binding="{Binding Price, StringFormat='{}{0:0.00}₽'}" CanUserReorder="True" IsReadOnly="True" MinWidth="32"
+                                    Header="Цена" />
+      <local:DataGridAdaptiveColumn CanUserReorder="True" Binding="{Binding MeasureKind, Converter={StaticResource MeasureKindConverter}}" IsReadOnly="True" MinWidth="32"
+                                    SortMemberPath="Name"
+                                    Header="Мера измерения" >
+      </local:DataGridAdaptiveColumn>
+      <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" Width="*" />
       <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>

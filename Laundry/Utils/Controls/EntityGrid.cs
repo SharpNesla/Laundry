@@ -39,8 +39,16 @@ namespace Laundry.Utils.Controls
     private Screens _editScreen;
     public IReadOnlyList<TEntity> Entities { get; set; }
     public TEntity SelectedEntity { get; set; }
-    public FilterDefinition<TEntity> Filter;
+
+    public virtual FilterDefinition<TEntity> Filter
+    {
+      get { return BaseFilter; }
+      set { BaseFilter = value; }
+    }
+
     private readonly DeleteDialogViewModel _shure;
+
+    protected FilterDefinition<TEntity> BaseFilter { get; private set; }
     public TRepository Repo { get; }
   
     public Visibilities Visibilities { get; }
@@ -60,14 +68,11 @@ namespace Laundry.Utils.Controls
       this.Repo = repo;
       this._shure = shure;
       this.DisplaySelectionColumn = displaySelectColumn;
-
+      this.BaseFilter = Builders<TEntity>.Filter.Empty;
       this.Visibilities = visibilities;
     }
 
-    public virtual long Count
-    {
-      get { return this.Repo.GetCount(); }
-    }
+    public virtual long Count => this.Repo.GetCount(Filter);
 
     public virtual void Refresh(int page, int elements)
     {
@@ -96,7 +101,7 @@ namespace Laundry.Utils.Controls
       }
     }
 
-    public void Add()
+    public virtual void Add()
     {
       _eventAggregator.PublishOnUIThread(_editScreen);
       StateChanged?.Invoke();
