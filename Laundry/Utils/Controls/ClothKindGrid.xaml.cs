@@ -55,17 +55,6 @@ namespace Laundry.Utils.Controls
       {
         RemoveChildren(clothKind);
       }
-
-      //for (var vis = button as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-      //{
-      //  if (vis is DataGridRow)
-      //  {
-      //    var row = (DataGridRow)vis;
-      //    row.DetailsVisibility =
-      //      row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-      //    break;
-      //  }
-      //}
     }
 
     public void RemoveChildren(ClothKind clothKind)
@@ -86,10 +75,6 @@ namespace Laundry.Utils.Controls
     }
 
     public override void ExportToExcel()
-    {
-    }
-
-    public void CheckBranch(ToggleButton button)
     {
     }
   }

@@ -39,7 +39,7 @@ namespace Laundry
       container.Singleton<DashBoardViewModel>();
       container.Singleton<AnalyticsViewModel>();
 
-      container.Singleton<ClientDictionaryViewModel>();
+      container.Singleton<ClientDictionaryViewModel>("ClientDict");
       container.PerRequest<ClientEditorViewModel>();
       container.PerRequest<ClientDataGridViewModel>();
       container.Singleton<ClientCardViewModel>();

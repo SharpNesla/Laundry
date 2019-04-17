@@ -138,7 +138,15 @@ namespace Laundry.Utils.Controls
     public void RefreshPaginable()
     {
       this.Count = Paginable.Count;
+      if (Count < CurrentPage * ElementsPerPage)
+      {
       Paginable.Refresh(this.CurrentPage - 1, this.ElementsPerPage);
+      }
+      else
+      {
+        this.CurrentPage = 1;
+        Paginable.Refresh(0, this.ElementsPerPage);
+      }
     }
 
     public IPaginable Paginable { get; set; }

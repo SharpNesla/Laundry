@@ -10,7 +10,7 @@
              xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
              xmlns:cal="http://www.caliburnproject.org"
              Background="{DynamicResource MaterialDesignPaper}">
-    <DockPanel Height="600" Width="970">
+  <DockPanel Height="600" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="24,20,24,20">
       <DockPanel>
@@ -31,72 +31,74 @@
       </DockPanel>
     </materialDesign:ColorZone>
     <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
-            <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-              Style="{StaticResource MaterialDesignFlatButton}" Content="ПРИНЯТЬ"/>
-        </StackPanel>
+      <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+              Style="{StaticResource MaterialDesignFlatButton}" Content="ПРИНЯТЬ" />
+    </StackPanel>
 
 
-        <Grid Margin="24">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
-                <ColumnDefinition Width="371*" />
-            </Grid.ColumnDefinitions>
-            <materialDesign:Card Margin="0,0,16,0"
+    <Grid Margin="24">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
+        <ColumnDefinition Width="371*" />
+      </Grid.ColumnDefinitions>
+      <materialDesign:Card Margin="0,0,16,0"
                            Padding="16"
                            BorderThickness="0" VerticalAlignment="Stretch">
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="328" />
-                        <RowDefinition Height="37*" />
-                    </Grid.RowDefinitions>
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="328" />
+            <RowDefinition Height="37*" />
+          </Grid.RowDefinitions>
+          <StackPanel>
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                        Text="{StaticResource ClientEditor.MainInfoTitle}" />
-                        <StackPanel Margin="0,16,0,0">
-                            <TextBlock Margin="0,0,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{1} {0} {2}">
-                                        <Binding Path="Entity.Name" />
-                                        <Binding Path="Entity.Surname" />
-                                        <Binding Path="Entity.Patronymic" />
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
+            <StackPanel Margin="0,16,0,0">
+              <TextBlock Margin="0,0,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
+                <TextBlock.Text>
+                  <MultiBinding StringFormat="{}{1} {0} {2}">
+                    <Binding Path="Entity.Name" />
+                    <Binding Path="Entity.Surname" />
+                    <Binding Path="Entity.Patronymic" />
+                  </MultiBinding>
+                </TextBlock.Text>
+              </TextBlock>
 
-                            <TextBlock Margin="0,8,0,0" Text="{Binding Entity.DateBirth, StringFormat='Дата рождения: dd.MM.yyyy'}"
+              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.DateBirth, StringFormat='Дата рождения: dd.MM.yyyy'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-                            <TextBlock Margin="0,8,0,0" Text="{Binding Entity.PhoneNumber, StringFormat='Номер телефона: {0}'}"
+              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.PhoneNumber, StringFormat='Номер телефона: {0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-                            <TextBlock Margin="0,8,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">
-                                        <Binding Path="Entity.City" />
-                                        <Binding Path="Entity.Street" />
-                                        <Binding Path="Entity.House" />
-                                        <Binding Path="Entity.ZipCode" />
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                            <TextBlock Margin="0,8,0,0" Text="Комментарий:" Style="{StaticResource MaterialDesignBody2TextBlock}" />
-                            <TextBlock Margin="0,4,0,0" Text="{Binding Entity.Comment}" Style="{StaticResource MaterialDesignBody1TextBlock}"/>
-                        </StackPanel>
+              <TextBlock Margin="0,8,0,0" Visibility="{Binding Visibilities.Director}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}">
+                <TextBlock.Text>
+                  <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">
+                    <Binding Path="Entity.City" />
+                    <Binding Path="Entity.Street" />
+                    <Binding Path="Entity.House" />
+                    <Binding Path="Entity.ZipCode" />
+                  </MultiBinding>
+                </TextBlock.Text>
+              </TextBlock>
+              <TextBlock Margin="0,8,0,0" Text="Комментарий:" Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,4,0,0" Text="{Binding Entity.Comment}"
+                         Style="{StaticResource MaterialDesignBody1TextBlock}" />
+            </StackPanel>
 
-                    </StackPanel>
-                    <!--<Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="EditClient"
+          </StackPanel>
+          <!--<Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="EditClient"
               Style="{StaticResource MaterialDesignFlatButton}" Content="РЕДАКТИРОВАТЬ" Margin="0,37,126,0" Height="Auto" Grid.Row="1"/>-->
-                </Grid>
+        </Grid>
 
-            </materialDesign:Card>
-            <materialDesign:Card
+      </materialDesign:Card>
+      <materialDesign:Card
         Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
-                <DockPanel>
+        <DockPanel>
           <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource ClientEditor.OrdersInfo}" />
-          <ContentControl Name="OrderGrid" Margin="0,16,0,0"></ContentControl>
+          <ContentControl Name="OrderGrid" Margin="0,16,0,0" />
         </DockPanel>
 
-            </materialDesign:Card>
-        </Grid>
-    </DockPanel>
+      </materialDesign:Card>
+    </Grid>
+  </DockPanel>
 </UserControl>

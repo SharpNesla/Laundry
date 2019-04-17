@@ -26,7 +26,8 @@ namespace Laundry.Views
     public EmployeeSearchViewModel DistributerCombo { get; set; }
     public ClientSearchViewModel CorpDistributerCombo { get; set; }
 
-    public OrderEditorViewModel(IEventAggregator aggregator, IModel model, ClothDataGridViewModel clothGrid, PaginatorViewModel paginator)
+    public OrderEditorViewModel(IEventAggregator aggregator, IModel model, ClothDataGridViewModel clothGrid,
+      PaginatorViewModel paginator)
       : base(aggregator, model, model.Orders, "заказа")
     {
       aggregator.Subscribe(this);
@@ -39,15 +40,22 @@ namespace Laundry.Views
       this.ClientCombo = new ClientSearchViewModel(model);
       this.ClientCombo.EntityChanged += OnEntityChanged;
 
-      this.ObtainerCombo = new EmployeeSearchViewModel(model) {Label = "Приёмщик"};
+      #region Инициализация поисковых комбобоксов
+
+      this.ObtainerCombo = new EmployeeSearchViewModel(model, "Приёмщик",
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor));
       this.CorpObtainerCombo = new ClientSearchViewModel(model, "Приёмщик (корпоративный)",
         Builders<Client>.Filter.Eq(nameof(Client.IsCorporative), true));
       this.InCourierCombo = new EmployeeSearchViewModel(model, "Курьер, забирающий заказ",
         Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Courier));
-      this.WasherCombo = new EmployeeSearchViewModel(model) {Label = "Прачечник"};
-      this.OutCourierCombo = new EmployeeSearchViewModel(model) {Label = "Курьер, вовзращающий заказ"};
-      this.CorpDistributerCombo = new ClientSearchViewModel(model, "Приёмщик (корпоративный), принимающий заказ");
-      this.DistributerCombo = new EmployeeSearchViewModel(model) {Label = "Приёмщик, выдающий заказ"};
+      this.WasherCombo = new EmployeeSearchViewModel(model, "Прачечник",
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Washer));
+      this.OutCourierCombo = new EmployeeSearchViewModel(model, "Курьер, вовзращающий заказ",
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Courier));
+      this.CorpDistributerCombo = new ClientSearchViewModel(model, "Приёмщик (корпоративный), принимающий заказ",
+        Builders<Client>.Filter.Eq(nameof(Client.IsCorporative), true));
+      this.DistributerCombo = new EmployeeSearchViewModel(model, "Приёмщик, выдающий заказ",
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor));
 
       this.ObtainerCombo.EntityChanged += obtainer => this.EntityRepository.SetObtainer(this.Entity, obtainer);
       this.CorpObtainerCombo.EntityChanged +=
@@ -59,6 +67,8 @@ namespace Laundry.Views
         this.EntityRepository.SetDistributer(this.Entity, corpDistributer);
       this.DistributerCombo.EntityChanged +=
         distributer => this.EntityRepository.SetDistributer(this.Entity, distributer);
+
+      #endregion
     }
 
     public async void AddCloth()
@@ -77,6 +87,23 @@ namespace Laundry.Views
     {
       base.Handle(message);
       this.ClientCombo.SelectedEntity = EntityRepository.GetClient(this.Entity);
+      if (message.IsCorporative)
+      {
+        CorpObtainerCombo.SelectedEntity = Model.Clients.GetById(message.CorpObtainerId);
+        CorpDistributerCombo.SelectedEntity = Model.Clients.GetById(message.CorpDistributerId);
+      }
+      else
+      {
+        ObtainerCombo.SelectedEntity = Model.Employees.GetById(message.ObtainerId);
+        DistributerCombo.SelectedEntity = Model.Employees.GetById(message.DistributerId);
+
+      }
+      InCourierCombo.SelectedEntity = Model.Employees.GetById(message.InCourierId);
+
+      WasherCombo.SelectedEntity = Model.Employees.GetById(message.WasherCourierId);
+
+      OutCourierCombo.SelectedEntity = Model.Employees.GetById(message.OutCourierId);
+
     }
 
     public void Handle(Client message)

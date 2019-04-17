@@ -35,19 +35,6 @@ namespace Laundry.Utils.Controls
     {
     }
 
-    public override void Add()
-    {
-      if (IsNewOrder)
-      {
-        
-      }
-
-      else
-      {
-        base.Add();
-      }
-    }
-
     public override void ExportToExcel()
     {
       throw new NotImplementedException();

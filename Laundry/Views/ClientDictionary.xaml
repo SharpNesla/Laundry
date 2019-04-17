@@ -11,6 +11,7 @@
              xmlns:utils="clr-namespace:Laundry.Utils"
              xmlns:cal="http://www.caliburnproject.org"
              d:DesignHeight="600" d:DesignWidth="800"
+             Name="Screen"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
@@ -23,10 +24,11 @@
                 cal:Message.Attach="ShowActivityMenu($source)">
           <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
           <Button.ContextMenu>
-            <ContextMenu>
+            <ContextMenu DataContext="{Binding ElementName=Screen, Path=DataContext}">
               <MenuItem Header="Экспортировать как">
                 <MenuItem Header="*.csv" />
-                <MenuItem Header="*.xlsx" cal:Message.Attach="ExportToExcel()"/>
+                <MenuItem Header="*.xlsx" cal:Action.Target="ClientDict" cal:Message.Attach="[Event Click] = [Action ExportToExcel"
+                         />
               </MenuItem>
               <MenuItem Header="Удалить выбраное" />
             </ContextMenu>
