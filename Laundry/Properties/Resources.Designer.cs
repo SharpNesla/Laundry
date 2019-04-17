@@ -61,6 +61,15 @@ namespace Laundry.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Путь к экспортируемой таблице клиентов.
+        /// </summary>
+        internal static string ClientDataGridViewModel_ExportToExcel_Путь_к_экспортируемой_таблице_клиентов {
+            get {
+                return ResourceManager.GetString("ClientDataGridViewModel_ExportToExcel_Путь_к_экспортируемой_таблице_клиентов", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap LoginBackground {

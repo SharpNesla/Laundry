@@ -31,5 +31,10 @@ namespace Laundry.Utils.Controls
       DeleteDialogViewModel shure) : base(eventAggregator, card, model.ClothInstances, shure, Screens.About)
     {
     }
+
+    public override void ExportToExcel()
+    {
+      throw new NotImplementedException();
+    }
   }
 }

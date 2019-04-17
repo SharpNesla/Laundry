@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -17,6 +20,8 @@ using Laundry.Model;
 using Laundry.Model.DatabaseClients;
 using Laundry.Utils.Controls.EntitySearchControls;
 using Laundry.Views;
+using MongoDB.Driver;
+using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
 {
@@ -25,7 +30,6 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class ClientDataGridViewModel : EntityGrid<Client, ClientRepository, ClientCardViewModel>
   {
-
     public Client Client { get; set; }
 
     public bool IsByDateBirth { get; set; }
@@ -37,8 +41,55 @@ namespace Laundry.Utils.Controls
       DeleteDialogViewModel deleteDialog, IModel model) :
       base(eventAggregator, card, model.Clients, deleteDialog, Screens.ClientEditor)
     {
-      
     }
 
+    public override void Refresh(int page, int elements)
+    {
+      var filter = this.Filter ?? Builders<Client>.Filter.Empty;
+
+      if (this.IsByDateBirth)
+      {
+        filter = 
+          Builders<Client>.Filter.And(this.Filter,
+          Builders<Client>.Filter.Gte(nameof(Client.DateBirth), this.LowDateBirthBound));
+      }
+
+      base.Refresh(page, elements);
+    }
+
+    public override void ExportToExcel()
+    {
+      var workbook = new XSSFWorkbook();
+
+      var sheet = workbook.CreateSheet();
+
+      var clients = this.Repo.Get(0, int.MaxValue);
+
+      foreach (var client in clients)
+      {
+        sheet.AppendClient(client);
+      }
+
+      var dialog = new SaveFileDialog
+      {
+        InitialDirectory = @"~/Documents",
+        Title = "Путь к экспортируемой таблице клиентов",
+        AddExtension = true,
+        Filter = "Файлы Excel 2007 (*.xlsx)|*.xlsx|Все остальные файлы (*.*)|*.*"
+      };
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        if (!File.Exists(dialog.FileName))
+        {
+          File.Delete(dialog.FileName);
+        }
+
+        //запишем всё в файл
+        using (var fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
+        {
+          workbook.Write(fs);
+        }
+      }
+    }
   }
 }

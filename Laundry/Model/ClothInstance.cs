@@ -10,13 +10,16 @@ namespace Laundry.Model
 {
   public class ClothInstance : IRepositoryElement
   {
-    public ClothKind Kind { get; set; }
+
+    public long ClothKind { get; set; }
 
     [BsonIgnoreIfDefault]
     public int WearPercentage { get; set; }
 
     [BsonIgnoreIfDefault]
     public int Amount { get; set; }
+
+    public long TagNumber { get; set; }
 
     [BsonId]
     public long Id { get; set; }
@@ -26,5 +29,7 @@ namespace Laundry.Model
 
     [BsonIgnore]
     public string Signature { get; }
+
+    public long Order { get; internal set; }
   }
 }

@@ -30,5 +30,10 @@ namespace Laundry.Utils.Controls
       IModel model) : base(eventAggregator, card, model.Subsidiaries, deleteDialog, Screens.SubsidiaryEditor)
     {
     }
+
+    public override void ExportToExcel()
+    {
+      throw new NotImplementedException();
+    }
   }
 }

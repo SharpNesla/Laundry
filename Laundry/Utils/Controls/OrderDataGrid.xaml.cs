@@ -48,6 +48,11 @@ namespace Laundry.Utils.Controls
         base.Refresh(page, elements);
     }
 
+    public override void ExportToExcel()
+    {
+      throw new NotImplementedException();
+    }
+
     public override long Count
     {
       get

@@ -29,7 +29,7 @@ namespace Laundry.Model.CollectionRepositories
     {
       try
       {
-        entity.Id = Collection.Aggregate().SortByDescending(x => x.Id).First().Id + 1;
+        entity.Id = GetNextId();
       }
       catch
       {
@@ -37,6 +37,11 @@ namespace Laundry.Model.CollectionRepositories
       }
 
       Collection.InsertOne(entity);
+    }
+
+    public long GetNextId()
+    {
+      return Collection.Aggregate().SortByDescending(x => x.Id).First().Id + 1;
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,9 @@ using Laundry.Model.DatabaseClients;
 using Laundry.Views;
 using MaterialDesignThemes.Wpf;
 using MongoDB.Driver;
+using NPOI.SS.UserModel;
 using Action = System.Action;
-
+using NPOI.XSSF.UserModel;
 namespace Laundry.Utils.Controls
 {
   public interface IEntityGrid<out TEntity> : IPaginable where TEntity : IRepositoryElement
@@ -20,13 +22,14 @@ namespace Laundry.Utils.Controls
     IReadOnlyList<TEntity> Entities { get; }
     TEntity SelectedEntity { get; }
 
+    void ExportToExcel();
     void Add();
     void Edit();
     void Remove();
     void Refresh();
   }
 
-  public class EntityGrid<TEntity, TRepository, TCard> : PropertyChangedBase, IEntityGrid<TEntity>
+  public abstract class EntityGrid<TEntity, TRepository, TCard> : PropertyChangedBase, IEntityGrid<TEntity>
     where TEntity : IRepositoryElement
     where TRepository : Repository<TEntity>
     where TCard : Card<TEntity>
@@ -39,6 +42,8 @@ namespace Laundry.Utils.Controls
     public FilterDefinition<TEntity> Filter;
     private readonly DeleteDialogViewModel _shure;
     public TRepository Repo { get; }
+  
+    public Visibilities Visibilities { get; }
 
     public bool IsSearchDrawerOpened { get; set; }
 
@@ -47,7 +52,7 @@ namespace Laundry.Utils.Controls
     public event Action<TEntity> RemoveButtonClick;
 
     public EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
-      DeleteDialogViewModel shure, Screens editScreen, bool displaySelectColumn = true)
+      DeleteDialogViewModel shure, Screens editScreen,Visibilities visibilities = null, bool displaySelectColumn = true)
     {
       this._card = card;
       this._editScreen = editScreen;
@@ -55,6 +60,8 @@ namespace Laundry.Utils.Controls
       this.Repo = repo;
       this._shure = shure;
       this.DisplaySelectionColumn = displaySelectColumn;
+
+      this.Visibilities = visibilities;
     }
 
     public virtual long Count
@@ -64,7 +71,7 @@ namespace Laundry.Utils.Controls
 
     public virtual void Refresh(int page, int elements)
     {
-      this.Entities = Repo.Get(page, elements);
+      this.Entities = Repo.Get(page, elements, Filter);
     }
 
     public event Action StateChanged;
@@ -111,6 +118,8 @@ namespace Laundry.Utils.Controls
       }
     }
 
+    public abstract void ExportToExcel();
+
     private void chkItems_CheckedChanged(object sender, EventArgs e)
     {
       //foreach (DataGridViewRow row in GridView1.Rows)
@@ -121,6 +130,23 @@ namespace Laundry.Utils.Controls
       //    chk.Selected = true;
       //  }
       //}
+    }
+  }
+
+  public static class ExcelExtensions
+  {
+    public static void AppendClient(this ISheet sheet, Client client)
+    {
+      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows + 1);
+      var indexCell = row.CreateCell(0);
+      var nameCell = row.CreateCell(1);
+      var surnameCell = row.CreateCell(2);
+
+      indexCell.SetCellValue(client.Id);
+      nameCell.SetCellValue(client.Name);
+      surnameCell.SetCellValue(client.Surname);
+
+      
     }
   }
 }

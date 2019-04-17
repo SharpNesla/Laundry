@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using Caliburn.Micro;
 using Laundry.Model;
+using Laundry.Views;
 
 namespace Laundry.Utils
 {
@@ -16,12 +17,15 @@ namespace Laundry.Utils
     public IEventAggregator EventAggregator { get; private set; }
     public IModel Model { get; private set; }
 
+
+    public Visibilities Visibilities { get; private set; }
     public ActivityScreen Context { get; set; }  
 
     protected ActivityScreen(IEventAggregator aggregator, IModel model)
     {
       this.EventAggregator = aggregator;
       this.Model = model;
+      this.Visibilities = new Visibilities(model);
     }
 
     public void ChangeApplicationScreen(Screens screen)

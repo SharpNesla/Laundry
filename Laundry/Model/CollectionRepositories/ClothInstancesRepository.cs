@@ -12,5 +12,10 @@ namespace Laundry.Model.CollectionRepositories
     public ClothInstancesRepository(IModel model, IMongoCollection<ClothInstance> collection) : base(model, collection)
     {
     }
+
+    public void SetOrder(ClothInstance instance, Order order)
+    {
+      instance.Order = order.Id;
+    }
   }
 }

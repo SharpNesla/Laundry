@@ -42,7 +42,7 @@
             <ContextMenu>
               <MenuItem Header="Экспортировать как">
                 <MenuItem Header="*.csv" />
-                <MenuItem Header="*.xlsx" />
+                <MenuItem Header="*.xlsx" cal:Message.Attach="ExportToExcel()"/>
               </MenuItem>
               <MenuItem Header="Удалить выбраное" />
             </ContextMenu>
@@ -113,11 +113,29 @@
             <StackPanel>
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                          Text="{StaticResource ClientEditor.MainInfoTitle}" />
-              <TextBox Text="{Binding Entity.Surname}" Margin="0,16,0,8" materialDesign:HintAssist.Hint="Фамилия"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Entity.Name}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Entity.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество"
+              <TextBox Margin="0,16,0,12" materialDesign:HintAssist.Hint="Фамилия"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                  <Binding Path="Entity.Surname"
+                           UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                      <DataErrorValidationRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+              </TextBox>
+              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                  <Binding Path="Entity.Name" 
+                           UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                      <DataErrorValidationRule />
+                    </Binding.ValidationRules>
+                  </Binding>
+                </TextBox.Text>
+              </TextBox>
+              <TextBox Text="{Binding Entity.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество (если есть)"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
               <TextBox Text="{Binding Entity.PhoneNumber}"
                        Margin="0,0,0,8"

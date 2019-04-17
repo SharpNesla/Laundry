@@ -7,7 +7,7 @@ using PropertyChanged;
 namespace Laundry.Utils
 {
   public class EditorScreen<TRepository, TEntity> : ActivityScreen, IHandle<TEntity>
-    where TEntity : IRepositoryElement, new()
+    where TEntity : class, IRepositoryElement, new()
     where TRepository : Repository<TEntity>
   {
     [AlsoNotifyFor(nameof(EditorTitle))]
@@ -33,6 +33,7 @@ namespace Laundry.Utils
 
       this.IsNew = true;
       this.Entity = new TEntity();
+      this.Entity.Id = EntityRepository.GetCount();
     }
 
     public virtual void Discard()

@@ -23,7 +23,7 @@
     ItemsSource="{Binding Entities}"
     cal:Message.Attach="[Event MouseDoubleClick] = [Action ShowInfoCard()]">
     <DataGrid.ContextMenu>
-      <ContextMenu>
+      <ContextMenu Visibility="{Binding Visibilities.Director}">
         <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
         <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
       </ContextMenu>

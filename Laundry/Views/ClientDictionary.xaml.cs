@@ -19,5 +19,10 @@ namespace Laundry.Views
       base(aggregator, model, paginator, entityGrid, "Клиентов")
     {
     }
+
+    public void ExportToExcel()
+    {
+      this.EntityGrid.ExportToExcel();
+    }
   }
 }

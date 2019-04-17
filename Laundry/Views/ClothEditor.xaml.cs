@@ -24,9 +24,33 @@ namespace Laundry.Views
   /// </summary>
   public class ClothEditorViewModel : EditorScreen<ClothInstancesRepository, ClothInstance>
   {
+    private Order _order;
+
+    public Order Order
+    {
+      get { return _order; }
+      set
+      {
+        this.Model.ClothInstances.SetOrder(this.Entity, value);
+        _order = value;
+      }
+    }
+
     public ClothEditorViewModel(IEventAggregator aggregator, IModel model) :
       base(aggregator, model, model.ClothInstances, "предмета одежды")
     {
+    }
+
+    public override void ApplyChanges()
+    {
+      if (IsNew)
+      {
+        EntityRepository.Add(this.Entity);
+      }
+      else
+      {
+        EntityRepository.Update(this.Entity);
+      }
     }
   }
 }

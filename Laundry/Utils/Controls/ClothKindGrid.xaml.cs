@@ -55,6 +55,12 @@ namespace Laundry.Utils.Controls
     {
       this.Entities = new[] {Repo.GetById(0)};
     }
+
+    public override void ExportToExcel()
+    {
+      throw new NotImplementedException();
+    }
+
     public void CheckBranch(ToggleButton button)
     {
     }

@@ -38,5 +38,10 @@ namespace Laundry.Utils
     {
       this.EntityGrid.Add();
     }
+
+    public void AdvancedSearch()
+    {
+      this.Paginator.RefreshPaginable();
+    }
   }
 }

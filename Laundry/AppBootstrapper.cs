@@ -80,6 +80,7 @@ namespace Laundry
       
       //container.Singleton<OrderCard>();
       container.PerRequest<PaginatorViewModel>();
+      container.Singleton<Visibilities>();
       container.Singleton<DeleteDialogViewModel>();
       container.Singleton<ConnectionLostDialogViewModel>();
     }

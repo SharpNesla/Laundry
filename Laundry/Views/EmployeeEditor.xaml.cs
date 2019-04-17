@@ -65,7 +65,7 @@ namespace Laundry.Views
     public override void ApplyChanges()
     {
       base.ApplyChanges();
-      if (ChangePassword && (string.IsNullOrEmpty(Password) && string.IsNullOrEmpty(AdditionalPassword)) && AdditionalPassword == Password)
+      if (ChangePassword && (!string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(AdditionalPassword)) && AdditionalPassword == Password)
       {
         this.EntityRepository.SetPassword(this.Entity, Password);
       }
@@ -80,7 +80,7 @@ namespace Laundry.Views
 
     public void AdditionalPasswordChanged(PasswordBox box)
     {
-      Password = box.Password;
+      AdditionalPassword = box.Password;
     }
 
     public void PasswordChanged(PasswordBox box)

@@ -29,5 +29,10 @@ namespace Laundry.Utils.Controls
       : base(eventAggregator, card, model.Cars,deleteDialog, Screens.CarEditor)
     {
     }
+
+    public override void ExportToExcel()
+    {
+      throw new NotImplementedException();
+    }
   }
 }

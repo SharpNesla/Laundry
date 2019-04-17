@@ -7,16 +7,20 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views"
-             Background="{DynamicResource MaterialDesignPaper}">
+             Background="{DynamicResource MaterialDesignPaper}"
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="14"
+             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+             >
   <DockPanel Width="500"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    VerticalAlignment="Stretch">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             VerticalAlignment="Stretch">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16,20,20,20">
       <StackPanel Orientation="Horizontal">
 
-        <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="24" Width="24"/>
+        <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="24" Width="24" />
         <TextBlock
           Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
@@ -52,11 +56,11 @@
                 Носки Шерстяные
               </ComboBoxItem>
             </ComboBox>
-            <TextBox materialDesign:HintAssist.Hint="Номер бирки"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox materialDesign:HintAssist.Hint="Процент износа"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox materialDesign:HintAssist.Hint="Количесто"
+            <TextBox materialDesign:HintAssist.Hint="Номер бирки" Text="{Binding Entity.TagId}"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
+            <TextBox materialDesign:HintAssist.Hint="Процент износа" Text="{Binding WearPercentage}"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
+            <TextBox materialDesign:HintAssist.Hint="Количесто" Text="{Binding Amount}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
           </StackPanel>
         </materialDesign:Card>
