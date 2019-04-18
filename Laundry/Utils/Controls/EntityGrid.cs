@@ -107,7 +107,7 @@ namespace Laundry.Utils.Controls
       StateChanged?.Invoke();
     }
 
-    public void Edit()
+    public virtual void Edit()
     {
       _eventAggregator.PublishOnUIThread(_editScreen);
       _eventAggregator.PublishOnUIThread(SelectedEntity);

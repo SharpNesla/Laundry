@@ -47,19 +47,19 @@
         <StackPanel>
           <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource CarEditor.MainInfoTitle}" />
-          <TextBox Text="{Binding Car.BrandAndModel}" Margin="0,8,0,8" materialDesign:HintAssist.Hint="Марка и модель"
+          <TextBox Text="{Binding Entity.BrandAndModel}" Margin="0,8,0,8" materialDesign:HintAssist.Hint="Марка и модель"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Text="{Binding Sing}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Регистрационный знак"
+          <TextBox Text="{Binding Entity.Sing}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Регистрационный знак"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Text="{Binding VIN}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Идентификационный номер (VIN)"
+          <TextBox Text="{Binding Entity.VIN}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Идентификационный номер (VIN)"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Серия и номер ПТС"
+          <TextBox Text="{Binding Entity.BodyID}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Серия и номер ПТС"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Цвет"
+          <TextBox Text="{Binding Entity.Color}"  Margin="0,0,0,8" materialDesign:HintAssist.Hint="Цвет"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <DatePicker materialDesign:HintAssist.Hint="Год выпуска"
+          <DatePicker materialDesign:HintAssist.Hint="Год выпуска" SelectedDate="{Binding Entity.CreationYear}"
                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16"
-                      HorizontalAlignment="Left" />
+                      HorizontalAlignment="Stretch" />
         </StackPanel>
       </materialDesign:Card>
 

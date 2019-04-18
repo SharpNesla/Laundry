@@ -26,13 +26,23 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class ClothDataGridViewModel : EntityGrid<ClothInstance, ClothInstancesRepository, ClothInstanceCardViewModel>
   {
+    private readonly ClothEditorViewModel _editor;
     public Order Order { get; set; }
+
 
     public bool IsNewOrder { get; set; }
 
-    public ClothDataGridViewModel(IEventAggregator eventAggregator, ClothInstanceCardViewModel card, IModel model,
+    public ClothDataGridViewModel(IEventAggregator eventAggregator, ClothEditorViewModel editor,
+      ClothInstanceCardViewModel card, IModel model,
       DeleteDialogViewModel shure) : base(eventAggregator, card, model.ClothInstances, shure, Screens.About)
     {
+      _editor = editor;
+    }
+
+    public override void Edit()
+    {
+      this._editor.Entity = this.SelectedEntity;
+      DialogHostExtensions.ShowCaliburnVM(_editor);
     }
 
     public override void Refresh(int page, int elements)
@@ -49,7 +59,8 @@ namespace Laundry.Utils.Controls
 
     public override long Count
     {
-      get {
+      get
+      {
         if (Order != null && !IsNewOrder)
         {
           return Repo.GetForOrderCount(this.Order);

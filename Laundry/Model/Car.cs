@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Laundry.Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -8,10 +9,15 @@ namespace Laundry.Model
 {
   public enum CarCategory
   {
+    [Description("A")]
     A,
+    [Description("B")]
     B,
+    [Description("C")]
     C,
+    [Description("D")]
     D,
+    [Description("E")]
     E
   }
 
@@ -26,7 +32,7 @@ namespace Laundry.Model
     [BsonIgnoreIfNull]
     public string VIN { get; set; }
 
-    //public CarType Type { get; set; }
+    public CarCategory Catergory { get; set; }
     [BsonIgnoreIfDefault]
     public CarCategory Category { get; set; }
 

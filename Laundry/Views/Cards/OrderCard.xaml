@@ -81,7 +81,7 @@
                 </TextBlock.Text>
               </TextBlock>
               <TextBlock Margin="0,8,0,0" Text="Комментарий:" Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,4,0,0" Text="{Binding Comment}" Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+              <TextBlock Margin="0,4,0,0" Text="{Binding Entity.Comment}" Style="{StaticResource MaterialDesignBody1TextBlock}"/>
             </StackPanel>
 
           </StackPanel>
@@ -115,7 +115,7 @@
             </DockPanel>
           </Grid>
 
-          <ContentControl Margin="0,16,0,0" Name="ClothInstancesGrid"></ContentControl>
+          <ContentControl Margin="0,16,0,0" Name="ClothInstancesGrid"/>
 
         </DockPanel>
 

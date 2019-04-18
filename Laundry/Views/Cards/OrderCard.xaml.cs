@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Utils.Controls;
 using MaterialDesignThemes.Wpf;
 using PropertyChanged;
 
@@ -22,8 +23,26 @@ namespace Laundry.Views
 {
   public class OrderCardViewModel : Card<Order>
   {
-    public OrderCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.OrderEditor)
+    public ClothDataGridViewModel ClothInstancesGrid{ get; }
+
+    public override Order Entity
     {
+      get
+      {
+        return base.Entity;
+      }
+
+      set
+      {
+        base.Entity = value;
+        this.ClothInstancesGrid.Order = value;
+        this.ClothInstancesGrid.Refresh(0, 10);
+      }
+    }
+
+    public OrderCardViewModel(IEventAggregator eventAggregator, ClothDataGridViewModel clothGrid) : base(eventAggregator, Screens.OrderEditor)
+    {
+      this.ClothInstancesGrid = clothGrid;
     }
   }
 }

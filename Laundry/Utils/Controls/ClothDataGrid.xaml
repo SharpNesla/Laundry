@@ -92,8 +92,9 @@
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
             <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
-                    Style="{StaticResource MaterialDesignFlatButton}">
-              <materialDesign:PackIcon Kind="Edit" Height="24" Width="24" />
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    cal:Message.Attach="ShowInfoCard($dataContext)">
+              <materialDesign:PackIcon Kind="InfoOutline" Height="24" Width="24" />
             </Button>
           </DataTemplate>
         </DataGridTemplateColumn.CellTemplate>

@@ -28,7 +28,8 @@ namespace Laundry.Model
    
     public string Username { get; set; }
 
-
+    [BsonIgnoreIfNull]
+    public string Comment { get; set; }
 
     [BsonIgnore]
     public override string Signature

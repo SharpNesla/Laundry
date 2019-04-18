@@ -12,7 +12,7 @@ namespace Laundry.Views
   /// </summary>
   public class CarEditorViewModel : EditorScreen<Repository<Car>, Car>
   {
-    public CarEditorViewModel(IEventAggregator aggregator, IModel model, Repository<Car> entityRepo) : base(aggregator, model, entityRepo, "автомобиля")
+    public CarEditorViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model, model.Cars, "автомобиля")
     {
     }
   }

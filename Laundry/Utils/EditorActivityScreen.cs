@@ -42,6 +42,7 @@ namespace Laundry.Utils
 
     public virtual void Handle(TEntity message)
     {
+
       this.Entity = this.EntityRepository.GetById(message.Id);
       this.IsNew = false;
       this.EventAggregator.Unsubscribe(this);
