@@ -20,6 +20,7 @@ namespace Laundry.Model.CollectionRepositories
       {
         clothKind.ChildrenCount = GetChildrenCount(clothKind);
       }
+
       return clothKinds;
     }
 
@@ -32,7 +33,7 @@ namespace Laundry.Model.CollectionRepositories
 
     public long GetChildrenCount(ClothKind clothKind)
     {
-       return this.GetCount(Builders<ClothKind>.Filter.Eq(nameof(ClothKind.Parent), clothKind.Id));
+      return this.GetCount(Builders<ClothKind>.Filter.Eq(nameof(ClothKind.Parent), clothKind.Id));
     }
 
     public void FetchChildren(ClothKind clothKind)
@@ -40,6 +41,5 @@ namespace Laundry.Model.CollectionRepositories
       clothKind.Children =
         this.Get(0, int.MaxValue, Builders<ClothKind>.Filter.Eq(nameof(ClothKind.Parent), clothKind.Id));
     }
-    
   }
 }

@@ -22,10 +22,10 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for ClothEditor.xaml
   /// </summary>
-  public class ClothKindEditorViewModel : EditorScreen<ClothInstancesRepository, ClothInstance>
+  public class ClothKindEditorViewModel : EditorScreen<ClothKindRepository, ClothKind>
   {
     public ClothKindEditorViewModel(IEventAggregator aggregator, IModel model) :
-      base(aggregator, model, model.ClothInstances, "предмета одежды")
+      base(aggregator, model, model.ClothKinds, "предмета одежды")
     {
     }
   }

@@ -24,7 +24,12 @@
             ItemsSource="{Binding EditableEntities}"
             SelectedItem="{Binding SelectedEntity}"
             Background="{Binding ElementName=OwnControl, Path=Background}">
-
+    <DataGrid.ContextMenu>
+      <ContextMenu Visibility="{Binding Visibilities.Director}">
+        <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
+        <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
+      </ContextMenu>
+    </DataGrid.ContextMenu>
     <DataGrid.Columns>
       <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
         <DataGridTemplateColumn.CellTemplate>

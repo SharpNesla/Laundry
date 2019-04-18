@@ -10,6 +10,18 @@ namespace Laundry.Model.CollectionRepositories
     {
     }
 
+    public override void Add(Order entity)
+    {
+      base.Add(entity);
+
+      foreach (var clothInstance in Model.ClothInstances.GetUnRegistred(0, int.MaxValue))
+      {
+        clothInstance.Order = entity.Id;
+      }
+
+      this.Model.ClothInstances.RegisterUnregistred();
+    }
+
     public void SetClient(Order order, Client client)
     {
       if (client != null)
@@ -66,37 +78,37 @@ namespace Laundry.Model.CollectionRepositories
 
     internal void SetObtainer(Order entity, Employee obtainer)
     {
-      entity.ObtainerId = obtainer.Id;
+      if (obtainer != null) entity.ObtainerId = obtainer.Id;
     }
 
     public void SetObtainer(Order entity, Client corpObtainer)
     {
-      entity.CorpObtainerId = corpObtainer.Id;
+      if (corpObtainer != null) entity.CorpObtainerId = corpObtainer.Id;
     }
 
     public void SetInCourier(Order entity, Employee inCourier)
     {
-      entity.InCourierId = inCourier.Id;
+      if (inCourier != null) entity.InCourierId = inCourier.Id;
     }
 
     public void SetOutCourier(Order entity, Employee outCourier)
     {
-      entity.OutCourierId = outCourier.Id;
+      if (outCourier != null) entity.OutCourierId = outCourier.Id;
     }
 
     public void SetWasher(Order entity, Employee washer)
     {
-      entity.WasherCourierId = washer.Id;
+      if (washer != null) entity.WasherCourierId = washer.Id;
     }
 
     public void SetDistributer(Order entity, Client corpDistributer)
     {
-      entity.CorpDistributerId = corpDistributer.Id;
+      if (corpDistributer != null) entity.CorpDistributerId = corpDistributer.Id;
     }
 
     public void SetDistributer(Order entity, Employee corpDistributer)
     {
-      entity.DistributerId = corpDistributer.Id;
+      if (corpDistributer != null) entity.DistributerId = corpDistributer.Id;
     }
   }
 }

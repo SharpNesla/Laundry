@@ -11,21 +11,35 @@
              Name="OwnControl">
   <DataGrid
     Margin="16"
+    Background="{Binding ElementName=OwnControl, Path=Background}"
     CanUserSortColumns="True"
     CanUserAddRows="False"
     CanUserResizeColumns="True"
     CellStyle="{StaticResource CellStyle}"
+    SelectionMode="Single"
     AutoGenerateColumns="False"
-    ItemsSource="{Binding ClothInstances}"
-    Background="{Binding ElementName=OwnControl, Path=Background}">
+    SelectedItem="{Binding SelectedEntity}"
+    ItemsSource="{Binding Entities}"
+    cal:Message.Attach="[Event MouseDoubleClick] = [Action ShowInfoCard()]">
     <DataGrid.ContextMenu>
-      <ContextMenu>
+      <ContextMenu Visibility="{Binding Visibilities.Director}">
         <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
         <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
       </ContextMenu>
     </DataGrid.ContextMenu>
     <DataGrid.Columns>
-
+      <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
+                              ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                              EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+        <DataGridCheckBoxColumn.Header>
+          <Border
+            Background="Transparent"
+            Padding="9.3 0 0 0"
+            HorizontalAlignment="Center">
+            <CheckBox />
+          </Border>
+        </DataGridCheckBoxColumn.Header>
+      </DataGridCheckBoxColumn>
       <DataGridTemplateColumn MinWidth="48" Header="№" CanUserReorder="True" IsReadOnly="True"
                               SortMemberPath="Patronymic">
         <DataGridTemplateColumn.CellTemplate>
@@ -67,7 +81,7 @@
                               Header="Количество">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Amount, StringFormat={}{0}кг}"
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Amount, StringFormat={}{0}}"
                        VerticalAlignment="Center" />
           </DataTemplate>
         </DataGridTemplateColumn.CellTemplate>

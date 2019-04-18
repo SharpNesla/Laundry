@@ -25,7 +25,7 @@
           <TextBlock
             Style="{StaticResource MaterialDesignTitleTextBlock}"
             VerticalAlignment="Center"
-            Margin="8 0 0 0" Text="{Binding Entity.Id, StringFormat='Клиент №{0}'}" />
+            Margin="8 0 0 0" Text="{Binding Entity.Id, StringFormat='Вид №{0}'}" />
         </StackPanel>
 
       </DockPanel>
@@ -92,7 +92,7 @@
       <materialDesign:Card Grid.Column="1" VerticalAlignment="Stretch">
         <DockPanel>
           <TextBlock Margin="16,16,16,0" DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
-                     Text="{StaticResource ClientEditor.OrdersInfo}" />
+                     Text="Вещи данного вида" />
 
           <DockPanel DockPanel.Dock="Bottom" Margin="16">
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">

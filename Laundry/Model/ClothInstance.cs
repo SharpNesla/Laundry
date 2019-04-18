@@ -29,7 +29,9 @@ namespace Laundry.Model
 
     [BsonIgnore]
     public string Signature { get; }
+    [BsonIgnore]
+    public bool Selected { get; set; }
 
-    public long Order { get; internal set; }
+    public long Order { get; set; }
   }
 }

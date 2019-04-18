@@ -24,7 +24,8 @@ namespace Laundry.Views
   [AddINotifyPropertyChangedInterface]
   public class EmployeeCardViewModel : Card<Employee>
   {
-    public EmployeeCardViewModel(IEventAggregator eventAggregator, OrderDataGridViewModel orderGrid) : base(eventAggregator, Screens.EmployeeEditor)
+    public EmployeeCardViewModel(IEventAggregator eventAggregator, OrderDataGridViewModel orderGrid,
+      Visibilities visibilities) : base(eventAggregator, Screens.EmployeeEditor, visibilities)
     {
       this.OrderGrid = orderGrid;
       orderGrid.DisplaySelectionColumn = false;

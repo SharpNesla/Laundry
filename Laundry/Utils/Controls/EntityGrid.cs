@@ -76,7 +76,7 @@ namespace Laundry.Utils.Controls
 
     public virtual void Refresh(int page, int elements)
     {
-      this.Entities = Repo.Get(page, elements, Filter);
+      this.Entities = Repo.Get(page * elements, elements, Filter);
     }
 
     public event Action StateChanged;

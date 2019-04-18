@@ -45,19 +45,7 @@ namespace Laundry.Model
     public DateTime DeletionDate { get; set; }
     [BsonIgnore]
     public string Signature { get; }
-
-    [BsonIgnoreIfNull]
-    [BsonElement(nameof(Couriers))]
-    public List<long> CourierIds { get; set; }
-
-    [BsonElement(nameof(Drivers))]
-    [BsonIgnoreIfNull]
-    public List<long> DriverIds { get; set; }
-
     [BsonIgnore]
-    public List<Employee> Couriers { get; set; }
-
-    [BsonIgnore]
-    public List<Employee> Drivers { get; set; }
+    public bool Selected { get; set; }
   }
 }

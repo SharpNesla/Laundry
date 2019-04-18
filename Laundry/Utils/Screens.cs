@@ -25,6 +25,8 @@
     CarEditor,
 
     ClothEditor,
+
+    ClothKindDictionary,
     ClothKindEditor,
 
     Context,

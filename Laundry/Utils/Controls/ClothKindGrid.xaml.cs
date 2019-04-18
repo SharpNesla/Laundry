@@ -33,7 +33,7 @@ namespace Laundry.Utils.Controls
 
     public ClothKindGridViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
       IModel model, DeleteDialogViewModel shure)
-      : base(eventAggregator, card, model.ClothKinds, shure, Screens.About)
+      : base(eventAggregator, card, model.ClothKinds, shure, Screens.ClothKindEditor)
     {
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
     }

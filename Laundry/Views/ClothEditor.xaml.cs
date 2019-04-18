@@ -16,6 +16,7 @@ using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Utils;
+using Action = System.Action;
 
 namespace Laundry.Views
 {
@@ -24,17 +25,10 @@ namespace Laundry.Views
   /// </summary>
   public class ClothEditorViewModel : EditorScreen<ClothInstancesRepository, ClothInstance>
   {
-    private Order _order;
+    public Order Order { get; set; }
+    public bool IsNewOrder { get; set; }
 
-    public Order Order
-    {
-      get { return _order; }
-      set
-      {
-        this.Model.ClothInstances.SetOrder(this.Entity, value);
-        _order = value;
-      }
-    }
+    public event Action Created;
 
     public ClothEditorViewModel(IEventAggregator aggregator, IModel model) :
       base(aggregator, model, model.ClothInstances, "предмета одежды")
@@ -43,14 +37,25 @@ namespace Laundry.Views
 
     public override void ApplyChanges()
     {
-      if (IsNew)
+      
+      if (IsNewOrder)
       {
-        EntityRepository.Add(this.Entity);
+        EntityRepository.AddUnRegistred(this.Entity);
       }
       else
       {
-        EntityRepository.Update(this.Entity);
+        if (IsNew)
+        {
+          EntityRepository.SetOrder(this.Entity, this.Order);
+          EntityRepository.Add(this.Entity);
+        }
+        else
+        {
+          EntityRepository.Update(this.Entity);
+        }
       }
+
+      Created?.Invoke();
     }
   }
 }

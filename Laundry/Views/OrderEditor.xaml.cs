@@ -32,6 +32,7 @@ namespace Laundry.Views
     {
       aggregator.Subscribe(this);
       this.ClothInstancesGrid = clothGrid;
+      this.ClothInstancesGrid.IsNewOrder = true;
 
       this.Paginator = paginator;
       this.Paginator.ElementsName = "Вещей";
@@ -74,8 +75,22 @@ namespace Laundry.Views
     public async void AddCloth()
     {
       var clothInstanceEditor = new ClothEditorViewModel(this.EventAggregator, this.Model);
-      clothInstanceEditor.Order = this.Entity;
+      clothInstanceEditor.Created += this.Paginator.RefreshPaginable;
+      if (IsNew)
+      {
+        clothInstanceEditor.IsNewOrder = true;
+      }
+      else
+      {
+        clothInstanceEditor.Order = this.Entity;
+      }
       await DialogHostExtensions.ShowCaliburnVM(clothInstanceEditor);
+    }
+
+    public override void Discard()
+    {
+      base.Discard();
+      this.Model.ClothInstances.ClearUnRegistred();
     }
 
     private void OnEntityChanged(Client obj)
@@ -86,6 +101,11 @@ namespace Laundry.Views
     public override void Handle(Order message)
     {
       base.Handle(message);
+
+      this.ClothInstancesGrid.Order = message;
+      this.ClothInstancesGrid.IsNewOrder = false;
+      this.Paginator.RefreshPaginable();
+      
       this.ClientCombo.SelectedEntity = EntityRepository.GetClient(this.Entity);
       if (message.IsCorporative)
       {

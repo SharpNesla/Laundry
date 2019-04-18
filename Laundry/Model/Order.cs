@@ -38,10 +38,18 @@ namespace Laundry.Model
     public DateTime DeletionDate { get; set; }
 
     public string Signature { get; }
+
+    [BsonIgnore]
+    public bool Selected { get; set; }
+
     [BsonIgnoreIfDefault]
     public bool IsCorporative { get; set; }
+
     [BsonIgnoreIfDefault]
     public bool IsDiscount { get; set; }
+
+    public IList<ClothInstance> Instances { get; set; }
+
     #region Ids
 
     [BsonElement("Client")]
@@ -69,5 +77,5 @@ namespace Laundry.Model
     public long DistributerId { get; set; }
 
     #endregion
-    }
+  }
 }

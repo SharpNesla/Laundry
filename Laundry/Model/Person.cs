@@ -52,6 +52,8 @@ namespace Laundry.Model
     {
       get { return $"{this.Id} {this.Name} {this.Surname}"; }
     }
+    [BsonIgnore]
+    public bool Selected { get; set; }
 
     public string this[string columnName]
     {

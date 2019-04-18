@@ -120,6 +120,7 @@
                   <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
                 </Button>
               </StackPanel>
+              <ContentControl Name="Paginator"></ContentControl>
               <TextBlock VerticalAlignment="Center">
                 <TextBlock.Text>
                   <MultiBinding StringFormat="{}Заказ от {0:dd.MM.yyyy, HH:mm}. Цена: 0">

@@ -16,6 +16,8 @@ namespace Laundry.Model
     public DateTime DeletionDate { get; set; }
 
     public string Signature { get; }
+    [BsonIgnore]
+    public bool Selected { get; set; }
 
     [BsonIgnoreIfDefault]
     public int House { get; set; }

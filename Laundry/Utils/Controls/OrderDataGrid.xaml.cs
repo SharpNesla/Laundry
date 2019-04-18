@@ -14,7 +14,7 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
-  public class OrderDataGridViewModel : EntityGrid<Order, OrderRepository, OrderCardViewModel>, IHandle<Client>
+  public class OrderDataGridViewModel : EntityGrid<Order, OrderRepository, OrderCardViewModel>
   {
     private readonly IEventAggregator _eventAggregator;
 
@@ -111,12 +111,12 @@ namespace Laundry.Utils.Controls
       this.Client = obj;
     }
 
-    public void Handle(Client message)
-    {
-      this.IsSearchDrawerOpened = true;
-      this.IsByClient = true;
-      this.ClientCombo.SelectedEntity = message;
-      this._eventAggregator.Unsubscribe(this);
-    }
+    //public void Handle(Client message)
+    //{
+    //  this.IsSearchDrawerOpened = true;
+    //  this.IsByClient = true;
+    //  this.ClientCombo.SelectedEntity = message;
+    //  this._eventAggregator.Unsubscribe(this);
+    //}
   }
 }
