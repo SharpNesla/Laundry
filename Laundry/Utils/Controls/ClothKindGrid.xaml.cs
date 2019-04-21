@@ -31,7 +31,6 @@ namespace Laundry.Utils.Controls
     public float NameWidth { get; set; }
     public ObservableCollection<ClothKind> EditableEntities { get; private set; }
 
-    
 
     public ClothKindGridViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
       IModel model, DeleteDialogViewModel shure, ClothKindEditorViewModel editor)
@@ -39,6 +38,7 @@ namespace Laundry.Utils.Controls
     {
       _editor = editor;
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
+      this.StateChanged += RaiseStateChanged; 
     }
 
     public override void Add()

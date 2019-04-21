@@ -7,6 +7,7 @@ using Laundry.Model;
 using Laundry.Model.DatabaseClients;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
+using Laundry.Utils.Controls.EntitySearchControls;
 using MaterialDesignThemes.Wpf;
 using PropertyChanged;
 
@@ -22,13 +23,45 @@ namespace Laundry.Views
       get { return !IsNew; }
     }
 
-    public bool  ChangePassword { get; set; }
+    public EmployeeProfession EmployeeProfession
+    {
+      get { return Entity.Profession; }
+      set { Entity.Profession = value; }
+    }
+
+    public CarSearchViewModel CarSearch { get; set; }
+    [DependsOn(nameof(EmployeeProfession))]
+    public bool IsAdvisor
+    {
+      get { return this.Entity.Profession == EmployeeProfession.Advisor; }
+    }
+
+    [DependsOn(nameof(EmployeeProfession))]
+    public bool IsCourier
+    {
+      get { return this.Entity.Profession == EmployeeProfession.Courier; }
+    }
+
+    [DependsOn(nameof(EmployeeProfession))]
+    public bool IsDriverOrCourier
+    {
+      get
+      {
+        return this.Entity.Profession == EmployeeProfession.Driver ||
+               this.Entity.Profession == EmployeeProfession.Courier;
+      }
+    }
+
+    public SubsidiarySearchViewModel SubsidiarySearch { get; set; }
+
+    public bool ChangePassword { get; set; }
 
     public OrderDataGridViewModel OrderDataGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
 
     public string Password { get; set; }
     public string AdditionalPassword { get; set; }
+
     #region TabBindings
 
     [AlsoNotifyFor(nameof(InfoVisibility))]
@@ -60,12 +93,25 @@ namespace Laundry.Views
       this.Paginator = paginator;
       paginator.ElementsName = "Заказов";
       paginator.RegisterPaginable(OrderDataGrid, false);
+
+      this.SubsidiarySearch = new SubsidiarySearchViewModel(model);
+      this.SubsidiarySearch.EntityChanged +=
+        OnSubsidiarySearchOnEntityChanged;
+
+      this.CarSearch = new CarSearchViewModel(model);
+      this.CarSearch.EntityChanged += x => this.Model.Employees.SetCar(this.Entity, x);
+    }
+
+    private void OnSubsidiarySearchOnEntityChanged(Subsidiary x)
+    {
+      this.Model.Employees.SetSubsidiary(this.Entity, x);
     }
 
     public override void ApplyChanges()
     {
       base.ApplyChanges();
-      if (ChangePassword && (!string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(AdditionalPassword)) && AdditionalPassword == Password)
+      if (ChangePassword && (!string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(AdditionalPassword)) &&
+          AdditionalPassword == Password)
       {
         this.EntityRepository.SetPassword(this.Entity, Password);
       }
@@ -75,6 +121,10 @@ namespace Laundry.Views
     {
       base.Handle(message);
       OrderDataGrid.Employee = Entity;
+
+      SubsidiarySearch.SelectedEntity = Model.Subsidiaries.GetById(message.Subsidiary);
+      CarSearch.SelectedEntity = Model.Cars.GetById(message.Car);
+
       Paginator.RefreshPaginable();
     }
 

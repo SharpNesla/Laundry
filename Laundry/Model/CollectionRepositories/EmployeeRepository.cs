@@ -62,6 +62,11 @@ namespace Laundry.Model.DatabaseClients
     {
     }
 
+    public void SetSubsidiary(Employee employee, Subsidiary subsidiary)
+    {
+      if (subsidiary != null) employee.Subsidiary = subsidiary.Id;
+    }
+
     public override IReadOnlyList<Employee> GetBySearchString(string searchString, FilterDefinition<Employee> filter,
       int offset = 0, int capLimit = 10)
     {
@@ -100,6 +105,11 @@ namespace Laundry.Model.DatabaseClients
         .Skip(offset)
         .Limit(capLimit)
         .ToList().Select(x => BsonSerializer.Deserialize<Employee>(x)).ToList();
+    }
+
+    public void SetCar(Employee entity, Car car)
+    {
+      if (car != null) entity.Car = car.Id;
     }
   }
 }

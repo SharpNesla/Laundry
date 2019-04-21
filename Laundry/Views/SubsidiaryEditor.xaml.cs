@@ -28,25 +28,10 @@ namespace Laundry.Views
   public class SubsidiaryEditorViewModel : EditorScreen<Repository<Subsidiary>, Subsidiary>
   {
     public EmployeeSearchViewModel MainAdvisor { get; }
-    public EmployeeSearchViewModel AdvisorSearch { get; }
 
-    public EmployeeDataGridViewModel AdvisorGrid { get; }
-
-    public SubsidiaryEditorViewModel(IEventAggregator aggregator, EmployeeDataGridViewModel employeeGrid, IModel model,
-      string entityTitleName = "Филиала") : base(aggregator, model, model.Subsidiaries, entityTitleName)
+    public SubsidiaryEditorViewModel(IEventAggregator aggregator, IModel model, string entityTitleName = "филиала") 
+      : base(aggregator, model, model.Subsidiaries, entityTitleName)
     {
-      AdvisorSearch = new EmployeeSearchViewModel(model, "Добавляемый приёмщик",
-        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor));
-
-      MainAdvisor = new EmployeeSearchViewModel(model, "Добавляемый приёмщик",
-        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor));
-
-      AdvisorGrid = employeeGrid;
-    }
-
-    public override void Handle(Subsidiary message)
-    {
-      AdvisorGrid.Filter = Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), message.Id);
     }
   }
 }

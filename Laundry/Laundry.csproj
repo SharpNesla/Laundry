@@ -141,12 +141,14 @@
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\ClothInstance.cs" />
     <Compile Include="Model\ClothKind.cs" />
+    <Compile Include="Model\CollectionRepositories\CarRepository.cs" />
     <Compile Include="Model\CollectionRepositories\ClientRepository.cs" />
     <Compile Include="Model\CollectionRepositories\ClothInstancesRepository.cs" />
     <Compile Include="Model\CollectionRepositories\ClothKindRepository.cs" />
     <Compile Include="Model\CollectionRepositories\OrderRepository.cs" />
     <Compile Include="Model\CollectionRepositories\Repository.cs" />
     <Compile Include="Model\CollectionRepositories\EmployeeRepository.cs" />
+    <Compile Include="Model\CollectionRepositories\SubsidiaryRepository.cs" />
     <Compile Include="Model\DataBaseModel.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\IModel.cs" />
@@ -163,6 +165,9 @@
     </Compile>
     <Compile Include="Utils\Controls\ClothKindGrid.xaml.cs">
       <DependentUpon>ClothKindGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Controls\EntitySearchControls\CarSearch.xaml.cs">
+      <DependentUpon>CarSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Controls\EntitySearchControls\ClientSearch.xaml.cs">
       <DependentUpon>ClientSearch.xaml</DependentUpon>
@@ -181,6 +186,9 @@
       <DependentUpon>EmployeeSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Controls\EntitySearchControls\EntitySearchBox.cs" />
+    <Compile Include="Utils\Controls\EntitySearchControls\SubsidiarySearch.xaml.cs">
+      <DependentUpon>SubsidiarySearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Controls\SubsidiaryGrid.xaml.cs">
       <DependentUpon>SubsidiaryGrid.xaml</DependentUpon>
     </Compile>
@@ -208,6 +216,21 @@
     <Compile Include="Utils\Screens.cs" />
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Actions\DeliverOrders.xaml.cs">
+      <DependentUpon>DeliverOrders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Actions\DistributeOrders.xaml.cs">
+      <DependentUpon>DistributeOrders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Actions\ObtainOrders.xaml.cs">
+      <DependentUpon>ObtainOrders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Actions\TakeOrders.xaml.cs">
+      <DependentUpon>TakeOrders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Actions\WashOrders.xaml.cs">
+      <DependentUpon>WashOrders.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CarDictionary.xaml.cs">
       <DependentUpon>CarDictionary.xaml</DependentUpon>
@@ -305,6 +328,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Utils\Controls\EntitySearchControls\CarSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Utils\Controls\EntitySearchControls\ClientSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -329,6 +356,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Utils\Controls\EntitySearchControls\SubsidiarySearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Utils\Controls\OrderDataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -342,6 +373,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Actions\DeliverOrders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Actions\DistributeOrders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Actions\ObtainOrders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Actions\TakeOrders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Actions\WashOrders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -508,7 +559,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\Controls\Grids\" />
-    <Folder Include="Views\Actions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -95,7 +95,7 @@ namespace Laundry.Views
       this.ClothInstancesGrid.Order = message;
       this.ClothInstancesGrid.IsNewOrder = false;
       this.Paginator.RefreshPaginable();
-      
+
       this.ClientCombo.SelectedEntity = EntityRepository.GetClient(this.Entity);
       if (message.IsCorporative)
       {
@@ -106,14 +106,13 @@ namespace Laundry.Views
       {
         ObtainerCombo.SelectedEntity = Model.Employees.GetById(message.ObtainerId);
         DistributerCombo.SelectedEntity = Model.Employees.GetById(message.DistributerId);
-
       }
+
       InCourierCombo.SelectedEntity = Model.Employees.GetById(message.InCourierId);
 
       WasherCombo.SelectedEntity = Model.Employees.GetById(message.WasherCourierId);
 
       OutCourierCombo.SelectedEntity = Model.Employees.GetById(message.OutCourierId);
-
     }
 
     public void Handle(Client message)

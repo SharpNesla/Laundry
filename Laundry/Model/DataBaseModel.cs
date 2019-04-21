@@ -21,8 +21,8 @@ namespace Laundry.Model
     public EmployeeRepository Employees { get; set; }
     public OrderRepository Orders { get; set; }
     public ClothInstancesRepository ClothInstances { get; set; }
-    public Repository<Subsidiary> Subsidiaries { get; set; }
-    public Repository<Car> Cars { get; set; }
+    public SubsidiaryRepository Subsidiaries { get; set; }
+    public CarRepository Cars { get; set; }
     public ClothKindRepository ClothKinds { get; set; }
 
     private IMongoDatabase _dataBase;
@@ -46,8 +46,8 @@ namespace Laundry.Model
 
       this.Employees = new EmployeeRepository(this, _employees);
       this.Orders = new OrderRepository(this, _orders);
-      this.Subsidiaries = new Repository<Subsidiary>(this, _dataBase.GetCollection<Subsidiary>("subsidiaries"));
-      this.Cars = new Repository<Car>(this, _dataBase.GetCollection<Car>("cars"));
+      this.Subsidiaries = new SubsidiaryRepository(this, _dataBase.GetCollection<Subsidiary>("subsidiaries"));
+      this.Cars = new CarRepository(this, _dataBase.GetCollection<Car>("cars"));
       this.ClothInstances = new ClothInstancesRepository(this, _dataBase.GetCollection<ClothInstance>("clothinstances"));
       this.ClothKinds = new ClothKindRepository(this, _dataBase.GetCollection<ClothKind>("clothkinds"));
       this.CurrentUser = this.Employees.GetCurrentEmployee(username, password);

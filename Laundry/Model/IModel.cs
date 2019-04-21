@@ -14,8 +14,8 @@ namespace Laundry.Model
     EmployeeRepository Employees { get; }
     OrderRepository Orders { get; }
     ClothInstancesRepository ClothInstances { get; }
-    Repository<Subsidiary> Subsidiaries { get; }
-    Repository<Car> Cars { get; }
+    SubsidiaryRepository Subsidiaries { get; }
+    CarRepository Cars { get; }
     ClothKindRepository ClothKinds { get; set; }
 
     void Connect(string username, string password);

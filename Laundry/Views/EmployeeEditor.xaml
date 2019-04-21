@@ -175,39 +175,48 @@
             <Grid.RowDefinitions>
               <RowDefinition Height="38" />
               <RowDefinition Height="38" />
-              <RowDefinition Height="80" />
-              <RowDefinition Height="80" />
+              <RowDefinition Height="38" />
+              <RowDefinition Height="54" />
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="275"/>
               <ColumnDefinition Width="275"/>
-              <ColumnDefinition />
+              <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.ColumnSpan="3" Style="{StaticResource MaterialDesignTitleTextBlock}"
                        Text="Комментарий" />
             <ComboBox Margin="2,0,16,0" Grid.Row="1" Grid.Column="0"
                       materialDesign:HintAssist.Hint="Должность"
-
+                      VerticalAlignment="Bottom"
                       ItemsSource="{Binding Source={converters:Enumeration {x:Type model:EmployeeProfession}}}"
                       DisplayMemberPath="Description"
-                      SelectedValue="{Binding Entity.Profession}"
+                      SelectedValue="{Binding EmployeeProfession}"
                       SelectedValuePath="Value" />
-            <CheckBox Margin="2,0,0,0" Grid.Row="3" Grid.Column="0"
-                    Style="{StaticResource MaterialDesignCheckBox}" IsChecked="{Binding ChangePassword}">
-              Изменить пароль
-              </CheckBox>
-            <TextBox Grid.Row="2" Grid.Column="0" Text="{Binding Entity.Username}"  Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                     materialDesign:HintAssist.Hint="Логин" Margin="2,0,16,16" />
-            <PasswordBox Grid.Row="2" Grid.Column="1"  Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
-                         materialDesign:HintAssist.Hint="Пароль" Margin="2,0,0,16"
+
+            <ContentControl Grid.Row="1" Grid.Column="1" Visibility="{Binding IsDriverOrCourier, Converter={StaticResource BoolVisibilityConverter}}"  Name="CarSearch"/>
+            <ContentControl Grid.Row="1" Grid.Column="1" Visibility="{Binding IsAdvisor, Converter={StaticResource BoolVisibilityConverter}}" Name="SubsidiarySearch"/>
+
+            
+            <TextBox Grid.Row="2" Grid.Column="0" Text="{Binding Entity.Username}"
+                     materialDesign:HintAssist.Hint="Логин" Margin="2,0,16,0" />
+            <PasswordBox Grid.Row="3"  Style="{StaticResource MaterialDesignPasswordBox}"
+                         materialDesign:HintAssist.Hint="Пароль" Margin="2,0,16,16"
                          IsEnabled="{Binding ChangePassword}"
                          cal:Message.Attach="[Event PasswordChanged] = [Action PasswordChanged($source)]" />
-            <PasswordBox Grid.Row="3" Grid.Column="1"  Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
-                         materialDesign:HintAssist.Hint="Пароль (Повторно)" Margin="2,0,0,16"
-                         IsEnabled="{Binding ChangePassword}"
-                         cal:Message.Attach="[Event PasswordChanged] = [Action AdditionalPasswordChanged($source)]" />
+            <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="2,0,0,16">
+              <PasswordBox   Style="{StaticResource MaterialDesignPasswordBox}"
+                           materialDesign:HintAssist.Hint="Пароль (Повторно)" 
+                           IsEnabled="{Binding ChangePassword}"
+                           cal:Message.Attach="[Event PasswordChanged] = [Action AdditionalPasswordChanged($source)]" />
+              <CheckBox Margin="8,0,0,4" VerticalAlignment="Bottom"
+                        Style="{StaticResource MaterialDesignCheckBox}" IsChecked="{Binding ChangePassword}">
+                Изменить пароль
+              </CheckBox>
+              
+            </StackPanel>
             
+
             <TextBox Grid.ColumnSpan="3" Grid.Row="4" Grid.Column="0"
                      Text="{Binding Entity.Comment}"
                      materialDesign:HintAssist.Hint="Комментарий"

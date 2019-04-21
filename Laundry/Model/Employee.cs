@@ -22,10 +22,14 @@ namespace Laundry.Model
 
   public class Employee : Person
   {
-    public int Subsidiary{ get; internal set; }
+
     public EmployeeProfession Profession { get; set; }
 
-   
+
+    public long Subsidiary { get; internal set; }
+
+    public long Car { get; internal set; }
+
     public string Username { get; set; }
 
     [BsonIgnoreIfNull]

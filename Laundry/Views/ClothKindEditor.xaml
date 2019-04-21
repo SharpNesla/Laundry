@@ -46,11 +46,21 @@
           Padding="16"
           BorderThickness="0">
           <StackPanel>
-            <TextBox materialDesign:HintAssist.Hint="Номер бирки" Text="{Binding }"
+            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                      VerticalAlignment="Bottom"
+                      materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
+              <ComboBoxItem IsEnabled="False">
+                Носки Шерстяные
+              </ComboBoxItem>
+              <ComboBoxItem>
+                Носки Шерстяные
+              </ComboBoxItem>
+            </ComboBox>
+            <TextBox materialDesign:HintAssist.Hint="Номер бирки" Text="{Binding Entity.TagId}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-            <TextBox materialDesign:HintAssist.Hint="Стоимость" Text="{Binding Entity.Price}"
+            <TextBox materialDesign:HintAssist.Hint="Процент износа" Text="{Binding Entity.WearPercentage}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-            <TextBox materialDesign:HintAssist.Hint="Количесто" Text="{Binding Amount}"
+            <TextBox materialDesign:HintAssist.Hint="Количесто" Text="{Binding Entity.Amount}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
           </StackPanel>
         </materialDesign:Card>

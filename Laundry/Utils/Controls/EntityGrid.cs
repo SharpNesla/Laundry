@@ -129,18 +129,6 @@ namespace Laundry.Utils.Controls
     {
       this.StateChanged?.Invoke();
     }
-
-    private void chkItems_CheckedChanged(object sender, EventArgs e)
-    {
-      //foreach (DataGridViewRow row in GridView1.Rows)
-      //{
-      //  DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)row.Cells[1];
-      //  if (chk.Selected == false)
-      //  {
-      //    chk.Selected = true;
-      //  }
-      //}
-    }
   }
 
   public static class ExcelExtensions
