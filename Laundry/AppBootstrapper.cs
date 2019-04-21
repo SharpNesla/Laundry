@@ -75,6 +75,8 @@ namespace Laundry
       container.PerRequest<ClothKindEditorViewModel>();
 
       container.Singleton<DiscountSystemViewModel>();
+      container.Singleton<DiscountGridViewModel>();
+
       container.Singleton<SettingsViewModel>();
       container.Singleton<AboutViewModel>();
       

@@ -12,8 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
+using Laundry.Model;
+using Laundry.Model.CollectionRepositories;
+using Laundry.Views;
 
 namespace Laundry.Utils.Controls
 {
-  
+  public class DiscountGridViewModel : EntityGrid<DiscountEdge, DiscountSystemRepository, Card<DiscountEdge>>
+  {
+    public DiscountGridViewModel(IModel model, IEventAggregator eventAggregator, DeleteDialogViewModel deleteDialog) : base(eventAggregator, null, model.DiscountEdges, deleteDialog, Screens.About)
+    {
+    }
+
+    public override void ExportToExcel()
+    {
+      
+    }
+  }
 }

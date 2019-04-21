@@ -16,7 +16,8 @@ namespace Laundry.Model
     ClothInstancesRepository ClothInstances { get; }
     SubsidiaryRepository Subsidiaries { get; }
     CarRepository Cars { get; }
-    ClothKindRepository ClothKinds { get; set; }
+    ClothKindRepository ClothKinds { get; }
+    DiscountSystemRepository DiscountEdges { get; }
 
     void Connect(string username, string password);
     event Action ConnectionLost;

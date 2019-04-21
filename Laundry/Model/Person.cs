@@ -12,6 +12,7 @@ namespace Laundry.Model
 {
   public class Person : IRepositoryElement, IDataErrorInfo
   {
+    [BsonId]
     public long Id { get; set; }
 
     [BsonIgnoreIfNull]

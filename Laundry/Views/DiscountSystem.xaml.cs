@@ -15,15 +15,17 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Utils.Controls;
 
 namespace Laundry.Views
 {
     /// <summary>
     /// Interaction logic for DiscountSystem.xaml
     /// </summary>
-    public class DiscountSystemViewModel : DrawerActivityScreen  
+    public class DiscountSystemViewModel : DictionaryScreen<DiscountGridViewModel>
     {
-      public DiscountSystemViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+      public DiscountSystemViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, DiscountGridViewModel entityGrid, string paginatorLabel = "Объектов") 
+        : base(aggregator, model, paginator, entityGrid, paginatorLabel)
       {
       }
     }

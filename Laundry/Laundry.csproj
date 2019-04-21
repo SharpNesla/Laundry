@@ -145,11 +145,13 @@
     <Compile Include="Model\CollectionRepositories\ClientRepository.cs" />
     <Compile Include="Model\CollectionRepositories\ClothInstancesRepository.cs" />
     <Compile Include="Model\CollectionRepositories\ClothKindRepository.cs" />
+    <Compile Include="Model\CollectionRepositories\DiscountSystemRepository.cs" />
     <Compile Include="Model\CollectionRepositories\OrderRepository.cs" />
     <Compile Include="Model\CollectionRepositories\Repository.cs" />
     <Compile Include="Model\CollectionRepositories\EmployeeRepository.cs" />
     <Compile Include="Model\CollectionRepositories\SubsidiaryRepository.cs" />
     <Compile Include="Model\DataBaseModel.cs" />
+    <Compile Include="Model\DiscountEdge.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\CollectionRepositories\IRepositoryElement.cs" />
@@ -165,6 +167,9 @@
     </Compile>
     <Compile Include="Utils\Controls\ClothKindGrid.xaml.cs">
       <DependentUpon>ClothKindGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Controls\DiscountGrid.xaml.cs">
+      <DependentUpon>DiscountGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Controls\EntitySearchControls\CarSearch.xaml.cs">
       <DependentUpon>CarSearch.xaml</DependentUpon>
@@ -325,6 +330,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Utils\Controls\ClothKindGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utils\Controls\DiscountGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
