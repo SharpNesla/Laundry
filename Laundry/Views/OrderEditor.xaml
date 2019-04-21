@@ -108,8 +108,9 @@
                 <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
                            Style="{StaticResource MaterialDesignBody2TextBlock}">
                   <TextBlock.Text>
-                    <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
+                    <MultiBinding StringFormat="{}Всего предметов одежды {0} на общую сумму {1:0,00}₽">
                       <Binding Path="OrderDataGrid.Count" />
+                      <Binding Path="OrderDataGrid.Price" />
                     </MultiBinding>
                   </TextBlock.Text>
                 </TextBlock>

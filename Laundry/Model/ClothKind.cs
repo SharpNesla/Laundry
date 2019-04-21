@@ -12,10 +12,11 @@ namespace Laundry.Model
 
   public enum MeasureKind
   {
-    [Description("кг")]
-    Kg,
+    
     [Description("шт")]
     Thing,
+    [Description("кг")]
+    Kg,
     [Description("пар")]
     Pair
   }
@@ -51,7 +52,7 @@ namespace Laundry.Model
 
     [BsonIgnore]
     public bool Selected { get; set; }
-
+    [BsonIgnore]
     public int Level { get; set; }
   }
 }

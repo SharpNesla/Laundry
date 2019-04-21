@@ -68,7 +68,7 @@
               Style="{StaticResource MaterialDesignFlatButton}" Name="Discard">
         ОТМЕНИТЬ
       </Button>
-      <Button Name="ApplyChanges" DockPanel.Dock="Left" MaxWidth="132"
+      <Button cal:Message.Attach="Apply($view)" DockPanel.Dock="Left" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>
@@ -115,15 +115,8 @@
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                          Text="{StaticResource ClientEditor.MainInfoTitle}" />
               <TextBox Margin="0,16,0,12" materialDesign:HintAssist.Hint="Фамилия"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                <TextBox.Text>
-                  <Binding Path="Entity.Surname"
-                           UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                      <DataErrorValidationRule ValidatesOnTargetUpdated="True"/>
-                    </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding UpdateSourceTrigger=LostFocus, Path=Entity.Surname,
+                ValidatesOnDataErrors=true, NotifyOnValidationError=true}">
               </TextBox>
               <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
@@ -131,7 +124,7 @@
                   <Binding Path="Entity.Name" 
                            UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                      <DataErrorValidationRule />
+                      <DataErrorValidationRule ValidatesOnTargetUpdated="False"/>
                     </Binding.ValidationRules>
                   </Binding>
                 </TextBox.Text>

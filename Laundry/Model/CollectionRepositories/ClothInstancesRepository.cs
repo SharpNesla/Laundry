@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Laundry.Model.DatabaseClients;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Laundry.Model.CollectionRepositories
@@ -15,6 +17,22 @@ namespace Laundry.Model.CollectionRepositories
     {
       _unregistredPool = new List<ClothInstance>();
     }
+
+    public override IReadOnlyList<ClothInstance> Get(int offset, int limit, FilterDefinition<ClothInstance> filter = null)
+    {
+        var filters = Builders<ClothInstance>.Filter.And(
+          Builders<ClothInstance>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+          filter ?? Builders<ClothInstance>.Filter.Empty);
+        
+
+        return Collection
+          .Aggregate()
+          .Match(filters)
+          .Lookup("clothkinds","ClothKind", "_id", "ClothKindObj")
+          .Unwind<ClothInstance>("ClothKindObj")
+          
+          .Skip(offset).Limit(limit).ToList().AsReadOnly();
+      }
 
     public void AddUnRegistred(ClothInstance instance)
     {

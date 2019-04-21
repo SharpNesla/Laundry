@@ -142,6 +142,6 @@ namespace Laundry.Utils.Controls
       
     }
 
-    public IPaginable Paginable { get; set; }
+    public IPaginable Paginable { get; private set; }
   }
 }

@@ -13,6 +13,7 @@ namespace Laundry.Utils
     [AlsoNotifyFor(nameof(EditorTitle))]
     public bool IsNew { get; set; }
 
+    [DoNotNotify]
     public TEntity Entity { get; set; }
 
     public virtual string EditorTitle

@@ -28,7 +28,7 @@ namespace Laundry.Views
     public Order Order { get; set; }
     public bool IsNewOrder { get; set; }
 
-    public event Action Created;
+    public event Action Changed;
 
     public ClothEditorViewModel(IEventAggregator aggregator, IModel model) :
       base(aggregator, model, model.ClothInstances, "предмета одежды")
@@ -55,7 +55,7 @@ namespace Laundry.Views
         }
       }
 
-      Created?.Invoke();
+      Changed?.Invoke();
     }
   }
 }

@@ -27,15 +27,23 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class ClothKindGridViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>
   {
+    private readonly ClothKindEditorViewModel _editor;
     public float NameWidth { get; set; }
     public ObservableCollection<ClothKind> EditableEntities { get; private set; }
 
+    
 
     public ClothKindGridViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
-      IModel model, DeleteDialogViewModel shure)
+      IModel model, DeleteDialogViewModel shure, ClothKindEditorViewModel editor)
       : base(eventAggregator, card, model.ClothKinds, shure, Screens.ClothKindEditor)
     {
+      _editor = editor;
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
+    }
+
+    public override void Add()
+    {
+      DialogHostExtensions.ShowCaliburnVM(_editor);
     }
 
     public void ShowHideDetails(ToggleButton button, ClothKind clothKind)

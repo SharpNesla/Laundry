@@ -23,15 +23,7 @@
       </StackPanel>
     </materialDesign:ColorZone>
 
-    <Grid>
-      <Button Name="OpenOrderEditor" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0 0 16 16" materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
-              ToolTip="MaterialDesignFloatingActionAccentButton">
-        <materialDesign:PackIcon
-          Kind="Plus"
-          Height="24"
-          Width="24" />
-      </Button>
+    <Grid Margin="16">
     </Grid>
   </DockPanel>
 </UserControl>

@@ -53,7 +53,7 @@
                               Header="Вид">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Kind.Name}" VerticalAlignment="Center" />
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding ClothKindObj.Name}" VerticalAlignment="Center" />
           </DataTemplate>
         </DataGridTemplateColumn.CellTemplate>
       </DataGridTemplateColumn>
@@ -71,7 +71,7 @@
                               Header="Цена">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Kind.Price, StringFormat={}{0:0.00}р}"
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding ClothKindObj.Price, StringFormat={}{0:0.00}₽}"
                        VerticalAlignment="Center" />
           </DataTemplate>
         </DataGridTemplateColumn.CellTemplate>
@@ -81,8 +81,15 @@
                               Header="Количество">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Amount, StringFormat={}{0}}"
-                       VerticalAlignment="Center" />
+            <TextBlock TextTrimming="CharacterEllipsis"
+                       VerticalAlignment="Center">
+              <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} {1}">
+                  <Binding Path="Amount"  />
+                  <Binding Path="ClothKindObj.MeasureKind" Converter="{StaticResource MeasureKindConverter}" />
+                </MultiBinding>
+              </TextBlock.Text>
+            </TextBlock>
           </DataTemplate>
         </DataGridTemplateColumn.CellTemplate>
       </DataGridTemplateColumn>

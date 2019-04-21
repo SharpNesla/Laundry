@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Laundry.Utils
   {
     public IEventAggregator EventAggregator { get; private set; }
     public IModel Model { get; private set; }
-
+    
 
     public Visibilities Visibilities { get; private set; }
     public ActivityScreen Context { get; set; }  
@@ -25,6 +26,7 @@ namespace Laundry.Utils
     {
       this.EventAggregator = aggregator;
       this.Model = model;
+      
       this.Visibilities = new Visibilities(model);
     }
 

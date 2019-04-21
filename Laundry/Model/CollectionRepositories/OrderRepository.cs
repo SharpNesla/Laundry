@@ -10,6 +10,7 @@ namespace Laundry.Model.CollectionRepositories
     {
     }
 
+
     public override void Add(Order entity)
     {
       base.Add(entity);

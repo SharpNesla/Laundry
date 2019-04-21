@@ -74,17 +74,7 @@ namespace Laundry.Views
 
     public async void AddCloth()
     {
-      var clothInstanceEditor = new ClothEditorViewModel(this.EventAggregator, this.Model);
-      clothInstanceEditor.Created += this.Paginator.RefreshPaginable;
-      if (IsNew)
-      {
-        clothInstanceEditor.IsNewOrder = true;
-      }
-      else
-      {
-        clothInstanceEditor.Order = this.Entity;
-      }
-      await DialogHostExtensions.ShowCaliburnVM(clothInstanceEditor);
+      this.ClothInstancesGrid.Add();
     }
 
     public override void Discard()

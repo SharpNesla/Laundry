@@ -46,7 +46,6 @@
       </DataGrid.ContextMenu>
       <DataGrid.Columns>
         <DataGridCheckBoxColumn
-          Binding="{Binding IsSelected}"
           Visibility="{Binding DisplaySelectionColumn ,Converter={StaticResource BoolVisibilityConverter}}"
           CanUserReorder="False" MinWidth="64" Width="64"
           ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"

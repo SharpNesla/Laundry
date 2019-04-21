@@ -10,7 +10,6 @@ namespace Laundry.Model
 {
   public class ClothInstance : IRepositoryElement
   {
-
     public long ClothKind { get; set; }
 
     [BsonIgnoreIfDefault]
@@ -29,9 +28,17 @@ namespace Laundry.Model
 
     [BsonIgnore]
     public string Signature { get; }
+
+    public ClothKind ClothKindObj { get; set; }
+
     [BsonIgnore]
     public bool Selected { get; set; }
-
+    
     public long Order { get; set; }
+    [BsonIgnore]
+    public float Price
+    {
+      get { return this.ClothKindObj.Price * Amount; }
+    }
   }
 }

@@ -58,9 +58,9 @@
             </ComboBox>
             <TextBox materialDesign:HintAssist.Hint="Номер бирки" Text="{Binding Entity.TagId}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-            <TextBox materialDesign:HintAssist.Hint="Процент износа" Text="{Binding WearPercentage}"
+            <TextBox materialDesign:HintAssist.Hint="Процент износа" Text="{Binding Entity.WearPercentage}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-            <TextBox materialDesign:HintAssist.Hint="Количесто" Text="{Binding Amount}"
+            <TextBox materialDesign:HintAssist.Hint="Количесто" Text="{Binding Entity.Amount}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
           </StackPanel>
         </materialDesign:Card>

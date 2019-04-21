@@ -79,6 +79,13 @@ namespace Laundry.Views
       EventAggregator.BeginPublishOnUIThread(Entity);
     }
 
+    public void Apply(ClientEditorView view)
+    {
+      var entityCached = this.Entity;
+      this.Entity = null;
+      this.Entity = entityCached;
+    }
+
     public override void Handle(Client client)
     {
       base.Handle(client);

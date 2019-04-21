@@ -69,6 +69,7 @@ namespace Laundry
       container.Singleton<ClothKindDictionaryViewModel>();
       container.Singleton<ClothInstanceCardViewModel>();
       container.Singleton<ClothEditorViewModel>();
+
       container.PerRequest<ClothKindGridViewModel>();
       container.PerRequest<ClothKindCardViewModel>();
       container.PerRequest<ClothKindEditorViewModel>();

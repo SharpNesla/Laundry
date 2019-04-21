@@ -9,7 +9,8 @@ namespace Laundry.Views
     public Visibilities Visibilities { get; }
     private Screens _editorScreen;
     protected IEventAggregator _eventAggregator;
-    public virtual TEntity Entity { get; set; }
+    public virtual TEntity Entity { get;
+      set; }
     public Card(IEventAggregator eventAggregator,  Screens editorScreen, Visibilities visibilities = null)
     {
       Visibilities = visibilities;

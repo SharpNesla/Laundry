@@ -125,6 +125,11 @@ namespace Laundry.Utils.Controls
 
     public abstract void ExportToExcel();
 
+    public void RaiseStateChanged()
+    {
+      this.StateChanged?.Invoke();
+    }
+
     private void chkItems_CheckedChanged(object sender, EventArgs e)
     {
       //foreach (DataGridViewRow row in GridView1.Rows)

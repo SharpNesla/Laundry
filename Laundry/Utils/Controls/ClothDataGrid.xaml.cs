@@ -26,6 +26,7 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class ClothDataGridViewModel : EntityGrid<ClothInstance, ClothInstancesRepository, ClothInstanceCardViewModel>
   {
+    private readonly IEventAggregator _eventAggregator;
     private readonly ClothEditorViewModel _editor;
     public Order Order { get; set; }
 
@@ -36,13 +37,30 @@ namespace Laundry.Utils.Controls
       ClothInstanceCardViewModel card, IModel model,
       DeleteDialogViewModel shure) : base(eventAggregator, card, model.ClothInstances, shure, Screens.About)
     {
+      _eventAggregator = eventAggregator;
       _editor = editor;
+      _editor.Changed += this.RaiseStateChanged;
+    }
+
+    public override void Add()
+    {
+
+      if (IsNewOrder)
+      {
+        _editor.IsNewOrder = true;
+      }
+      else
+      {
+        _editor.Order = this.Order;
+      }
+      DialogHostExtensions.ShowCaliburnVM(_editor);
     }
 
     public override void Edit()
     {
-      this._editor.Entity = this.SelectedEntity;
       DialogHostExtensions.ShowCaliburnVM(_editor);
+      _eventAggregator.PublishOnUIThread(SelectedEntity);
+
     }
 
     public override void Refresh(int page, int elements)
