@@ -25,37 +25,37 @@ namespace Laundry.Views
   /// </summary>
   public class ClothEditorViewModel : EditorScreen<ClothInstancesRepository, ClothInstance>
   {
+    private int _instancePos;
     public Order Order { get; set; }
     public bool IsNewOrder { get; set; }
 
     public event Action Changed;
 
-    public ClothEditorViewModel(IEventAggregator aggregator, IModel model) :
+    public ClothEditorViewModel(IEventAggregator aggregator, IModel model, Order order) :
       base(aggregator, model, model.ClothInstances, "предмета одежды")
     {
+      this.Order = order;
     }
 
     public override void ApplyChanges()
     {
-      
-      if (IsNewOrder)
+      if (IsNew)
       {
-        EntityRepository.AddUnRegistred(this.Entity);
+        this.Order.Instances.Add(this.Entity);
       }
       else
       {
-        if (IsNew)
-        {
-          EntityRepository.SetOrder(this.Entity, this.Order);
-          EntityRepository.Add(this.Entity);
-        }
-        else
-        {
-          EntityRepository.Update(this.Entity);
-        }
+        this.Order.Instances[_instancePos] = this.Entity;
       }
 
       Changed?.Invoke();
+    }
+  
+    public override void Handle(ClothInstance message)
+    {
+      this.Entity = message.Clone();
+      this._instancePos = this.Order.Instances.IndexOf(message); 
+      this.IsNew = false;
     }
   }
 }

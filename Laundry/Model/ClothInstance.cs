@@ -34,11 +34,22 @@ namespace Laundry.Model
     [BsonIgnore]
     public bool Selected { get; set; }
     
-    public long Order { get; set; }
     [BsonIgnore]
     public float Price
     {
       get { return this.ClothKindObj.Price * Amount; }
+    }
+    public ClothInstance Clone()
+    {
+      return new ClothInstance
+      {
+        ClothKind = this.ClothKind,
+        ClothKindObj = this.ClothKindObj,
+        TagNumber = this.TagNumber,
+        Id = this.Id,
+        Amount = this.Amount,
+        WearPercentage = this.WearPercentage,
+      };
     }
   }
 }

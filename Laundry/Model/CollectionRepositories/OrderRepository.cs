@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace Laundry.Model.CollectionRepositories
@@ -10,17 +13,29 @@ namespace Laundry.Model.CollectionRepositories
     {
     }
 
-
-    public override void Add(Order entity)
+    public override IReadOnlyList<Order> Get(int offset, int limit, FilterDefinition<Order> filter = null)
     {
-      base.Add(entity);
-
-      foreach (var clothInstance in Model.ClothInstances.GetUnRegistred(0, int.MaxValue))
+      var basee = base.Get(offset, limit, filter);
+      foreach (var order in basee)
       {
-        clothInstance.Order = entity.Id;
+        foreach (var instance in order.Instances)
+        {
+          instance.ClothKindObj = Model.ClothKinds.GetById(instance.ClothKind);
+        }
       }
 
-      this.Model.ClothInstances.RegisterUnregistred();
+      return basee;
+    }
+
+    public override Order GetById(long id)
+    {
+      var order =base.GetById(id);
+      foreach (var instance in order.Instances)
+      {
+        instance.ClothKindObj = Model.ClothKinds.GetById(instance.ClothKind);
+      }
+
+      return order;
     }
 
     public void SetClient(Order order, Client client)

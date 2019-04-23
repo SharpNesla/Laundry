@@ -79,6 +79,15 @@ namespace Laundry.Model
       }
     }
 
+    public virtual void TriggerValidation()
+    {
+      this.Name = String.Empty;
+      this.Name = null;
+
+      this.Surname = String.Empty;
+      this.Surname = null;
+    }
+
     public string Error { get; }
   }
 }

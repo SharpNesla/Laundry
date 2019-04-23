@@ -32,7 +32,7 @@ namespace Laundry.Views
     {
       aggregator.Subscribe(this);
       this.ClothInstancesGrid = clothGrid;
-      this.ClothInstancesGrid.IsNewOrder = true;
+      this.ClothInstancesGrid.Order = this.Entity;
 
       this.Paginator = paginator;
       this.Paginator.ElementsName = "Вещей";
@@ -77,12 +77,6 @@ namespace Laundry.Views
       this.ClothInstancesGrid.Add();
     }
 
-    public override void Discard()
-    {
-      base.Discard();
-      this.Model.ClothInstances.ClearUnRegistred();
-    }
-
     private void OnEntityChanged(Client obj)
     {
       this.EntityRepository.SetClient(this.Entity, obj);
@@ -92,8 +86,10 @@ namespace Laundry.Views
     {
       base.Handle(message);
 
-      this.ClothInstancesGrid.Order = message;
-      this.ClothInstancesGrid.IsNewOrder = false;
+      this.Entity = this.EntityRepository.GetById(message.Id);
+      
+
+      this.ClothInstancesGrid.Order = this.Entity;
       this.Paginator.RefreshPaginable();
 
       this.ClientCombo.SelectedEntity = EntityRepository.GetClient(this.Entity);

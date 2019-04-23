@@ -26,7 +26,6 @@ namespace Laundry.Views.Cards
     public ClothInstanceCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.About)
     {
     }
-
     
   }
 }

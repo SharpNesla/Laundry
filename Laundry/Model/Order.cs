@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Laundry.Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
-
+using System.Linq;
 namespace Laundry.Model
 {
   public enum OrderState
@@ -30,9 +30,7 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public OrderState Status { get; set; }
-
-    [BsonIgnoreIfDefault]
-    public float Price { get; set; }
+    
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
@@ -47,8 +45,18 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public bool IsDiscount { get; set; }
+    [BsonIgnore]
+    public double Price
+    {
+      get { return Instances.Sum(x => x.Price); }
+    }
 
-    public IList<ClothInstance> Instances { get; set; }
+    public List<ClothInstance> Instances { get; set; }
+
+    public Order()
+    {
+      this.Instances = new List<ClothInstance>();
+    }
 
     #region Ids
 

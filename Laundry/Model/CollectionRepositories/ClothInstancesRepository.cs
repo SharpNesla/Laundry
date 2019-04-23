@@ -49,16 +49,10 @@ namespace Laundry.Model.CollectionRepositories
       this._unregistredPool.Clear();
     }
 
-    public void SetOrder(ClothInstance instance, Order order)
-    {
-      instance.Order = order.Id;
-    }
-
     public long GetForOrderCount(Order order)
     {
       var filter = Builders<ClothInstance>.Filter.And(
-        Builders<ClothInstance>.Filter.Exists(nameof(ClothInstance.DeletionDate), false),
-        Builders<ClothInstance>.Filter.Eq(nameof(ClothInstance.Order), order.Id)
+        Builders<ClothInstance>.Filter.Exists(nameof(ClothInstance.DeletionDate), false)
       );
       return Collection.CountDocuments(filter);
     }
@@ -75,7 +69,7 @@ namespace Laundry.Model.CollectionRepositories
 
     public IReadOnlyList<ClothInstance> GetForOrder(int offset, int limit, Order order)
     {
-      return this.Get(offset, limit, Builders<ClothInstance>.Filter.Eq(nameof(ClothInstance.Order), order.Id));
+      return this.Get(offset, limit);
     }
 
     public IReadOnlyList<ClothInstance> GetUnRegistred(int offset, int limit)

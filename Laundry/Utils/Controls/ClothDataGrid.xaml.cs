@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,67 +28,41 @@ namespace Laundry.Utils.Controls
   public class ClothDataGridViewModel : EntityGrid<ClothInstance, ClothInstancesRepository, ClothInstanceCardViewModel>
   {
     private readonly IEventAggregator _eventAggregator;
-    private readonly ClothEditorViewModel _editor;
+    private readonly IModel _model;
     public Order Order { get; set; }
-
-
-    public bool IsNewOrder { get; set; }
-
-    public ClothDataGridViewModel(IEventAggregator eventAggregator, ClothEditorViewModel editor,
+    
+    public ClothDataGridViewModel(IEventAggregator eventAggregator,
       ClothInstanceCardViewModel card, IModel model,
       DeleteDialogViewModel shure) : base(eventAggregator, card, model.ClothInstances, shure, Screens.About)
     {
       _eventAggregator = eventAggregator;
-      _editor = editor;
-      _editor.Changed += this.RaiseStateChanged;
+      _model = model;
     }
 
-    public override void Add()
+    public override async void Add()
     {
-
-      if (IsNewOrder)
-      {
-        _editor.IsNewOrder = true;
-      }
-      else
-      {
-        _editor.Order = this.Order;
-      }
-      DialogHostExtensions.ShowCaliburnVM(_editor);
+      var editor = new ClothEditorViewModel(_eventAggregator, _model, this.Order);
+      await DialogHostExtensions.ShowCaliburnVM(editor);
+      RaiseStateChanged();
     }
 
-    public override void Edit()
+    public override async void Edit()
     {
-      DialogHostExtensions.ShowCaliburnVM(_editor);
+      var editor = new ClothEditorViewModel(_eventAggregator, _model, this.Order);
+
       _eventAggregator.PublishOnUIThread(SelectedEntity);
-
+      await DialogHostExtensions.ShowCaliburnVM(editor);
+      RaiseStateChanged();
     }
 
     public override void Refresh(int page, int elements)
     {
-      if (Order != null && !IsNewOrder)
-      {
-        this.Entities = Repo.GetForOrder(page * elements, elements, Order);
-      }
-      else
-      {
-        this.Entities = Repo.GetUnRegistred(page * elements, elements);
-      }
+      this.Entities = Order.Instances.Skip(page * elements).Take(elements).ToList().AsReadOnly();
     }
 
     public override long Count
     {
-      get
-      {
-        if (Order != null && !IsNewOrder)
-        {
-          return Repo.GetForOrderCount(this.Order);
-        }
-        else
-        {
-          return Repo.GetUnRegistredCount();
-        }
-      }
+      get { return Order.Instances.Count; }
     }
 
     public override void ExportToExcel()
