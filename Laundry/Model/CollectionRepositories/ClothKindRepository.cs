@@ -24,6 +24,22 @@ namespace Laundry.Model.CollectionRepositories
       return clothKinds;
     }
 
+    public ClothKind GetFullTree()
+    {
+      var root = this.GetById(0);
+      FetchChildrenRecursively(root);
+      return root;
+    }
+
+    private void FetchChildrenRecursively(ClothKind subroot)
+    {
+      FetchChildren(subroot);
+      foreach (var subrootChild in subroot.Children)
+      {
+        FetchChildrenRecursively(subrootChild);
+      }
+    }
+
     public override ClothKind GetById(long id)
     {
       var clothKind = base.GetById(id);

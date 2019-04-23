@@ -11,7 +11,7 @@
              xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
              xmlns:cal="http://www.caliburnproject.org"
              d:DesignHeight="600" d:DesignWidth="800"
-             
+
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
 
@@ -43,7 +43,7 @@
             <ContextMenu>
               <MenuItem Header="Экспортировать как">
                 <MenuItem Header="*.csv" />
-                <MenuItem Header="*.xlsx" cal:Message.Attach="ExportToExcel()"/>
+                <MenuItem Header="*.xlsx" cal:Message.Attach="ExportToExcel()" />
               </MenuItem>
               <MenuItem Header="Удалить выбраное" />
             </ContextMenu>
@@ -68,7 +68,7 @@
               Style="{StaticResource MaterialDesignFlatButton}" Name="Discard">
         ОТМЕНИТЬ
       </Button>
-      <Button cal:Message.Attach="Apply($view)" DockPanel.Dock="Left" MaxWidth="132"
+      <Button cal:Message.Attach="ApplyChanges($view)" DockPanel.Dock="Left" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>
@@ -115,21 +115,27 @@
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                          Text="{StaticResource ClientEditor.MainInfoTitle}" />
               <TextBox Margin="0,16,0,12" materialDesign:HintAssist.Hint="Фамилия"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding UpdateSourceTrigger=LostFocus, Path=Entity.Surname,
-                ValidatesOnDataErrors=true, NotifyOnValidationError=true}">
-              </TextBox>
-              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                  <Binding Path="Entity.Name" 
-                           UpdateSourceTrigger="PropertyChanged">
+                  <Binding Path="Entity.Surname" ValidatesOnNotifyDataErrors="True"> 
                     <Binding.ValidationRules>
-                      <DataErrorValidationRule ValidatesOnTargetUpdated="False"/>
+                      <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
                     </Binding.ValidationRules>
                   </Binding>
                 </TextBox.Text>
               </TextBox>
-              <TextBox Text="{Binding Entity.Patronymic}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Отчество (если есть)"
+              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                  <Binding Path="Entity.Name" ValidatesOnNotifyDataErrors="True">
+                    <Binding.ValidationRules >
+                      <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
+                    </Binding.ValidationRules>
+                  </Binding>
+                </TextBox.Text>
+              </TextBox>
+              <TextBox Text="{Binding Entity.Patronymic}" Margin="0,0,0,8"
+                       materialDesign:HintAssist.Hint="Отчество (если есть)"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
               <TextBox Text="{Binding Entity.PhoneNumber}"
                        Margin="0,0,0,8"

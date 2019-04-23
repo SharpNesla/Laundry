@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,7 +11,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
 {
-  public class Person : IRepositoryElement, IDataErrorInfo
+  public class Person : IRepositoryElement, IDataErrorInfo, INotifyDataErrorInfo
   {
     [BsonId]
     public long Id { get; set; }
@@ -79,15 +80,20 @@ namespace Laundry.Model
       }
     }
 
-    public virtual void TriggerValidation()
-    {
-      this.Name = String.Empty;
-      this.Name = null;
-
-      this.Surname = String.Empty;
-      this.Surname = null;
-    }
+    
 
     public string Error { get; }
+    public IEnumerable GetErrors(string propertyName)
+    {
+      return this[propertyName];
+    }
+
+    public bool HasErrors { get; } = false;
+
+    public void TriggerValidation()
+    {
+      this.ErrorsChanged?.Invoke(null, null);
+    }
+    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
   }
 }

@@ -187,6 +187,9 @@
       <DependentUpon>ClothDataGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Controls\EntityGrid.cs" />
+    <Compile Include="Utils\Controls\EntitySearchControls\ClothKindSelector.xaml.cs">
+      <DependentUpon>ClothKindSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Controls\EntitySearchControls\EmployeeSearch.xaml.cs">
       <DependentUpon>EmployeeSearch.xaml</DependentUpon>
     </Compile>
@@ -358,6 +361,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Utils\Controls\EmployeeDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utils\Controls\EntitySearchControls\ClothKindSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
