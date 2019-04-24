@@ -39,6 +39,9 @@ namespace Laundry.Views
     {
       this.Order = order;
       this.ClothKindTree = new ClothKindSelectorViewModel(model);
+      this.ClothKindTree.EntityChanged = x => { this.Entity.ClothKind = x.Id;
+        this.Entity.ClothKindObj = x;
+      };
     }
 
     public override void ApplyChanges()
@@ -58,7 +61,8 @@ namespace Laundry.Views
     public override void Handle(ClothInstance message)
     {
       this.Entity = message.Clone();
-      this._instancePos = this.Order.Instances.IndexOf(message); 
+      this._instancePos = this.Order.Instances.IndexOf(message);
+      this.ClothKindTree.SelectedEntity = this.Entity.ClothKindObj;
       this.IsNew = false;
     }
   }

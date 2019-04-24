@@ -24,9 +24,33 @@ namespace Laundry.Views
   /// </summary>
   public class ClothKindEditorViewModel : EditorScreen<ClothKindRepository, ClothKind>
   {
+    private ClothKind _clothKindParent;
+
     public ClothKindEditorViewModel(IEventAggregator aggregator, IModel model) :
       base(aggregator, model, model.ClothKinds, "предмета одежды")
     {
+    }
+
+    public ClothKind ClothKindParent
+    {
+      get { return _clothKindParent; }
+      set
+      {
+        _clothKindParent = value;
+        this.Entity.Parent = _clothKindParent.Id;
+      }
+    }
+
+    public override void ApplyChanges()
+    {
+      if (IsNew)
+      {
+        EntityRepository.Add(this.Entity);
+      }
+      else
+      {
+        EntityRepository.Update(this.Entity);
+      }
     }
   }
 }

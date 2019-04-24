@@ -6,6 +6,7 @@ using MaterialDesignThemes.Wpf;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Views.Actions;
 
 namespace Laundry.Views
 {
@@ -14,16 +15,24 @@ namespace Laundry.Views
   /// </summary>
   public class DashBoardViewModel : DrawerActivityScreen
   {
+    private readonly IEventAggregator _aggregator;
+    private readonly IModel _mockModel;
 
     public DashBoardViewModel(IEventAggregator aggregator, IModel mockModel) : base(aggregator, mockModel)
     {
-      
+      _aggregator = aggregator;
+      _mockModel = mockModel;
     }
-
+    
     public void OpenOrderEditor()
     {
       this.ChangeApplicationScreen(Utils.Screens.OrderEditor);
     }
 
+    public async void Wash()
+    {
+      var washOrdersDialog = new WashOrdersViewModel(_aggregator,_mockModel);
+      await DialogHostExtensions.ShowCaliburnVM(washOrdersDialog);
+    }
   }
 }

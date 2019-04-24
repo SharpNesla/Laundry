@@ -27,25 +27,34 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class ClothKindGridViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>
   {
-    private readonly ClothKindEditorViewModel _editor;
+    private readonly IModel _model;
     public float NameWidth { get; set; }
     public ObservableCollection<ClothKind> EditableEntities { get; private set; }
 
 
     public ClothKindGridViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
-      IModel model, DeleteDialogViewModel shure, ClothKindEditorViewModel editor)
+      IModel model, DeleteDialogViewModel shure)
       : base(eventAggregator, card, model.ClothKinds, shure, Screens.ClothKindEditor)
     {
-      _editor = editor;
+      _model = model;
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
       this.StateChanged += RaiseStateChanged; 
     }
 
-    public override void Add()
+    public override async void Add()
     {
-      DialogHostExtensions.ShowCaliburnVM(_editor);
+      var editor = new ClothKindEditorViewModel(this.EventAggregator, _model);
+      editor.ClothKindParent = this.SelectedEntity;
+      await DialogHostExtensions.ShowCaliburnVM(editor);
+      this.Refresh(0, 0);
     }
-
+    public override async void Edit()
+    {
+      var editor = new ClothKindEditorViewModel(this.EventAggregator, _model);
+      EventAggregator.PublishOnUIThread(this.SelectedEntity);
+      await DialogHostExtensions.ShowCaliburnVM(editor);
+      this.Refresh(0, 0);
+    }
     public void ShowHideDetails(ToggleButton button, ClothKind clothKind)
     {
       if (button.IsChecked.Value)

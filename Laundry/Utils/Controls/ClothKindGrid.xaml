@@ -85,7 +85,7 @@
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
-              <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
+              <Button Foreground="{StaticResource MaterialDesignBodyLight}"
                       Style="{StaticResource MaterialDesignFlatButton}"
                       cal:Message.Attach="ShowInfoCard($dataContext)">
 

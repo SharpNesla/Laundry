@@ -35,7 +35,7 @@ namespace Laundry.Utils.Controls
     where TCard : Card<TEntity>
   {
     private Card<TEntity> _card;
-    private IEventAggregator _eventAggregator;
+    protected readonly IEventAggregator EventAggregator;
     private Screens _editScreen;
     public IReadOnlyList<TEntity> Entities { get; set; }
     public TEntity SelectedEntity { get; set; }
@@ -64,7 +64,7 @@ namespace Laundry.Utils.Controls
     {
       this._card = card;
       this._editScreen = editScreen;
-      this._eventAggregator = eventAggregator;
+      this.EventAggregator = eventAggregator;
       this.Repo = repo;
       this._shure = shure;
       this.DisplaySelectionColumn = displaySelectColumn;
@@ -103,14 +103,14 @@ namespace Laundry.Utils.Controls
 
     public virtual void Add()
     {
-      _eventAggregator.PublishOnUIThread(_editScreen);
+      EventAggregator.PublishOnUIThread(_editScreen);
       StateChanged?.Invoke();
     }
 
     public virtual void Edit()
     {
-      _eventAggregator.PublishOnUIThread(_editScreen);
-      _eventAggregator.PublishOnUIThread(SelectedEntity);
+      EventAggregator.PublishOnUIThread(_editScreen);
+      EventAggregator.PublishOnUIThread(SelectedEntity);
     }
 
     public async void Remove()

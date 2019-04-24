@@ -17,7 +17,7 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public int Amount { get; set; }
-
+    [BsonIgnoreIfDefault]
     public long TagNumber { get; set; }
 
     [BsonId]
@@ -28,7 +28,7 @@ namespace Laundry.Model
 
     [BsonIgnore]
     public string Signature { get; }
-
+    [BsonIgnore]
     public ClothKind ClothKindObj { get; set; }
 
     [BsonIgnore]

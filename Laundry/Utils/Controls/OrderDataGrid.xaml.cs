@@ -116,7 +116,7 @@ namespace Laundry.Utils.Controls
     //  this.IsSearchDrawerOpened = true;
     //  this.IsByClient = true;
     //  this.ClientCombo.SelectedEntity = message;
-    //  this._eventAggregator.Unsubscribe(this);
+    //  this.EventAggregator.Unsubscribe(this);
     //}
   }
 }

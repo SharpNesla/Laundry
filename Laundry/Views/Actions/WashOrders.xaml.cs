@@ -12,17 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
+using Laundry.Model;
+using Laundry.Utils;
+using Laundry.Utils.Controls;
 
 namespace Laundry.Views.Actions
 {
-  /// <summary>
-  /// Interaction logic for WashOrders.xaml
-  /// </summary>
-  public partial class WashOrders : UserControl
+  public class WashOrdersViewModel : ActivityScreen
   {
-    public WashOrders()
+    public OrderDataGridViewModel OrderGrid { get; set; }
+
+    public WashOrdersViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
     {
-      InitializeComponent();
     }
+
   }
 }

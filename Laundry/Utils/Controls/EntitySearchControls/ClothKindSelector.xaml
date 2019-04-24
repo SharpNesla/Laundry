@@ -11,15 +11,12 @@
              TextElement.FontSize="14"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
              d:DesignHeight="450" d:DesignWidth="800">
-  <StackPanel>
-    <TextBlock>
+  <DockPanel LastChildFill="True">
 
-    </TextBlock>
-    <materialDesign:PopupBox StaysOpen="True">
+    <materialDesign:PopupBox DockPanel.Dock="Right" StaysOpen="True">
       <Grid MinWidth="400">
-        <TreeView 
-          cal:Message.Attach="[Event SelectedItemChanged] = [Action SelectionChanged()]"
-          ItemsSource="{Binding Tree}">
+        <TreeView cal:Message.Attach="[Event SelectedItemChanged] = [Action SelectionChanged($source)]"
+                  ItemsSource="{Binding Tree}">
           <TreeView.ItemTemplate>
             <HierarchicalDataTemplate ItemsSource="{Binding Children}">
               <TextBlock Text="{Binding Name}" />
@@ -29,5 +26,15 @@
         </TreeView>
       </Grid>
     </materialDesign:PopupBox>
-  </StackPanel>
+
+    <TextBlock>
+      <TextBlock.Text>
+        <MultiBinding StringFormat="{}{0} {1}₽">
+          <Binding Path="SelectedEntity.Name" />
+          <Binding Path="SelectedEntity.Price" />
+          <Binding Path="SelectedEntity.MeasureKind" Converter="{StaticResource MeasureKindConverter}" />
+        </MultiBinding>
+      </TextBlock.Text>
+    </TextBlock>
+  </DockPanel>
 </UserControl>

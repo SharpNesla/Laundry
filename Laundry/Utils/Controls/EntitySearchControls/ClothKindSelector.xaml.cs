@@ -21,15 +21,16 @@ namespace Laundry.Utils.Controls.EntitySearchControls
   {
     public List<ClothKind> Tree { get; }
     public ClothKind SelectedEntity { get; set; }
+    public Action<ClothKind> EntityChanged;
     public ClothKindSelectorViewModel(IModel model)
     {
       this.Tree = new List<ClothKind> {model.ClothKinds.GetFullTree()};
     }
 
-    public void SelectionChanged(object sender, RoutedPropertyChangedEventArgs<Object> e)
+    public void SelectionChanged(TreeView view)
     {
-
-      MessageBox.Show((e.NewValue as ClothKind)?.Name);
+      this.SelectedEntity = view.SelectedItem as ClothKind;
+      EntityChanged?.Invoke(SelectedEntity);
     }
   }
 }

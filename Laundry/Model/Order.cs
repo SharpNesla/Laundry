@@ -73,7 +73,7 @@ namespace Laundry.Model
     public long CorpObtainerId { get; set; }
 
     [BsonElement("WasherCourier")]
-    public long WasherCourierId { get; set; }
+    public long WasherId { get; set; }
 
     [BsonElement("OutCourier")]
     public long OutCourierId { get; set; }

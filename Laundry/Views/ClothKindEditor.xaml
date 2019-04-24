@@ -7,6 +7,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
+             xmlns:model="clr-namespace:Laundry.Model"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
@@ -46,21 +48,21 @@
           Padding="16"
           BorderThickness="0">
           <StackPanel>
-            <ComboBox materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+            <TextBox materialDesign:HintAssist.Hint="Название" Text="{Binding Entity.Name}"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,8" />
+
+
+            <ComboBox Margin="0,0,16,0" Grid.Row="1" Grid.Column="0"
+                      materialDesign:HintAssist.Hint="Мера измерения"
                       VerticalAlignment="Bottom"
-                      materialDesign:HintAssist.Hint="{StaticResource ClothTypes}">
-              <ComboBoxItem IsEnabled="False">
-                Носки Шерстяные
-              </ComboBoxItem>
-              <ComboBoxItem>
-                Носки Шерстяные
-              </ComboBoxItem>
-            </ComboBox>
-            <TextBox materialDesign:HintAssist.Hint="Номер бирки" Text="{Binding Entity.TagId}"
+                      ItemsSource="{Binding Source={converters:Enumeration {x:Type model:MeasureKind}}}"
+                      DisplayMemberPath="Description"
+                      SelectedValue="{Binding Entity.MeasureKind}"
+                      SelectedValuePath="Value" />
+
+            <TextBox materialDesign:HintAssist.Hint="Цена за единицу" Text="{Binding Entity.Price}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-            <TextBox materialDesign:HintAssist.Hint="Процент износа" Text="{Binding Entity.WearPercentage}"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-            <TextBox materialDesign:HintAssist.Hint="Количесто" Text="{Binding Entity.Amount}"
+            <TextBox materialDesign:HintAssist.Hint="Количество порошка на стирку единицы (в кг)" Text="{Binding Entity.Amount}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
           </StackPanel>
         </materialDesign:Card>

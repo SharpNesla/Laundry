@@ -41,11 +41,12 @@ namespace Laundry.Model
 
     public long ChildrenCount { get; internal set; }
 
-    public bool HasChildren
-    {
-      get { return ChildrenCount != 0; }
-    }
+    [BsonIgnore]
+    public bool HasChildren => ChildrenCount != 0;
+
+    [BsonIgnore]
     public IReadOnlyList<ClothKind> Children { get; internal set; }
+
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
     public string Signature { get; }

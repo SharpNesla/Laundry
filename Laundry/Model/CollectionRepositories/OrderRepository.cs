@@ -30,6 +30,7 @@ namespace Laundry.Model.CollectionRepositories
     public override Order GetById(long id)
     {
       var order =base.GetById(id);
+
       foreach (var instance in order.Instances)
       {
         instance.ClothKindObj = Model.ClothKinds.GetById(instance.ClothKind);
@@ -58,7 +59,7 @@ namespace Laundry.Model.CollectionRepositories
         Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
         Builders<Order>.Filter.Eq(nameof(Order.ClientId), client.Id)
       );
-      var orders = Collection.Find(filter).Skip(offset).Limit(limit).ToList();
+      var orders = this.Get(offset, limit, filter);
       return orders;
     }
 
