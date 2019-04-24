@@ -127,5 +127,13 @@ namespace Laundry.Model.CollectionRepositories
     {
       if (corpDistributer != null) entity.DistributerId = corpDistributer.Id;
     }
+
+    public void SetOrdersStatus(IEnumerable<Order> orders, OrderStatus status)
+    {
+      foreach (var order in orders)
+      {
+        Collection.UpdateOne(x => x.Id == order.Id, Builders<Order>.Update.Set(x=>x.Status, status));
+      }
+    }
   }
 }

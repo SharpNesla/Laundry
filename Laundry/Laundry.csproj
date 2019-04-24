@@ -234,6 +234,7 @@
     <Compile Include="Views\Actions\ObtainOrders.xaml.cs">
       <DependentUpon>ObtainOrders.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Actions\OrderActionsBase.cs" />
     <Compile Include="Views\Actions\TakeOrders.xaml.cs">
       <DependentUpon>TakeOrders.xaml</DependentUpon>
     </Compile>

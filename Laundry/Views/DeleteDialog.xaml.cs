@@ -20,7 +20,7 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for ShureQuestionDialog.xaml
   /// </summary>
-  public class DeleteDialogViewModel : PropertyChangedBase
+  public class DeleteDialogViewModel : Screen
   {
     public bool IsDelete { get; set; }
     public async Task<bool> AskQuestion()

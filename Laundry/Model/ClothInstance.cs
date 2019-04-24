@@ -32,7 +32,7 @@ namespace Laundry.Model
     public ClothKind ClothKindObj { get; set; }
 
     [BsonIgnore]
-    public bool Selected { get; set; }
+    public bool IsSelected { get; set; }
     
     [BsonIgnore]
     public float Price

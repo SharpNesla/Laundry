@@ -6,34 +6,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using Laundry.Model;
+
 namespace Laundry.Utils.Converters
 {
-    class OrderStatusConverter : IValueConverter
+  class OrderStatusConverter : IValueConverter
+  {
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-          var val = (OrderState) value;
+      var val = (OrderStatus) value;
 
-            switch (val)
-            {
-                case OrderState.Taken:
-                    return "Принят";
-                case OrderState.MoveFromSubs:
-                    return "Перевозится в прачечную";
-                case OrderState.Washing:
-                    return "В стирке";
-                case OrderState.MoveToSubs:
-                    return "Перевозится в филиал";
-                case OrderState.Granted:
-                    return "Выдан";
-                default:
-                    return "";
-            }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+      return (new EnumerationExtension(typeof(OrderStatus))).GetDescription(val);
     }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+      throw new NotImplementedException();
+    }
+  }
 }

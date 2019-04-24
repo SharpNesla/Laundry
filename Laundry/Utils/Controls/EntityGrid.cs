@@ -15,6 +15,7 @@ using MongoDB.Driver;
 using NPOI.SS.UserModel;
 using Action = System.Action;
 using NPOI.XSSF.UserModel;
+
 namespace Laundry.Utils.Controls
 {
   public interface IEntityGrid<out TEntity> : IPaginable where TEntity : IRepositoryElement
@@ -40,6 +41,11 @@ namespace Laundry.Utils.Controls
     public IReadOnlyList<TEntity> Entities { get; set; }
     public TEntity SelectedEntity { get; set; }
 
+    public IReadOnlyList<TEntity> SelectedEntities
+    {
+      get { return this.Entities.Where(x => x.IsSelected).ToList(); }
+    }
+
     public virtual FilterDefinition<TEntity> Filter
     {
       get { return BaseFilter; }
@@ -50,7 +56,7 @@ namespace Laundry.Utils.Controls
 
     protected FilterDefinition<TEntity> BaseFilter { get; private set; }
     public TRepository Repo { get; }
-  
+
     public Visibilities Visibilities { get; }
 
     public bool IsSearchDrawerOpened { get; set; }
@@ -60,7 +66,8 @@ namespace Laundry.Utils.Controls
     public event Action<TEntity> RemoveButtonClick;
 
     public EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
-      DeleteDialogViewModel shure, Screens editScreen,Visibilities visibilities = null, bool displaySelectColumn = true)
+      DeleteDialogViewModel shure, Screens editScreen, Visibilities visibilities = null,
+      bool displaySelectColumn = true)
     {
       this._card = card;
       this._editScreen = editScreen;
@@ -143,8 +150,6 @@ namespace Laundry.Utils.Controls
       indexCell.SetCellValue(client.Id);
       nameCell.SetCellValue(client.Name);
       surnameCell.SetCellValue(client.Surname);
-
-      
     }
   }
 }

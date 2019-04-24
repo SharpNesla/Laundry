@@ -55,6 +55,6 @@ namespace Laundry.Model
       get { return $"{Id} {BrandAndModel}"; }
     }
     [BsonIgnore]
-    public bool Selected { get; set; }
+    public bool IsSelected { get; set; }
   }
 }

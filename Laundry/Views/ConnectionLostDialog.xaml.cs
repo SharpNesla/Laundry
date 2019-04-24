@@ -12,13 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Caliburn.Micro;
 
 namespace Laundry.Views
 {
   /// <summary>
   /// Interaction logic for ConnectionLostDialogViewModel.xaml
   /// </summary>
-  public class ConnectionLostDialogViewModel : UserControl
+  public class ConnectionLostDialogViewModel : Screen
   {
     public ConnectionLostDialogViewModel()
     {

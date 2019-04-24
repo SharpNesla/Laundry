@@ -1,16 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Laundry.Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Linq;
 namespace Laundry.Model
 {
-  public enum OrderState
+  public enum OrderStatus
   {
+    [Description("Принят")]
     Taken,
+    [Description("Перевозка на прачечную")]
     MoveFromSubs,
+    [Description("Готов к стирке")]
+    ReadyToWash,
+    [Description("В стирке")]
     Washing,
+    [Description("Постиран")]
+    Washer,
+    [Description("Перевозка из прачечной")]
     MoveToSubs,
+    [Description("Выдан")]
     Granted
   }
 
@@ -27,9 +37,8 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime ExecutionDate { get; set; }
-
-    [BsonIgnoreIfDefault]
-    public OrderState Status { get; set; }
+    
+    public OrderStatus Status { get; set; }
     
 
     [BsonIgnoreIfDefault]
@@ -38,7 +47,7 @@ namespace Laundry.Model
     public string Signature { get; }
 
     [BsonIgnore]
-    public bool Selected { get; set; }
+    public bool IsSelected { get; set; }
 
     [BsonIgnoreIfDefault]
     public bool IsCorporative { get; set; }
@@ -73,7 +82,7 @@ namespace Laundry.Model
     public long CorpObtainerId { get; set; }
 
     [BsonElement("WasherCourier")]
-    public long WasherId { get; set; }
+    public long WasherCourierId { get; set; }
 
     [BsonElement("OutCourier")]
     public long OutCourierId { get; set; }

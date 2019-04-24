@@ -20,7 +20,7 @@ namespace Laundry.Model
       get { return $"{Id} {City} {Street} {House}"; }
     }
     [BsonIgnore]
-    public bool Selected { get; set; }
+    public bool IsSelected { get; set; }
 
     [BsonIgnoreIfDefault]
     public int House { get; set; }

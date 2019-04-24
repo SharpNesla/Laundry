@@ -19,6 +19,6 @@ namespace Laundry.Model
     [BsonIgnore]
     public string Signature { get; }
     [BsonIgnoreIfDefault]
-    public bool Selected { get; set; }
+    public bool IsSelected { get; set; }
   }
 }

@@ -8,6 +8,7 @@ using Laundry.Utils.Controls.EntitySearchControls;
 namespace Laundry
 {
   using Laundry.Utils.Controls;
+  using Laundry.Views.Actions;
   using Laundry.Views.Cards;
   using Utils;
 
@@ -87,6 +88,7 @@ namespace Laundry
       container.Singleton<Visibilities>();
       container.Singleton<DeleteDialogViewModel>();
       container.Singleton<ConnectionLostDialogViewModel>();
+      
     }
 
     protected override object GetInstance(Type service, string key)

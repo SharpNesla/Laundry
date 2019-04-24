@@ -79,7 +79,7 @@
       </DataGrid.Resources>
       <DataGrid.Columns>
 
-        <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
+        <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64" Binding="{Binding IsSelected}"
                               Visibility="{Binding Data.DisplaySelectionColumn, Source={StaticResource proxy}, Converter={StaticResource BoolVisibilityConverter}}"
                               ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                               EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">

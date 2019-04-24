@@ -11,7 +11,7 @@ namespace Laundry.Model.CollectionRepositories
   /// <typeparam name="T">Тип объекта находящегося в коллекции</typeparam>
   public class Repository<T> where T : IRepositoryElement
   {
-    public IMongoCollection<T> Collection { get; protected set; }
+    protected IMongoCollection<T> Collection { get; set; }
     internal event Action ConnectionLost;
     protected IModel Model { get; set; }
 

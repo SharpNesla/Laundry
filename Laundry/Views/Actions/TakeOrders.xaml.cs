@@ -12,17 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Laundry.Model;
+using Laundry.Model.CollectionRepositories;
+using Laundry.Utils.Controls;
 
 namespace Laundry.Views.Actions
 {
-  /// <summary>
-  /// Interaction logic for TakeOrders.xaml
-  /// </summary>
-  public partial class TakeOrders : UserControl
+  public class TakeOrdersViewModel : OrderActionsBase
   {
-    public TakeOrders()
+    public TakeOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid) 
+      : base(model.Orders, model.CurrentUser, orderGrid, OrderStatus.Taken, OrderStatus.MoveFromSubs)
     {
-      InitializeComponent();
+
     }
   }
 }

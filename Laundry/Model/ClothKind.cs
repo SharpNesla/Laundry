@@ -12,7 +12,6 @@ namespace Laundry.Model
 
   public enum MeasureKind
   {
-    
     [Description("шт")]
     Thing,
     [Description("кг")]
@@ -52,7 +51,7 @@ namespace Laundry.Model
     public string Signature { get; }
 
     [BsonIgnore]
-    public bool Selected { get; set; }
+    public bool IsSelected { get; set; }
     [BsonIgnore]
     public int Level { get; set; }
   }

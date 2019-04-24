@@ -17,7 +17,7 @@
         <TextBlock
           Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="{Binding EditorTitle}" />
+          Margin="8 0 0 0" Text="Перевозка  на прачечную" />
       </StackPanel>
     </materialDesign:ColorZone>
 

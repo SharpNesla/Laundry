@@ -13,6 +13,6 @@ namespace Laundry.Model.DatabaseClients
     [BsonIgnore]
     string Signature { get; }
 
-    bool Selected { get; set; }
+    bool IsSelected { get; set; }
   }
 }

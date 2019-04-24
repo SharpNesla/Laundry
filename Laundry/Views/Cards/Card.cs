@@ -4,7 +4,7 @@ using Laundry.Utils;
 
 namespace Laundry.Views
 {
-  public class Card<TEntity> : PropertyChangedBase where TEntity : IRepositoryElement
+  public class Card<TEntity> : Screen where TEntity : IRepositoryElement
   {
     public Visibilities Visibilities { get; }
     private Screens _editorScreen;

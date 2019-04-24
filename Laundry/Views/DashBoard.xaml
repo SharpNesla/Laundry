@@ -23,8 +23,9 @@
     </materialDesign:ColorZone>
 
     <StackPanel Margin="0" Width="400">
-      <Button Margin="0,0,0,16" Content="Отвезти заказы из филиала на стирку"
+      <Button Name="MoveFromSubs" Margin="0,0,0,16" Content="Отвезти заказы из филиала на стирку"
               Visibility="{Binding Visibilities.Courier}" />
+      <Button Name="RecieveOrders" Margin="0,0,0,16" Content="Принять заказы на стирку" Visibility="{Binding Visibilities.Washer}" />
       <Button Name="Wash" Margin="0,0,0,16" Content="Постирать заказы" Visibility="{Binding Visibilities.Washer}" />
       <Button Margin="0,0,0,16" Content="Выдать заказы" Visibility="{Binding Visibilities.Advisor}" />
       <Button Margin="0,0,0,16" Content="Отвезти заказы на выдачу" Visibility="{Binding Visibilities.Courier}" />
