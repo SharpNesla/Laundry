@@ -14,21 +14,28 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
+using Laundry.Model.CollectionRepositories;
 using Laundry.Utils;
-using Laundry.Utils.Controls;
 
 namespace Laundry.Views
 {
-    /// <summary>
-    /// Interaction logic for DiscountSystem.xaml
-    /// </summary>
-    public class DiscountSystemViewModel : DictionaryScreen<DiscountGridViewModel>
+  public class DiscountEdgeEditorViewModel : EditorScreen<DiscountSystemRepository, DiscountEdge>
+  {
+    public DiscountEdgeEditorViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model,
+      model.DiscountEdges, "границы")
     {
-      public DiscountSystemViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, DiscountGridViewModel entityGrid) 
-        : base(aggregator, model, paginator, entityGrid, "Границ")
+    }
+
+    public override void ApplyChanges()
+    {
+      if (IsNew)
       {
+        EntityRepository.Add(this.Entity);
       }
-    
-   
+      else
+      {
+        EntityRepository.Update(this.Entity);
+      }
+    }
   }
 }

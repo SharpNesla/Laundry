@@ -15,7 +15,10 @@ namespace Laundry.Model
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
     [BsonIgnoreIfDefault]
-    public double Edge { get; }
+    public double Edge { get; set; }
+    [BsonIgnoreIfDefault]
+    public double Discount { get; set; }
+
     [BsonIgnore]
     public string Signature { get; }
     [BsonIgnoreIfDefault]

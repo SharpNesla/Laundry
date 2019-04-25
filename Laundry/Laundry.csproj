@@ -225,6 +225,12 @@
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Actions\AcceptDelivery.xaml.cs">
+      <DependentUpon>AcceptDelivery.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Actions\ApplyOrdersForDelivery.xaml.cs">
+      <DependentUpon>ApplyOrdersForDelivery.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Actions\DeliverOrders.xaml.cs">
       <DependentUpon>DeliverOrders.xaml</DependentUpon>
     </Compile>
@@ -274,6 +280,9 @@
     </Compile>
     <Compile Include="Views\ConnectionLostDialog.xaml.cs">
       <DependentUpon>ConnectionLostDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DiscountEdgeEditor.xaml.cs">
+      <DependentUpon>DiscountEdgeEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OrderDictionary.xaml.cs">
       <DependentUpon>OrderDictionary.xaml</DependentUpon>
@@ -393,6 +402,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Actions\AcceptDelivery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Actions\ApplyOrdersForDelivery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Actions\DeliverOrders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -454,6 +471,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ConnectionLostDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DiscountEdgeEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

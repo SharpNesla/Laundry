@@ -7,6 +7,7 @@ using Laundry.Model.CollectionRepositories;
 using Laundry.Model.DatabaseClients;
 using Laundry.Views;
 using MaterialDesignThemes.Wpf;
+using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
 {
@@ -21,7 +22,8 @@ namespace Laundry.Utils.Controls
     {
     }
 
-    public override void ExportToExcel()
+
+    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
     {
       throw new NotImplementedException();
     }

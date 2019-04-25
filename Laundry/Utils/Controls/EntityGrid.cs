@@ -66,13 +66,14 @@ namespace Laundry.Utils.Controls
     public event Action<TEntity> RemoveButtonClick;
 
     public EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
-      DeleteDialogViewModel shure, Screens editScreen, Visibilities visibilities = null,
+      DeleteDialogViewModel shure, Screens editScreen, Visibilities visibilities = null, string entityName = "объекта",
       bool displaySelectColumn = true)
     {
       this._card = card;
       this._editScreen = editScreen;
       this.EventAggregator = eventAggregator;
       this.Repo = repo;
+      this.EntityName = entityName;
       this._shure = shure;
       this.DisplaySelectionColumn = displaySelectColumn;
       this.BaseFilter = Builders<TEntity>.Filter.Empty;
@@ -130,7 +131,37 @@ namespace Laundry.Utils.Controls
       }
     }
 
-    public abstract void ExportToExcel();
+    protected abstract XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook);
+
+    public void ExportToExcel()
+    {
+      var workbook = new XSSFWorkbook();
+
+      var preparedWorkBook = PrepareWorkBook(workbook);
+      
+      var dialog = new SaveFileDialog
+      {
+        InitialDirectory = @"~/Documents",
+        Title = $"Путь к экспортируемой таблице {EntityName}",
+        AddExtension = true,
+        Filter = "Файлы Excel 2007 (*.xlsx)|*.xlsx|Все остальные файлы (*.*)|*.*"
+      };
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        if (!File.Exists(dialog.FileName))
+        {
+          File.Delete(dialog.FileName);
+        }
+
+        //запишем всё в файл
+        using (var fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
+        {
+          preparedWorkBook.Write(fs);
+        }
+      }
+    }
+
+    public object EntityName { get; set; }
 
     public void RaiseStateChanged()
     {
@@ -142,14 +173,21 @@ namespace Laundry.Utils.Controls
   {
     public static void AppendClient(this ISheet sheet, Client client)
     {
-      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows + 1);
+      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
       var indexCell = row.CreateCell(0);
-      var nameCell = row.CreateCell(1);
-      var surnameCell = row.CreateCell(2);
+      var nameCell = row.CreateCell(2);
+      var surnameCell = row.CreateCell(1);
+
+      row.CreateCell(3).SetCellValue(client.Patronymic);
+
+      var datebirth = row.CreateCell(4);
+
+      row.CreateCell(5).SetCellValue(client.OrdersCount);
 
       indexCell.SetCellValue(client.Id);
       nameCell.SetCellValue(client.Name);
       surnameCell.SetCellValue(client.Surname);
+      datebirth.SetCellValue(client.DateBirth.ToString("dd.MM.yyyy"));
     }
   }
 }

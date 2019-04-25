@@ -16,18 +16,32 @@ using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
+using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
 {
   public class DiscountGridViewModel : EntityGrid<DiscountEdge, DiscountSystemRepository, Card<DiscountEdge>>
   {
-    public DiscountGridViewModel(IModel model, IEventAggregator eventAggregator, DeleteDialogViewModel deleteDialog) : base(eventAggregator, null, model.DiscountEdges, deleteDialog, Screens.About)
+    private readonly IModel _model;
+    private readonly IEventAggregator _eventAggregator;
+
+    public DiscountGridViewModel(IModel model, IEventAggregator eventAggregator, DeleteDialogViewModel deleteDialog) :
+      base(eventAggregator, null, model.DiscountEdges, deleteDialog, Screens.About)
     {
+      _model = model;
+      _eventAggregator = eventAggregator;
     }
 
-    public override void ExportToExcel()
+    public override async void Add()
     {
-      
+      var editor = new DiscountEdgeEditorViewModel(_eventAggregator, _model);
+      await DialogHostExtensions.ShowCaliburnVM(editor);
+      RaiseStateChanged();
+    }
+
+    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
+    {
+      throw new NotImplementedException();
     }
   }
 }

@@ -27,7 +27,7 @@
             <ContextMenu DataContext="{Binding ElementName=Screen, Path=DataContext}">
               <MenuItem Header="Экспортировать как">
                 <MenuItem Header="*.csv" />
-                <MenuItem Header="*.xlsx" cal:Action.Target="ClientDict" cal:Message.Attach="[Event Click] = [Action ExportToExcel"
+                <MenuItem Header="*.xlsx" cal:Action.Target="ClientDict" cal:Message.Attach="[Event Click] = [Action ExportToExcel]"
                          />
               </MenuItem>
               <MenuItem Header="Удалить выбраное" />

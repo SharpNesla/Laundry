@@ -8,6 +8,7 @@ using Laundry.Utils.Controls.EntitySearchControls;
 using Laundry.Views;
 using MaterialDesignThemes.Wpf;
 using MongoDB.Driver;
+using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
 {
@@ -72,11 +73,11 @@ namespace Laundry.Utils.Controls
         base.Refresh(page, elements);
     }
 
-    public override void ExportToExcel()
+    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
     {
       throw new NotImplementedException();
     }
-
+    
     public override long Count
     {
       get

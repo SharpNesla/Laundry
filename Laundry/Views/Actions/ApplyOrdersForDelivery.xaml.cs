@@ -18,17 +18,16 @@ using Laundry.Utils.Controls;
 
 namespace Laundry.Views.Actions
 {
-  public class TakeOrdersViewModel : OrderActionsBase
+  public class ApplyOrdersForDeliveryViewModel : OrderActionsBase
   {
-    public TakeOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid) 
-      : base(model.Orders, model.CurrentUser, orderGrid, OrderStatus.Taken, OrderStatus.MoveFromSubs)
+    public ApplyOrdersForDeliveryViewModel(IModel model, OrderDataGridViewModel orderGrid) 
+      : base(model.Orders, model.CurrentUser, orderGrid, OrderStatus.Washing , OrderStatus.Washed)
     {
-
     }
 
     public override void PrintReport()
     {
-      throw new NotImplementedException();
+      
     }
   }
 }

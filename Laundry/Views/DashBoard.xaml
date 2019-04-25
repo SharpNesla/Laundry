@@ -27,8 +27,9 @@
               Visibility="{Binding Visibilities.Courier}" />
       <Button Name="RecieveOrders" Margin="0,0,0,16" Content="Принять заказы на стирку" Visibility="{Binding Visibilities.Washer}" />
       <Button Name="Wash" Margin="0,0,0,16" Content="Постирать заказы" Visibility="{Binding Visibilities.Washer}" />
+      <Button Name="ApplyOrdersForDelivery" Margin="0,0,0,16" Content="Подготовить заказы к доставке" Visibility="{Binding Visibilities.Washer}" />
       <Button Margin="0,0,0,16" Content="Выдать заказы" Visibility="{Binding Visibilities.Advisor}" />
-      <Button Margin="0,0,0,16" Content="Отвезти заказы на выдачу" Visibility="{Binding Visibilities.Courier}" />
+      <Button Name="MoveToSubs" Margin="0,0,0,16" Content="Отвезти заказы на выдачу" Visibility="{Binding Visibilities.Courier}" />
       <Button Margin="0,0,0,16" Content="Доставить корпоративные заказы" Visibility="{Binding Visibilities.Courier}" />
     </StackPanel>
   </DockPanel>

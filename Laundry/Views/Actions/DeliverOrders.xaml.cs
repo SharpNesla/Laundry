@@ -12,17 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Laundry.Model;
+using Laundry.Utils.Controls;
 
 namespace Laundry.Views.Actions
 {
-  /// <summary>
-  /// Interaction logic for DeliverOrders.xaml
-  /// </summary>
-  public partial class DeliverOrders : UserControl
+  public class DeliverOrdersViewModel : OrderActionsBase
   {
-    public DeliverOrders()
+    public DeliverOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
+      : base(model.Orders, model.CurrentUser, orderGrid, OrderStatus.Washed, OrderStatus.MoveToSubs)
     {
-      InitializeComponent();
+
+    }
+
+    public override void PrintReport()
+    {
+      throw new NotImplementedException();
     }
   }
 }

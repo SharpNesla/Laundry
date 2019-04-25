@@ -48,7 +48,7 @@ namespace Laundry.Utils.Controls
           filter = Builders<Client>.Filter.And(
             this.BaseFilter,
             Builders<Client>.Filter.Gte(nameof(Client.DateBirth), this.LowDateBirthBound ?? DateTime.MinValue),
-            Builders<Client>.Filter.Lte(nameof(Client.DateBirth), this.HighDateBirthBound?? DateTime.MaxValue));
+            Builders<Client>.Filter.Lte(nameof(Client.DateBirth), this.HighDateBirthBound ?? DateTime.MaxValue));
         }
 
         return filter;
@@ -57,45 +57,39 @@ namespace Laundry.Utils.Controls
       set { base.Filter = value; }
     }
 
-    public ClientDataGridViewModel(IEventAggregator eventAggregator, ClientCardViewModel card,
-      DeleteDialogViewModel deleteDialog, IModel model) :
-      base(eventAggregator, card, model.Clients, deleteDialog, Screens.ClientEditor)
+    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
     {
-    }
-
-    public override void ExportToExcel()
-    {
-      var workbook = new XSSFWorkbook();
-
       var sheet = workbook.CreateSheet();
 
       var clients = this.Repo.Get(0, int.MaxValue);
+
+      workbook.SetSheetName(0, "Клиенты");
+
+      var header = sheet.CreateRow(0);
+      header.CreateCell(0).SetCellValue("№");
+      header.CreateCell(1).SetCellValue("Имя");
+      header.CreateCell(2).SetCellValue("Фамилия");
+      header.CreateCell(3).SetCellValue("Отчество");
+      header.CreateCell(4).SetCellValue("Дата рождения");
+      header.CreateCell(5).SetCellValue("Количество заказов");
 
       foreach (var client in clients)
       {
         sheet.AppendClient(client);
       }
 
-      var dialog = new SaveFileDialog
+      for (int i = 0; i < 6; i++)
       {
-        InitialDirectory = @"~/Documents",
-        Title = "Путь к экспортируемой таблице клиентов",
-        AddExtension = true,
-        Filter = "Файлы Excel 2007 (*.xlsx)|*.xlsx|Все остальные файлы (*.*)|*.*"
-      };
-      if (dialog.ShowDialog() == DialogResult.OK)
-      {
-        if (!File.Exists(dialog.FileName))
-        {
-          File.Delete(dialog.FileName);
-        }
-
-        //запишем всё в файл
-        using (var fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
-        {
-          workbook.Write(fs);
-        }
+        sheet.AutoSizeColumn(i);
       }
+
+      return workbook;
+    }
+
+    public ClientDataGridViewModel(IEventAggregator eventAggregator, ClientCardViewModel card,
+      DeleteDialogViewModel deleteDialog, IModel model) :
+      base(eventAggregator, card, model.Clients, deleteDialog, Screens.ClientEditor)
+    {
     }
   }
 }

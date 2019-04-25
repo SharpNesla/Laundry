@@ -17,6 +17,7 @@ using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
 using Laundry.Views.Cards;
+using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
 {
@@ -31,9 +32,10 @@ namespace Laundry.Utils.Controls
     {
     }
 
-    public override void ExportToExcel()
+    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
     {
       throw new NotImplementedException();
     }
+    
   }
 }

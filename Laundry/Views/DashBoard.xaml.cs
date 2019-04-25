@@ -40,6 +40,18 @@ namespace Laundry.Views
       DialogHostExtensions.ShowCaliburnVM(takeOrders);
     }
 
+    public void MoveToSubs()
+    {
+      var deliverOrders = new DeliverOrdersViewModel(_mockModel, _orderGrid);
+      DialogHostExtensions.ShowCaliburnVM(deliverOrders);
+    }
+
+    public void ApplyOrdersForDelivery()
+    {
+      var applyorders = new ApplyOrdersForDeliveryViewModel(_mockModel, _orderGrid);
+      DialogHostExtensions.ShowCaliburnVM(applyorders);
+    }
+
     public void RecieveOrders()
     {
       var takeOrders = new TakeOrdersViewModel(_mockModel, _orderGrid);

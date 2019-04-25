@@ -17,7 +17,7 @@ namespace Laundry.Model
     [Description("В стирке")]
     Washing,
     [Description("Постиран")]
-    Washer,
+    Washed,
     [Description("Перевозка из прачечной")]
     MoveToSubs,
     [Description("Выдан")]

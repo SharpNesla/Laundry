@@ -63,39 +63,7 @@
             Orientation="Horizontal"
             materialDesign:RippleAssist.IsCentered="True">
 
-            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="32" Width="32" />
-            <materialDesign:ColorZone
-              Mode="Standard"
-              Padding="8 4 8 4"
-              CornerRadius="2"
-              Panel.ZIndex="1"
-              Margin="16 0 0 0"
-              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="400">
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition
-                    Width="Auto" />
-                  <ColumnDefinition
-                    Width="*" />
-                  <ColumnDefinition
-                    Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Button Name="AdvancedSearch"
-                  Style="{DynamicResource MaterialDesignToolButton}">
-                  <materialDesign:PackIcon
-                    Kind="Magnify"
-                    Opacity="0.56" />
-                </Button>
-                <TextBox
-                  Grid.Column="1"
-                  Margin="8 0 0 0"
-                  materialDesign:HintAssist.Hint="{StaticResource ClientDictionary.SearchBarTitle}"
-                  materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                  BorderThickness="0"
-                  MinWidth="200"
-                  VerticalAlignment="Center" />
-              </Grid>
-            </materialDesign:ColorZone>
+            <materialDesign:PackIcon Kind="Money" VerticalAlignment="Center" Height="32" Width="32" />
 
             <materialDesign:ColorZone
               Mode="Standard"
@@ -110,10 +78,6 @@
                           Style="{StaticResource MaterialDesignActionToggleButton}"
                           IsChecked="{Binding EntityGrid.IsSearchDrawerOpened}"
                           ToolTip="Расширенный поиск">
-              <ToggleButton.Content>
-                <materialDesign:PackIcon
-                  Kind="Search" />
-              </ToggleButton.Content>
               <materialDesign:ToggleButtonAssist.OnContent>
                 <materialDesign:PackIcon
                   Kind="ArrowDown" />

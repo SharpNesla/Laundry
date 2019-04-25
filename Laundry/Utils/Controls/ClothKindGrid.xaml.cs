@@ -19,6 +19,7 @@ using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
 using Laundry.Views.Cards;
+using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
 {
@@ -55,6 +56,12 @@ namespace Laundry.Utils.Controls
       await DialogHostExtensions.ShowCaliburnVM(editor);
       this.Refresh(0, 0);
     }
+
+    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
+    {
+      throw new NotImplementedException();
+    }
+
     public void ShowHideDetails(ToggleButton button, ClothKind clothKind)
     {
       if (button.IsChecked.Value)
@@ -90,9 +97,6 @@ namespace Laundry.Utils.Controls
     {
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
     }
-
-    public override void ExportToExcel()
-    {
-    }
+    
   }
 }

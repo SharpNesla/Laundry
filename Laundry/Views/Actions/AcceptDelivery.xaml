@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Laundry.Views.Actions.DistributeOrders"
+﻿<UserControl x:Class="Laundry.Views.Actions.AcceptDelivery"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -17,7 +17,7 @@
         <TextBlock
           Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="Выдать заказы" />
+          Margin="8 0 0 0" Text="Принять заказы на выдачу" />
       </StackPanel>
     </materialDesign:ColorZone>
 

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Laundry.Views.Actions.DistributeOrders"
+﻿<UserControl x:Class="Laundry.Views.Actions.ApplyOrdersForDeliveryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -17,10 +17,9 @@
         <TextBlock
           Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="Выдать заказы" />
+          Margin="8 0 0 0" Text="Подготовить заказы к доставке" />
       </StackPanel>
     </materialDesign:ColorZone>
-
 
     <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="24,0,24,24">
       <Button IsCancel="True" DockPanel.Dock="Right" MaxWidth="132"
@@ -34,15 +33,16 @@
         ПРИНЯТЬ
       </Button>
     </DockPanel>
-    <materialDesign:Card Margin="24"
-      BorderThickness="0" VerticalAlignment="Stretch">
+    <materialDesign:Card
+                           Padding="16" Margin="24"
+                           BorderThickness="0" VerticalAlignment="Stretch">
 
       <DockPanel LastChildFill="True">
         <Grid DockPanel.Dock="Bottom">
           <DockPanel>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
               <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
-                         Style="{StaticResource MaterialDesignBody2TextBlock}">
+                           Style="{StaticResource MaterialDesignBody2TextBlock}">
                 <TextBlock.Text>
                   <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
                     <Binding Path="Client.OrdersCount" />

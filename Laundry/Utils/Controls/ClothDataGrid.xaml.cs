@@ -18,6 +18,7 @@ using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
 using Laundry.Views.Cards;
+using NPOI.XSSF.UserModel;
 using PropertyChanged;
 
 namespace Laundry.Utils.Controls
@@ -65,9 +66,10 @@ namespace Laundry.Utils.Controls
       get { return Order.Instances.Count; }
     }
 
-    public override void ExportToExcel()
+    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
     {
       throw new NotImplementedException();
     }
+
   }
 }
