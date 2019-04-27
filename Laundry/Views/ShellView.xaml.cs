@@ -56,10 +56,10 @@ namespace Laundry
       this.IsDrawerOpened = false;
     }
 
-    public void ShowSelfUserCard()
+    public async void ShowSelfUserCard()
     {
       _employeeCard.Entity = CurrentEmployee;
-      DialogHostExtensions.ShowCaliburnVM(this._employeeCard);
+      await DialogHostExtensions.ShowCaliburnVM(this._employeeCard);
     }
 
     public void Handle(DrawerState message)

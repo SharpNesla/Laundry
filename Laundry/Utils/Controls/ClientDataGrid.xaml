@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Laundry.Utils.Controls"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" Name="OwnControl">
   <!--{Binding IsSearchDrawerOpened}-->
@@ -26,6 +27,7 @@
       </materialDesign:DrawerHost.BottomDrawerContent>
 
     </materialDesign:DrawerHost>
+    
     <DataGrid
       Margin="16"
       SelectionMode="Single"
@@ -44,12 +46,14 @@
           <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
         </ContextMenu>
       </DataGrid.ContextMenu>
+      <DataGrid.Resources>
+        <converters:BindingProxy x:Key="proxy" Data="{Binding}"/>
+      </DataGrid.Resources>
       <DataGrid.Columns>
-        <DataGridCheckBoxColumn
-          Visibility="{Binding DisplaySelectionColumn ,Converter={StaticResource BoolVisibilityConverter}}"
-          CanUserReorder="False" MinWidth="64" Width="64"
-          ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
-          EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+        <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64" Binding="{Binding IsSelected}"
+                                Visibility="{Binding Data.DisplaySelectionColumn, Source={StaticResource proxy}, Converter={StaticResource BoolVisibilityConverter}}"
+                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
           <DataGridCheckBoxColumn.Header>
             <Border
               Background="Transparent"

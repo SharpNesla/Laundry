@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="Laundry.Views.Dashboards.WasherDashBoardView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Laundry.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800"
+             Background="{DynamicResource MaterialDesignPaper}">
+  <DockPanel LastChildFill="True">
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid">
+      <Grid
+        Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="400*" />
+          <ColumnDefinition Width="400*" />
+          <ColumnDefinition Width="361*" />
+          <ColumnDefinition Width="50" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
+          <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
+                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
+          <TextBlock
+            Style="{StaticResource MaterialDesignTitleTextBlock}"
+            VerticalAlignment="Center"
+            Margin="16 0 0 0" Text="{StaticResource Analytics.Title}" />
+        </StackPanel>
+
+        <RadioButton
+          Style="{StaticResource MaterialDesignTabRadioButton}"
+          IsChecked="{Binding IsGridChecked}" Height="42" Grid.Row="1"
+          Content="Таблица" />
+        <RadioButton Grid.Column="1"
+                     IsChecked="{Binding IsChartChecked}"
+                     Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
+                     Content="График" />
+        <RadioButton Grid.Column="2"
+                     IsChecked="{Binding IsChartChecked}"
+                     Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1" Grid.ColumnSpan="2"
+                     Content="График" />
+        <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"
+                Style="{StaticResource MaterialDesignToolButton}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
+                cal:Message.Attach="ShowActivityMenu($source)">
+          <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
+          <Button.ContextMenu>
+            <ContextMenu>
+              <MenuItem Header="Экспортировать как">
+                <MenuItem Header="*.csv" />
+                <MenuItem Header="*.xlsx" cal:Message.Attach="ExportToExcel()" />
+              </MenuItem>
+              <MenuItem Header="Удалить выбраное" />
+            </ContextMenu>
+          </Button.ContextMenu>
+        </Button>
+      </Grid>
+    </materialDesign:ColorZone>
+
+  </DockPanel>
+</UserControl>

@@ -53,22 +53,29 @@
 
           <DockPanel VerticalAlignment="Stretch" LastChildFill="True">
             <StackPanel DockPanel.Dock="Top">
+              
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                          Text="{StaticResource ClientEditor.MainInfoTitle}" />
+              
               <TextBlock Margin="0,16,0,8" Text="{Binding Client.Signature, StringFormat='{}Клиент: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,0,0,12" Text="{Binding Entity.ExecutionDate , StringFormat='{}Дата и время исполнения: &#x0a;{0:dd.MM.yyyy, HH:mm}'}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,0,0,8" Text="{Binding Obtainer.Signature , StringFormat='{}Приёмщик: &#x0a;{0}'}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,0,0,8" Text="{Binding InCourier.Signature, StringFormat='{}Курьер, забирающий заказ: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,0,0,8" Text="{Binding Obtainer.CorpObtainer}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}"
                          Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolVisibilityConverter}}" />
-              <TextBlock Margin="0,0,0,8" Text="{Binding Washer.Signatureб , StringFormat='{}Прачечник: &#x0a;{0}'}"
+              <TextBlock Margin="0,0,0,8" Text="{Binding Washer.Signature , StringFormat='{}Прачечник: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,0,0,8" Text="{Binding OutCourier.Signature, StringFormat='{}Приёмщик: &#x0a;{0}'}"
+              <TextBlock Margin="0,0,0,8" Text="{Binding OutCourier.Signature, StringFormat='{}Курьер, вовзращающий заказ: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,0,0,0" Text="{Binding Distributer.Signature, StringFormat='{}Прачечник: &#x0a;{0}'}"
-                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,0,0,8" Text="{Binding Obtainer.CorpDistributer, StringFormat='{}Прачечник: &#x0a;{0}'}"
+              <TextBlock Margin="0,0,0,0" Text="{Binding Distributer.Signature, StringFormat='{}Приёмщик, выдающий заказ: &#x0a;{0}'}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" 
+                         Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolNotVisibilityConverter}}"/>
+              <TextBlock Margin="0,0,0,12" Text="{Binding Obtainer.CorpDistributer, StringFormat='{}Принимающий корпоративный клиент: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}"
                          Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolVisibilityConverter}}" />
 
@@ -94,8 +101,9 @@
               <TextBlock VerticalAlignment="Center"
                          Style="{StaticResource MaterialDesignBody2TextBlock}">
                 <TextBlock.Text>
-                  <MultiBinding StringFormat="{}Количество вещей: {0} на общую сумму 0">
+                  <MultiBinding StringFormat="{}Количество вещей: {0} на общую сумму {1:0.00}₽">
                     <Binding Path="Entity.InstancesCount" />
+                    <Binding Path="Entity.Price"/>
                   </MultiBinding>
                 </TextBlock.Text>
               </TextBlock>

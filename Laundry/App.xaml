@@ -19,6 +19,7 @@
         <ResourceDictionary
           Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Amber.xaml" />
 
+        <ResourceDictionary Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/Colors/material.xaml" />
 
         <ResourceDictionary Source="Resources/Strings.xaml" />
 
@@ -28,7 +29,7 @@
 
       </ResourceDictionary.MergedDictionaries>
 
-
+    
 
       <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Style.Triggers>

@@ -27,6 +27,7 @@ namespace Laundry.Utils.Controls
     void Add();
     void Edit();
     void Remove();
+    void RemoveSelectedGroup();
     void Refresh();
   }
 
@@ -99,13 +100,13 @@ namespace Laundry.Utils.Controls
       }
     }
 
-    public void ShowInfoCard(TEntity context)
+    public async void ShowInfoCard(TEntity context)
     {
       if (context != null)
       {
         _card.Entity = context;
 
-        DialogHostExtensions.ShowCaliburnVM(_card);
+        await DialogHostExtensions.ShowCaliburnVM(_card);
       }
     }
 
@@ -129,6 +130,16 @@ namespace Laundry.Utils.Controls
         this.Repo.Remove(SelectedEntity);
         StateChanged?.Invoke();
       }
+    }
+
+    public void RemoveSelectedGroup()
+    {
+      foreach (var selectedEntity in SelectedEntities)
+      {
+        this.Repo.Remove(selectedEntity);
+      }
+
+      RaiseStateChanged();
     }
 
     protected abstract XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook);

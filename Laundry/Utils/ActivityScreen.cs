@@ -40,5 +40,9 @@ namespace Laundry.Utils
       if (button.ContextMenu != null) button.ContextMenu.IsOpen = true;
     }
 
+    public void RaiseActivated()
+    {
+      this.OnActivate();
+    }
   }
 }

@@ -7,43 +7,184 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
              xmlns:controls="clr-namespace:Laundry.Utils.Controls"
+             xmlns:liveCharts="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
+             xmlns:model="clr-namespace:Laundry.Model"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
-        <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                              >
-            <Grid
-        Margin="0,0,0,0"
-      >
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid">
+      <Grid
+        Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="400*" />
+          <ColumnDefinition Width="361*" />
+          <ColumnDefinition Width="50" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
+          <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
+                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
+          <TextBlock
+
+            Style="{StaticResource MaterialDesignTitleTextBlock}"
+            VerticalAlignment="Center"
+            Margin="16 0 0 0" Text="{StaticResource Analytics.Title}" />
+        </StackPanel>
+
+        <RadioButton
+          Style="{StaticResource MaterialDesignTabRadioButton}"
+          IsChecked="{Binding IsGridChecked}" Height="42" Grid.Row="1"
+          Content="Таблица" />
+        <RadioButton Grid.Column="1"
+                     IsChecked="{Binding IsChartChecked}"
+                     Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
+                     Content="График" />
+        <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"
+                Style="{StaticResource MaterialDesignToolButton}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
+                cal:Message.Attach="ShowActivityMenu($source)">
+          <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
+          <Button.ContextMenu>
+            <ContextMenu>
+              <MenuItem Header="Экспортировать как">
+                <MenuItem Header="*.csv" />
+                <MenuItem Header="*.xlsx" cal:Message.Attach="ExportToExcel()" />
+              </MenuItem>
+              <MenuItem Header="Удалить выбраное" />
+            </ContextMenu>
+          </Button.ContextMenu>
+        </Button>
+      </Grid>
+    </materialDesign:ColorZone>
+    <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
+      <Button Name="AddEntity" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+        <materialDesign:PackIcon Kind="Refresh" Height="24" Width="24" />
+      </Button>
+      <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                Mode="PrimaryMid"
+                                Padding="16">
+        <StackPanel Orientation="Vertical">
+          <StackPanel
+            Orientation="Horizontal"
+            materialDesign:RippleAssist.IsCentered="True"
+            Margin="0,0,0,8">
+            <materialDesign:ColorZone
+              Mode="Standard"
+              Padding="8 4 8 4"
+              CornerRadius="2"
+              Panel.ZIndex="1"
+              Margin="16 0 0 0"
+              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="400">
+              <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                  <ColumnDefinition
+                    Width="Auto" />
+                  <ColumnDefinition
+                    Width="*" />
+                  <ColumnDefinition
+                    Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
-                    <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
-                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
-                    <TextBlock
+                <Button Name="AdvancedSearch"
+                        Style="{DynamicResource MaterialDesignToolButton}">
+                  <materialDesign:PackIcon
+                    Kind="Magnify"
+                    Opacity="0.56" />
+                </Button>
+                <TextBox
+                  Grid.Column="1"
+                  Margin="8 0 0 0"
+                  materialDesign:HintAssist.Hint="{StaticResource ClientDictionary.SearchBarTitle}"
+                  materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                  BorderThickness="0"
+                  MinWidth="200"
+                  VerticalAlignment="Center" />
+              </Grid>
+            </materialDesign:ColorZone>
 
-          Style="{StaticResource MaterialDesignTitleTextBlock}"
-          VerticalAlignment="Center"
-          Margin="16 0 0 0" Text="{StaticResource Analytics.Title}">
-                    </TextBlock>
-                </StackPanel>
+            <materialDesign:ColorZone
+              Mode="Standard"
+              Padding="8 4 0 4"
+              CornerRadius="2"
+              Panel.ZIndex="1"
+              Margin="16 0 0 0"
+              materialDesign:ShadowAssist.ShadowDepth="Depth1" Height="40">
+              <ContentControl Name="Paginator" />
+            </materialDesign:ColorZone>
+            <ToggleButton Margin="8,0,0,0"
+                          Style="{StaticResource MaterialDesignActionToggleButton}"
+                          IsChecked="{Binding EntityGrid.IsSearchDrawerOpened}"
+                          ToolTip="Расширенный поиск">
+              <ToggleButton.Content>
+                <materialDesign:PackIcon
+                  Kind="Search" />
+              </ToggleButton.Content>
+              <materialDesign:ToggleButtonAssist.OnContent>
+                <materialDesign:PackIcon
+                  Kind="ArrowDown" />
+              </materialDesign:ToggleButtonAssist.OnContent>
+            </ToggleButton>
+          </StackPanel>
 
-                <RadioButton
-          Style="{StaticResource MaterialDesignTabRadioButton}"
-          IsChecked="True" Height="42" Grid.Row="1"
-          Content="Таблица"/>
-                <RadioButton Grid.Column="1"
-          Style="{StaticResource MaterialDesignTabRadioButton}"
-          IsChecked="False" Height="42" Grid.Row="1"
-          Content="График" />
-            </Grid>
-        </materialDesign:ColorZone>
-    </DockPanel>
+          <StackPanel
+            Orientation="Horizontal"
+            materialDesign:RippleAssist.IsCentered="True">
+            <materialDesign:ColorZone
+              Mode="Standard"
+              Padding="8 4 8 4"
+              CornerRadius="2"
+              Panel.ZIndex="1"
+              Margin="16 0 0 0"
+              materialDesign:ShadowAssist.ShadowDepth="Depth1">
+              <StackPanel Orientation="Horizontal">
+                <ComboBox Margin="8,0,16,0" Height="38" VerticalContentAlignment="Center"
+                          materialDesign:HintAssist.Hint="Тип объекта"
+                          VerticalAlignment="Bottom"
+                          ItemsSource="{Binding Source={converters:Enumeration {x:Type local:AnalyticEntityType}}}"
+                          DisplayMemberPath="Description"
+                          SelectedValue="{Binding EntityType}"
+                          SelectedValuePath="Value" />
+                <ComboBox Margin="8,0,16,0" Height="38" VerticalContentAlignment="Center"
+                          materialDesign:HintAssist.Hint="Тип диаграммы"
+                          VerticalAlignment="Bottom"
+                          ItemsSource="{Binding Source={converters:Enumeration {x:Type local:ChartType}}}"
+                          DisplayMemberPath="Description"
+                          SelectedValue="{Binding ChartType}"
+                          SelectedValuePath="Value" />
+              </StackPanel>
+            </materialDesign:ColorZone>
+          </StackPanel>
+        </StackPanel>
+
+      </materialDesign:ColorZone>
+    </StackPanel>
+    <Grid Margin="0,0,0,-24">
+      <ContentControl Visibility="{Binding IsGridChecked, Converter={StaticResource BoolVisibilityConverter}}" Name="EntityGrid"/>
+      <materialDesign:Card Padding="16"
+                           Visibility="{Binding IsChartChecked, Converter={StaticResource BoolVisibilityConverter}}"
+                           VerticalAlignment="Stretch" Margin="24">
+        <materialDesign:Card.Resources>
+          <Style TargetType="liveCharts:LineSeries">
+            
+          </Style>
+        </materialDesign:Card.Resources>
+        <liveCharts:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Left">
+          
+          <liveCharts:CartesianChart.AxisX>
+            <liveCharts:Axis Title="Salesman" Labels="{Binding Labels}" />
+          </liveCharts:CartesianChart.AxisX>
+          <liveCharts:CartesianChart.AxisY>
+            <liveCharts:Axis Title="Sold Apps" LabelFormatter="{Binding Formatter}" />
+          </liveCharts:CartesianChart.AxisY>
+        </liveCharts:CartesianChart>
+      </materialDesign:Card>
+    </Grid>
+  </DockPanel>
 </UserControl>

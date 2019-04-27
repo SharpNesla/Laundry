@@ -135,6 +135,11 @@ namespace Laundry.Utils.Controls
       }
     }
 
+    public void ClearPaginable()
+    {
+      this.Paginable = null;
+    }
+
     public void RefreshPaginable()
     {
       this.Count = Paginable.Count;

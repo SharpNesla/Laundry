@@ -25,6 +25,7 @@ namespace Laundry.Model
 
     public EmployeeProfession Profession { get; set; }
 
+    public bool IsCourierCarDriver { get; set; }
 
     public long Subsidiary { get; internal set; }
 

@@ -10,6 +10,7 @@ namespace Laundry
   using Laundry.Utils.Controls;
   using Laundry.Views.Actions;
   using Laundry.Views.Cards;
+  using Laundry.Views.Dashboards;
   using Utils;
 
   public class AppBootstrapper : BootstrapperBase
@@ -40,28 +41,28 @@ namespace Laundry
       container.Singleton<DashBoardViewModel>();
       container.Singleton<AnalyticsViewModel>();
 
-      container.Singleton<ClientDictionaryViewModel>("ClientDict");
+      container.Singleton<ClientDictionaryViewModel>("ClientDictionary");
       container.PerRequest<ClientEditorViewModel>();
       container.PerRequest<ClientDataGridViewModel>();
       container.Singleton<ClientCardViewModel>();
       container.PerRequest<ClientSearchViewModel>();
 
-      container.Singleton<EmployeeDictionaryViewModel>();
+      container.Singleton<EmployeeDictionaryViewModel>("EmployeeDictionary");
       container.PerRequest<EmployeeEditorViewModel>();
       container.PerRequest<EmployeeDataGridViewModel>();
       container.Singleton<EmployeeCardViewModel>();
 
-      container.Singleton<SubsidiaryDictionaryViewModel>();
+      container.Singleton<SubsidiaryDictionaryViewModel>("SubsidiaryDictionary");
       container.PerRequest<SubsidiaryEditorViewModel>();
       container.PerRequest<SubsidiaryGridViewModel>();
       container.Singleton<SubsidiaryCardViewModel>();
 
-      container.Singleton<CarDictionaryViewModel>();
+      container.Singleton<CarDictionaryViewModel>("CarDictionary");
       container.PerRequest<CarEditorViewModel>();
       container.PerRequest<CarDataGridViewModel>();
       container.Singleton<CarCardViewModel>();
 
-      container.Singleton<OrderDictionaryViewModel>();
+      container.Singleton<OrderDictionaryViewModel>("OrderDictionary");
       container.PerRequest<OrderEditorViewModel>();
       container.PerRequest<OrderDataGridViewModel>();
       container.Singleton<OrderCardViewModel>();
@@ -88,7 +89,12 @@ namespace Laundry
       container.Singleton<Visibilities>();
       container.Singleton<DeleteDialogViewModel>();
       container.Singleton<ConnectionLostDialogViewModel>();
-      
+
+      container
+        .Singleton<DirectorDashBoardViewModel>()
+        .Singleton<AdvisorDashBoardViewModel>()
+        .Singleton<WasherDashBoardViewModel>()
+        .Singleton<CourierDashBoardViewModel>();
     }
 
     protected override object GetInstance(Type service, string key)

@@ -18,6 +18,7 @@ using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
 using Laundry.Views.Cards;
+using MongoDB.Driver;
 using NPOI.XSSF.UserModel;
 using PropertyChanged;
 
@@ -25,6 +26,27 @@ namespace Laundry.Utils.Controls
 {
   public class ClothDataGridViewModel : EntityGrid<ClothInstance, ClothInstancesRepository, ClothInstanceCardViewModel>
   {
+
+    //public override FilterDefinition<Client> Filter
+    //{
+    //  get
+    //  {
+    //    var filter = BaseFilter;
+
+    //    if (this.I)
+    //    {
+    //      filter = Builders<Client>.Filter.And(
+    //        this.BaseFilter,
+    //        Builders<Client>.Filter.Gte(nameof(Client.DateBirth), this.LowDateBirthBound ?? DateTime.MinValue),
+    //        Builders<Client>.Filter.Lte(nameof(Client.DateBirth), this.HighDateBirthBound ?? DateTime.MaxValue));
+    //    }
+
+    //    return filter;
+    //  }
+
+    //  set { base.Filter = value; }
+    //}
+
     private readonly IEventAggregator _eventAggregator;
     private readonly IModel _model;
     public Order Order { get; set; }

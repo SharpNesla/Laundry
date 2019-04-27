@@ -43,5 +43,15 @@ namespace Laundry.Utils
     {
       this.Paginator.RefreshPaginable();
     }
+
+    public void ExportToExcel()
+    {
+      EntityGrid.ExportToExcel();
+    }
+
+    public void RemoveSelectedGroup()
+    {
+      EntityGrid.RemoveSelectedGroup();
+    }
   }
 }

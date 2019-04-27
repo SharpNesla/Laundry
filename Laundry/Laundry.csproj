@@ -281,6 +281,19 @@
     <Compile Include="Views\ConnectionLostDialog.xaml.cs">
       <DependentUpon>ConnectionLostDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dashboards\AdvisorDashBoard.xaml.cs">
+      <DependentUpon>AdvisorDashBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dashboards\CourierDashBoard.xaml.cs">
+      <DependentUpon>CourierDashBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dashboards\DashBoardBase.cs" />
+    <Compile Include="Views\Dashboards\DirectorDashBoard.xaml.cs">
+      <DependentUpon>DirectorDashBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dashboards\WasherDashBoard.xaml.cs">
+      <DependentUpon>WasherDashBoard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DiscountEdgeEditor.xaml.cs">
       <DependentUpon>DiscountEdgeEditor.xaml</DependentUpon>
     </Compile>
@@ -471,6 +484,22 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ConnectionLostDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dashboards\AdvisorDashBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dashboards\CourierDashBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dashboards\DirectorDashBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dashboards\WasherDashBoard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

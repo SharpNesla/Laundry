@@ -8,60 +8,45 @@ using Laundry.Model;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using Laundry.Views.Actions;
+using Laundry.Views.Dashboards;
 
 namespace Laundry.Views
 {
   /// <summary>
   /// Interaction logic for DashBoard.xaml
   /// </summary>
-  public class DashBoardViewModel : DrawerActivityScreen
+  public class DashBoardViewModel : ActivityScreen
   {
-    private readonly IEventAggregator _aggregator;
-    private readonly IModel _mockModel;
-    private readonly OrderDataGridViewModel _orderGrid;
-    private readonly TakeOrdersViewModel _takeOrders;
-    private readonly WashOrdersViewModel _wash;
-
-    public DashBoardViewModel(IEventAggregator aggregator, IModel mockModel, OrderDataGridViewModel orderGrid) : base(aggregator, mockModel)
+    private readonly WasherDashBoardViewModel _washerDashBoard;
+    public DashBoardBase EmployeeDashBoard { get; set; }
+    public DashBoardViewModel(IEventAggregator aggregator, IModel model, WasherDashBoardViewModel washerDashBoard) : base(aggregator, model)
     {
-      _aggregator = aggregator;
-      _mockModel = mockModel;
-      _orderGrid = orderGrid;
+      _washerDashBoard = washerDashBoard;
     }
-    
-    public void OpenOrderEditor()
+    protected override void OnActivate()
     {
-      this.ChangeApplicationScreen(Utils.Screens.OrderEditor);
-    }
+      base.OnActivate();
+      switch (Model.CurrentUser.Profession)
+      {
+        case EmployeeProfession.Courier:
+          this.EmployeeDashBoard = _washerDashBoard;
+          break;
+        case EmployeeProfession.Director:
+          this.EmployeeDashBoard = _washerDashBoard;
+          break;
+        case EmployeeProfession.Washer:
+          this.EmployeeDashBoard = _washerDashBoard;
+          break;
+        case EmployeeProfession.Advisor:
+          this.EmployeeDashBoard = _washerDashBoard;
+          break;
+        case EmployeeProfession.Driver:
+          break;
+        default:
+          throw new ArgumentOutOfRangeException();
+      }
 
-    public void MoveFromSubs()
-    {
-      var takeOrders = new TakeOrdersViewModel(_mockModel, _orderGrid);
-      DialogHostExtensions.ShowCaliburnVM(takeOrders);
-    }
-
-    public void MoveToSubs()
-    {
-      var deliverOrders = new DeliverOrdersViewModel(_mockModel, _orderGrid);
-      DialogHostExtensions.ShowCaliburnVM(deliverOrders);
-    }
-
-    public void ApplyOrdersForDelivery()
-    {
-      var applyorders = new ApplyOrdersForDeliveryViewModel(_mockModel, _orderGrid);
-      DialogHostExtensions.ShowCaliburnVM(applyorders);
-    }
-
-    public void RecieveOrders()
-    {
-      var takeOrders = new TakeOrdersViewModel(_mockModel, _orderGrid);
-      DialogHostExtensions.ShowCaliburnVM(takeOrders);
-    }
-
-    public void Wash()
-    {
-      var wash = new WashOrdersViewModel(_mockModel, _orderGrid);
-      DialogHostExtensions.ShowCaliburnVM(wash);
+      this.EmployeeDashBoard.RaiseActivated();
     }
   }
 }
