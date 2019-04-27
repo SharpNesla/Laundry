@@ -29,21 +29,21 @@
           <TextBlock
             Style="{StaticResource MaterialDesignTitleTextBlock}"
             VerticalAlignment="Center"
-            Margin="16 0 0 0" Text="{StaticResource Analytics.Title}" />
+            Margin="16 0 0 0" Text="Обзор: прачечник" />
         </StackPanel>
 
         <RadioButton
           Style="{StaticResource MaterialDesignTabRadioButton}"
-          IsChecked="{Binding IsGridChecked}" Height="42" Grid.Row="1"
-          Content="Таблица" />
+          IsChecked="{Binding IsWashOrders}" Height="42" Grid.Row="1"
+          Content="Заказы готовые к стирке" />
         <RadioButton Grid.Column="1"
-                     IsChecked="{Binding IsChartChecked}"
+                     IsChecked="{Binding IsApplyOrdersForDelivery}"
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
-                     Content="График" />
+                     Content="Постиранные заказы" />
         <RadioButton Grid.Column="2"
-                     IsChecked="{Binding IsChartChecked}"
+                     IsChecked="{Binding IsAcceptDelivery}"
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1" Grid.ColumnSpan="2"
-                     Content="График" />
+                     Content="Заказы, ожидающие отправку" />
         <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"
                 Style="{StaticResource MaterialDesignToolButton}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
@@ -61,6 +61,81 @@
         </Button>
       </Grid>
     </materialDesign:ColorZone>
+    <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
+      <Button Name="WashOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+              Visibility="{Binding IsWashOrders, Converter={StaticResource BoolVisibilityConverter}}"
+              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              ToolTip="Поставить заказы на стирку"
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+        <materialDesign:PackIcon Kind="WashingMachine" Height="24" Width="24" />
+      </Button>
+      <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                Mode="PrimaryMid"
+                                Padding="16">
+        <DockPanel>
+          <StackPanel
+            Orientation="Horizontal"
+            materialDesign:RippleAssist.IsCentered="True">
 
+            <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="32" Width="32" />
+            <materialDesign:ColorZone
+              Mode="Standard"
+              Padding="8 4 8 4"
+              CornerRadius="2"
+              Panel.ZIndex="1"
+              Margin="16 0 0 0"
+              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="400">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition
+                    Width="Auto" />
+                  <ColumnDefinition
+                    Width="*" />
+                  <ColumnDefinition
+                    Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button
+                  Style="{DynamicResource MaterialDesignToolButton}">
+                  <materialDesign:PackIcon
+                    Kind="Magnify"
+                    Opacity="0.56" />
+                </Button>
+                <TextBox
+                  Grid.Column="1"
+                  Margin="8 0 0 0"
+                  materialDesign:HintAssist.Hint="{StaticResource OrderDictionary.SearchBarTitle}"
+                  materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                  BorderThickness="0"
+                  MinWidth="200"
+                  VerticalAlignment="Center" />
+              </Grid>
+            </materialDesign:ColorZone>
+            <materialDesign:ColorZone
+              Mode="Standard"
+              Padding="8 4 0 4"
+              CornerRadius="2"
+              Panel.ZIndex="1"
+              Margin="16 0 0 0"
+              materialDesign:ShadowAssist.ShadowDepth="Depth1" Height="40">
+              <ContentControl Name="Paginator" />
+            </materialDesign:ColorZone>
+            <ToggleButton Margin="8,0,0,0"
+                          Style="{StaticResource MaterialDesignActionToggleButton}"
+                          IsChecked="{Binding EntityGrid.IsSearchDrawerOpened}"
+                          ToolTip="Расширенный поиск">
+              <ToggleButton.Content>
+                <materialDesign:PackIcon
+                  Kind="Search" />
+              </ToggleButton.Content>
+              <materialDesign:ToggleButtonAssist.OnContent>
+                <materialDesign:PackIcon
+                  Kind="ArrowDown" />
+              </materialDesign:ToggleButtonAssist.OnContent>
+            </ToggleButton>
+          </StackPanel>
+        </DockPanel>
+      </materialDesign:ColorZone>
+    </StackPanel>
+    <ContentControl Name="OrderGrid" />
   </DockPanel>
 </UserControl>
