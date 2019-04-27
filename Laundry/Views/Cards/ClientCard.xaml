@@ -48,11 +48,6 @@
                            Padding="16"
                            BorderThickness="0" VerticalAlignment="Stretch">
 
-        <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="328" />
-            <RowDefinition Height="37*" />
-          </Grid.RowDefinitions>
           <StackPanel>
             <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                        Text="{StaticResource ClientEditor.MainInfoTitle}" />
@@ -82,14 +77,13 @@
                 </TextBlock.Text>
               </TextBlock>
               <TextBlock Margin="0,8,0,0" Text="Комментарий:" Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,4,0,0" Text="{Binding Entity.Comment}"
+              <TextBlock Margin="0,4,0,0" Text="{Binding Entity.Comment}" TextWrapping="Wrap" 
                          Style="{StaticResource MaterialDesignBody1TextBlock}" />
             </StackPanel>
 
           </StackPanel>
           <!--<Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="EditClient"
               Style="{StaticResource MaterialDesignFlatButton}" Content="РЕДАКТИРОВАТЬ" Margin="0,37,126,0" Height="Auto" Grid.Row="1"/>-->
-        </Grid>
 
       </materialDesign:Card>
       <materialDesign:Card Grid.Column="1" VerticalAlignment="Stretch">

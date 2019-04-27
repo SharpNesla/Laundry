@@ -82,7 +82,7 @@
                                       Header="Заказы" />
 
         <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
+        <DataGridTemplateColumn CanUserReorder="False" MinWidth="80" IsReadOnly="True">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <StackPanel Orientation="Horizontal">

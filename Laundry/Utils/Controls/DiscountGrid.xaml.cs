@@ -39,6 +39,12 @@ namespace Laundry.Utils.Controls
       RaiseStateChanged();
     }
 
+    public void SelectEdge(DiscountEdge edge)
+    {
+      this.SelectedEntity = edge;
+    }
+    
+
     protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
     {
       throw new NotImplementedException();

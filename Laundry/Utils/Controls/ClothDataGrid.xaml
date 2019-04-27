@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Laundry.Utils.Controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Name="OwnControl">
@@ -27,8 +28,13 @@
         <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
       </ContextMenu>
     </DataGrid.ContextMenu>
+    <DataGrid.Resources>
+      <converters:BindingProxy x:Key="proxy" Data="{Binding}"/>
+    </DataGrid.Resources>
     <DataGrid.Columns>
-      <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
+
+      <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64" Binding="{Binding IsSelected}"
+                              Visibility="{Binding Data.DisplaySelectionColumn, Source={StaticResource proxy}, Converter={StaticResource BoolVisibilityConverter}}"
                               ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                               EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
         <DataGridCheckBoxColumn.Header>
@@ -44,7 +50,7 @@
                               SortMemberPath="Patronymic">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Id}" VerticalAlignment="Center" />
+            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding TagNumber}" VerticalAlignment="Center" />
           </DataTemplate>
         </DataGridTemplateColumn.CellTemplate>
       </DataGridTemplateColumn>
@@ -95,7 +101,7 @@
       </DataGridTemplateColumn>
 
       <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-      <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" MinWidth="8">
+      <DataGridTemplateColumn CanUserReorder="False" MinWidth="80" IsReadOnly="True">
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
             <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"

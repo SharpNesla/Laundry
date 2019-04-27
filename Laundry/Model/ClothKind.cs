@@ -23,6 +23,7 @@ namespace Laundry.Model
   [AddINotifyPropertyChangedInterface]
   public class ClothKind : IRepositoryElement
   {
+    [BsonIgnoreIfDefault]
     public long Parent { get; set; }
     [BsonIgnoreIfNull]
     public string Name { get; set; }

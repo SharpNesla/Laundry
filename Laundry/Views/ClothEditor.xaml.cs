@@ -39,6 +39,9 @@ namespace Laundry.Views
     {
       this.Order = order;
       this.ClothKindTree = new ClothKindSelectorViewModel(model);
+
+      this.ClothKindTree.SelectedEntity = model.ClothKinds.GetById(0);
+
       this.ClothKindTree.EntityChanged = x => { this.Entity.ClothKind = x.Id;
         this.Entity.ClothKindObj = x;
       };

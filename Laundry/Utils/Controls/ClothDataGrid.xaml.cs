@@ -23,9 +23,6 @@ using PropertyChanged;
 
 namespace Laundry.Utils.Controls
 {
-  /// <summary>
-  /// Interaction logic for OrderDataGrid.xaml
-  /// </summary>
   public class ClothDataGridViewModel : EntityGrid<ClothInstance, ClothInstancesRepository, ClothInstanceCardViewModel>
   {
     private readonly IEventAggregator _eventAggregator;
@@ -58,13 +55,10 @@ namespace Laundry.Utils.Controls
 
     public override void Refresh(int page, int elements)
     {
-      this.Entities = Order.Instances.Skip(page * elements).Take(elements).ToList().AsReadOnly();
+      this.Entities = Order.Instances.AsReadOnly();
     }
 
-    public override long Count
-    {
-      get { return Order.Instances.Count; }
-    }
+    public override long Count => Order.Instances.Count;
 
     protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
     {

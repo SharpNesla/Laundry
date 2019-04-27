@@ -48,7 +48,7 @@
           BorderThickness="0">
           <StackPanel>
             <ContentControl Name="ClothKindTree"></ContentControl>
-            <TextBox materialDesign:HintAssist.Hint="Номер бирки" Text="{Binding Entity.}"
+            <TextBox materialDesign:HintAssist.Hint="Номер бирки" Text="{Binding Entity.TagNumber}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
             <TextBox materialDesign:HintAssist.Hint="Процент износа" Text="{Binding Entity.WearPercentage}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />

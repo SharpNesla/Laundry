@@ -14,15 +14,22 @@
   <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="16">
     <StackPanel>
       <ItemsControl ItemsSource="{Binding Entities}">
+
         <ItemsControl.ItemTemplate>
-          
+
           <DataTemplate>
-            
+
             <materialDesign:Card Margin="16"
                                  Width="300"
+                                 cal:Message.Attach="[Event MouseRightButtonDown] = [Action SelectEdge($dataContext)]"
                                  UniformCornerRadius="6"
                                  Background="{StaticResource PrimaryHueMidBrush}">
-
+              <materialDesign:Card.ContextMenu>
+                <ContextMenu>
+                  <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
+                  <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
+                </ContextMenu>
+              </materialDesign:Card.ContextMenu>
               <StackPanel>
                 <DockPanel Margin="16" LastChildFill="True">
                   <Button DockPanel.Dock="Right" Margin="-6,-6,-2,-6" Name="EditClient"

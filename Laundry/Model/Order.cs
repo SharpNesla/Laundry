@@ -4,29 +4,28 @@ using System.ComponentModel;
 using Laundry.Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Linq;
+
 namespace Laundry.Model
 {
   public enum OrderStatus
   {
-    [Description("Принят")]
-    Taken,
+    [Description("Принят")] Taken,
+
     [Description("Перевозка на прачечную")]
     MoveFromSubs,
-    [Description("Готов к стирке")]
-    ReadyToWash,
-    [Description("В стирке")]
-    Washing,
-    [Description("Постиран")]
-    Washed,
+    [Description("Готов к стирке")] ReadyToWash,
+    [Description("В стирке")] Washing,
+    [Description("Постиран")] Washed,
+
     [Description("Перевозка из прачечной")]
     MoveToSubs,
-    [Description("Выдан")]
-    Granted
+    [Description("Выдан")] Granted
   }
 
   public class Order : IRepositoryElement
   {
     private Client _client;
+    private double CustomPrice { get; set; }
     public long Id { get; set; }
 
     [BsonIgnoreIfNull]
@@ -37,14 +36,18 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime ExecutionDate { get; set; }
-    
+
     public OrderStatus Status { get; set; }
-    
+
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
 
+    [BsonIgnore]
     public string Signature { get; }
+
+    [BsonIgnore]
+    public DiscountEdge DiscountEdge { get; set; }
 
     [BsonIgnore]
     public bool IsSelected { get; set; }
@@ -54,10 +57,31 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public bool IsDiscount { get; set; }
+
+    [BsonIgnoreIfDefault]
+    public bool IsCustomPrice { get; set; }
+
+    public string InstancesCount
+    {
+      get
+      {
+        return
+          $"{this.Instances.Where(x => x.ClothKindObj.MeasureKind == MeasureKind.Thing || x.ClothKindObj.MeasureKind == MeasureKind.Pair).Sum(x => x.Amount)}шт, " +
+          $"{this.Instances.Where(x => x.ClothKindObj.MeasureKind == MeasureKind.Kg).Sum(x=>x.Amount)}кг";
+      }
+    }
+
     [BsonIgnore]
     public double Price
     {
-      get { return Instances.Sum(x => x.Price); }
+      get { return IsCustomPrice ? CustomPrice : Instances.Sum(x => x.Price); }
+      set { CustomPrice = value; }
+    }
+
+    [BsonIgnore]
+    public double DiscountPrice
+    {
+      get { return Price; }
     }
 
     public List<ClothInstance> Instances { get; set; }

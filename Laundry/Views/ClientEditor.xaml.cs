@@ -79,11 +79,6 @@ namespace Laundry.Views
       EventAggregator.BeginPublishOnUIThread(Entity);
     }
 
-    public void ApplyChanges(ClientEditorView editorViewModel)
-    {
-      this.Entity.TriggerValidation();
-    }
-
     public override void Handle(Client client)
     {
       base.Handle(client);

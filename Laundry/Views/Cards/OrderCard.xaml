@@ -9,8 +9,11 @@
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
              xmlns:cal="http://www.caliburnproject.org"
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="14"
+             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel Height="500" Width="970">
+  <DockPanel Height="700" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="24,20,24,20">
       <DockPanel>
@@ -46,45 +49,39 @@
       <materialDesign:Card Margin="0,0,16,0"
                            Padding="16"
                            BorderThickness="0" VerticalAlignment="Stretch">
-
         <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="328" />
-            <RowDefinition Height="37*" />
-          </Grid.RowDefinitions>
-          <StackPanel>
-            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
-                       Text="{StaticResource ClientEditor.MainInfoTitle}" />
-            <StackPanel Margin="0,16,0,0">
-              <TextBlock Margin="0,0,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
-                <TextBlock.Text>
-                  <MultiBinding StringFormat="{}Принял: {0} {1} {2}">
-                    <Binding Path="Id" />
-                    <Binding Path="Name" />
-                    <Binding Path="Surname" />
-                  </MultiBinding>
-                </TextBlock.Text>
-              </TextBlock>
 
-              <TextBlock Margin="0,8,0,0" Text="{Binding DateBirth, StringFormat='Дата рождения: dd.MM.yyyy'}"
+          <DockPanel VerticalAlignment="Stretch" LastChildFill="True">
+            <StackPanel DockPanel.Dock="Top">
+              <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
+                         Text="{StaticResource ClientEditor.MainInfoTitle}" />
+              <TextBlock Margin="0,16,0,8" Text="{Binding Client.Signature, StringFormat='{}Клиент: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,8,0,0" Text="{Binding PhoneNumber, StringFormat='Номер телефона: {0}'}"
+              <TextBlock Margin="0,0,0,8" Text="{Binding Obtainer.Signature , StringFormat='{}Приёмщик: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,8,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
-                <TextBlock.Text>
-                  <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">
-                    <Binding Path="City" />
-                    <Binding Path="Street" />
-                    <Binding Path="House" />
-                    <Binding Path="ZipCode" />
-                  </MultiBinding>
-                </TextBlock.Text>
-              </TextBlock>
+              <TextBlock Margin="0,0,0,8" Text="{Binding Obtainer.CorpObtainer}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}"
+                         Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolVisibilityConverter}}" />
+              <TextBlock Margin="0,0,0,8" Text="{Binding Washer.Signatureб , StringFormat='{}Прачечник: &#x0a;{0}'}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,0,0,8" Text="{Binding OutCourier.Signature, StringFormat='{}Приёмщик: &#x0a;{0}'}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,0,0,0" Text="{Binding Distributer.Signature, StringFormat='{}Прачечник: &#x0a;{0}'}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,0,0,8" Text="{Binding Obtainer.CorpDistributer, StringFormat='{}Прачечник: &#x0a;{0}'}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}"
+                         Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolVisibilityConverter}}" />
+
               <TextBlock Margin="0,8,0,0" Text="Комментарий:" Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,4,0,0" Text="{Binding Entity.Comment}" Style="{StaticResource MaterialDesignBody1TextBlock}"/>
-            </StackPanel>
 
-          </StackPanel>
+            </StackPanel>
+            <TextBlock ScrollViewer.VerticalScrollBarVisibility="Visible"
+                       ScrollViewer.CanContentScroll="True"
+                       Margin="0,4,0,0" TextWrapping="Wrap" Text="{Binding Entity.Comment}"
+                       Style="{StaticResource MaterialDesignBody1TextBlock}" />
+          </DockPanel>
+
+
         </Grid>
 
       </materialDesign:Card>
@@ -92,30 +89,20 @@
         <DockPanel>
           <TextBlock Margin="16,16,16,0" DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource OrderEditor.ClothInfo}" />
-          <Grid DockPanel.Dock="Bottom" Margin="16,0,16,16">
-            <DockPanel>
-              <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
-                           Style="{StaticResource MaterialDesignBody2TextBlock}">
-                  <TextBlock.Text>
-                    <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
-                      <Binding Path="OrderDataGrid.Count" />
-                    </MultiBinding>
-                  </TextBlock.Text>
-                </TextBlock>
-                <!--Заказ от 21.01.2019, 13:30. Цена: 1300р/!-->
-                <Button Name="AddOrder" DockPanel.Dock="Right" Margin="0,0,9,0"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        HorizontalAlignment="Left" ToolTip="Просмотреть все предметы одежды этого заказа">
-                  <materialDesign:PackIcon Kind="ViewAgenda" Height="24" Width="24" />
-                </Button>
-              </StackPanel>
-              <StackPanel  DockPanel.Dock="Left"/>
+          <StackPanel Height="32" Margin="20,0,16,16" DockPanel.Dock="Bottom" Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center">
+              <TextBlock VerticalAlignment="Center"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}">
+                <TextBlock.Text>
+                  <MultiBinding StringFormat="{}Количество вещей: {0} на общую сумму 0">
+                    <Binding Path="Entity.InstancesCount" />
+                  </MultiBinding>
+                </TextBlock.Text>
+              </TextBlock>
+            </TextBlock>
+          </StackPanel>
 
-            </DockPanel>
-          </Grid>
-
-          <ContentControl Margin="0,16,0,0" Name="ClothInstancesGrid"/>
+          <ContentControl Margin="0,8,0,0" Name="ClothInstancesGrid" />
 
         </DockPanel>
 

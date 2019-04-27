@@ -40,7 +40,7 @@
                 Name="Buttons"
                 Margin="{Binding Level, Converter={StaticResource LevelToMarginConverter}}"
                 Visibility="{Binding HasChildren, Converter={StaticResource BoolVisibilityConverter}}"
-                cal:Message.Attach="[Event Click] = [Action ShowHideDetails($source, $dataContext)]"
+                cal:Message.Attach="[Event Click] = [Action ShowHideDetails($source, $dataContext, $view)]"
                 Style="{StaticResource MaterialDesignActionToggleButton}"
                 ToolTip="Развернуть поддерево">
                 <materialDesign:PackIcon

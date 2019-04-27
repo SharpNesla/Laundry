@@ -21,6 +21,7 @@ using Laundry.Model.DatabaseClients;
 using Laundry.Utils.Controls.EntitySearchControls;
 using Laundry.Views;
 using MongoDB.Driver;
+using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
@@ -78,9 +79,13 @@ namespace Laundry.Utils.Controls
         sheet.AppendClient(client);
       }
 
+      
+
       for (int i = 0; i < 6; i++)
       {
         sheet.AutoSizeColumn(i);
+        
+        sheet.SetAutoFilter(new CellRangeAddress(0, sheet.PhysicalNumberOfRows, i, i));
       }
 
       return workbook;

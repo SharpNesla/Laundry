@@ -18,10 +18,10 @@ namespace Laundry.Utils
 
     public virtual string EditorTitle
     {
-      get { return !IsNew ? $"Редактирование {_clientName} №{Entity.Id}" : $"Редактирование нового {_clientName}"; }
+      get { return !IsNew ? $"Редактирование {EntityName} №{Entity.Id}" : $"Редактирование нового {EntityName}"; }
     }
 
-    private readonly string _clientName;
+    protected readonly string EntityName;
 
     protected TRepository EntityRepository { get; set; }
 
@@ -30,7 +30,7 @@ namespace Laundry.Utils
       this.EventAggregator.Subscribe(this);
       this.EntityRepository = entityRepo;
 
-      this._clientName = entityTitleName;
+      this.EntityName = entityTitleName;
 
       this.IsNew = true;
       this.Entity = new TEntity();

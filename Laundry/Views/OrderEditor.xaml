@@ -6,7 +6,10 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Utils.Controls" d:DesignWidth="800" d:DesignHeight="600"
+             xmlns:controls="clr-namespace:Laundry.Utils.Controls"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
+             xmlns:model="clr-namespace:Laundry.Model"
+             d:DesignWidth="800" d:DesignHeight="600"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel VerticalAlignment="Stretch">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
@@ -86,6 +89,13 @@
                     Style="{StaticResource MaterialDesignCheckBox}" Margin="10,0,0,0" Height="20">
             Скидка
           </CheckBox>
+          <!--<ComboBox Margin="2,0,16,0" Grid.Row="1" Grid.Column="0"
+                    materialDesign:HintAssist.Hint="Статус заказа"
+                    VerticalAlignment="Bottom"
+                    ItemsSource="{Binding Source={converters:Enumeration {x:Type model:OrderStatus}}}"
+                    DisplayMemberPath="Description"
+                    SelectedValue="{Binding Entity.Status}"
+                    SelectedValuePath="Value" />-->
           <TextBox Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0"
                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                    Margin="2,16,0,0"
@@ -104,32 +114,20 @@
                      Text="{StaticResource OrderEditor.ClothInfo}" />
           <Grid DockPanel.Dock="Bottom" Margin="16,0,16,16">
             <DockPanel>
-              <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
-                           Style="{StaticResource MaterialDesignBody2TextBlock}">
-                  <TextBlock.Text>
-                    <MultiBinding StringFormat="{}Всего предметов одежды {0} на общую сумму {1:0,00}₽">
-                      <Binding Path="OrderDataGrid.Count" />
-                      <Binding Path="OrderDataGrid.Price" />
-                    </MultiBinding>
-                  </TextBlock.Text>
-                </TextBlock>
-                <!--Заказ от 21.01.2019, 13:30. Цена: 1300р/!-->
-                <Button Name="AddCloth" DockPanel.Dock="Right" Margin="0,0,9,0"
+              <Button DockPanel.Dock="Right" Name="AddCloth" Margin="0,0,9,0"
                         Style="{StaticResource MaterialDesignFlatButton}"
                         HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
-                  <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
-                </Button>
-              </StackPanel>
-              <ContentControl Name="Paginator"></ContentControl>
+                <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+              </Button>
+              <StackPanel>
               <TextBlock VerticalAlignment="Center">
                 <TextBlock.Text>
-                  <MultiBinding StringFormat="{}Заказ от {0:dd.MM.yyyy, HH:mm}. Цена: 0">
+                  <MultiBinding StringFormat="Цена: 0">
                     <Binding Path="Entity.CreationDate" />
                   </MultiBinding>
                 </TextBlock.Text>
               </TextBlock>
-
+              </StackPanel>
             </DockPanel>
           </Grid>
 

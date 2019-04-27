@@ -11,6 +11,12 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
 {
+  public enum Gender
+  {
+    Male,
+    Female
+  }
+
   public class Person : IRepositoryElement, IDataErrorInfo, INotifyDataErrorInfo
   {
     [BsonId]

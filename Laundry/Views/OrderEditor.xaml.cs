@@ -14,6 +14,16 @@ namespace Laundry.Views
   /// </summary>
   public class OrderEditorViewModel : EditorScreen<OrderRepository, Order>, IHandle<Client>
   {
+    public override string EditorTitle
+    {
+      get
+      {
+        return !IsNew
+          ? $"Редактирование {EntityName} №{Entity.Id} от {Entity.CreationDate:dd.MM.yyyy, HH:mm}"
+          : $"Редактирование нового {EntityName} от от {Entity.CreationDate:dd.MM.yyyy, HH:mm}";
+      }
+    }
+
     public ClientSearchViewModel ClientCombo { get; set; }
     public ClothDataGridViewModel ClothInstancesGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
@@ -87,7 +97,7 @@ namespace Laundry.Views
       base.Handle(message);
 
       this.Entity = this.EntityRepository.GetById(message.Id);
-      
+
 
       this.ClothInstancesGrid.Order = this.Entity;
       this.Paginator.RefreshPaginable();

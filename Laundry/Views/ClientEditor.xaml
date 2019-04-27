@@ -68,7 +68,7 @@
               Style="{StaticResource MaterialDesignFlatButton}" Name="Discard">
         ОТМЕНИТЬ
       </Button>
-      <Button cal:Message.Attach="ApplyChanges($view)" DockPanel.Dock="Left" MaxWidth="132"
+      <Button Name="ApplyChanges"  DockPanel.Dock="Left" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>

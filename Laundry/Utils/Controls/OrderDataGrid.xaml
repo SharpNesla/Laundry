@@ -104,11 +104,11 @@
                                     IsReadOnly="True" SortMemberPath="Status" MinWidth="48" Header="Статус"/>
         <local:DataGridAdaptiveColumn Binding="{Binding Price, StringFormat='{}{0:0.00} ₽'}"  CanUserReorder="True"
                                     IsReadOnly="True" SortMemberPath="Price" MinWidth="48" Header="Цена"/>
-        <local:DataGridAdaptiveColumn Binding="{Binding Instances.Count}" CanUserReorder="True" IsReadOnly="True" MinWidth="96"
+        <local:DataGridAdaptiveColumn Binding="{Binding InstancesCount}" CanUserReorder="True" IsReadOnly="True" MinWidth="96"
                                     SortMemberPath="Instances.Count"
                                     Header="Кол-во вещей"/>
         <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
-        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
+        <DataGridTemplateColumn CanUserReorder="False" MinWidth="80" IsReadOnly="True">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <StackPanel Orientation="Horizontal">

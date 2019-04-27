@@ -8,7 +8,8 @@
   <DataGridTextColumn.ElementStyle>
     <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignBody2TextBlock}">
       <Setter Property="VerticalAlignment" Value="Center" />
-      <Setter Property="TextTrimming" Value="CharacterEllipsis"></Setter>
+      <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+      <Setter Property="Foreground" Value="{StaticResource MaterialDesignBody}" />
     </Style>
   </DataGridTextColumn.ElementStyle>
 </DataGridTextColumn>

@@ -62,7 +62,7 @@ namespace Laundry.Utils.Controls
       throw new NotImplementedException();
     }
 
-    public void ShowHideDetails(ToggleButton button, ClothKind clothKind)
+    public void ShowHideDetails(ToggleButton button, ClothKind clothKind, ClothKindGridView view)
     {
       if (button.IsChecked.Value)
       {
@@ -73,11 +73,15 @@ namespace Laundry.Utils.Controls
           kind.Level = clothKind.Level + 1;
           this.EditableEntities.Insert(EditableEntities.IndexOf(clothKind) + 1, kind);
         }
+
+        //view.MainGrid.Columns[0].Width = new DataGridLength((clothKind.Level + 1) * 64, DataGridLengthUnitType.Pixel);
       }
 
       else
       {
         RemoveChildren(clothKind);
+
+        //view.MainGrid.Columns[0].Width = new DataGridLength((clothKind.Level) * 64 + 64, DataGridLengthUnitType.Pixel);
       }
     }
 

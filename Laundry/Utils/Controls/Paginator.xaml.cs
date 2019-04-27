@@ -93,7 +93,7 @@ namespace Laundry.Utils.Controls
     public PaginatorViewModel()
     {
       this.ComboValues = new int[] {5, 10, 20, 50, 100};
-      this.ElementsPerPage = 5;
+      this.ElementsPerPage = 10;
       this.CurrentPage = 1;
       CheckButtons();
     }
