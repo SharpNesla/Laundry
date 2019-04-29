@@ -26,14 +26,14 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for ClothKindGrid.xaml
   /// </summary>
-  public class ClothKindTreeViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>
+  public class ClothKindGridViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>
   {
     private readonly IModel _model;
     public float NameWidth { get; set; }
     public ObservableCollection<ClothKind> EditableEntities { get; private set; }
 
 
-    public ClothKindTreeViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
+    public ClothKindGridViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
       IModel model, DeleteDialogViewModel shure)
       : base(eventAggregator, card, model.ClothKinds, shure, Screens.ClothKindEditor)
     {
@@ -62,6 +62,28 @@ namespace Laundry.Utils.Controls
       throw new NotImplementedException();
     }
 
+    public void ShowHideDetails(ToggleButton button, ClothKind clothKind, ClothKindTreeView view)
+    {
+      if (button.IsChecked.Value)
+      {
+        this.Repo.FetchChildren(clothKind);
+
+        foreach (var kind in clothKind.Children)
+        {
+          kind.Level = clothKind.Level + 1;
+          this.EditableEntities.Insert(EditableEntities.IndexOf(clothKind) + 1, kind);
+        }
+
+        //view.MainGrid.Columns[0].Width = new DataGridLength((clothKind.Level + 1) * 64, DataGridLengthUnitType.Pixel);
+      }
+
+      else
+      {
+        RemoveChildren(clothKind);
+
+        //view.MainGrid.Columns[0].Width = new DataGridLength((clothKind.Level) * 64 + 64, DataGridLengthUnitType.Pixel);
+      }
+    }
 
     public void RemoveChildren(ClothKind clothKind)
     {

@@ -13,20 +13,52 @@
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
-    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                              Padding="16">
-      <StackPanel Orientation="Horizontal">
-        <ToggleButton Name="MenuToggleButton"
-                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32"
-                      IsChecked="{Binding IsDrawerButtonChecked}" Width="32" />
-        <TextBlock
+    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid">
+      <Grid
+        Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="400*" />
+          <ColumnDefinition Width="361*" />
+          <ColumnDefinition Width="50" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
+          <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
+                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
+          <TextBlock
 
-          Style="{StaticResource MaterialDesignTitleTextBlock}"
-          VerticalAlignment="Center"
-          Margin="16 0 0 0">
-          Справочник видов одежды
-        </TextBlock>
-      </StackPanel>
+            Style="{StaticResource MaterialDesignTitleTextBlock}"
+            VerticalAlignment="Center"
+            Margin="16 0 0 0" Text="Справочник видов одежды" />
+        </StackPanel>
+
+        <RadioButton
+          Style="{StaticResource MaterialDesignTabRadioButton}"
+          IsChecked="{Binding IsTreeChecked}" Height="42" Grid.Row="1"
+          Content="Древовидное представление" />
+        <RadioButton Grid.Column="1" Grid.ColumnSpan="2"
+                     IsChecked="{Binding isGridChecked}"
+                     Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
+                     Content="Таблица" />
+        <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"
+                Style="{StaticResource MaterialDesignToolButton}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
+                cal:Message.Attach="ShowActivityMenu($source)">
+          <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
+          <Button.ContextMenu>
+            <ContextMenu>
+              <MenuItem Header="Экспортировать как">
+                <MenuItem Header="*.csv" />
+                <MenuItem Header="*.xlsx" cal:Message.Attach="ExportToExcel()" />
+              </MenuItem>
+              <MenuItem Header="Удалить выбраное" />
+            </ContextMenu>
+          </Button.ContextMenu>
+        </Button>
+      </Grid>
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
       <Button Name="AddEntity" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
@@ -102,6 +134,7 @@
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-    <ContentControl Margin="0,0,0,-24" Name="EntityGrid"></ContentControl>
+    <ContentControl Margin="0,0,0,-24" Visibility="{Binding IsGridChecked, Converter={StaticResource BoolVisibilityConverter}}" Name="EntityGrid"/>
+    <ContentControl Margin="0,0,0,-24" Visibility="{Binding isTreeChecked, Converter={StaticResource BoolVisibilityConverter}}" Name="ClothKindTree"/>
   </DockPanel>
 </UserControl>

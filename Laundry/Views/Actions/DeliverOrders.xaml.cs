@@ -20,7 +20,7 @@ namespace Laundry.Views.Actions
   public class DeliverOrdersViewModel : OrderActionsBase
   {
     public DeliverOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
-      : base(model.Orders, model.CurrentUser, orderGrid, OrderStatus.Washed, OrderStatus.MoveToSubs)
+      : base(model.Orders, model.CurrentUser, nameof(Order.OutCourierId), orderGrid, OrderStatus.Washed, OrderStatus.MoveToSubs)
     {
 
     }

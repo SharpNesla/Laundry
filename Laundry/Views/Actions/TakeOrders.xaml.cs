@@ -21,7 +21,7 @@ namespace Laundry.Views.Actions
   public class TakeOrdersViewModel : OrderActionsBase
   {
     public TakeOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid) 
-      : base(model.Orders, model.CurrentUser, orderGrid, OrderStatus.Taken, OrderStatus.MoveFromSubs)
+      : base(model.Orders, model.CurrentUser, nameof(Order.InCourierId), orderGrid, OrderStatus.Taken, OrderStatus.MoveFromSubs)
     {
 
     }

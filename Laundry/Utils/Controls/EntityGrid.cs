@@ -57,7 +57,7 @@ namespace Laundry.Utils.Controls
 
     protected FilterDefinition<TEntity> BaseFilter { get; private set; }
     public TRepository Repo { get; }
-
+    public bool IsDisplaySubtotals { get; set; }
     public Visibilities Visibilities { get; }
 
     public bool IsSearchDrawerOpened { get; set; }

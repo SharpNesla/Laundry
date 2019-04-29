@@ -18,14 +18,16 @@ namespace Laundry.Views.Actions
     private readonly OrderStatus _changingStatus;
     public OrderDataGridViewModel OrderGrid { get; set; }
 
-    public OrderActionsBase(OrderRepository orderRepo, Employee currentUser, OrderDataGridViewModel orderGrid,
+    public OrderActionsBase(OrderRepository orderRepo, Employee currentUser, string orderEmployeeInvolvement, OrderDataGridViewModel orderGrid,
       OrderStatus startStatus, OrderStatus changingStatus)
     {
       Repository = orderRepo;
       _changingStatus = changingStatus;
       OrderGrid = orderGrid;
       OrderGrid.Filter =
-        Builders<Order>.Filter.Eq(nameof(Order.Status), startStatus);
+        Builders<Order>.Filter.And(
+          Builders<Order>.Filter.Eq(nameof(Order.Status), startStatus),
+          Builders<Order>.Filter.Eq(orderEmployeeInvolvement, currentUser.Id));
       this.OrderGrid.Refresh(0, int.MaxValue);
     }
 

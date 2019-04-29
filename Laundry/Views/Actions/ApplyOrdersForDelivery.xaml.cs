@@ -21,7 +21,7 @@ namespace Laundry.Views.Actions
   public class ApplyOrdersForDeliveryViewModel : OrderActionsBase
   {
     public ApplyOrdersForDeliveryViewModel(IModel model, OrderDataGridViewModel orderGrid) 
-      : base(model.Orders, model.CurrentUser, orderGrid, OrderStatus.Washing , OrderStatus.Washed)
+      : base(model.Orders, model.CurrentUser, nameof(Order.WasherCourierId), orderGrid, OrderStatus.Washing , OrderStatus.Washed)
     {
     }
 

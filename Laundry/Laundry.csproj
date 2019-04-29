@@ -168,6 +168,9 @@
     <Compile Include="Utils\Controls\ClothKindGrid.xaml.cs">
       <DependentUpon>ClothKindGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Controls\ClothKindTree.xaml.cs">
+      <DependentUpon>ClothKindTree.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Controls\DiscountGrid.xaml.cs">
       <DependentUpon>DiscountGrid.xaml</DependentUpon>
     </Compile>
@@ -357,6 +360,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Utils\Controls\ClothKindGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Utils\Controls\ClothKindTree.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

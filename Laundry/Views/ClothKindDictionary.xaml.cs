@@ -25,9 +25,18 @@ namespace Laundry.Views
   /// </summary>
   public class ClothKindDictionaryViewModel : DictionaryScreen<ClothKindGridViewModel>
   {
-    public ClothKindDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, ClothKindGridViewModel entityGrid) : 
+    public bool IsTreeChecked { get; set; }
+    public bool IsGridChecked { get; set; }
+
+    public ClothKindTreeViewModel ClothKindTree { get; set; }
+
+    public ClothKindDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, 
+      ClothKindTreeViewModel clothKindTree, ClothKindGridViewModel entityGrid) : 
       base(aggregator, model, paginator, entityGrid, "Видов одежды")
     {
+      IsTreeChecked = true;
+      this.ClothKindTree = clothKindTree;
+      this.ClothKindTree.Refresh(0,0);
     }
   }
 }

@@ -34,6 +34,7 @@ namespace Laundry.Views
   {
     private readonly OrderDataGridViewModel _orderGrid;
     private readonly SubsidiaryGridViewModel _subsidiaryGrid;
+    private readonly ClothKindGridViewModel _clothKindGrid;
     private AnalyticEntityType _entityType;
     public IEntityGrid<IRepositoryElement> EntityGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
@@ -58,7 +59,7 @@ namespace Laundry.Views
             ChangeEntity(_subsidiaryGrid, "Филиалов");
             break;
           case AnalyticEntityType.ClothKind:
-            ChangeEntity(_orderGrid, "Заказов");
+            ChangeEntity(_clothKindGrid, "Видов одежды");
             break;
         }
       }
@@ -80,10 +81,15 @@ namespace Laundry.Views
     public Func<double, string> Formatter { get; set; }
 
     public AnalyticsViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator,
-      OrderDataGridViewModel orderGrid, SubsidiaryGridViewModel subsidiaryGrid) : base(aggregator, model)
+      OrderDataGridViewModel orderGrid, SubsidiaryGridViewModel subsidiaryGrid, ClothKindGridViewModel clothKindGrid) : base(aggregator, model)
     {
       _orderGrid = orderGrid;
+      _orderGrid.IsDisplaySubtotals = true;
       _subsidiaryGrid = subsidiaryGrid;
+      _subsidiaryGrid.IsDisplaySubtotals = true;
+      _clothKindGrid = clothKindGrid;
+      _clothKindGrid.IsDisplaySubtotals = true;
+
       Paginator = paginator;
 
       ChangeEntity(_orderGrid, "Заказов");
