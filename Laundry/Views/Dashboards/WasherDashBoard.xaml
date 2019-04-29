@@ -39,11 +39,11 @@
         <RadioButton Grid.Column="1"
                      IsChecked="{Binding IsApplyOrdersForDelivery}"
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
-                     Content="Постиранные заказы" />
+                     Content="Заказы, ожидающие отправки" />
         <RadioButton Grid.Column="2"
-                     IsChecked="{Binding IsAcceptDelivery}"
+                     IsChecked="{Binding IsRecieveOrders}"
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1" Grid.ColumnSpan="2"
-                     Content="Заказы, ожидающие отправку" />
+                     Content="Заказы, принимаемые на стирку" />
         <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"
                 Style="{StaticResource MaterialDesignToolButton}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
@@ -68,6 +68,20 @@
               ToolTip="Поставить заказы на стирку"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="WashingMachine" Height="24" Width="24" />
+      </Button>
+      <Button Name="ApplyOrdersForDelivery" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+              Visibility="{Binding IsApplyOrdersForDelivery, Converter={StaticResource BoolVisibilityConverter}}"
+              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              ToolTip="Отправить постиранные заказы на доставку"
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+        <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24" />
+      </Button>
+      <Button Name="RecieveOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+              Visibility="{Binding IsRecieveOrders, Converter={StaticResource BoolVisibilityConverter}}"
+              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              ToolTip="Принять доставленные заказы на стирку"
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+        <materialDesign:PackIcon Kind="UserArrowLeft" Height="24" Width="24" />
       </Button>
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
                                 Mode="PrimaryMid"
@@ -109,15 +123,6 @@
                   MinWidth="200"
                   VerticalAlignment="Center" />
               </Grid>
-            </materialDesign:ColorZone>
-            <materialDesign:ColorZone
-              Mode="Standard"
-              Padding="8 4 0 4"
-              CornerRadius="2"
-              Panel.ZIndex="1"
-              Margin="16 0 0 0"
-              materialDesign:ShadowAssist.ShadowDepth="Depth1" Height="40">
-              <ContentControl Name="Paginator" />
             </materialDesign:ColorZone>
             <ToggleButton Margin="8,0,0,0"
                           Style="{StaticResource MaterialDesignActionToggleButton}"

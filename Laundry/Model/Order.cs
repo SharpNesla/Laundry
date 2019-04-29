@@ -24,8 +24,8 @@ namespace Laundry.Model
 
   public class Order : IRepositoryElement
   {
-    private Client _client;
-    private double CustomPrice { get; set; }
+    [BsonIgnoreIfDefault]
+    public double CustomPrice { get; set; }
     public long Id { get; set; }
 
     [BsonIgnoreIfNull]
@@ -71,7 +71,6 @@ namespace Laundry.Model
       }
     }
 
-    [BsonIgnore]
     public double Price
     {
       get { return IsCustomPrice ? CustomPrice : Instances.Sum(x => x.Price); }

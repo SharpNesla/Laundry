@@ -85,10 +85,7 @@
                       materialDesign:HintAssist.Hint="Дата исполнения"
                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                       VerticalAlignment="Center" Margin="2,0,0,0" SelectedDate="{Binding Entity.ExecutionDate}" />
-          <CheckBox Grid.Row="8" Grid.Column="1" VerticalAlignment="Bottom" IsChecked="{Binding Entity.IsDiscount}"
-                    Style="{StaticResource MaterialDesignCheckBox}" Margin="10,0,0,0" Height="20">
-            Скидка
-          </CheckBox>
+
           <!--<ComboBox Margin="2,0,16,0" Grid.Row="1" Grid.Column="0"
                     materialDesign:HintAssist.Hint="Статус заказа"
                     VerticalAlignment="Bottom"
@@ -96,6 +93,7 @@
                     DisplayMemberPath="Description"
                     SelectedValue="{Binding Entity.Status}"
                     SelectedValuePath="Value" />-->
+
           <TextBox Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0"
                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                    Margin="2,16,0,0"
@@ -115,18 +113,29 @@
           <Grid DockPanel.Dock="Bottom" Margin="16,0,16,16">
             <DockPanel>
               <Button DockPanel.Dock="Right" Name="AddCloth" Margin="0,0,9,0"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
+                      Style="{StaticResource MaterialDesignFlatButton}"
+                      HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
                 <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
               </Button>
-              <StackPanel>
-              <TextBlock VerticalAlignment="Center">
-                <TextBlock.Text>
-                  <MultiBinding StringFormat="Цена: 0">
-                    <Binding Path="Entity.CreationDate" />
-                  </MultiBinding>
-                </TextBlock.Text>
-              </TextBlock>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock>
+                  <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Общее количество вещей: {0}">
+                      <Binding Path="Entity.InstancesCount"></Binding>
+                    </MultiBinding>
+                  </TextBlock.Text>
+                </TextBlock>
+                <TextBox VerticalAlignment="Center" Width="62"
+                         Visibility="{Binding Entity.IsCustomPrice, Converter={StaticResource BoolVisibilityConverter}}"
+                         Text="{Binding Entity.CustomPrice}" Margin="0,4" />
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Entity.IsCustomPrice}"
+                          Style="{StaticResource MaterialDesignCheckBox}" Margin="10,0,0,0" Height="20">
+                  Нестандартная цена
+                </CheckBox>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Entity.IsDiscount}"
+                          Style="{StaticResource MaterialDesignCheckBox}" Margin="10,0,0,0" Height="20">
+                  Скидка
+                </CheckBox>
               </StackPanel>
             </DockPanel>
           </Grid>

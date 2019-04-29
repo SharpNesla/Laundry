@@ -39,6 +39,14 @@ namespace Laundry.Utils.Controls
       RaiseStateChanged();
     }
 
+    public override async void Edit()
+    {
+      var editor = new DiscountEdgeEditorViewModel(_eventAggregator, _model);
+      EventAggregator.PublishOnUIThread(this.SelectedEntity);
+      await DialogHostExtensions.ShowCaliburnVM(editor);
+      RaiseStateChanged();
+    }
+
     public void SelectEdge(DiscountEdge edge)
     {
       this.SelectedEntity = edge;

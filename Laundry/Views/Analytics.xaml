@@ -41,7 +41,7 @@
           Style="{StaticResource MaterialDesignTabRadioButton}"
           IsChecked="{Binding IsGridChecked}" Height="42" Grid.Row="1"
           Content="Таблица" />
-        <RadioButton Grid.Column="1"
+        <RadioButton Grid.Column="1" Grid.ColumnSpan="2"
                      IsChecked="{Binding IsChartChecked}"
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
                      Content="График" />
