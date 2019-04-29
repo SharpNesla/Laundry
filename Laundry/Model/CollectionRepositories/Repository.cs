@@ -98,6 +98,11 @@ namespace Laundry.Model.CollectionRepositories
       }
     }
 
+    public virtual long GetSearchStringCount(string searchString ,FilterDefinition<T> filter = null)
+    {
+      return this.GetCount();
+    }
+
     public virtual IReadOnlyList<T> GetBySearchString(string searchString, FilterDefinition<T> filter, int offset = 0,
       int capLimit = 10)
     {

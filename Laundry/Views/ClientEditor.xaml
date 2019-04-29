@@ -68,7 +68,7 @@
               Style="{StaticResource MaterialDesignFlatButton}" Name="Discard">
         ОТМЕНИТЬ
       </Button>
-      <Button Name="ApplyChanges"  DockPanel.Dock="Left" MaxWidth="132"
+      <Button Name="ApplyChanges" DockPanel.Dock="Left" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>
@@ -117,7 +117,7 @@
               <TextBox Margin="0,16,0,12" materialDesign:HintAssist.Hint="Фамилия"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                  <Binding Path="Entity.Surname" ValidatesOnNotifyDataErrors="True"> 
+                  <Binding Path="Entity.Surname" ValidatesOnNotifyDataErrors="True">
                     <Binding.ValidationRules>
                       <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
                     </Binding.ValidationRules>
@@ -128,7 +128,7 @@
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
                   <Binding Path="Entity.Name" ValidatesOnNotifyDataErrors="True">
-                    <Binding.ValidationRules >
+                    <Binding.ValidationRules>
                       <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
                     </Binding.ValidationRules>
                   </Binding>
@@ -146,11 +146,11 @@
                   Пол
                 </TextBlock>
                 <RadioButton Margin="0,0,8,4" Style="{StaticResource MaterialDesignRadioButton}"
-                             Tag="True">
+                             IsChecked="{Binding Path=Entity.Gender, Converter={StaticResource EnumBooleanConverter}, ConverterParameter=Male}">
                   Мужской
                 </RadioButton>
                 <RadioButton Style="{StaticResource MaterialDesignRadioButton}"
-                             Tag="True">
+                             IsChecked="{Binding Path=Entity.Gender, Converter={StaticResource EnumBooleanConverter}, ConverterParameter=Female}">
                   Женский
                 </RadioButton>
               </StackPanel>

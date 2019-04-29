@@ -63,10 +63,10 @@ namespace Laundry.Utils.Controls
     public bool IsSearchDrawerOpened { get; set; }
 
     public bool DisplaySelectionColumn { get; set; }
+    
+    public string SearchString { get; set; }
 
-    public event Action<TEntity> RemoveButtonClick;
-
-    public EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
+    protected EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
       DeleteDialogViewModel shure, Screens editScreen, Visibilities visibilities = null, string entityName = "объекта",
       bool displaySelectColumn = true)
     {
@@ -81,11 +81,32 @@ namespace Laundry.Utils.Controls
       this.Visibilities = visibilities;
     }
 
-    public virtual long Count => this.Repo.GetCount(Filter);
+    public virtual long Count
+    {
+      get
+      {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+          return Repo.GetSearchStringCount(SearchString, Filter);
+        }
+        else
+        {
+          return this.Repo.GetCount(Filter);
+        }
+      }
+    }
 
     public virtual void Refresh(int page, int elements)
     {
-      this.Entities = Repo.Get(page * elements, elements, Filter);
+      if (!string.IsNullOrEmpty(SearchString))
+      {
+        this.Entities = Repo.GetBySearchString(SearchString, Filter, page * elements, elements);
+      }
+      else
+      {
+
+        this.Entities = Repo.Get(page * elements, elements, Filter);
+      }
     }
 
     public event Action StateChanged;

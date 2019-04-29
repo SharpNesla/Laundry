@@ -49,7 +49,7 @@
       <converters:BindingProxy x:Key="BindingProxy"></converters:BindingProxy>
       <converters:OrderStatusConverter x:Key="StatusConverter"></converters:OrderStatusConverter>
       
-
+      <converters:EnumBooleanConverter x:Key="EnumBooleanConverter"></converters:EnumBooleanConverter>
       <converters:ProfessionConverter x:Key="ProfessionConverter"></converters:ProfessionConverter>
       <converters:BoolVisibilityConverter x:Key="BoolVisibilityConverter"></converters:BoolVisibilityConverter>
       <converters:BoolNotVisibilityConverter x:Key="BoolNotVisibilityConverter"></converters:BoolNotVisibilityConverter>

@@ -15,14 +15,10 @@ namespace Laundry.Views
 {
   public class ClientDictionaryViewModel : DictionaryScreen<ClientDataGridViewModel>
   {
-    public ClientDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, ClientDataGridViewModel entityGrid) :
+    public ClientDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator,
+      ClientDataGridViewModel entityGrid) :
       base(aggregator, model, paginator, entityGrid, "Клиентов")
     {
-    }
-
-    public void ExportToExcel()
-    {
-      this.EntityGrid.ExportToExcel();
     }
   }
 }

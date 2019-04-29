@@ -36,6 +36,8 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime DateBirth { get; set; }
+    
+    public Gender Gender { get; set; }
 
     [BsonIgnoreIfNull]
     public string House { get; set; }

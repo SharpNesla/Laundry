@@ -201,6 +201,7 @@
       <DependentUpon>SubsidiaryGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Converters\BoolVisibilityConverter.cs" />
+    <Compile Include="Utils\Converters\EnumBooleanConverter.cs" />
     <Compile Include="Utils\Converters\LevelToMargin.cs" />
     <Compile Include="Utils\Converters\MeasureKindConverter.cs" />
     <Compile Include="Utils\DialogHostExtensions.cs" />

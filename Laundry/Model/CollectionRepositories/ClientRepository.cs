@@ -72,5 +72,42 @@ namespace Laundry.Model.DatabaseClients
         .Limit(capLimit)
         .ToList().Select(x => BsonSerializer.Deserialize<Client>(x)).ToList();
     }
+
+    public override long GetSearchStringCount(string searchString, FilterDefinition<Client> filter = null)
+    {
+      var searchChunks = searchString.Split(' ');
+
+      var regex = @"^";
+
+      foreach (var searchChunk in searchChunks)
+      {
+        regex += $"(?=.*{searchChunk})";
+      }
+
+      regex += @".*$";
+
+      //Бсондокументы, описывающие стадии агрегации (экспортированы из mongo compass)
+      //(добавление поля Signature и его match по сооветствующему составляемому регулярному выражению)
+      var match = new BsonDocument("$match",
+        new BsonDocument("Signature",
+          new BsonDocument("$regex", regex)));
+      var addfields = new BsonDocument("$addFields",
+        new BsonDocument("Signature",
+          new BsonDocument("$concat",
+            new BsonArray
+            {
+              new BsonDocument("$toString", "$_id"),
+              " ",
+              "$Name",
+              " ",
+              "$Surname"
+            })));
+      var filterdef = filter ?? Builders<Client>.Filter.Empty;
+      var result = Collection.Aggregate()
+        .Match(filterdef)
+        .AppendStage<BsonDocument>(addfields)
+        .AppendStage<BsonDocument>(match).Count().First();
+      return result.Count;
+    }
   }
 }
