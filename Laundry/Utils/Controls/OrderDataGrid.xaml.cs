@@ -18,6 +18,7 @@ namespace Laundry.Utils.Controls
   public class OrderDataGridViewModel : EntityGrid<Order, OrderRepository, OrderCardViewModel>
   {
     private readonly IEventAggregator _eventAggregator;
+    private EmployeeProfession _profession;
 
     public override FilterDefinition<Order> Filter
     {
@@ -28,9 +29,37 @@ namespace Laundry.Utils.Controls
         if (this.IsByCreationDate)
         {
           filter = Builders<Order>.Filter.And(
-            this.BaseFilter);
-          //Builders<Client>.Filter.Gte(nameof(Client.DateBirth), this. ?? DateTime.MinValue),
-          //Builders<Client>.Filter.Lte(nameof(Client.DateBirth), this.HighDateBirthBound ?? DateTime.MaxValue));
+            filter,
+            Builders<Order>.Filter.Gte(nameof(Order.CreationDate), this.LowCreationDateBound ?? DateTime.MinValue),
+            Builders<Order>.Filter.Lte(nameof(Order.CreationDate), this.HighCreationDateBound ?? DateTime.MaxValue));
+        }
+
+        if (this.IsByExecutionDate)
+        {
+          filter = Builders<Order>.Filter.And(
+            filter,
+            Builders<Order>.Filter.Gte(nameof(Order.ExecutionDate), this.LowExecutionDateBound ?? DateTime.MinValue),
+            Builders<Order>.Filter.Lte(nameof(Order.ExecutionDate), this.HighExecutionDateBound ?? DateTime.MaxValue));
+        }
+
+        if (this.IsByClient)
+        {
+          filter = Builders<Order>.Filter.And(
+            filter,
+            Builders<Order>.Filter.Eq(nameof(Order.ClientId), this.ClientCombo.SelectedEntity?.Id ?? -1));
+        }
+
+        if (this.IsByEmployee)
+        {
+          filter = Builders<Order>.Filter.And(
+            filter,
+            Builders<Order>.Filter.Or(
+              Builders<Order>.Filter.Eq(nameof(Order.ObtainerId), this.EmployeeCombo.SelectedEntity?.Id ?? -1),
+              Builders<Order>.Filter.Eq(nameof(Order.InCourierId), this.EmployeeCombo.SelectedEntity?.Id ?? -1),
+              Builders<Order>.Filter.Eq(nameof(Order.WasherCourierId), this.EmployeeCombo.SelectedEntity?.Id ?? -1),
+              Builders<Order>.Filter.Eq(nameof(Order.OutCourierId), this.EmployeeCombo.SelectedEntity?.Id ?? -1),
+              Builders<Order>.Filter.Eq(nameof(Order.DistributerId), this.EmployeeCombo.SelectedEntity?.Id ?? -1)
+            ));
         }
 
         return filter;
@@ -42,15 +71,32 @@ namespace Laundry.Utils.Controls
     #region Св-ва, описывающие поисковые параметры грида
 
     public bool IsByCreationDate { get; set; }
+    public DateTime? LowCreationDateBound { get; set; }
+    public DateTime? HighCreationDateBound { get; set; }
+
     public bool IsByExecutionDate { get; set; }
+    public DateTime? LowExecutionDateBound { get; set; }
+    public DateTime? HighExecutionDateBound { get; set; }
 
     public bool IsByClient { get; set; }
     public bool IsCorporative { get; set; }
     public ClientSearchViewModel ClientCombo { get; set; }
 
     public bool IsByEmployee { get; set; }
-    public EmployeeProfession Profession { get; set; }
-    public EmployeeSearchViewModel EmployeeCombo { get; set; }
+
+    public EmployeeProfession Profession
+    {
+      get { return _profession; }
+      set
+      {
+        _profession = value;
+        EmployeeCombo.Filter = Builders<Employee>.Filter.Eq(nameof(Employee.Profession), value);
+      }
+    }
+    public EmployeeSearchViewModel EmployeeCombo { get; }
+
+    public bool IsBySubsidiary { get; set; }
+    public SubsidiarySearchViewModel SubsidiaryCombo { get; set; }
 
     #endregion
 
@@ -77,7 +123,7 @@ namespace Laundry.Utils.Controls
     {
       throw new NotImplementedException();
     }
-    
+
     public override long Count
     {
       get
@@ -101,15 +147,13 @@ namespace Laundry.Utils.Controls
       eventAggregator.Subscribe(this);
 
       this.ClientCombo = new ClientSearchViewModel(model);
-      this.ClientCombo.EntityChanged += OnEntityChanged;
 
-      this.EmployeeCombo = new EmployeeSearchViewModel(model) { Label = "Работник" };
-    }
+      this.SubsidiaryCombo = new SubsidiarySearchViewModel(model);
 
+      this.EmployeeCombo = new EmployeeSearchViewModel(model) {Label = "Работник"};
 
-    private void OnEntityChanged(Client obj)
-    {
-      this.Client = obj;
+      this.Profession = EmployeeProfession.Courier;
+
     }
 
     //public void Handle(Client message)

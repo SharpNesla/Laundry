@@ -45,11 +45,16 @@
 
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
-
+      <Button Name="AddEntity" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+        <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+      </Button>
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
                                 Mode="PrimaryMid"
                                 Padding="16">
         <DockPanel>
+
           <StackPanel
             Orientation="Horizontal"
             materialDesign:RippleAssist.IsCentered="True">
@@ -71,7 +76,7 @@
                   <ColumnDefinition
                     Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button
+                <Button Name="AdvancedSearch"
                   Style="{DynamicResource MaterialDesignToolButton}">
                   <materialDesign:PackIcon
                     Kind="Magnify"
@@ -113,6 +118,6 @@
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-    <ContentControl Name="EntityGrid" />
+    <ContentControl Margin="0,0,0,-24" Name="EntityGrid" />
   </DockPanel>
 </UserControl>

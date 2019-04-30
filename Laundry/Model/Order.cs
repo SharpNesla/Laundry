@@ -93,6 +93,8 @@ namespace Laundry.Model
       this.Instances = new List<ClothInstance>();
     }
 
+    public long InSubsidiary { get; internal set; }
+    public long OutSubsidiary { get; internal set; }
     #region Ids
 
     [BsonElement("Client")]

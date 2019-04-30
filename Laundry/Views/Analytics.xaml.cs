@@ -76,9 +76,9 @@ namespace Laundry.Views
       Paginator.RefreshPaginable();
     }
 
-    public SeriesCollection SeriesCollection { get; set; }
-    public string[] Labels { get; set; }
-    public Func<double, string> Formatter { get; set; }
+    public SeriesCollection SeriesCollection { get; private set; }
+    public string[] Labels { get; private set; }
+    public Func<double, string> Formatter { get; private set; }
 
     public AnalyticsViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator,
       OrderDataGridViewModel orderGrid, SubsidiaryGridViewModel subsidiaryGrid, ClothKindGridViewModel clothKindGrid) : base(aggregator, model)
@@ -115,7 +115,6 @@ namespace Laundry.Views
       //also adding values updates and animates the chart automatically
       SeriesCollection[1].Values.Add(48d);
 
-      Labels = new[] { "Maria", "Susan", "Charles", "Frida" };
       Formatter = value => value.ToString("N");
     }
   }

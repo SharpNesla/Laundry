@@ -20,8 +20,19 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     private TEntity _selectedEntity;
     protected readonly TRepository Repository;
     private string _entityText;
+    private FilterDefinition<TEntity> _filter;
 
-    public FilterDefinition<TEntity> Filter { get; set; }
+    public FilterDefinition<TEntity> Filter
+    {
+      get { return _filter; }
+      set
+      {
+        _filter = value;
+
+        this.Entities = new List<TEntity>(Repository.Get(0, 10, value));
+      }
+    }
+
     public IList<TEntity> Entities { get; set; }
 
     public string Label { get; set; }

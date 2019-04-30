@@ -117,11 +117,11 @@
                                       SortMemberPath="Name"
                                       Header="Мера измерения" />
         <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" Width="*" />
-        <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
+        <DataGridTemplateColumn CanUserReorder="False" MinWidth="80" IsReadOnly="True">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <StackPanel Orientation="Horizontal">
-                <Button Foreground="{StaticResource MaterialDesignBodyLight}"
+                <Button Margin="0" Foreground="{StaticResource MaterialDesignBodyLight}"
                         Style="{StaticResource MaterialDesignFlatButton}"
                         cal:Message.Attach="ShowInfoCard($dataContext)">
 

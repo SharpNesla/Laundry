@@ -9,24 +9,23 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:model="clr-namespace:Laundry.Model"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="450" d:DesignWidth="1024"
              Name="OwnControl">
   <DockPanel LastChildFill="True">
     <!--{Binding IsSearchDrawerOpened}-->
     <StackPanel  DockPanel.Dock="Bottom">
 
-      <StackPanel Margin="16" Visibility="{Binding IsDisplaySubtotals, Converter={StaticResource BoolVisibilityConverter}}"
-                  Height="64" >
-        <TextBlock Margin="0,8" Text="ИТОГО" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
+      <StackPanel Margin="16,0,16,16" Visibility="{Binding IsDisplaySubtotals, Converter={StaticResource BoolVisibilityConverter}}">
+        <TextBlock Margin="8,0,0,8" Text="ИТОГО" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
         <Separator></Separator>
-       
+        <TextBlock Margin="0,16,81,0" Width="911" TextAlignment="Right" Text="Всего заказов по критериям: 350 &#x0a;На общую сумму: 10 930 802 074.00₽" HorizontalAlignment="Right"/>
       </StackPanel>
 
       <materialDesign:DrawerHost Name="DrawerHost"
                                  IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
         <materialDesign:DrawerHost.BottomDrawerContent>
           <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}" Orientation="Horizontal">
-            <StackPanel Width="200" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <StackPanel Width="180" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
               <CheckBox IsChecked="{Binding IsByClient}">По клиенту</CheckBox>
               <CheckBox IsChecked="{Binding IsCorporative}" Margin="0,16,0,0"
                         IsEnabled="{Binding IsByClient}">
@@ -34,11 +33,11 @@
               </CheckBox>
               <ContentControl Height="38" IsEnabled="{Binding IsByClient}" cal:View.Model="{Binding ClientCombo}" />
             </StackPanel>
-            <StackPanel Width="200" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <StackPanel Width="175" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
               <CheckBox IsChecked="{Binding IsByEmployee}">По работнику</CheckBox>
-              <ComboBox Margin="2,0,16,0" Grid.Row="1" Grid.Column="0"
+              <ComboBox Margin="2,8.8,16,0" Grid.Row="1" Grid.Column="0"
                         materialDesign:HintAssist.Hint="Должность"
-
+                        IsEnabled="{Binding IsByEmployee}"
                         ItemsSource="{Binding Source={converters:Enumeration {x:Type model:EmployeeProfession}}}"
                         DisplayMemberPath="Description"
                         SelectedValue="{Binding Profession}"
@@ -47,21 +46,25 @@
             </StackPanel>
             <StackPanel Width="150" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
               <CheckBox IsChecked="{Binding IsByCreationDate}">По дате приёма</CheckBox>
-              <DatePicker SelectedDate="{Binding LowDateBirthBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+              <DatePicker SelectedDate="{Binding LowCreationDateBound}" materialDesign:HintAssist.Hint="Нижняя граница"
                           Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
                           HorizontalAlignment="Stretch" IsEnabled="{Binding IsByCreationDate}" />
-              <DatePicker SelectedDate="{Binding HighDateBirthBound}" materialDesign:HintAssist.Hint="Верхняя граница"
+              <DatePicker SelectedDate="{Binding HighCreationDateBound}" materialDesign:HintAssist.Hint="Верхняя граница"
                           Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
                           HorizontalAlignment="Stretch" IsEnabled="{Binding IsByCreationDate}" />
             </StackPanel>
-            <StackPanel Width="150" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <StackPanel Width="174" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
               <CheckBox IsChecked="{Binding IsByExecutionDate}">По дате исполнения</CheckBox>
-              <DatePicker SelectedDate="{Binding LowDateBirthBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+              <DatePicker SelectedDate="{Binding LowExecutionDateBound}" materialDesign:HintAssist.Hint="Нижняя граница"
                           Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
                           HorizontalAlignment="Stretch" IsEnabled="{Binding IsByExecutionDate}" />
-              <DatePicker SelectedDate="{Binding HighDateBirthBound}" materialDesign:HintAssist.Hint="Верхняя граница"
+              <DatePicker SelectedDate="{Binding HighExecutionDateBound}" materialDesign:HintAssist.Hint="Верхняя граница"
                           Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
                           HorizontalAlignment="Stretch" IsEnabled="{Binding IsByExecutionDate}" />
+            </StackPanel>
+            <StackPanel Width="175" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+              <CheckBox IsChecked="{Binding IsBySubsidiary}">По филиалу</CheckBox>
+              <ContentControl Height="38" IsEnabled="{Binding IsBySubsidiary}" cal:View.Model="{Binding SubsidiaryCombo}" />
             </StackPanel>
           </StackPanel>
         </materialDesign:DrawerHost.BottomDrawerContent>
@@ -91,7 +94,7 @@
         <converters:BindingProxy x:Key="proxy" Data="{Binding}" />
       </DataGrid.Resources>
       <DataGrid.Columns>
-      
+
         <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64" Binding="{Binding IsSelected}"
                                 Visibility="{Binding Data.DisplaySelectionColumn, Source={StaticResource proxy}, Converter={StaticResource BoolVisibilityConverter}}"
                                 ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"

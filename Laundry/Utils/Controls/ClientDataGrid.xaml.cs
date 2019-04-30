@@ -47,7 +47,7 @@ namespace Laundry.Utils.Controls
         if (this.IsByDateBirth)
         {
           filter = Builders<Client>.Filter.And(
-            this.BaseFilter,
+            filter,
             Builders<Client>.Filter.Gte(nameof(Client.DateBirth), this.LowDateBirthBound ?? DateTime.MinValue),
             Builders<Client>.Filter.Lte(nameof(Client.DateBirth), this.HighDateBirthBound ?? DateTime.MaxValue));
         }

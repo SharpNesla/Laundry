@@ -95,7 +95,11 @@ namespace Laundry.Model.CollectionRepositories
 
     internal void SetObtainer(Order entity, Employee obtainer)
     {
-      if (obtainer != null) entity.ObtainerId = obtainer.Id;
+      if (obtainer != null)
+      {
+        entity.ObtainerId = obtainer.Id;
+        entity.InSubsidiary = obtainer.Subsidiary;
+      }
     }
 
     public void SetObtainer(Order entity, Client corpObtainer)
@@ -123,9 +127,13 @@ namespace Laundry.Model.CollectionRepositories
       if (corpDistributer != null) entity.CorpDistributerId = corpDistributer.Id;
     }
 
-    public void SetDistributer(Order entity, Employee corpDistributer)
+    public void SetDistributer(Order entity, Employee distributer)
     {
-      if (corpDistributer != null) entity.DistributerId = corpDistributer.Id;
+      if (distributer != null)
+      {
+        entity.DistributerId = distributer.Id;
+        entity.OutSubsidiary = distributer.Subsidiary;
+      }
     }
 
     public void SetOrdersStatus(IEnumerable<Order> orders, OrderStatus status)
