@@ -61,7 +61,28 @@ namespace Laundry.Utils.Controls
     {
       throw new NotImplementedException();
     }
+    public void ShowHideDetails(ToggleButton button, ClothKind clothKind, ClothKindTreeView view)
+    {
+      if (button.IsChecked.Value)
+      {
+        this.Repo.FetchChildren(clothKind);
 
+        foreach (var kind in clothKind.Children)
+        {
+          kind.Level = clothKind.Level + 1;
+          this.EditableEntities.Insert(EditableEntities.IndexOf(clothKind) + 1, kind);
+        }
+
+        //view.MainGrid.Columns[0].Width = new DataGridLength((clothKind.Level + 1) * 64, DataGridLengthUnitType.Pixel);
+      }
+
+      else
+      {
+        RemoveChildren(clothKind);
+
+        //view.MainGrid.Columns[0].Width = new DataGridLength((clothKind.Level) * 64 + 64, DataGridLengthUnitType.Pixel);
+      }
+    }
 
     public void RemoveChildren(ClothKind clothKind)
     {
@@ -77,8 +98,9 @@ namespace Laundry.Utils.Controls
 
     public override void Refresh(int page, int elements)
     {
-      this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
+      this.EditableEntities = new ObservableCollection<ClothKind> { Repo.GetById(0) };
     }
-    
+
+
   }
 }

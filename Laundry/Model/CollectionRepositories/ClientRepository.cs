@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Laundry.Model.CollectionRepositories;
 using MongoDB.Bson;
@@ -103,11 +104,20 @@ namespace Laundry.Model.DatabaseClients
               "$Surname"
             })));
       var filterdef = filter ?? Builders<Client>.Filter.Empty;
-      var result = Collection.Aggregate()
-        .Match(filterdef)
-        .AppendStage<BsonDocument>(addfields)
-        .AppendStage<BsonDocument>(match).Count().First();
-      return result.Count;
+      try
+      {
+        var result = Collection.Aggregate()
+          .Match(filterdef)
+          .AppendStage<BsonDocument>(addfields)
+          .AppendStage<BsonDocument>(match).Count().First();
+        return result.Count;
+      }
+      catch (InvalidOperationException e)
+      {
+        return 0;
+      }
+      
+      
     }
   }
 }
