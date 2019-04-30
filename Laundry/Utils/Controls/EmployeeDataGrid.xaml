@@ -28,8 +28,14 @@
         <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
       </ContextMenu>
     </DataGrid.ContextMenu>
+
+    <DataGrid.Resources>
+      <converters:BindingProxy x:Key="proxy" Data="{Binding}" />
+    </DataGrid.Resources>
+
     <DataGrid.Columns>
-      <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64"
+      <DataGridCheckBoxColumn CanUserReorder="False" MinWidth="64" Width="64" Binding="{Binding IsSelected}"
+                              Visibility="{Binding Data.DisplaySelectionColumn, Source={StaticResource proxy}, Converter={StaticResource BoolVisibilityConverter}}"
                               ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                               EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
         <DataGridCheckBoxColumn.Header>
@@ -42,50 +48,32 @@
         </DataGridCheckBoxColumn.Header>
       </DataGridCheckBoxColumn>
       <local:DataGridAdaptiveColumn Binding="{Binding Id}" CanUserReorder="True" IsReadOnly="True" MinWidth="32"
-                                       SortMemberPath="Id"
-                                       Header="№" />
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
-                              SortMemberPath="Surname"
-                              Header="Фамилия">
-        <DataGridTemplateColumn.CellTemplate>
-          <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Surname}" VerticalAlignment="Center" />
-          </DataTemplate>
-        </DataGridTemplateColumn.CellTemplate>
-      </DataGridTemplateColumn>
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Name"
-                              Header="Имя">
-        <DataGridTemplateColumn.CellTemplate>
-          <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Name}" VerticalAlignment="Center" />
-          </DataTemplate>
-        </DataGridTemplateColumn.CellTemplate>
-      </DataGridTemplateColumn>
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
-                              SortMemberPath="Patronymic"
-                              Header="Отчество">
-        <DataGridTemplateColumn.CellTemplate>
-          <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Patronymic}"
-                       VerticalAlignment="Center" />
-          </DataTemplate>
-        </DataGridTemplateColumn.CellTemplate>
-      </DataGridTemplateColumn>
-
+                                    SortMemberPath="Id"
+                                    Header="№" />
+      <local:DataGridAdaptiveColumn Binding="{Binding Surname}" CanUserReorder="True" IsReadOnly="True"
+                                    MinWidth="96" SortMemberPath="Surname"
+                                    Header="Фамилия" />
+      <local:DataGridAdaptiveColumn Binding="{Binding Name}" CanUserReorder="True" IsReadOnly="True" MinWidth="96"
+                                    SortMemberPath="Surname"
+                                    Header="Имя" />
+      <local:DataGridAdaptiveColumn Binding="{Binding Patronymic}" CanUserReorder="True" IsReadOnly="True"
+                                    Visibility="{Binding Data.IsCompact, Source={StaticResource proxy}, Converter={StaticResource BoolNotVisibilityConverter}}"
+                                    MinWidth="96" SortMemberPath="Surname"
+                                    Header="Отчество" />
+      <local:DataGridAdaptiveColumn Binding="{Binding PhoneNumber}" MinWidth="128" Header="Номер телефона"
+                                    Visibility="{Binding Data.IsCompact, Source={StaticResource proxy}, Converter={StaticResource BoolNotVisibilityConverter}}"
+                                    CanUserReorder="True" IsReadOnly="True"
+                                    SortMemberPath="PhoneNumber" />
       <local:DataGridAdaptiveColumn Binding="{Binding DateBirth, StringFormat='dd.MM.yyyy'}" CanUserReorder="True"
+                                    Visibility="{Binding Data.IsCompact, Source={StaticResource proxy}, Converter={StaticResource BoolNotVisibilityConverter}}"
                                     IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="128"
                                     Header="Дата рождения" />
-
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" SortMemberPath="Profession"
-                              MinWidth="164"
-                              Header="Должность">
-        <DataGridTemplateColumn.CellTemplate>
-          <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Profession, Converter={StaticResource ProfessionConverter}}" VerticalAlignment="Center" />
-          </DataTemplate>
-        </DataGridTemplateColumn.CellTemplate>
-      </DataGridTemplateColumn>
-
+      <local:DataGridAdaptiveColumn Binding="{Binding Profession, Converter={StaticResource ProfessionConverter}}" CanUserReorder="True" IsReadOnly="True"
+                                    SortMemberPath="Profession" MinWidth="86"
+                                    Header="Должность" />
+      <local:DataGridAdaptiveColumn Binding="{Binding OrdersCount}" CanUserReorder="True" IsReadOnly="True"
+                                    SortMemberPath="OrdersCount" MinWidth="86"
+                                    Header="Заказы" />
       <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
       <DataGridTemplateColumn CanUserReorder="False" MinWidth="80" IsReadOnly="True">
         <DataGridTemplateColumn.CellTemplate>

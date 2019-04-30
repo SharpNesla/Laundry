@@ -42,6 +42,8 @@ namespace Laundry.Utils.Controls
     public IReadOnlyList<TEntity> Entities { get; set; }
     public TEntity SelectedEntity { get; set; }
 
+    public bool IsCompact { get; set; }
+
     public IReadOnlyList<TEntity> SelectedEntities
     {
       get { return this.Entities.Where(x => x.IsSelected).ToList(); }

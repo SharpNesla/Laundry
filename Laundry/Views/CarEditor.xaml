@@ -63,9 +63,9 @@
         </StackPanel>
       </materialDesign:Card>
 
-      <materialDesign:Card Margin="0,0,0,0" Padding="16" VerticalAlignment="Stretch" Grid.Column="1">
+      <materialDesign:Card Margin="0,0,0,0" VerticalAlignment="Stretch" Grid.Column="1">
         <DockPanel>
-          <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
+          <DockPanel Margin="16,0,16,16" DockPanel.Dock="Bottom" LastChildFill="True">
             <Button DockPanel.Dock="Right" Margin="0,0,9,0" Style="{StaticResource MaterialDesignFlatButton}"
                         HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
               <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
@@ -74,7 +74,7 @@
             <StackPanel Orientation="Horizontal">
               <TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
                              Style="{StaticResource MaterialDesignBody2TextBlock}"
-                             Text="2 курьера, 1 в процессе доставки" />
+                             Text="{Binding Couriers.Count, StringFormat='{}{0} курьера'}" />
             </StackPanel>
           </DockPanel>
           <ContentControl Name="Couriers"/>

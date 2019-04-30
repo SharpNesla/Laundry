@@ -18,10 +18,13 @@ namespace Laundry.Views
   public class DashBoardViewModel : ActivityScreen
   {
     private readonly WasherDashBoardViewModel _washerDashBoard;
+    private readonly DirectorDashBoardViewModel _directorDashBoard;
     public DashBoardBase EmployeeDashBoard { get; set; }
-    public DashBoardViewModel(IEventAggregator aggregator, IModel model, WasherDashBoardViewModel washerDashBoard) : base(aggregator, model)
+    public DashBoardViewModel(IEventAggregator aggregator, IModel model, WasherDashBoardViewModel washerDashBoard,
+      DirectorDashBoardViewModel directorDashBoard) : base(aggregator, model)
     {
       _washerDashBoard = washerDashBoard;
+      _directorDashBoard = directorDashBoard;
     }
     protected override void OnActivate()
     {
@@ -32,7 +35,7 @@ namespace Laundry.Views
           this.EmployeeDashBoard = _washerDashBoard;
           break;
         case EmployeeProfession.Director:
-          this.EmployeeDashBoard = _washerDashBoard;
+          this.EmployeeDashBoard = _directorDashBoard;
           break;
         case EmployeeProfession.Washer:
           this.EmployeeDashBoard = _washerDashBoard;

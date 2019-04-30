@@ -44,6 +44,11 @@
           <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="Общая информация" />
           <ContentControl Name="MainAdvisorSearch" Width="250"></ContentControl>
+
+          <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                   Text="{Binding Entity.}" />
+
           <TextBox Name="CityTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                    Text="{Binding Entity.City}" />
@@ -66,10 +71,10 @@
         </StackPanel>
       </materialDesign:Card>
 
-      <materialDesign:Card Margin="0,0,0,0" Padding="16" VerticalAlignment="Stretch" Grid.Column="1">
+      <materialDesign:Card Margin="0,0,0,0" VerticalAlignment="Stretch" Grid.Column="1">
         <DockPanel>
-          <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
-            <Button DockPanel.Dock="Right" Margin="0,0,9,0" Style="{StaticResource MaterialDesignFlatButton}"
+          <DockPanel DockPanel.Dock="Bottom" Margin="16,0,16,16" LastChildFill="True">
+            <Button DockPanel.Dock="Right" Margin="0,0,9,0" IsEnabled="{Binding IsNew}" Style="{StaticResource MaterialDesignFlatButton}"
                         HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
               <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
 

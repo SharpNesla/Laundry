@@ -83,7 +83,7 @@ namespace Laundry.Model
     [BsonIgnore]
     public double DiscountPrice
     {
-      get { return Price * (1 - this.DiscountEdge.Discount / 100); ; }
+      get { return Price * (1 - this.DiscountEdge.Discount / 100); }
     }
 
     public List<ClothInstance> Instances { get; set; }

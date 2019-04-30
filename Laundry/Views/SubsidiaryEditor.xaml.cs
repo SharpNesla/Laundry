@@ -28,10 +28,19 @@ namespace Laundry.Views
   public class SubsidiaryEditorViewModel : EditorScreen<Repository<Subsidiary>, Subsidiary>
   {
     public EmployeeSearchViewModel MainAdvisor { get; }
-
-    public SubsidiaryEditorViewModel(IEventAggregator aggregator, IModel model, string entityTitleName = "филиала") 
+    public EmployeeDataGridViewModel Advisors { get; set; }
+    public SubsidiaryEditorViewModel(IEventAggregator aggregator, EmployeeDataGridViewModel advisorsGrid, IModel model, string entityTitleName = "филиала") 
       : base(aggregator, model, model.Subsidiaries, entityTitleName)
     {
+      this.Advisors = advisorsGrid;
+      Advisors.Filter = Builders<Employee>.Filter.And(
+        Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
+      );
+      this.Advisors.DisplaySelectionColumn = false;
+      this.Advisors.IsCompact = true;
+
+      this.Advisors.Refresh(0, int.MaxValue);
     }
   }
 }

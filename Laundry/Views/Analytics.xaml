@@ -151,13 +151,6 @@
                           DisplayMemberPath="Description"
                           SelectedValue="{Binding EntityType}"
                           SelectedValuePath="Value" />
-                <ComboBox Margin="8,0,16,0" Height="38" VerticalContentAlignment="Center"
-                          materialDesign:HintAssist.Hint="Тип диаграммы"
-                          VerticalAlignment="Bottom"
-                          ItemsSource="{Binding Source={converters:Enumeration {x:Type local:ChartType}}}"
-                          DisplayMemberPath="Description"
-                          SelectedValue="{Binding ChartType}"
-                          SelectedValuePath="Value" />
               </StackPanel>
             </materialDesign:ColorZone>
           </StackPanel>

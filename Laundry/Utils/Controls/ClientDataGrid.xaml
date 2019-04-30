@@ -82,7 +82,7 @@
                                       IsReadOnly="True" SortMemberPath="DateBirth" MinWidth="128"
                                       Header="Дата рождения" />
         <local:DataGridAdaptiveColumn Binding="{Binding OrdersCount}" CanUserReorder="True" IsReadOnly="True"
-                                      SortMemberPath="Patronymic" MinWidth="86"
+                                      SortMemberPath="OrdersCount" MinWidth="86"
                                       Header="Заказы" />
 
         <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />

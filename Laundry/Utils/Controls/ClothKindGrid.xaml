@@ -17,7 +17,7 @@
       <StackPanel Margin="16"
                   Visibility="{Binding IsDisplaySubtotals, Converter={StaticResource BoolVisibilityConverter}}"
                   Height="64">
-        <TextBlock Margin="0,8" Text="ИТОГИ" Style="{StaticResource MaterialDesignTitleTextBlock}" />
+        <TextBlock Margin="0,8" Text="ИТОГО" Style="{StaticResource MaterialDesignTitleTextBlock}" />
         <Separator />
 
       </StackPanel>
