@@ -26,14 +26,17 @@ namespace Laundry.Model
   {
     [BsonIgnoreIfDefault]
     public double CustomPrice { get; set; }
+
     public long Id { get; set; }
 
     [BsonIgnoreIfNull]
     public string Comment { get; set; }
 
+    [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
     [BsonIgnoreIfDefault]
     public DateTime CreationDate { get; set; }
 
+    [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
     [BsonIgnoreIfDefault]
     public DateTime ExecutionDate { get; set; }
 
@@ -67,7 +70,7 @@ namespace Laundry.Model
       {
         return
           $"{this.Instances.Where(x => x.ClothKindObj.MeasureKind == MeasureKind.Thing || x.ClothKindObj.MeasureKind == MeasureKind.Pair).Sum(x => x.Amount)}шт, " +
-          $"{this.Instances.Where(x => x.ClothKindObj.MeasureKind == MeasureKind.Kg).Sum(x=>x.Amount)}кг";
+          $"{this.Instances.Where(x => x.ClothKindObj.MeasureKind == MeasureKind.Kg).Sum(x => x.Amount)}кг";
       }
     }
 
@@ -80,7 +83,7 @@ namespace Laundry.Model
     [BsonIgnore]
     public double DiscountPrice
     {
-      get { return Price; }
+      get { return Price * (1 - this.DiscountEdge.Discount / 100); ; }
     }
 
     public List<ClothInstance> Instances { get; set; }

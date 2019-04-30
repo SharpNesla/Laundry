@@ -62,7 +62,7 @@
 
             <TextBox materialDesign:HintAssist.Hint="Цена за единицу" Text="{Binding Entity.Price}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-            <TextBox materialDesign:HintAssist.Hint="Количество порошка на стирку единицы (в кг)" Text="{Binding Entity.Amount}"
+            <TextBox materialDesign:HintAssist.Hint="Себестоимость стирки за единицу" Text="{Binding Entity.Amount}"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
           </StackPanel>
         </materialDesign:Card>

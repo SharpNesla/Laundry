@@ -84,7 +84,14 @@
           <DatePicker Grid.Row="8" Grid.Column="0"
                       materialDesign:HintAssist.Hint="Дата исполнения"
                       Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                      VerticalAlignment="Center" Margin="2,0,0,0" SelectedDate="{Binding Entity.ExecutionDate}" />
+                      VerticalAlignment="Bottom"  SelectedDate="{Binding Entity.ExecutionDate}" />
+          <materialDesign:TimePicker
+            Is24Hours="True" 
+            Width="100" Grid.Row="8" Grid.Column="1"
+            materialDesign:HintAssist.Hint="Время"
+            SelectedTimeFormat="Short"
+            SelectedTime="{Binding Entity.ExecutionDate}"
+            VerticalAlignment="Bottom" Height="23" Margin="13,0"/>
 
           <!--<ComboBox Margin="2,0,16,0" Grid.Row="1" Grid.Column="0"
                     materialDesign:HintAssist.Hint="Статус заказа"
