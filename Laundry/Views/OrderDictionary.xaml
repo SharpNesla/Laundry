@@ -9,6 +9,7 @@
              xmlns:controls="clr-namespace:Laundry.Utils.Controls"
              xmlns:utils="clr-namespace:Laundry.Utils"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
@@ -16,17 +17,23 @@
                               Padding="16">
       <DockPanel>
 
-        <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" DockPanel.Dock="Right"
-                Style="{StaticResource MaterialDesignToolButton}"
-                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="28"
-                cal:Message.Attach="ShowActivityMenu($source)">
+        <Button
+          Tag="{Binding DataContext, ElementName=OwnControl}"
+          Visibility="{Binding OrderGridVisibility}"
+          DockPanel.Dock="Right"
+          Style="{StaticResource MaterialDesignToolButton}"
+          Foreground="{StaticResource MaterialDesignDarkForeground}" Width="28"
+          cal:Message.Attach="ShowActivityMenu($source)">
           <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
+          <Button.Resources>
+            <converters:BindingProxy x:Key="proxy" Data="{Binding}" />
+          </Button.Resources>
           <Button.ContextMenu>
-            <ContextMenu DataContext="{Binding ElementName=Screen, Path=DataContext}">
-              <MenuItem Header="Экспортировать как">
-                <MenuItem Header="*.csv" />
-                <MenuItem Header="*.xlsx" cal:Action.Target="ClientDictionary" cal:Message.Attach="[Event Click] = [Action ExportToExcel()]"/>
-              </MenuItem>
+            <ContextMenu>
+              <MenuItem Header="*.csv" />
+              <MenuItem Header="*.xlsx" 
+                        cal:Message.Attach="[Event Click] = [Action ExportToExcel()]"
+                        cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"/>
               <MenuItem Header="Удалить выбраное" />
             </ContextMenu>
           </Button.ContextMenu>
@@ -39,7 +46,7 @@
 
             Style="{StaticResource MaterialDesignTitleTextBlock}"
             VerticalAlignment="Center"
-            Margin="16 0 0 0" Text="{StaticResource OrderDictionary.Title}"/>
+            Margin="16 0 0 0" Text="{StaticResource OrderDictionary.Title}" />
         </StackPanel>
       </DockPanel>
 
@@ -77,7 +84,7 @@
                     Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button Name="AdvancedSearch"
-                  Style="{DynamicResource MaterialDesignToolButton}">
+                        Style="{DynamicResource MaterialDesignToolButton}">
                   <materialDesign:PackIcon
                     Kind="Magnify"
                     Opacity="0.56" />

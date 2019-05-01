@@ -21,6 +21,7 @@ using Laundry.Model.DatabaseClients;
 using Laundry.Utils.Controls.EntitySearchControls;
 using Laundry.Views;
 using MongoDB.Driver;
+using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
 
@@ -58,37 +59,24 @@ namespace Laundry.Utils.Controls
       set { base.Filter = value; }
     }
 
-    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
+    public override string[] TableSheetHeader => new[]
+      {"№", "Имя", "Фамилия", "Отчество", "Номер телефона", "Дата рождения", "Количество заказов"};
+
+    public override string TableSheetName => "Клиенты";
+
+    protected override IRow AppendEntityToTable(ISheet sheet, Client entity)
     {
-      var sheet = workbook.CreateSheet();
+      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
 
-      var clients = this.Repo.Get(0, int.MaxValue);
+      row.CreateCell(3).SetCellValue(entity.Patronymic);
+      row.CreateCell(4).SetCellValue(entity.PhoneNumber);
+      row.CreateCell(6).SetCellValue(entity.OrdersCount);
+      row.CreateCell(0).SetCellValue(entity.Id);
+      row.CreateCell(2).SetCellValue(entity.Name);
+      row.CreateCell(1).SetCellValue(entity.Surname);
+      row.CreateCell(5).SetCellValue(entity.DateBirth.ToString("dd.MM.yyyy"));
 
-      workbook.SetSheetName(0, "Клиенты");
-
-      var header = sheet.CreateRow(0);
-      header.CreateCell(0).SetCellValue("№");
-      header.CreateCell(1).SetCellValue("Имя");
-      header.CreateCell(2).SetCellValue("Фамилия");
-      header.CreateCell(3).SetCellValue("Отчество");
-      header.CreateCell(4).SetCellValue("Дата рождения");
-      header.CreateCell(5).SetCellValue("Количество заказов");
-
-      foreach (var client in clients)
-      {
-        sheet.AppendClient(client);
-      }
-
-      
-
-      for (int i = 0; i < 6; i++)
-      {
-        sheet.AutoSizeColumn(i);
-        
-        sheet.SetAutoFilter(new CellRangeAddress(0, sheet.PhysicalNumberOfRows, i, i));
-      }
-
-      return workbook;
+      return row;
     }
 
     public ClientDataGridViewModel(IEventAggregator eventAggregator, ClientCardViewModel card,

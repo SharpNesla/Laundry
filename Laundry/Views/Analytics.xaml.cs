@@ -94,7 +94,6 @@ namespace Laundry.Views
       _clothKindGrid.IsDisplaySubtotals = true;
 
       Paginator = paginator;
-
       ChangeEntity(_orderGrid, "Заказов");
 
       this.IsGridChecked = true;

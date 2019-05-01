@@ -13,12 +13,21 @@
              Name="OwnControl">
   <DockPanel LastChildFill="True">
     <!--{Binding IsSearchDrawerOpened}-->
-    <StackPanel  DockPanel.Dock="Bottom">
+    <StackPanel DockPanel.Dock="Bottom">
 
-      <StackPanel Margin="16,0,16,16" Visibility="{Binding IsDisplaySubtotals, Converter={StaticResource BoolVisibilityConverter}}">
-        <TextBlock Margin="8,0,0,8" Text="ИТОГО" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
-        <Separator></Separator>
-        <TextBlock Margin="8,16,81,0" TextAlignment="Left" Text="Всего заказов по критериям: 350&#x0a;На общую сумму: 10 930 802 074.00₽"/>
+      <StackPanel Margin="16,0,16,16"
+                  Visibility="{Binding IsDisplaySubtotals, Converter={StaticResource BoolVisibilityConverter}}">
+        <TextBlock Margin="8,0,0,8" Text="ИТОГО" Style="{StaticResource MaterialDesignTitleTextBlock}" />
+        <Separator />
+        <TextBlock Margin="8,16,81,0" TextAlignment="Left">
+          <TextBlock.Text>
+            <MultiBinding
+              StringFormat="{}Всего заказов по критериям: {0}&#x0a;Всего единиц одежды: 11113шт, 323224кг&#x0a;На общую сумму: 10 930 802 074.00₽">
+              <Binding Path="Count" />
+            </MultiBinding>
+          </TextBlock.Text>
+        </TextBlock>
+
       </StackPanel>
 
       <materialDesign:DrawerHost Name="DrawerHost"
@@ -49,22 +58,26 @@
               <DatePicker SelectedDate="{Binding LowCreationDateBound}" materialDesign:HintAssist.Hint="Нижняя граница"
                           Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
                           HorizontalAlignment="Stretch" IsEnabled="{Binding IsByCreationDate}" />
-              <DatePicker SelectedDate="{Binding HighCreationDateBound}" materialDesign:HintAssist.Hint="Верхняя граница"
+              <DatePicker SelectedDate="{Binding HighCreationDateBound}"
+                          materialDesign:HintAssist.Hint="Верхняя граница"
                           Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
                           HorizontalAlignment="Stretch" IsEnabled="{Binding IsByCreationDate}" />
             </StackPanel>
             <StackPanel Width="174" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
               <CheckBox IsChecked="{Binding IsByExecutionDate}">По дате исполнения</CheckBox>
-              <DatePicker SelectedDate="{Binding LowExecutionDateBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+              <DatePicker SelectedDate="{Binding LowExecutionDateBound}"
+                          materialDesign:HintAssist.Hint="Нижняя граница"
                           Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
                           HorizontalAlignment="Stretch" IsEnabled="{Binding IsByExecutionDate}" />
-              <DatePicker SelectedDate="{Binding HighExecutionDateBound}" materialDesign:HintAssist.Hint="Верхняя граница"
+              <DatePicker SelectedDate="{Binding HighExecutionDateBound}"
+                          materialDesign:HintAssist.Hint="Верхняя граница"
                           Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
                           HorizontalAlignment="Stretch" IsEnabled="{Binding IsByExecutionDate}" />
             </StackPanel>
             <StackPanel Width="175" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
               <CheckBox IsChecked="{Binding IsBySubsidiary}">По филиалу</CheckBox>
-              <ContentControl Height="38" IsEnabled="{Binding IsBySubsidiary}" cal:View.Model="{Binding SubsidiaryCombo}" />
+              <ContentControl Height="38" IsEnabled="{Binding IsBySubsidiary}"
+                              cal:View.Model="{Binding SubsidiaryCombo}" />
             </StackPanel>
           </StackPanel>
         </materialDesign:DrawerHost.BottomDrawerContent>

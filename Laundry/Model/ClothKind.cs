@@ -27,8 +27,7 @@ namespace Laundry.Model
     public long Parent { get; set; }
     [BsonIgnoreIfNull]
     public string Name { get; set; }
-
-    [BsonIgnoreIfDefault]
+    
     public MeasureKind MeasureKind { get; set; }
 
     [BsonIgnoreIfDefault]

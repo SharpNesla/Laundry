@@ -29,7 +29,7 @@ namespace Laundry.Model.CollectionRepositories
 
     public override Order GetById(long id)
     {
-      var order =base.GetById(id);
+      var order = base.GetById(id);
 
       foreach (var instance in order.Instances)
       {
@@ -39,6 +39,11 @@ namespace Laundry.Model.CollectionRepositories
       return order;
     }
 
+    public string GetAggregatedInstacesCount(FilterDefinition<Order> filter)
+    {
+      return "0шт, 0кг";
+    }
+    
     public void SetClient(Order order, Client client)
     {
       if (client != null)
@@ -146,7 +151,7 @@ namespace Laundry.Model.CollectionRepositories
     {
       foreach (var order in orders)
       {
-        Collection.UpdateOne(x => x.Id == order.Id, Builders<Order>.Update.Set(x=>x.Status, status));
+        Collection.UpdateOne(x => x.Id == order.Id, Builders<Order>.Update.Set(x => x.Status, status));
       }
     }
   }

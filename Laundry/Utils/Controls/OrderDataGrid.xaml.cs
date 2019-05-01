@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using Laundry.Model;
@@ -11,8 +12,11 @@ using MaterialDesignThemes.Wpf;
 using MongoDB.Driver;
 using NPOI.XSSF.UserModel;
 using System.Linq;
+using Laundry.Utils.Converters;
 using LiveCharts.Wpf;
+using NPOI.SS.Util;
 using PropertyChanged;
+using NPOI.SS.UserModel;
 
 namespace Laundry.Utils.Controls
 {
@@ -22,7 +26,18 @@ namespace Laundry.Utils.Controls
   public class OrderDataGridViewModel : EntityGrid<Order, OrderRepository, OrderCardViewModel>, IChartable<Order>
   {
     private readonly IEventAggregator _eventAggregator;
+    private readonly IModel _model;
     private EmployeeProfession _profession;
+
+    private readonly OrderStatusConverter _statusConverter = new OrderStatusConverter();
+
+    [AlsoNotifyFor(nameof(Labels), nameof(Values))]
+    public override IReadOnlyList<Order> Entities
+    {
+      get { return base.Entities; }
+
+      set { base.Entities = value; }
+    }
 
     public override FilterDefinition<Order> Filter
     {
@@ -97,6 +112,7 @@ namespace Laundry.Utils.Controls
         EmployeeCombo.Filter = Builders<Employee>.Filter.Eq(nameof(Employee.Profession), value);
       }
     }
+
     public EmployeeSearchViewModel EmployeeCombo { get; }
 
     public bool IsBySubsidiary { get; set; }
@@ -120,12 +136,9 @@ namespace Laundry.Utils.Controls
         this.Entities = Repo.GetForEmployee(Employee, page * elements, elements);
       }
       else
+      {
         base.Refresh(page, elements);
-    }
-
-    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
-    {
-      throw new NotImplementedException();
+      }
     }
 
     public override long Count
@@ -148,6 +161,7 @@ namespace Laundry.Utils.Controls
     ) : base(eventAggregator, card, model.Orders, deleteDialog, Screens.OrderEditor)
     {
       _eventAggregator = eventAggregator;
+      _model = model;
       eventAggregator.Subscribe(this);
 
       this.ClientCombo = new ClientSearchViewModel(model);
@@ -157,27 +171,93 @@ namespace Laundry.Utils.Controls
       this.EmployeeCombo = new EmployeeSearchViewModel(model) {Label = "Работник"};
 
       this.Profession = EmployeeProfession.Courier;
-
     }
 
-    //public void Handle(Client message)
-    //{
-    //  this.IsSearchDrawerOpened = true;
-    //  this.IsByClient = true;
-    //  this.ClientCombo.SelectedEntity = message;
-    //  this.EventAggregator.Unsubscribe(this);
-    //}
-    [DependsOn(nameof(Entities))]
-    public SeriesCollection Values => new SeriesCollection
-    {
-      new ColumnSeries
+    public override string[] TableSheetHeader =>
+      new[]
       {
-        Title = "Цена",
-        Values = new ChartValues<double>(this.Entities.Select(x => x.Price))
-      }
-    };
+        "№", "Дата создания", "Дата исполнения", "Цена", "Статус", "Количество вешей", "Комментарий",
+        "Клиент (№)", "Клиент (ФИО)",
+        "Приёмщик (№)", "Приёмщик (ФИО)",
+        "Корпоративный",
+        "Забирающий курьер (№)", "Забирающий курьер (ФИО)",
+        "Прачечник (№)", "Прачечник (ФИО)",
+        "Доставляющий курьер (№)", "Доставляющий курьер (ФИО)",
+        "Выдающий приёмщик (№)", "Выдающий приёмщик(№)",
+      };
 
-    public string[] Labels => this.Entities.Select(x => $"№{x.Id} {x.CreationDate:d}").ToArray();
+    protected override IRow AppendEntityToTable(ISheet sheet, Order entity)
+    {
+      #region Общая информация
+
+      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
+      row.CreateCell(0).SetCellValue(entity.Id);
+      row.CreateCell(1).SetCellValue(entity.CreationDate.ToString("d"));
+      row.CreateCell(2).SetCellValue(entity.ExecutionDate.ToString("d"));
+
+      row.CreateCell(3).SetCellValue(entity.Price);
+      row.CreateCell(4).SetCellValue(_statusConverter
+        .Convert(entity.Status, typeof(string), null, CultureInfo.CurrentCulture)?.ToString());
+      row.CreateCell(5).SetCellValue(entity.InstancesCount);
+
+      row.CreateCell(6).SetCellValue(entity.Comment);
+
+      row.CreateCell(7).SetCellValue(entity.IsCorporative ? "Да" : "Нет");
+
+      #endregion
+
+      row.CreateCell(8).SetCellValue(entity.ClientId);
+      row.CreateCell(9).SetCellValue(_model.Clients.GetById(entity.ClientId).Signature);
+
+      #region Персонал
+
+      row.CreateCell(10).SetCellValue(entity.ObtainerId);
+
+      row.CreateCell(11).SetCellValue(entity.IsCorporative
+        ? _model.Clients.GetById(entity.CorpObtainerId).Signature
+        : _model.Employees.GetById(entity.ObtainerId).Signature);
+
+      row.CreateCell(12).SetCellValue(entity.InCourierId);
+      row.CreateCell(13).SetCellValue(_model.Employees.GetById(entity.InCourierId).Signature);
+
+      row.CreateCell(14).SetCellValue(entity.WasherCourierId);
+      row.CreateCell(15).SetCellValue(_model.Employees.GetById(entity.WasherCourierId).Signature);
+
+      row.CreateCell(16).SetCellValue(entity.OutCourierId);
+      row.CreateCell(17).SetCellValue(_model.Employees.GetById(entity.OutCourierId).Signature);
+
+      row.CreateCell(18).SetCellValue(entity.IsCorporative
+        ? _model.Clients.GetById(entity.CorpDistributerId).Signature
+        : _model.Employees.GetById(entity.DistributerId).Signature);
+
+      #endregion
+
+      return row;
+    }
+
+
+    public string AggregatedInstancesCount => Repo.GetAggregatedInstacesCount(Filter);
+
+
+    public SeriesCollection Values
+    {
+      get
+      {
+        return new SeriesCollection
+        {
+          new ColumnSeries
+          {
+            Title = "Цена",
+            Values = new ChartValues<double>(this.Entities.Select(x => x.Price))
+          }
+        };
+      }
+    }
+
+    public string[] Labels
+    {
+      get { return this.Entities.Select(x => $"№{x.Id} {x.CreationDate:d}").ToArray(); }
+    }
 
     public string LabelsTitle => "Заказы";
     public string ValuesTitle => "Цена";

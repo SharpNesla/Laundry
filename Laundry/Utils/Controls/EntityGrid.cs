@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,12 @@ using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Model.DatabaseClients;
+using Laundry.Utils.Converters;
 using Laundry.Views;
 using MaterialDesignThemes.Wpf;
 using MongoDB.Driver;
 using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using Action = System.Action;
 using NPOI.XSSF.UserModel;
 
@@ -39,7 +42,7 @@ namespace Laundry.Utils.Controls
     private Card<TEntity> _card;
     protected readonly IEventAggregator EventAggregator;
     private Screens _editScreen;
-    public IReadOnlyList<TEntity> Entities { get; set; }
+    public virtual IReadOnlyList<TEntity> Entities { get;set; }
     public TEntity SelectedEntity { get; set; }
 
     public bool IsCompact { get; set; }
@@ -62,6 +65,8 @@ namespace Laundry.Utils.Controls
     public bool IsDisplaySubtotals { get; set; }
     public Visibilities Visibilities { get; }
 
+    public virtual string[] TableSheetHeader => new []{"№"};
+    public virtual string TableSheetName => "Объекты";
     public bool IsSearchDrawerOpened { get; set; }
 
     public bool DisplaySelectionColumn { get; set; }
@@ -165,7 +170,44 @@ namespace Laundry.Utils.Controls
       RaiseStateChanged();
     }
 
-    protected abstract XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook);
+    protected virtual XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
+    {
+      var sheet = workbook.CreateSheet();
+
+      var entities = this.Repo.Get(0, int.MaxValue, Filter);
+
+      workbook.SetSheetName(0, this.TableSheetName);
+
+      var header = sheet.CreateRow(0);
+
+      for (var i = 0; i < this.TableSheetHeader.Length; i++)
+      {
+        header.CreateCell(i).SetCellValue(this.TableSheetHeader[i]);
+      }
+      
+      foreach (var entity in entities)
+      {
+        AppendEntityToTable(sheet, entity);
+      }
+
+      for (var i = 0; i < this.TableSheetHeader.Length; i++)
+      {
+        sheet.AutoSizeColumn(i);
+
+        
+      }
+      sheet.SetAutoFilter(new CellRangeAddress(0, 0, this.TableSheetHeader.Length, this.TableSheetHeader.Length));
+      return workbook;
+    }
+
+    protected virtual IRow AppendEntityToTable(ISheet sheet, TEntity entity)
+    {
+      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
+      
+      row.CreateCell(0).SetCellValue(entity.Id);
+
+      return row;
+    }
 
     public void ExportToExcel()
     {
@@ -202,26 +244,5 @@ namespace Laundry.Utils.Controls
       this.StateChanged?.Invoke();
     }
   }
-
-  public static class ExcelExtensions
-  {
-    public static void AppendClient(this ISheet sheet, Client client)
-    {
-      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
-      var indexCell = row.CreateCell(0);
-      var nameCell = row.CreateCell(2);
-      var surnameCell = row.CreateCell(1);
-
-      row.CreateCell(3).SetCellValue(client.Patronymic);
-
-      var datebirth = row.CreateCell(4);
-
-      row.CreateCell(5).SetCellValue(client.OrdersCount);
-
-      indexCell.SetCellValue(client.Id);
-      nameCell.SetCellValue(client.Name);
-      surnameCell.SetCellValue(client.Surname);
-      datebirth.SetCellValue(client.DateBirth.ToString("dd.MM.yyyy"));
-    }
-  }
+  
 }
