@@ -34,7 +34,7 @@ namespace Laundry.Views
   {
     private readonly OrderDataGridViewModel _orderGrid;
     private readonly SubsidiaryGridViewModel _subsidiaryGrid;
-    private readonly ClothKindGridViewModel _clothKindGrid;
+    private readonly ClothKindTreeViewModel _clothKindGrid;
     private AnalyticEntityType _entityType;
     public IChartable<IRepositoryElement> EntityGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
@@ -85,7 +85,7 @@ namespace Laundry.Views
     }
 
     public AnalyticsViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator,
-      OrderDataGridViewModel orderGrid, SubsidiaryGridViewModel subsidiaryGrid, ClothKindGridViewModel clothKindGrid) : base(aggregator, model)
+      OrderDataGridViewModel orderGrid, SubsidiaryGridViewModel subsidiaryGrid, ClothKindTreeViewModel clothKindGrid) : base(aggregator, model)
     {
       _orderGrid = orderGrid;
       _orderGrid.IsDisplaySubtotals = true;

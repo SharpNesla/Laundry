@@ -23,20 +23,15 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for ClothKindEditor.xaml
   /// </summary>
-  public class ClothKindDictionaryViewModel : DictionaryScreen<ClothKindGridViewModel>
+  public class ClothKindDictionaryViewModel : DictionaryScreen<ClothKindTreeViewModel>
   {
-    public bool IsTreeChecked { get; set; }
-    public bool IsGridChecked { get; set; }
-
     public ClothKindTreeViewModel ClothKindTree { get; set; }
 
     public ClothKindDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, 
-      ClothKindTreeViewModel clothKindTree, ClothKindGridViewModel entityGrid) : 
+      ClothKindTreeViewModel clothKindTree, ClothKindTreeViewModel entityGrid) : 
       base(aggregator, model, paginator, entityGrid, "Видов одежды")
     {
-      IsTreeChecked = true;
-      this.ClothKindTree = clothKindTree;
-      this.ClothKindTree.Refresh(0,0);
+      this.EntityGrid.IsTreeMode = true;
     }
   }
 }

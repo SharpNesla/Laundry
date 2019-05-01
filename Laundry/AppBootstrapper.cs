@@ -73,7 +73,6 @@ namespace Laundry
       container.Singleton<ClothEditorViewModel>();
 
       container.PerRequest<ClothKindTreeViewModel>()
-        .PerRequest<ClothKindGridViewModel>()
         .PerRequest<ClothKindCardViewModel>()
         .PerRequest<ClothKindEditorViewModel>();
 

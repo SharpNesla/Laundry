@@ -6,9 +6,40 @@
              xmlns:local="clr-namespace:Laundry.Utils.Controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
+             xmlns:model="clr-namespace:Laundry.Model"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" Name="OwnControl">
-  <DataGrid
+  <DockPanel LastChildFill="True">
+    <!--{Binding IsSearchDrawerOpened}-->
+    <StackPanel DockPanel.Dock="Bottom">
+
+      <StackPanel Margin="16,0,16,16"
+                  Visibility="{Binding IsDisplaySubtotals, Converter={StaticResource BoolVisibilityConverter}}">
+        <TextBlock Margin="8,0,0,8" Text="ИТОГО" Style="{StaticResource MaterialDesignTitleTextBlock}" />
+        <Separator />
+        <TextBlock Margin="8,12,81,0" TextAlignment="Left">
+          <TextBlock.Text>
+            <MultiBinding
+              StringFormat="{}Всего заказов по критериям: {0}&#x0a;Всего единиц одежды: {1}&#x0a;На общую сумму: {2:0.00}₽">
+              <Binding Path="Count" />
+              <Binding Path="AggregatedInstancesCount" />
+              <Binding Path="AggregatedPrice" />
+            </MultiBinding>
+          </TextBlock.Text>
+        </TextBlock>
+
+      </StackPanel>
+
+      <materialDesign:DrawerHost Name="DrawerHost"
+                                 IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
+        <materialDesign:DrawerHost.BottomDrawerContent>
+          <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}" Orientation="Horizontal" />
+        </materialDesign:DrawerHost.BottomDrawerContent>
+
+      </materialDesign:DrawerHost>
+    </StackPanel>
+    <DataGrid
     Margin="16"
     Background="{Binding ElementName=OwnControl, Path=Background}"
     CanUserSortColumns="True"
@@ -42,26 +73,12 @@
       <local:DataGridAdaptiveColumn Binding="{Binding Id}" CanUserReorder="True" IsReadOnly="True" MinWidth="32"
                                        SortMemberPath="Id"
                                        Header="№" />
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
-                              SortMemberPath="House"
-                              Header="Дом">
-        <DataGridTemplateColumn.CellTemplate>
-          <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding House}" VerticalAlignment="Center" />
-          </DataTemplate>
-        </DataGridTemplateColumn.CellTemplate>
-      </DataGridTemplateColumn>
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96" SortMemberPath="Street"
-                              Header="Улица">
-        <DataGridTemplateColumn.CellTemplate>
-          <DataTemplate>
-            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Street}" VerticalAlignment="Center" />
-          </DataTemplate>
-        </DataGridTemplateColumn.CellTemplate>
-      </DataGridTemplateColumn>
-      <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" MinWidth="96"
-                              SortMemberPath="Patronymic"
-                              Header="Отчество">
+        <local:DataGridAdaptiveColumn Binding="{Binding House}" CanUserReorder="True" IsReadOnly="True" MinWidth="32"
+                                    SortMemberPath="House"
+                                    Header="Дом" />
+        <local:DataGridAdaptiveColumn Binding="{Binding Street}" CanUserReorder="True" IsReadOnly="True" MinWidth="32"
+                                    SortMemberPath="Street"
+                                    Header="Улица" />
         <DataGridTemplateColumn.CellTemplate>
           <DataTemplate>
             <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Patronymic}"
@@ -109,4 +126,5 @@
       </DataGridTemplateColumn>
     </DataGrid.Columns>
   </DataGrid>
+    </DockPanel>
 </UserControl>

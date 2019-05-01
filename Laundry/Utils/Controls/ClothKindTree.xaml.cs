@@ -19,6 +19,7 @@ using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
 using Laundry.Views.Cards;
+using LiveCharts;
 using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
@@ -26,12 +27,14 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for ClothKindGrid.xaml
   /// </summary>
-  public class ClothKindTreeViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>
+  public class ClothKindTreeViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>,
+    IChartable<ClothKind>
   {
     private readonly IModel _model;
     public float NameWidth { get; set; }
     public ObservableCollection<ClothKind> EditableEntities { get; private set; }
-
+    public ClothKind SelectedTreeEntity { get; set; }
+    public bool IsTreeMode { get; set; }
 
     public ClothKindTreeViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
       IModel model, DeleteDialogViewModel shure)
@@ -39,7 +42,6 @@ namespace Laundry.Utils.Controls
     {
       _model = model;
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
-      this.StateChanged += RaiseStateChanged; 
     }
 
     public override async void Add()
@@ -49,12 +51,13 @@ namespace Laundry.Utils.Controls
       await DialogHostExtensions.ShowCaliburnVM(editor);
       this.Refresh(0, 0);
     }
+
     public override async void Edit()
     {
       var editor = new ClothKindEditorViewModel(this.EventAggregator, _model);
       EventAggregator.PublishOnUIThread(this.SelectedEntity);
       await DialogHostExtensions.ShowCaliburnVM(editor);
-      this.Refresh(0, 0);
+      RaiseStateChanged();
     }
 
     protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
@@ -99,8 +102,13 @@ namespace Laundry.Utils.Controls
 
     public override void Refresh(int page, int elements)
     {
+      base.Refresh(page, elements);
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
     }
-    
+
+    public SeriesCollection Values { get; }
+    public string[] Labels { get; }
+    public string LabelsTitle { get; }
+    public string ValuesTitle { get; }
   }
 }

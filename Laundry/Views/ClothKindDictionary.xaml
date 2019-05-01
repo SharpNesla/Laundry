@@ -37,10 +37,9 @@
 
         <RadioButton
           Style="{StaticResource MaterialDesignTabRadioButton}"
-          IsChecked="{Binding IsTreeChecked}" Height="42" Grid.Row="1"
+          IsChecked="{Binding EntityGrid.IsTreeMode}" Height="42" Grid.Row="1"
           Content="Древовидное представление" />
         <RadioButton Grid.Column="1" Grid.ColumnSpan="2"
-                     IsChecked="{Binding isGridChecked}"
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
                      Content="Таблица" />
         <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"
@@ -70,11 +69,11 @@
                                 Mode="PrimaryMid"
                                 Padding="16">
         <DockPanel>
-          <StackPanel Visibility="Hidden"
+          <StackPanel
             Orientation="Horizontal"
             materialDesign:RippleAssist.IsCentered="True">
 
-            <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="32" Width="32" />
+            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="32" Width="32" />
             <materialDesign:ColorZone
               Mode="Standard"
               Padding="8 4 8 4"
@@ -91,7 +90,7 @@
                   <ColumnDefinition
                     Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button
+                <Button Name="AdvancedSearch"
                   Style="{DynamicResource MaterialDesignToolButton}">
                   <materialDesign:PackIcon
                     Kind="Magnify"
@@ -100,11 +99,12 @@
                 <TextBox
                   Grid.Column="1"
                   Margin="8 0 0 0"
-                  materialDesign:HintAssist.Hint="{StaticResource ClientDictionary.SearchBarTitle}"
+                  materialDesign:HintAssist.Hint="Поиск видов одежды"
                   materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                   BorderThickness="0"
                   MinWidth="200"
-                  VerticalAlignment="Center" />
+                  VerticalAlignment="Center"
+                  Text="{Binding EntityGrid.SearchString}"/>
               </Grid>
             </materialDesign:ColorZone>
 
