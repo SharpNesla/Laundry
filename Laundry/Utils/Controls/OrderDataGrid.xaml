@@ -19,11 +19,13 @@
                   Visibility="{Binding IsDisplaySubtotals, Converter={StaticResource BoolVisibilityConverter}}">
         <TextBlock Margin="8,0,0,8" Text="ИТОГО" Style="{StaticResource MaterialDesignTitleTextBlock}" />
         <Separator />
-        <TextBlock Margin="8,16,81,0" TextAlignment="Left">
+        <TextBlock Margin="8,12,81,0" TextAlignment="Left">
           <TextBlock.Text>
             <MultiBinding
-              StringFormat="{}Всего заказов по критериям: {0}&#x0a;Всего единиц одежды: 11113шт, 323224кг&#x0a;На общую сумму: 10 930 802 074.00₽">
+              StringFormat="{}Всего заказов по критериям: {0}&#x0a;Всего единиц одежды: {1}&#x0a;На общую сумму: {2:0.00}₽">
               <Binding Path="Count" />
+              <Binding Path="AggregatedInstancesCount" />
+              <Binding Path="AggregatedPrice" />
             </MultiBinding>
           </TextBlock.Text>
         </TextBlock>
@@ -132,7 +134,8 @@
         <local:DataGridAdaptiveColumn Binding="{Binding ExecutionDate, StringFormat='dd.MM.yyyy'}"
                                       CanUserReorder="True"
                                       IsReadOnly="True" MinWidth="96" SortMemberPath="ExecutionDate"
-                                      Header="Дата исполнения" />
+                                      Header="Дата исполнения"
+                                      Visibility="{Binding Data.IsCompact, Source={StaticResource proxy}, Converter={StaticResource BoolNotVisibilityConverter}}"/>
 
         <local:DataGridAdaptiveColumn Binding="{Binding Status, Converter={StaticResource StatusConverter}}"
                                       CanUserReorder="True"
@@ -142,7 +145,8 @@
         <local:DataGridAdaptiveColumn Binding="{Binding InstancesCount}" CanUserReorder="True" IsReadOnly="True"
                                       MinWidth="96"
                                       SortMemberPath="Instances.Count"
-                                      Header="Кол-во вещей" />
+                                      Header="Кол-во вещей" 
+                                      Visibility="{Binding Data.IsCompact, Source={StaticResource proxy}, Converter={StaticResource BoolNotVisibilityConverter}}"/>
         <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
         <DataGridTemplateColumn CanUserReorder="False" MinWidth="80" IsReadOnly="True">
           <DataGridTemplateColumn.CellTemplate>

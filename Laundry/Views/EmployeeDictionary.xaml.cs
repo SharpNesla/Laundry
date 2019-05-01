@@ -19,8 +19,6 @@ namespace Laundry.Views
   /// </summary>
   public class EmployeeDictionaryViewModel : DictionaryScreen<EmployeeDataGridViewModel>
   {
-
-    
     public EmployeeDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator,
       EmployeeDataGridViewModel entityGrid)
       : base(aggregator, model, paginator, entityGrid, "Работников")

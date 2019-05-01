@@ -41,9 +41,113 @@ namespace Laundry.Model.CollectionRepositories
 
     public string GetAggregatedInstacesCount(FilterDefinition<Order> filter)
     {
-      return "0шт, 0кг";
+      var pipeline = new BsonArray
+      {
+        new BsonDocument("$unwind",
+          new BsonDocument
+          {
+            {"path", "$Instances"},
+            {"preserveNullAndEmptyArrays", false}
+          }),
+        new BsonDocument("$lookup",
+          new BsonDocument
+          {
+            {"from", "clothkinds"},
+            {"localField", "Instances.ClothKind"},
+            {"foreignField", "_id"},
+            {"as", "ClothKind"}
+          }),
+        new BsonDocument("$unwind",
+          new BsonDocument
+          {
+            {"path", "$Instances"},
+            {"preserveNullAndEmptyArrays", false}
+          }),
+        new BsonDocument("$group",
+          new BsonDocument
+          {
+            {"_id", "$ClothKind.MeasureKind"},
+            {
+              "Count",
+              new BsonDocument("$sum", "$Instances.Amount")
+            }
+          }),
+        new BsonDocument("$unwind",
+          new BsonDocument("path", "$_id")),
+        new BsonDocument("$sort",
+          new BsonDocument("_id", 1))
+      };
+
+      var aggregation = this.Collection.Aggregate()
+        .Match(filter)
+        .AppendStage<BsonDocument>(pipeline[0].AsBsonDocument)
+        .AppendStage<BsonDocument>(pipeline[1].AsBsonDocument)
+        .AppendStage<BsonDocument>(pipeline[2].AsBsonDocument)
+        .AppendStage<BsonDocument>(pipeline[3].AsBsonDocument)
+        .AppendStage<BsonDocument>(pipeline[4].AsBsonDocument).ToList();
+
+
+      return
+        $"{aggregation[0]["Count"].AsInt32 + aggregation[2]["Count"].AsInt32}шт, {aggregation[1]["Count"].AsInt32}кг";
     }
-    
+
+    public double GetAggregatedPrice(FilterDefinition<Order> filter)
+    {
+      
+      var pipeline =
+        new BsonDocument("$group",
+          new BsonDocument
+          {
+            {"_id", 1},
+            {
+              "Price",
+              new BsonDocument("$sum", "$Price")
+            }
+          });
+
+      try
+      {
+        var doc = this.Collection.Aggregate().Match(filter)
+          .AppendStage<BsonDocument>(pipeline).ToList()[0]["Price"].AsDouble;
+        return doc;
+      }
+      catch (InvalidOperationException e)
+      {
+        return 0;
+      }
+      
+    }
+
+    public double GetAggregatedPriceForSubsidiary(Subsidiary subsidiary)
+    {
+      var group =
+        new BsonDocument("$group",
+          new BsonDocument
+          {
+            {"_id", "$InSubsidiary"},
+            {
+              "Price",
+              new BsonDocument("$sum", "$Price")
+            }
+          }
+        );
+      
+      try
+      {
+        var aggregation = this.Collection.Aggregate()
+          .AppendStage<BsonDocument>(group)
+          .Match(Builders<BsonDocument>.Filter.Eq("_id", subsidiary.Id)).First()
+          .AsBsonDocument;
+
+        return aggregation["Price"].AsDouble;
+      }
+      catch (InvalidOperationException e)
+      {
+        return 0;
+      }
+      
+    }
+
     public void SetClient(Order order, Client client)
     {
       if (client != null)

@@ -62,6 +62,7 @@ namespace Laundry.Views
             ChangeEntity(_clothKindGrid, "Видов одежды");
             break;
         }
+        
       }
     }
 
@@ -73,7 +74,7 @@ namespace Laundry.Views
       Paginator.ElementsName = elementsName;
 
       this.EntityGrid = repository;
-
+      
       Paginator.RefreshPaginable();
     }
 
@@ -88,15 +89,23 @@ namespace Laundry.Views
     {
       _orderGrid = orderGrid;
       _orderGrid.IsDisplaySubtotals = true;
+      _orderGrid.DisplaySelectionColumn = false;
       _subsidiaryGrid = subsidiaryGrid;
       _subsidiaryGrid.IsDisplaySubtotals = true;
+      _subsidiaryGrid.DisplaySelectionColumn = false;
       _clothKindGrid = clothKindGrid;
       _clothKindGrid.IsDisplaySubtotals = true;
+      _clothKindGrid.DisplaySelectionColumn = false;
 
       Paginator = paginator;
       ChangeEntity(_orderGrid, "Заказов");
 
       this.IsGridChecked = true;
+    }
+
+    public void AdvancedSearch()
+    {
+      this.Paginator.RefreshPaginable();
     }
   }
 }

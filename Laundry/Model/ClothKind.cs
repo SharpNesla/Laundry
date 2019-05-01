@@ -37,7 +37,7 @@ namespace Laundry.Model
     public string Comment { get; set; }
     [BsonId]
     public long Id { get; set; }
-
+    [BsonIgnore]
     public long ChildrenCount { get; internal set; }
 
     [BsonIgnore]

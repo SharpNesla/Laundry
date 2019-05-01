@@ -56,6 +56,9 @@
       <local:DataGridAdaptiveColumn Binding="{Binding Sign}" CanUserReorder="True" IsReadOnly="True"
                                     MinWidth="96"
                                     Header="Номерной знак" />
+      <local:DataGridAdaptiveColumn Binding="{Binding Color}" CanUserReorder="True" IsReadOnly="True"
+                                    MinWidth="96"
+                                    Header="Цвет" />
       <DataGridTemplateColumn CanUserReorder="True" IsReadOnly="True" Width="*" />
       <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True">
         <DataGridTemplateColumn.CellTemplate>

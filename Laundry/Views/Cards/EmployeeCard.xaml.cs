@@ -29,6 +29,7 @@ namespace Laundry.Views
     {
       this.OrderGrid = orderGrid;
       orderGrid.DisplaySelectionColumn = false;
+      orderGrid.IsCompact = true;
       this._eventAggregator = eventAggregator;
     }
 

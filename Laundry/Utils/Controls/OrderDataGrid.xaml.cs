@@ -31,7 +31,7 @@ namespace Laundry.Utils.Controls
 
     private readonly OrderStatusConverter _statusConverter = new OrderStatusConverter();
 
-    [AlsoNotifyFor(nameof(Labels), nameof(Values))]
+    [AlsoNotifyFor(nameof(Labels), nameof(Values),nameof(AggregatedPrice), nameof(Count), nameof(AggregatedInstancesCount))]
     public override IReadOnlyList<Order> Entities
     {
       get { return base.Entities; }
@@ -234,30 +234,20 @@ namespace Laundry.Utils.Controls
 
       return row;
     }
-
-
+    
     public string AggregatedInstancesCount => Repo.GetAggregatedInstacesCount(Filter);
+    public double AggregatedPrice => Repo.GetAggregatedPrice(Filter);
 
-
-    public SeriesCollection Values
+    public SeriesCollection Values => new SeriesCollection
     {
-      get
+      new ColumnSeries
       {
-        return new SeriesCollection
-        {
-          new ColumnSeries
-          {
-            Title = "Цена",
-            Values = new ChartValues<double>(this.Entities.Select(x => x.Price))
-          }
-        };
+        Title = "Цена",
+        Values = new ChartValues<double>(this.Entities.Select(x => x.Price))
       }
-    }
+    };
 
-    public string[] Labels
-    {
-      get { return this.Entities.Select(x => $"№{x.Id} {x.CreationDate:d}").ToArray(); }
-    }
+    public string[] Labels => this.Entities.Select(x => $"№{x.Id} {x.CreationDate:d}").ToArray();
 
     public string LabelsTitle => "Заказы";
     public string ValuesTitle => "Цена";

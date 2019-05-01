@@ -80,9 +80,9 @@ namespace Laundry.Views.Dashboards
       aggregator, model)
     {
       _actionsOrderGrid = actionsOrderGrid;
-      
 
       this.OrderGrid = orderGrid;
+      orderGrid.DisplaySelectionColumn = false;
       IsWashOrders = true;
     }
 

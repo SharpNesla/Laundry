@@ -55,7 +55,8 @@
                 <MenuItem Header="*.csv" />
                 <MenuItem Header="*.xlsx" cal:Message.Attach="ExportToExcel()" />
               </MenuItem>
-              <MenuItem Header="Удалить выбраное" />
+              <Separator/>
+              <MenuItem Header="Выход" />
             </ContextMenu>
           </Button.ContextMenu>
         </Button>
@@ -124,9 +125,9 @@
                   VerticalAlignment="Center" />
               </Grid>
             </materialDesign:ColorZone>
-            <ToggleButton Margin="8,0,0,0"
+            <ToggleButton Margin="8,0,0,0" Visibility="Collapsed"
                           Style="{StaticResource MaterialDesignActionToggleButton}"
-                          IsChecked="{Binding EntityGrid.IsSearchDrawerOpened}"
+                          IsChecked="{Binding OrderGrid.IsSearchDrawerOpened}"
                           ToolTip="Расширенный поиск">
               <ToggleButton.Content>
                 <materialDesign:PackIcon
@@ -141,6 +142,6 @@
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-    <ContentControl Name="OrderGrid" />
+    <ContentControl Name="OrderGrid" Margin="0,0,0,-24"/>
   </DockPanel>
 </UserControl>

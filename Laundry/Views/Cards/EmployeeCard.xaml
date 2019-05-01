@@ -13,7 +13,7 @@
              TextElement.FontSize="14"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel Height="600" Width="970">
+  <DockPanel Height="700" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="24,20,24,20">
       <DockPanel>
@@ -71,6 +71,8 @@
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,8,0,0" Text="{Binding Entity.PhoneNumber, StringFormat='Номер телефона: {0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.Profession, StringFormat='Должность: {0}', Converter={StaticResource ProfessionConverter}}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,8,0,0" Visibility="{Binding Visibilities.Director}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}">
                 <TextBlock.Text>
@@ -93,12 +95,33 @@
         </Grid>
 
       </materialDesign:Card>
-      <materialDesign:Card
-        Padding="16" Grid.Column="1" VerticalAlignment="Stretch">
+
+      <materialDesign:Card Grid.Column="1" VerticalAlignment="Stretch">
         <DockPanel>
-          <TextBlock DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
+          <TextBlock Margin="16,16,16,0" DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
                      Text="{StaticResource ClientEditor.OrdersInfo}" />
-          <ContentControl Name="OrderGrid" Margin="0,16,0,0" />
+
+          <DockPanel DockPanel.Dock="Bottom" Margin="16">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+              <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}">
+                <TextBlock.Text>
+                  <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
+                    <Binding Path="OrderDataGrid.Count" />
+                  </MultiBinding>
+                </TextBlock.Text>
+              </TextBlock>
+              <!--Заказ от 21.01.2019, 13:30. Цена: 1300р/!-->
+              <Button Name="ShowOrdersForClint" DockPanel.Dock="Right" Margin="0,0,9,0"
+                      Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                      Style="{StaticResource MaterialDesignFlatButton}"
+                      HorizontalAlignment="Left" ToolTip="Просмотреть все заказы данного клиента">
+                <materialDesign:PackIcon Kind="ViewAgenda" Height="24" Width="24" />
+              </Button>
+            </StackPanel>
+            <StackPanel  DockPanel.Dock="Left"/>
+          </DockPanel>
+          <ContentControl Name="OrderGrid"/>
         </DockPanel>
 
       </materialDesign:Card>
