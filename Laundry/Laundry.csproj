@@ -200,6 +200,7 @@
     <Compile Include="Utils\Controls\EntitySearchControls\SubsidiarySearch.xaml.cs">
       <DependentUpon>SubsidiarySearch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Controls\IChartable.cs" />
     <Compile Include="Utils\Controls\SubsidiaryGrid.xaml.cs">
       <DependentUpon>SubsidiaryGrid.xaml</DependentUpon>
     </Compile>

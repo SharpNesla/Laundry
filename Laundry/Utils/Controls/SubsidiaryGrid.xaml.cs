@@ -17,6 +17,7 @@ using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
 using Laundry.Views.Cards;
+using LiveCharts;
 using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
@@ -24,7 +25,7 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for SubsidiaryGrid.xaml
   /// </summary>
-  public class SubsidiaryGridViewModel : EntityGrid<Subsidiary, Repository<Subsidiary>, SubsidiaryCardViewModel>
+  public class SubsidiaryGridViewModel : EntityGrid<Subsidiary, Repository<Subsidiary>, SubsidiaryCardViewModel>, IChartable<Subsidiary>
   {
     public SubsidiaryGridViewModel(IEventAggregator eventAggregator, SubsidiaryCardViewModel card,
       DeleteDialogViewModel deleteDialog,
@@ -36,6 +37,10 @@ namespace Laundry.Utils.Controls
     {
       throw new NotImplementedException();
     }
-    
+
+    public SeriesCollection Values { get; }
+    public string[] Labels { get; }
+    public string LabelsTitle { get; }
+    public string ValuesTitle { get; }
   }
 }

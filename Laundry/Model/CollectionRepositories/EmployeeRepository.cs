@@ -67,6 +67,25 @@ namespace Laundry.Model.DatabaseClients
       if (subsidiary != null) employee.Subsidiary = subsidiary.Id;
     }
 
+    public override Employee GetById(long id)
+    {
+      var byId = base.GetById(id);
+      byId.OrdersCount = Model.Orders.GetForEmployeeCount(byId);
+      return byId;
+    }
+
+    public override IReadOnlyList<Employee> Get(int offset, int limit, FilterDefinition<Employee> filter = null)
+    {
+      var basee = base.Get(offset, limit, filter);
+
+      foreach (var employee in basee)
+      {
+        employee.OrdersCount = Model.Orders.GetForEmployeeCount(employee);
+      }
+
+      return basee;
+    }
+
     public override IReadOnlyList<Employee> GetBySearchString(string searchString, FilterDefinition<Employee> filter,
       int offset = 0, int capLimit = 10)
     {

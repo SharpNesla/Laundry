@@ -18,7 +18,7 @@
       <StackPanel Margin="16,0,16,16" Visibility="{Binding IsDisplaySubtotals, Converter={StaticResource BoolVisibilityConverter}}">
         <TextBlock Margin="8,0,0,8" Text="ИТОГО" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
         <Separator></Separator>
-        <TextBlock Margin="0,16,81,0" Width="911" TextAlignment="Right" Text="Всего заказов по критериям: 350 &#x0a;На общую сумму: 10 930 802 074.00₽" HorizontalAlignment="Right"/>
+        <TextBlock Margin="8,16,81,0" TextAlignment="Left" Text="Всего заказов по критериям: 350&#x0a;На общую сумму: 10 930 802 074.00₽"/>
       </StackPanel>
 
       <materialDesign:DrawerHost Name="DrawerHost"

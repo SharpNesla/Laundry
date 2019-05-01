@@ -26,14 +26,14 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for ClothKindGrid.xaml
   /// </summary>
-  public class ClothKindGridViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>
+  public class ClothKindTreeViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>
   {
     private readonly IModel _model;
     public float NameWidth { get; set; }
     public ObservableCollection<ClothKind> EditableEntities { get; private set; }
 
 
-    public ClothKindGridViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
+    public ClothKindTreeViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
       IModel model, DeleteDialogViewModel shure)
       : base(eventAggregator, card, model.ClothKinds, shure, Screens.ClothKindEditor)
     {

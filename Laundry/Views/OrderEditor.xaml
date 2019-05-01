@@ -9,7 +9,7 @@
              xmlns:controls="clr-namespace:Laundry.Utils.Controls"
              xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              xmlns:model="clr-namespace:Laundry.Model"
-             d:DesignWidth="800" d:DesignHeight="600"
+             d:DesignWidth="1024" d:DesignHeight="768"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel VerticalAlignment="Stretch">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
@@ -127,19 +127,20 @@
               <StackPanel Orientation="Horizontal">
                 <TextBlock>
                   <TextBlock.Text>
-                    <MultiBinding StringFormat="{}Общее количество вещей: {0}">
+                    <MultiBinding StringFormat="{}Количество вещей: {0}">
                       <Binding Path="Entity.InstancesCount"></Binding>
                     </MultiBinding>
                   </TextBlock.Text>
                 </TextBlock>
                 <TextBox VerticalAlignment="Center" Width="62"
                          Visibility="{Binding Entity.IsCustomPrice, Converter={StaticResource BoolVisibilityConverter}}"
-                         Text="{Binding Entity.CustomPrice}" Margin="0,4" />
+                         Text="{Binding Entity.Price}" Margin="0,4" />
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding Entity.IsCustomPrice}"
                           Style="{StaticResource MaterialDesignCheckBox}" Margin="10,0,0,0" Height="20">
                   Нестандартная цена
                 </CheckBox>
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding Entity.IsDiscount}"
+                          Visibility="{Binding Entity.IsCustomPrice, Converter={StaticResource BoolNotVisibilityConverter}}"
                           Style="{StaticResource MaterialDesignCheckBox}" Margin="10,0,0,0" Height="20">
                   Скидка
                 </CheckBox>

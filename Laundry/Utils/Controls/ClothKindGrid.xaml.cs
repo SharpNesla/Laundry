@@ -19,6 +19,7 @@ using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
 using Laundry.Views.Cards;
+using LiveCharts;
 using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
@@ -26,14 +27,14 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for ClothKindGrid.xaml
   /// </summary>
-  public class ClothKindTreeViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>
+  public class ClothKindGridViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>, IChartable<ClothKind>
   {
     private readonly IModel _model;
     public float NameWidth { get; set; }
     public ObservableCollection<ClothKind> EditableEntities { get; private set; }
 
 
-    public ClothKindTreeViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
+    public ClothKindGridViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
       IModel model, DeleteDialogViewModel shure)
       : base(eventAggregator, card, model.ClothKinds, shure, Screens.ClothKindEditor)
     {
@@ -102,5 +103,9 @@ namespace Laundry.Utils.Controls
     }
 
 
+    public SeriesCollection Values { get; }
+    public string[] Labels { get; }
+    public string LabelsTitle => "Виды одежды";
+    public string ValuesTitle => "Цена";
   }
 }

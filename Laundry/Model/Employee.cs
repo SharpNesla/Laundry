@@ -43,5 +43,7 @@ namespace Laundry.Model
     }
 
     public string Password { get; set; }
+    [BsonIgnore]
+    public long OrdersCount { get; set; }
   }
 }

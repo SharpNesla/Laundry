@@ -6,16 +6,20 @@ using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Utils.Controls.EntitySearchControls;
 using Laundry.Views;
+using LiveCharts;
 using MaterialDesignThemes.Wpf;
 using MongoDB.Driver;
 using NPOI.XSSF.UserModel;
+using System.Linq;
+using LiveCharts.Wpf;
+using PropertyChanged;
 
 namespace Laundry.Utils.Controls
 {
   /// <summary>
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
-  public class OrderDataGridViewModel : EntityGrid<Order, OrderRepository, OrderCardViewModel>
+  public class OrderDataGridViewModel : EntityGrid<Order, OrderRepository, OrderCardViewModel>, IChartable<Order>
   {
     private readonly IEventAggregator _eventAggregator;
     private EmployeeProfession _profession;
@@ -163,5 +167,19 @@ namespace Laundry.Utils.Controls
     //  this.ClientCombo.SelectedEntity = message;
     //  this.EventAggregator.Unsubscribe(this);
     //}
+    [DependsOn(nameof(Entities))]
+    public SeriesCollection Values => new SeriesCollection
+    {
+      new ColumnSeries
+      {
+        Title = "Цена",
+        Values = new ChartValues<double>(this.Entities.Select(x => x.Price))
+      }
+    };
+
+    public string[] Labels => this.Entities.Select(x => $"№{x.Id} {x.CreationDate:d}").ToArray();
+
+    public string LabelsTitle => "Заказы";
+    public string ValuesTitle => "Цена";
   }
 }

@@ -41,8 +41,7 @@ namespace Laundry.Model
     public DateTime ExecutionDate { get; set; }
 
     public OrderStatus Status { get; set; }
-
-
+    
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
 

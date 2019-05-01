@@ -36,7 +36,7 @@ namespace Laundry.Views
     private readonly SubsidiaryGridViewModel _subsidiaryGrid;
     private readonly ClothKindGridViewModel _clothKindGrid;
     private AnalyticEntityType _entityType;
-    public IEntityGrid<IRepositoryElement> EntityGrid { get; set; }
+    public IChartable<IRepositoryElement> EntityGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
 
     public bool IsGridChecked { get; set; }
@@ -65,8 +65,9 @@ namespace Laundry.Views
       }
     }
 
-    private void ChangeEntity(IEntityGrid<IRepositoryElement> repository, string elementsName)
+    private void ChangeEntity(IChartable<IRepositoryElement> repository, string elementsName)
     {
+      Paginator.CurrentPage = 1;
       Paginator.ClearPaginable();
       Paginator.RegisterPaginable(repository);
       Paginator.ElementsName = elementsName;
@@ -76,9 +77,11 @@ namespace Laundry.Views
       Paginator.RefreshPaginable();
     }
 
-    public SeriesCollection SeriesCollection { get; private set; }
-    public string[] Labels { get; private set; }
-    public Func<double, string> Formatter { get; private set; }
+    protected override void OnActivate()
+    {
+      base.OnActivate();
+      this.Paginator.RefreshPaginable();
+    }
 
     public AnalyticsViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator,
       OrderDataGridViewModel orderGrid, SubsidiaryGridViewModel subsidiaryGrid, ClothKindGridViewModel clothKindGrid) : base(aggregator, model)
@@ -95,27 +98,6 @@ namespace Laundry.Views
       ChangeEntity(_orderGrid, "Заказов");
 
       this.IsGridChecked = true;
-      
-      SeriesCollection = new SeriesCollection
-      {
-        new ColumnSeries
-        {
-          Title = "2015",
-          Values = new ChartValues<double> { 10, 50, 39, 50 }
-        }
-      };
-
-      //adding series will update and animate the chart automatically
-      SeriesCollection.Add(new ColumnSeries
-      {
-        Title = "2016",
-        Values = new ChartValues<double> { 11, 56, 42 }
-      });
-
-      //also adding values updates and animates the chart automatically
-      SeriesCollection[1].Values.Add(48d);
-
-      Formatter = value => value.ToString("N");
     }
   }
 }

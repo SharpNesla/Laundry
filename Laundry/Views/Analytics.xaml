@@ -12,7 +12,7 @@
              xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              xmlns:model="clr-namespace:Laundry.Model"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="800"
+             d:DesignHeight="768" d:DesignWidth="1024"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid">
@@ -168,13 +168,17 @@
             
           </Style>
         </materialDesign:Card.Resources>
-        <liveCharts:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Left">
-          
+        <liveCharts:CartesianChart Series="{Binding EntityGrid.Values}" LegendLocation="Left">
+         
           <liveCharts:CartesianChart.AxisX>
-            <liveCharts:Axis Title="Salesman" Labels="{Binding Labels}" />
-          </liveCharts:CartesianChart.AxisX>
+            <liveCharts:Axis Title="{Binding EntityGrid.LabelsTitle}" LabelsRotation="-45" Labels="{Binding EntityGrid.Labels}">
+              <liveCharts:Axis.Separator>
+                <liveCharts:Separator Step="1" />
+              </liveCharts:Axis.Separator>
+            </liveCharts:Axis>
+            </liveCharts:CartesianChart.AxisX>
           <liveCharts:CartesianChart.AxisY>
-            <liveCharts:Axis Title="Sold Apps" LabelFormatter="{Binding Formatter}" />
+            <liveCharts:Axis Title="{Binding EntityGrid.ValuesTitle}"/>
           </liveCharts:CartesianChart.AxisY>
         </liveCharts:CartesianChart>
       </materialDesign:Card>

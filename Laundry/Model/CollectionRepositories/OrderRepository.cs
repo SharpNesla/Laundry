@@ -87,7 +87,13 @@ namespace Laundry.Model.CollectionRepositories
     {
       var filter = Builders<Order>.Filter.And(
         Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
-        Builders<Order>.Filter.Eq(nameof(Order.ClientId), employee.Id)
+        Builders<Order>.Filter.Or(
+          Builders<Order>.Filter.Eq(nameof(Order.ObtainerId), employee.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.InCourierId), employee.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.WasherCourierId), employee.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.OutCourierId), employee.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.DistributerId), employee.Id)
+        )
       );
       return Collection.CountDocuments(filter);
     }
