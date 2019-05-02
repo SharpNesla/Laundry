@@ -23,11 +23,9 @@ namespace Laundry.Views.Dashboards
 {
   public class WasherDashBoardViewModel : DashBoardBase
   {
-    private readonly OrderDataGridViewModel _actionsOrderGrid;
     private bool _isWashOrders;
     private bool _isApplyOrdersForDelivery;
     private bool _isRecieveOrders;
-    public OrderDataGridViewModel OrderGrid { get; internal set; }
     
 
     public bool IsWashOrders
@@ -77,33 +75,29 @@ namespace Laundry.Views.Dashboards
 
     public WasherDashBoardViewModel(IEventAggregator aggregator, IModel model,
       OrderDataGridViewModel orderGrid, OrderDataGridViewModel actionsOrderGrid) : base(
-      aggregator, model)
+      aggregator, model, orderGrid, actionsOrderGrid)
     {
-      _actionsOrderGrid = actionsOrderGrid;
-
-      this.OrderGrid = orderGrid;
-      orderGrid.DisplaySelectionColumn = false;
-      IsWashOrders = true;
+     IsWashOrders = true;
     }
 
     public async void WashOrders()
     {
-      var wash = new WashOrdersViewModel(Model, _actionsOrderGrid);
+      var wash = new WashOrdersViewModel(Model, ActionsOrderGrid);
       await DialogHostExtensions.ShowCaliburnVM(wash);
       this.OrderGrid.Refresh(0, int.MaxValue);
     }
 
-    public void ApplyOrdersForDelivery()
+    public async void ApplyOrdersForDelivery()
     {
-      var applyorders = new ApplyOrdersForDeliveryViewModel(Model, _actionsOrderGrid);
-      DialogHostExtensions.ShowCaliburnVM(applyorders);
+      var applyorders = new ApplyOrdersForDeliveryViewModel(Model, ActionsOrderGrid);
+      await DialogHostExtensions.ShowCaliburnVM(applyorders);
       this.OrderGrid.Refresh(0, int.MaxValue);
     }
 
-    public void RecieveOrders()
+    public async void RecieveOrders()
     {
-      var takeOrders = new TakeOrdersViewModel(Model, _actionsOrderGrid);
-      DialogHostExtensions.ShowCaliburnVM(takeOrders);
+      var takeOrders = new TakeOrdersViewModel(Model, ActionsOrderGrid);
+      await DialogHostExtensions.ShowCaliburnVM(takeOrders);
       this.OrderGrid.Refresh(0, int.MaxValue);
     }
 

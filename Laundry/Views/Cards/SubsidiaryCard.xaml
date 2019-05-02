@@ -24,11 +24,11 @@
           <materialDesign:PackIcon Kind="SquareEditOutline" VerticalAlignment="Center" Height="24" Width="24" />
         </Button>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
-          <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Height="24" Width="24" />
+          <materialDesign:PackIcon Kind="House" VerticalAlignment="Center" Height="24" Width="24" />
           <TextBlock
             Style="{StaticResource MaterialDesignTitleTextBlock}"
             VerticalAlignment="Center"
-            Margin="8 0 0 0" Text="{Binding Entity.Id, StringFormat='Работник №{0}'}" />
+            Margin="8 0 0 0" Text="{Binding Entity.Id, StringFormat='Филиал №{0}'}" />
         </StackPanel>
 
       </DockPanel>
@@ -57,24 +57,14 @@
             <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                        Text="{StaticResource ClientEditor.MainInfoTitle}" />
             <StackPanel Margin="0,16,0,0">
-              <TextBlock Margin="0,0,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
-                <TextBlock.Text>
-                  <MultiBinding StringFormat="{}{1} {0} {2}">
-                    <Binding Path="Entity.Name" />
-                    <Binding Path="Entity.Surname" />
-                    <Binding Path="Entity.Patronymic" />
-                  </MultiBinding>
-                </TextBlock.Text>
-              </TextBlock>
+              <TextBlock Margin="0,0,0,0" Text="{Binding Entity.Name}"  Style="{StaticResource MaterialDesignBody2TextBlock}"/>
 
               <TextBlock Margin="0,8,0,0" Text="{Binding Entity.DateBirth, StringFormat='Дата рождения: dd.MM.yyyy'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,8,0,0" Text="{Binding Entity.PhoneNumber, StringFormat='Номер телефона: {0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.Profession, StringFormat='Должность: {0}', Converter={StaticResource ProfessionConverter}}"
-                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,8,0,0" Visibility="{Binding Visibilities.Director}"
-                         Style="{StaticResource MaterialDesignBody2TextBlock}">
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" TextWrapping="Wrap">
                 <TextBlock.Text>
                   <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">
                     <Binding Path="Entity.City" />
@@ -99,7 +89,7 @@
       <materialDesign:Card Grid.Column="1" VerticalAlignment="Stretch">
         <DockPanel>
           <TextBlock Margin="16,16,16,0" DockPanel.Dock="Top" Style="{StaticResource MaterialDesignTitleTextBlock}"
-                     Text="{StaticResource ClientEditor.OrdersInfo}" />
+                     Text="Приёмщики" />
 
           <DockPanel DockPanel.Dock="Bottom" Margin="16">
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">

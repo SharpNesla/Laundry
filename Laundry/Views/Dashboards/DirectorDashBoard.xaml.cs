@@ -28,11 +28,12 @@ namespace Laundry.Views.Dashboards
     private readonly TakeOrdersViewModel _takeOrders;
     private readonly WashOrdersViewModel _wash;
 
-    public DirectorDashBoardViewModel(IEventAggregator aggregator, IModel mockModel, OrderDataGridViewModel orderGrid) :
-      base(aggregator, mockModel)
+    public DirectorDashBoardViewModel(IEventAggregator aggregator, IModel model,
+      OrderDataGridViewModel orderGrid, OrderDataGridViewModel actionsOrderGrid) : base(
+      aggregator, model, orderGrid, actionsOrderGrid)
     {
       _aggregator = aggregator;
-      _mockModel = mockModel;
+      _mockModel = model;
       _orderGrid = orderGrid;
     }
 

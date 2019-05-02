@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Utils.Controls" d:DesignWidth="800" d:DesignHeight="600"
+             xmlns:controls="clr-namespace:Laundry.Utils.Controls"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel Width="800" Height="600">
+  <DockPanel Height="700" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16,20,20,20">
       <StackPanel Orientation="Horizontal">
@@ -33,25 +33,20 @@
         ПРИНЯТЬ
       </Button>
     </DockPanel>
-    <materialDesign:Card
-                           Padding="16" Margin="24"
-                           BorderThickness="0" VerticalAlignment="Stretch">
+    <materialDesign:Card Margin="24"
+                         BorderThickness="0" VerticalAlignment="Stretch">
 
       <DockPanel LastChildFill="True">
         <Grid DockPanel.Dock="Bottom">
           <DockPanel>
-            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-              <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
-                           Style="{StaticResource MaterialDesignBody2TextBlock}">
-                <TextBlock.Text>
-                  <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
-                    <Binding Path="Client.OrdersCount" />
-                  </MultiBinding>
-                </TextBlock.Text>
-              </TextBlock>
-              <!--Заказ от 21.01.2019, 13:30. Цена: 1300р/!-->
-            </StackPanel>
-            <ContentControl DockPanel.Dock="Left" Name="Paginator" />
+            <TextBlock Margin="16,0,16,16" VerticalAlignment="Center"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}">
+              <TextBlock.Text>
+                <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
+                  <Binding Path="Client.OrdersCount" />
+                </MultiBinding>
+              </TextBlock.Text>
+            </TextBlock>
 
           </DockPanel>
         </Grid>

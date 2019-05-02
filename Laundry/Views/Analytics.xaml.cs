@@ -12,32 +12,30 @@ namespace Laundry.Views
 {
   public enum ChartType
   {
-    [Description("Столбчатая")]
-    LineChart,
-    [Description("Линейная")]
-    Column,
-    [Description("Круговая")]
-    PieChart
+    [Description("Столбчатая")] LineChart,
+    [Description("Линейная")] Column,
+    [Description("Круговая")] PieChart
   }
 
   public enum AnalyticEntityType
   {
-    [Description("Заказы")]
-    Order,
-    [Description("Филиалы")]
-    Subsidiary,
-    [Description("Виды одежды")]
-    ClothKind
+    [Description("Заказы")] Order,
+    [Description("Филиалы")] Subsidiary,
+    [Description("Работники")] Employee,
+    [Description("Виды одежды")] ClothKind
   }
 
   public class AnalyticsViewModel : DrawerActivityScreen
   {
+    private readonly EmployeeDataGridViewModel _employeeGrid;
     private readonly OrderDataGridViewModel _orderGrid;
     private readonly SubsidiaryGridViewModel _subsidiaryGrid;
     private readonly ClothKindTreeViewModel _clothKindGrid;
     private AnalyticEntityType _entityType;
     public IChartable<IRepositoryElement> EntityGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
+
+    public string SearchHintString { get; private set; }
 
     public bool IsGridChecked { get; set; }
     public bool IsChartChecked { get; set; }
@@ -58,11 +56,13 @@ namespace Laundry.Views
           case AnalyticEntityType.Subsidiary:
             ChangeEntity(_subsidiaryGrid, "Филиалов");
             break;
+          case AnalyticEntityType.Employee:
+            ChangeEntity(_employeeGrid, "Работников");
+            break;
           case AnalyticEntityType.ClothKind:
             ChangeEntity(_clothKindGrid, "Видов одежды");
             break;
         }
-        
       }
     }
 
@@ -73,8 +73,10 @@ namespace Laundry.Views
       Paginator.RegisterPaginable(repository);
       Paginator.ElementsName = elementsName;
 
+      this.SearchHintString = elementsName.ToLower();
+
       this.EntityGrid = repository;
-      
+
       Paginator.RefreshPaginable();
     }
 
@@ -85,17 +87,26 @@ namespace Laundry.Views
     }
 
     public AnalyticsViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator,
-      OrderDataGridViewModel orderGrid, SubsidiaryGridViewModel subsidiaryGrid, ClothKindTreeViewModel clothKindGrid) : base(aggregator, model)
+      EmployeeDataGridViewModel employeeGrid,
+      OrderDataGridViewModel orderGrid, SubsidiaryGridViewModel subsidiaryGrid, ClothKindTreeViewModel clothKindGrid) :
+      base(aggregator, model)
     {
+      _employeeGrid = employeeGrid;
+      _employeeGrid.IsDisplaySubtotals = true;
+      _employeeGrid.DisplaySelectionColumn = false;
+
       _orderGrid = orderGrid;
       _orderGrid.IsDisplaySubtotals = true;
       _orderGrid.DisplaySelectionColumn = false;
+
       _subsidiaryGrid = subsidiaryGrid;
       _subsidiaryGrid.IsDisplaySubtotals = true;
       _subsidiaryGrid.DisplaySelectionColumn = false;
+
       _clothKindGrid = clothKindGrid;
       _clothKindGrid.IsDisplaySubtotals = true;
       _clothKindGrid.DisplaySelectionColumn = false;
+
 
       Paginator = paginator;
       ChangeEntity(_orderGrid, "Заказов");

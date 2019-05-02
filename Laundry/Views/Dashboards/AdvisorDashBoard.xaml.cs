@@ -14,12 +14,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
+using Laundry.Utils.Controls;
 
 namespace Laundry.Views.Dashboards
 {
   public class AdvisorDashBoardViewModel : DashBoardBase
   {
-    public AdvisorDashBoardViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+    public AdvisorDashBoardViewModel(IEventAggregator aggregator, IModel model,
+      OrderDataGridViewModel orderGrid, OrderDataGridViewModel actionsOrderGrid) : base(
+      aggregator, model, orderGrid, actionsOrderGrid)
     {
     }
   }

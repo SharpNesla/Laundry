@@ -86,9 +86,16 @@ namespace Laundry.Model.CollectionRepositories
         .AppendStage<BsonDocument>(pipeline[3].AsBsonDocument)
         .AppendStage<BsonDocument>(pipeline[4].AsBsonDocument).ToList();
 
-
-      return
-        $"{aggregation[0]["Count"].AsInt32 + aggregation[2]["Count"].AsInt32}шт, {aggregation[1]["Count"].AsInt32}кг";
+      try
+      {
+        return
+          $"{aggregation[0]["Count"].AsInt32 + aggregation[2]["Count"].AsInt32}шт, {aggregation[1]["Count"].AsInt32}кг";
+      }
+      catch (ArgumentOutOfRangeException e)
+      {
+        return "0шт, 0кг";
+      }
+      
     }
 
     public double GetAggregatedPrice(FilterDefinition<Order> filter)
@@ -104,14 +111,14 @@ namespace Laundry.Model.CollectionRepositories
               new BsonDocument("$sum", "$Price")
             }
           });
-
+      //В случае, если при агрегации в последовательности не оказалось элементов возвращаем ноль
       try
       {
         var doc = this.Collection.Aggregate().Match(filter)
           .AppendStage<BsonDocument>(pipeline).ToList()[0]["Price"].AsDouble;
         return doc;
       }
-      catch (InvalidOperationException e)
+      catch (ArgumentOutOfRangeException e)
       {
         return 0;
       }
@@ -147,7 +154,7 @@ namespace Laundry.Model.CollectionRepositories
       }
       
     }
-
+    
     public void SetClient(Order order, Client client)
     {
       if (client != null)
@@ -184,11 +191,18 @@ namespace Laundry.Model.CollectionRepositories
 
     public IReadOnlyList<Order> GetForEmployee(Employee employee, int offset, int limit)
     {
+      
       var filter = Builders<Order>.Filter.And(
         Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
-        Builders<Order>.Filter.Eq(nameof(Order.DistributerId), employee.Id)
+        Builders<Order>.Filter.Or(
+          Builders<Order>.Filter.Eq(nameof(Order.ObtainerId), employee.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.InCourierId), employee.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.WasherCourierId), employee.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.OutCourierId), employee.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.DistributerId), employee.Id)
+        )
       );
-      var orders = Collection.Find(filter).Skip(offset).Limit(limit).ToList();
+      var orders = base.Get(offset, limit, filter);
       return orders;
     }
 

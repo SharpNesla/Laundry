@@ -17,13 +17,26 @@ namespace Laundry.Model
 
     public string Signature
     {
-      get { return $"{Id} {City} {Street} {House}"; }
+      get { return $"{Id} {Name} {Street} {House}"; }
     }
+
     [BsonIgnore]
     public bool IsSelected { get; set; }
 
-    [BsonIgnoreIfDefault]
-    public int House { get; set; }
+    [BsonIgnoreIfNull]
+    public string PhoneNumber { get; set; }
+
+    [BsonIgnoreIfNull]
+    public string Comment { get; set; }
+
+    [BsonIgnoreIfNull]
+    public string Name { get; set; }
+
+    [BsonIgnoreIfNull]
+    public int? House { get; set; }
+
+    [BsonIgnoreIfNull]
+    public int? Flat { get; set; }
 
     [BsonIgnoreIfNull]
     public string Street { get; set; }
@@ -31,7 +44,7 @@ namespace Laundry.Model
     [BsonIgnoreIfNull]
     public string City { get; set; }
 
-    [BsonIgnoreIfDefault]
-    public int ZipCode { get; set; }
+    [BsonIgnoreIfNull]
+    public int? ZipCode { get; set; }
   }
 }

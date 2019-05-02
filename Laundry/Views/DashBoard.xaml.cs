@@ -18,13 +18,20 @@ namespace Laundry.Views
   public class DashBoardViewModel : ActivityScreen
   {
     private readonly WasherDashBoardViewModel _washerDashBoard;
+    private readonly AdvisorDashBoardViewModel _advisorDashBoard;
     private readonly DirectorDashBoardViewModel _directorDashBoard;
+    private readonly CourierDashBoardViewModel _courierDashBoard;
     public DashBoardBase EmployeeDashBoard { get; set; }
-    public DashBoardViewModel(IEventAggregator aggregator, IModel model, WasherDashBoardViewModel washerDashBoard,
-      DirectorDashBoardViewModel directorDashBoard) : base(aggregator, model)
+
+    public DashBoardViewModel(IEventAggregator aggregator, IModel model,
+      WasherDashBoardViewModel washerDashBoard, AdvisorDashBoardViewModel advisorDashBoard,
+      DirectorDashBoardViewModel directorDashBoard, CourierDashBoardViewModel courierDashBoard)
+      : base(aggregator, model)
     {
       _washerDashBoard = washerDashBoard;
+      _advisorDashBoard = advisorDashBoard;
       _directorDashBoard = directorDashBoard;
+      _courierDashBoard = courierDashBoard;
     }
     protected override void OnActivate()
     {
@@ -32,7 +39,7 @@ namespace Laundry.Views
       switch (Model.CurrentUser.Profession)
       {
         case EmployeeProfession.Courier:
-          this.EmployeeDashBoard = _washerDashBoard;
+          this.EmployeeDashBoard = _courierDashBoard;
           break;
         case EmployeeProfession.Director:
           this.EmployeeDashBoard = _directorDashBoard;
@@ -41,7 +48,7 @@ namespace Laundry.Views
           this.EmployeeDashBoard = _washerDashBoard;
           break;
         case EmployeeProfession.Advisor:
-          this.EmployeeDashBoard = _washerDashBoard;
+          this.EmployeeDashBoard = _advisorDashBoard;
           break;
         case EmployeeProfession.Driver:
           break;

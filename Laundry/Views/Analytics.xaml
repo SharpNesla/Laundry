@@ -101,7 +101,7 @@
                 <TextBox
                   Grid.Column="1"
                   Margin="8 0 0 0"
-                  materialDesign:HintAssist.Hint="{StaticResource ClientDictionary.SearchBarTitle}"
+                  materialDesign:HintAssist.Hint="{Binding SearchHintString, StringFormat='Поиск {0}'}"
                   materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                   BorderThickness="0"
                   MinWidth="200"

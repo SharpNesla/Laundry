@@ -57,9 +57,8 @@
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
           <TextBox Text="{Binding Entity.Color}"  Margin="0,0,0,8" materialDesign:HintAssist.Hint="Цвет"
                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          <DatePicker materialDesign:HintAssist.Hint="Год выпуска" SelectedDate="{Binding Entity.CreationYear}"
-                      Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,16"
-                      HorizontalAlignment="Stretch" />
+          <TextBox Text="{Binding Entity.CreationYear}"  Margin="0,0,0,8" materialDesign:HintAssist.Hint="Год выпуска"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
         </StackPanel>
       </materialDesign:Card>
 
@@ -67,7 +66,7 @@
         <DockPanel>
           <DockPanel Margin="16,0,16,16" DockPanel.Dock="Bottom" LastChildFill="True">
             <Button DockPanel.Dock="Right" Margin="0,0,9,0" Style="{StaticResource MaterialDesignFlatButton}"
-                        HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
+                        HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton" Visibility="Collapsed">
               <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
 
             </Button>
@@ -85,7 +84,7 @@
         <DockPanel>
           <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
             <Button DockPanel.Dock="Right" Margin="0,0,9,0" Style="{StaticResource MaterialDesignFlatButton}"
-                        HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton">
+                        HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton" Visibility="Collapsed">
               <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
 
             </Button>

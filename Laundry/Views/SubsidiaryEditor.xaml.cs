@@ -27,9 +27,11 @@ namespace Laundry.Views
   /// </summary>
   public class SubsidiaryEditorViewModel : EditorScreen<Repository<Subsidiary>, Subsidiary>
   {
-    public EmployeeSearchViewModel MainAdvisor { get; }
+    public EmployeeSearchViewModel MainAdvisorSearch { get; }
     public EmployeeDataGridViewModel Advisors { get; set; }
-    public SubsidiaryEditorViewModel(IEventAggregator aggregator, EmployeeDataGridViewModel advisorsGrid, IModel model, string entityTitleName = "филиала") 
+
+    public SubsidiaryEditorViewModel(IEventAggregator aggregator, EmployeeDataGridViewModel advisorsGrid, IModel model,
+      string entityTitleName = "филиала")
       : base(aggregator, model, model.Subsidiaries, entityTitleName)
     {
       this.Advisors = advisorsGrid;
@@ -41,6 +43,12 @@ namespace Laundry.Views
       this.Advisors.IsCompact = true;
 
       this.Advisors.Refresh(0, int.MaxValue);
+
+      this.MainAdvisorSearch = new EmployeeSearchViewModel(model, "Главный приёмщик",
+        Builders<Employee>.Filter.And(
+          Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
+          Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
+        ));
     }
   }
 }

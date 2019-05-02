@@ -51,5 +51,47 @@ namespace Laundry.Model.CollectionRepositories
         .Limit(capLimit)
         .ToList().Select(x => BsonSerializer.Deserialize<Subsidiary>(x)).ToList();
     }
+
+    public double GetAggregatedPrice(FilterDefinition<Subsidiary> filter)
+    {
+      var group = new BsonArray
+      {
+        new BsonDocument("$lookup",
+          new BsonDocument
+          {
+            {"from", "orders"},
+            {"localField", "_id"},
+            {"foreignField", "InSubsidiary"},
+            {"as", "Order"}
+          }),
+        new BsonDocument("$project",
+          new BsonDocument("Price",
+            new BsonDocument("$sum", "$Order.Price"))),
+        new BsonDocument("$group",
+          new BsonDocument
+          {
+            {"_id", 1},
+            {
+              "Price",
+              new BsonDocument("$sum", "$Price")
+            }
+          })
+      };
+
+      try
+      {
+        var aggregation = this.Collection.Aggregate()
+          .Match(filter)
+          .AppendStage<BsonDocument>(group[0].AsBsonDocument)
+          .AppendStage<BsonDocument>(group[1].AsBsonDocument)
+          .AppendStage<BsonDocument>(group[2].AsBsonDocument).ToList().First();
+        return aggregation["Price"].AsDouble;
+      }
+      catch (InvalidOperationException e)
+      {
+        return 0;
+      }
+
+    }
   }
 }
