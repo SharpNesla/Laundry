@@ -37,9 +37,9 @@
 
         <RadioButton
           Style="{StaticResource MaterialDesignTabRadioButton}"
-          IsChecked="{Binding EntityGrid.IsTreeMode}" Height="42" Grid.Row="1"
+          IsChecked="{Binding IsTreeMode}" Height="42" Grid.Row="1"
           Content="Древовидное представление" />
-        <RadioButton Grid.Column="1" Grid.ColumnSpan="2"
+        <RadioButton Grid.Column="1" Grid.ColumnSpan="2" IsChecked="{Binding IsGridMode}"
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
                      Content="Таблица" />
         <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"

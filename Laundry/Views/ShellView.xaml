@@ -16,7 +16,7 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" MinWidth="1024"
         MinHeight="768">
   <!--{Binding IsDrawerOpened}-->
-  <materialDesign:DialogHost DialogTheme="Inherit">
+  <materialDesign:DialogHost DialogTheme="Inherit" cal:Message.Attach="[Event Loaded] = [Action HostLoaded($source)]">
     <materialDesign:DrawerHost Name="DrawerHost" IsLeftDrawerOpen="{Binding IsDrawerOpened}">
       <materialDesign:DrawerHost.LeftDrawerContent>
         <DockPanel MinWidth="212">

@@ -13,18 +13,27 @@ namespace Laundry.Utils
   /// </summary>
   static class DialogHostExtensions
   {
+    public static DialogHost Current { get;set; }
+
     /// <summary>
     /// Метод для показа калибюрновских ViewModel MaterialInXaml'овским DialogHost'ом
     /// </summary>
     /// <typeparam name="T">Тип VM</typeparam>
     /// <param name="viewModel">VM</param>
+    /// 
+   
     public static async Task ShowCaliburnVM<T>(T viewModel)
     {
-      //Ищем View для ViewModel карточки клиента (Caliburn)
       var view = ViewLocator.LocateForModel(viewModel, null, null);
       ViewModelBinder.Bind(viewModel, view, null);
 
-      await DialogHost.Show(view);
+      var current = Current;
+
+      current.CurrentSession?.Close();
+
+      await Task.Delay(400);
+
+      await current.ShowDialog(view);
     }
   }
 }

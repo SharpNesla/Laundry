@@ -23,6 +23,11 @@ namespace Laundry
     [AlsoNotifyFor(nameof(CurrentName))]
     public Employee CurrentEmployee { get; set; }
 
+    public void HostLoaded(DialogHost host)
+    {
+      DialogHostExtensions.Current = host;
+    }
+
     public string CurrentName
     {
       get { return $"{CurrentEmployee?.Surname ?? ""} {CurrentEmployee?.Name ?? ""} {CurrentEmployee?.Patronymic ?? ""}"; }
