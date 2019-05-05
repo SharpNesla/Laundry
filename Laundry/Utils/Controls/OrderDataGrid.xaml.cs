@@ -20,6 +20,13 @@ using NPOI.SS.UserModel;
 
 namespace Laundry.Utils.Controls
 {
+  public class AggregationModel
+  {
+    public DateTime DateTime { get; set; }
+    public double Price { get; set; }
+    public long Amount { get; set; }
+  }
+
   /// <summary>
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
@@ -30,8 +37,10 @@ namespace Laundry.Utils.Controls
     private EmployeeProfession _profession;
 
     private readonly OrderStatusConverter _statusConverter = new OrderStatusConverter();
+    private ChartTime _time;
 
-    [AlsoNotifyFor(nameof(Labels), nameof(Values),nameof(AggregatedPrice), nameof(Count), nameof(AggregatedInstancesCount))]
+    [AlsoNotifyFor(nameof(Labels), nameof(Values), nameof(AggregatedPrice), nameof(Count),
+      nameof(AggregatedInstancesCount))]
     public override IReadOnlyList<Order> Entities
     {
       get { return base.Entities; }
@@ -141,6 +150,30 @@ namespace Laundry.Utils.Controls
       }
     }
 
+    private void AggregateOrders()
+    {
+      switch (Time)
+      {
+        case ChartTime.Day:
+          this.AggregationByTime = this.Repo.Get(0, int.MaxValue)
+            .GroupBy(s => new {date = new DateTime(s.CreationDate.Year, s.CreationDate.Month, s.CreationDate.Day)})
+            .Select(g => new AggregationModel {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()});
+          break;
+        case ChartTime.Mounth:
+          this.AggregationByTime = this.Repo.Get(0, int.MaxValue)
+            .GroupBy(s => new {date = new DateTime(s.CreationDate.Year, s.CreationDate.Month, 1)})
+            .Select(g => new AggregationModel {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()});
+          break;
+        case ChartTime.Year:
+          this.AggregationByTime = this.Repo.Get(0, int.MaxValue)
+            .GroupBy(s => new {date = new DateTime(s.CreationDate.Year, 1, 1)})
+            .Select(g => new AggregationModel {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()});
+          break;
+      }
+    }
+
+    public IEnumerable<AggregationModel> AggregationByTime { get; set; }
+
     public override long Count
     {
       get
@@ -234,22 +267,36 @@ namespace Laundry.Utils.Controls
 
       return row;
     }
-    
+
     public string AggregatedInstancesCount => Repo.GetAggregatedInstacesCount(Filter);
     public double AggregatedPrice => Repo.GetAggregatedPrice(Filter);
+
 
     public SeriesCollection Values => new SeriesCollection
     {
       new ColumnSeries
       {
         Title = "Цена",
-        Values = new ChartValues<double>(this.Entities.Select(x => x.Price))
+        Values = new ChartValues<double>(this.AggregationByTime.Select(x => x.Price))
       }
     };
 
-    public string[] Labels => this.Entities.Select(x => $"№{x.Id} {x.CreationDate:d}").ToArray();
+    public string[] Labels => this.AggregationByTime?.Select(x => x.DateTime.ToString("d")).ToArray();
 
     public string LabelsTitle => "Заказы";
     public string ValuesTitle => "Цена";
+
+    public ChartTime Time
+    {
+      get { return _time; }
+      set
+      {
+        _time = value;
+
+        AggregateOrders();
+      }
+    }
+
+    public EntityInfoType EntityInfoType { get; set; }
   }
 }

@@ -60,13 +60,10 @@
             <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                        Text="{StaticResource ClientEditor.MainInfoTitle}" />
             <StackPanel Margin="0,16,0,0">
-              <TextBlock Margin="0,0,0,0" Text="{Binding Entity.Name}"  Style="{StaticResource MaterialDesignBody2TextBlock}"/>
-
-              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.DateBirth, StringFormat='Дата рождения: dd.MM.yyyy'}"
-                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,0,0,0" Text="{Binding Entity.Name, StringFormat='{}Торговое название: {0}'}"  Style="{StaticResource MaterialDesignBody2TextBlock}"/>
               <TextBlock Margin="0,8,0,0" Text="{Binding Entity.PhoneNumber, StringFormat='Номер телефона: {0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,8,0,0" Visibility="{Binding Visibilities.Director}"
+              <TextBlock Margin="0,8,0,0"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" TextWrapping="Wrap">
                 <TextBlock.Text>
                   <MultiBinding StringFormat="{}Адрес: г. {0} ул. {1} д. {2} (Индекс: {3})">

@@ -64,5 +64,7 @@ namespace Laundry.Utils.Controls
     public string[] Labels => this.Entities.Select(x => x.Signature).ToArray();
     public string LabelsTitle => "Филиалы";
     public string ValuesTitle => "Суммы";
+    public ChartTime Time { get; set; }
+    public EntityInfoType EntityInfoType { get; set; }
   }
 }

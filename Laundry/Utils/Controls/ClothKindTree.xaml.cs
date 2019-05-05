@@ -110,5 +110,7 @@ namespace Laundry.Utils.Controls
     public string[] Labels { get; }
     public string LabelsTitle { get; }
     public string ValuesTitle { get; }
+    public ChartTime Time { get; set; }
+    public EntityInfoType EntityInfoType { get; set; }
   }
 }

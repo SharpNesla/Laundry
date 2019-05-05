@@ -48,7 +48,7 @@
           <StackPanel Margin="2,0,0,0">
             <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                        Text="Общая информация" />
-            <ContentControl Name="MainAdvisorSearch" />
+            <ContentControl Name="MainAdvisorSearch" IsEnabled="{Binding MainAdvisorSearchEnabled}"/>
 
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Торговое название"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"

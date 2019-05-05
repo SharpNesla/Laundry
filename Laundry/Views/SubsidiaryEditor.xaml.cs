@@ -27,6 +27,8 @@ namespace Laundry.Views
   /// </summary>
   public class SubsidiaryEditorViewModel : EditorScreen<Repository<Subsidiary>, Subsidiary>
   {
+    public bool MainAdvisorSearchEnabled => !IsNew;
+
     public EmployeeSearchViewModel MainAdvisorSearch { get; }
     public EmployeeDataGridViewModel Advisors { get; set; }
 
@@ -42,13 +44,17 @@ namespace Laundry.Views
       this.Advisors.DisplaySelectionColumn = false;
       this.Advisors.IsCompact = true;
 
-      this.Advisors.Refresh(0, int.MaxValue);
+      
 
       this.MainAdvisorSearch = new EmployeeSearchViewModel(model, "Главный приёмщик",
         Builders<Employee>.Filter.And(
           Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
           Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
         ));
+      if (!IsNew)
+      {
+        this.Advisors.Refresh(0, int.MaxValue);
+      }
     }
   }
 }

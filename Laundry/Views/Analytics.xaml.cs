@@ -10,11 +10,22 @@ using LiveCharts.Wpf;
 
 namespace Laundry.Views
 {
-  public enum ChartType
+  public enum ChartTime
   {
-    [Description("Столбчатая")] LineChart,
-    [Description("Линейная")] Column,
-    [Description("Круговая")] PieChart
+    [Description("День")]
+    Day,
+    [Description("Месяц")]
+    Mounth,
+    [Description("Год")]
+    Year
+  }
+
+  public enum EntityInfoType
+  {
+    [Description("Количество")]
+    Amount,
+    [Description("Суммарная стоимость")]
+    Cost
   }
 
   public enum AnalyticEntityType
@@ -35,10 +46,16 @@ namespace Laundry.Views
 
     public string SearchHintString { get; private set; }
 
+    public EntityInfoType EntityInfoType { get; set; }
+
     public bool IsGridChecked { get; set; }
     public bool IsChartChecked { get; set; }
 
-    public ChartType ChartType { get; set; }
+    public ChartTime ChartTime
+    {
+      get { return this.EntityGrid.Time; }
+      set { this.EntityGrid.Time = value; }
+    }
 
     public AnalyticEntityType EntityType
     {
@@ -67,9 +84,9 @@ namespace Laundry.Views
       Paginator.ClearPaginable();
       Paginator.RegisterPaginable(repository);
       Paginator.ElementsName = elementsName;
-
-      this.SearchHintString = elementsName.ToLower();
-
+      
+      this.SearchHintString = $"Поиск {elementsName.ToLower()}";
+      
       this.EntityGrid = repository;
 
       Paginator.RefreshPaginable();

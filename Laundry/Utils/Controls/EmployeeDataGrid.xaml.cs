@@ -15,7 +15,7 @@ namespace Laundry.Utils.Controls
   /// <summary>
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
-  public class EmployeeDataGridViewModel : EntityGrid<Employee, EmployeeRepository, EmployeeCardViewModel>, IChartable<Employee>
+  public class EmployeeDataGridViewModel : EntityGrid<Employee, EmployeeRepository, EmployeeCardViewModel>
   {
     public EmployeeDataGridViewModel(IEventAggregator eventAggregator, EmployeeCardViewModel card,
       DeleteDialogViewModel deleteDialog, IModel model, Visibilities visibilities)

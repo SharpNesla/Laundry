@@ -38,7 +38,7 @@ namespace Laundry.Views.Cards
           Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), value.Id),
           Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
         );
-        this.AdvisorsGrid.Refresh(0, 10);
+        this.AdvisorsGrid.Refresh(0, int.MaxValue);
       }
     }
 
