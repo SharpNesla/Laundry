@@ -33,10 +33,13 @@
 
       </DockPanel>
     </materialDesign:ColorZone>
-    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,24,24">
-      <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" IsCancel="True"
-              Style="{StaticResource MaterialDesignFlatButton}" Content="ПРИНЯТЬ" />
-    </StackPanel>
+    <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="24,0,24,24">
+      <Button IsCancel="True" MaxWidth="132" DockPanel.Dock="Left"
+              Style="{StaticResource MaterialDesignFlatButton}"
+              Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+        ПРИНЯТЬ
+      </Button>
+    </DockPanel>
 
 
     <Grid Margin="24">

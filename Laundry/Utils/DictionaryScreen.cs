@@ -25,7 +25,7 @@ namespace Laundry.Utils
 
       this.Paginator = paginator;
       this.Paginator.ElementsName = paginatorLabel;
-      this.Paginator.RegisterPaginable(entityGrid);
+      this.Paginator.RegisterPaginable(entityGrid, false);
     }
 
     protected override void OnActivate()

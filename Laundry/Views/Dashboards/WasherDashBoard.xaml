@@ -151,8 +151,14 @@
                 <TextBlock
                   Grid.Column="1"
                   Margin="8 0 0 0"
-                  Text="{Binding OrderGrid.Count, StringFormat='Всего заказов: {0}'}"
-                  VerticalAlignment="Center" />
+                  VerticalAlignment="Center">
+                  <TextBlock.Text>
+                    <MultiBinding StringFormat="Всего заказов: {0}; Всего вещей: {1}">
+                    <Binding Path="OrderGrid.Count"/>
+                      <Binding Path="OrderGrid.AggregatedInstancesCount"/>
+                    </MultiBinding>
+                  </TextBlock.Text>
+                </TextBlock>
               </Grid>
             </materialDesign:ColorZone>
             <ToggleButton Margin="8,0,0,0" Visibility="Collapsed"

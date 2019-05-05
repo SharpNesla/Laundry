@@ -202,7 +202,7 @@ namespace Laundry.Model.CollectionRepositories
           Builders<Order>.Filter.Eq(nameof(Order.DistributerId), employee.Id)
         )
       );
-      var orders = base.Get(offset, limit, filter);
+      var orders = this.Get(offset, limit, filter);
       return orders;
     }
 

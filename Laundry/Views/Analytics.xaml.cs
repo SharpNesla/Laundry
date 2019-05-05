@@ -21,13 +21,11 @@ namespace Laundry.Views
   {
     [Description("Заказы")] Order,
     [Description("Филиалы")] Subsidiary,
-    [Description("Работники")] Employee,
     [Description("Виды одежды")] ClothKind
   }
 
   public class AnalyticsViewModel : DrawerActivityScreen
   {
-    private readonly EmployeeDataGridViewModel _employeeGrid;
     private readonly OrderDataGridViewModel _orderGrid;
     private readonly SubsidiaryGridViewModel _subsidiaryGrid;
     private readonly ClothKindTreeViewModel _clothKindGrid;
@@ -55,9 +53,6 @@ namespace Laundry.Views
             break;
           case AnalyticEntityType.Subsidiary:
             ChangeEntity(_subsidiaryGrid, "Филиалов");
-            break;
-          case AnalyticEntityType.Employee:
-            ChangeEntity(_employeeGrid, "Работников");
             break;
           case AnalyticEntityType.ClothKind:
             ChangeEntity(_clothKindGrid, "Видов одежды");
@@ -87,13 +82,9 @@ namespace Laundry.Views
     }
 
     public AnalyticsViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator,
-      EmployeeDataGridViewModel employeeGrid,
       OrderDataGridViewModel orderGrid, SubsidiaryGridViewModel subsidiaryGrid, ClothKindTreeViewModel clothKindGrid) :
       base(aggregator, model)
     {
-      _employeeGrid = employeeGrid;
-      _employeeGrid.IsDisplaySubtotals = true;
-      _employeeGrid.DisplaySelectionColumn = false;
 
       _orderGrid = orderGrid;
       _orderGrid.IsDisplaySubtotals = true;
