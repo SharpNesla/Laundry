@@ -25,7 +25,7 @@
           <TextBlock
             Style="{StaticResource MaterialDesignTitleTextBlock}"
             VerticalAlignment="Center"
-            Margin="8 0 0 0" Text="{Binding Entity.Id, StringFormat='Клиент №{0}'}" />
+            Margin="8 0 0 0" Text="{Binding Entity.Id, StringFormat='Автомобиль №{0}'}" />
         </StackPanel>
 
       </DockPanel>
@@ -57,19 +57,11 @@
             <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                        Text="{StaticResource ClientEditor.MainInfoTitle}" />
             <StackPanel Margin="0,16,0,0">
-              <TextBlock Margin="0,0,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
-                <TextBlock.Text>
-                  <MultiBinding StringFormat="{}{1} {0} {2}">
-                    <Binding Path="Entity.Name" />
-                    <Binding Path="Entity.Surname" />
-                    <Binding Path="Entity.Patronymic" />
-                  </MultiBinding>
-                </TextBlock.Text>
-              </TextBlock>
+              <TextBlock Margin="0,0,0,0" Text="{Binding Entity.BrandAndModel}"  Style="{StaticResource MaterialDesignBody2TextBlock}"/>
 
-              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.DateBirth, StringFormat='Дата рождения: dd.MM.yyyy'}"
+              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.Sign, StringFormat='{}Номерной знак: {0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.PhoneNumber, StringFormat='Номер телефона: {0}'}"
+              <TextBlock Margin="0,8,0,0" Text="{Binding Entity.Color, StringFormat='Цвет: {0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,8,0,0" Style="{StaticResource MaterialDesignBody2TextBlock}">
                 <TextBlock.Text>

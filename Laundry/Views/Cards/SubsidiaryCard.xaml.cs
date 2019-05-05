@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Utils.Controls;
+using MongoDB.Driver;
 
 namespace Laundry.Views.Cards
 {
@@ -23,8 +25,29 @@ namespace Laundry.Views.Cards
   /// </summary>
   public class SubsidiaryCardViewModel : Card<Subsidiary>
   {
-    public SubsidiaryCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.SubsidiaryEditor)
+    public EmployeeDataGridViewModel AdvisorsGrid { get; }
+
+    public override Subsidiary Entity
     {
+      get { return base.Entity; }
+
+      set
+      {
+        base.Entity = value;
+        this.AdvisorsGrid.Filter = Builders<Employee>.Filter.And(
+          Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), value.Id),
+          Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
+        );
+        this.AdvisorsGrid.Refresh(0, 10);
+      }
+    }
+
+    public SubsidiaryCardViewModel(IEventAggregator eventAggregator, EmployeeDataGridViewModel advisorsGrid) : base(
+      eventAggregator, Screens.SubsidiaryEditor)
+    {
+      this.AdvisorsGrid = advisorsGrid;
+      this.AdvisorsGrid.IsCompact = true;
+      this.AdvisorsGrid.DisplaySelectionColumn = false;
     }
   }
 }
