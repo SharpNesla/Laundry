@@ -6,33 +6,66 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System.Linq;
+using NPOI.SS.Formula.Functions;
 
 namespace Laundry.Model.DatabaseClients
 {
   public class ClientRepository : Repository<Client>
   {
+    #region Client ProjectDef string
+
+    private const string ClientProjectDefinition = @"
+{
+  Name:'$Name',
+  Surname:'$Surname',
+  Patronymic:'$Patronymic',
+  PhoneNumber:'$PhoneNumber',
+  DateBirth:'$DateBirth',
+  Gender:'$Gender',
+  House:'$House',
+  City:'$City',
+  Flat:'$Flat',
+  ZipCode:'$ZipCode',
+  Comment:'$Comment',
+  IsCorporative:'$IsCorporative',
+  OrdersCount : {$size:'$Orders'},
+  OrdersPrice : {$sum:'$Orders.Price'}
+}";
+
+    #endregion
+
     public override IReadOnlyList<Client> Get(int offset, int limit, FilterDefinition<Client> filter = null)
     {
-      var clients = base.Get(offset, limit, filter);
-      foreach (var client in clients)
-      {
-        client.OrdersCount = Model.Orders.GetForClientCount(client);
-      }
-
-      return clients;
+      var readOnlyList = this.Collection.Aggregate()
+        .Match(Builders<Client>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
+        .Lookup("orders", "_id", "Client", "Orders")
+        .Project<Client>(ClientProjectDefinition)
+        .Match(filter ?? Builders<Client>.Filter.Empty)
+        .Skip(offset)
+        .Limit(limit)
+        .ToList();
+      return readOnlyList;
     }
 
     public override Client GetById(long id)
     {
-      var client = base.GetById(id);
-      client.OrdersCount = Model.Orders.GetForClientCount(client);
-      return client;
+      return Collection.Aggregate()
+        .Match(Builders<Client>.Filter.Eq(nameof(IRepositoryElement.Id), id))
+        .Lookup("orders", "_id", "Client", "Orders")
+        .Project<Client>(ClientProjectDefinition).First();
     }
 
     public ClientRepository(IModel model, IMongoCollection<Client> collection) : base(model, collection)
     {
     }
 
+    public override void Update(Client entity)
+    {
+      entity.OrdersCountImpl = null;
+      entity.OrdersPriceImpl = null;
+
+      base.Update(entity);
+    }
 
     public override IReadOnlyList<Client> GetBySearchString(string searchString, FilterDefinition<Client> filter,
       int offset = 0, int capLimit = 10)
@@ -69,9 +102,11 @@ namespace Laundry.Model.DatabaseClients
         .Match(filterdef)
         .AppendStage<BsonDocument>(addfields)
         .AppendStage<BsonDocument>(match)
+        .As<Client>()
         .Skip(offset)
         .Limit(capLimit)
-        .ToList().Select(x => BsonSerializer.Deserialize<Client>(x)).ToList();
+        .Project<Client>(ClientProjectDefinition)
+        .ToList();
     }
 
     public override long GetSearchStringCount(string searchString, FilterDefinition<Client> filter = null)
@@ -116,8 +151,6 @@ namespace Laundry.Model.DatabaseClients
       {
         return 0;
       }
-      
-      
     }
   }
 }

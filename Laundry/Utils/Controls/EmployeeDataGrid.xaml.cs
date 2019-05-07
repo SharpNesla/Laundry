@@ -17,6 +17,8 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class EmployeeDataGridViewModel : EntityGrid<Employee, EmployeeRepository, EmployeeCardViewModel>
   {
+
+
     public EmployeeDataGridViewModel(IEventAggregator eventAggregator, EmployeeCardViewModel card,
       DeleteDialogViewModel deleteDialog, IModel model, Visibilities visibilities)
       : base(eventAggregator, card, model.Employees, deleteDialog, Screens.EmployeeEditor, visibilities)

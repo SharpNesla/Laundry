@@ -36,7 +36,7 @@ namespace Laundry.Model
     [BsonIgnoreIfDefault]
     public CarCategory Category { get; set; }
 
-    [BsonIgnoreIfDefault] public DateTime CreationYear;
+    [BsonIgnoreIfDefault] public short CreationYear;
 
     [BsonIgnoreIfNull]
     public string BodyID { get; set; }

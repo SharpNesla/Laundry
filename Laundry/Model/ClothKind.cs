@@ -24,7 +24,7 @@ namespace Laundry.Model
   public class ClothKind : IRepositoryElement
   {
     [BsonIgnoreIfDefault]
-    public long Parent { get; set; }
+    public long? Parent { get; set; }
     [BsonIgnoreIfNull]
     public string Name { get; set; }
     
@@ -54,5 +54,17 @@ namespace Laundry.Model
     public bool IsSelected { get; set; }
     [BsonIgnore]
     public int Level { get; set; }
+
+    [BsonIgnoreIfNull]
+    [BsonElement("SumPrice")]
+    internal double? SumPriceImpl;
+
+    [BsonIgnoreIfNull]
+    [BsonElement("Count")]
+    internal int? CountImpl;
+
+    public double Count => CountImpl ?? 0;
+    public double SumPrice => SumPriceImpl ?? 0;
+
   }
 }

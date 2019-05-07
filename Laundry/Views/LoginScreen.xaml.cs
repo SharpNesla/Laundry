@@ -28,11 +28,11 @@ namespace Laundry.Views
         this.Model.Connect(Username, Password);
         ChangeApplicationScreen(Screens.DashBoard);
       }
-      catch (Exception e)
+      catch (UnauthorizedAccessException e)
       {
         var messageQueue = SnackBar.MessageQueue;
         var message = "Неправильное имя пользователя или пароль";
-        
+      
         messageQueue.Enqueue(message);
       }
       

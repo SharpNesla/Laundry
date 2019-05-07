@@ -148,6 +148,8 @@ namespace Laundry.Utils.Controls
       {
         base.Refresh(page, elements);
       }
+
+      AggregateOrders();
     }
 
     private void AggregateOrders()

@@ -11,10 +11,10 @@
              d:DesignHeight="450" d:DesignWidth="800" Name="OwnControl">
   <!--{Binding IsSearchDrawerOpened}-->
   <DockPanel LastChildFill="True">
-    <materialDesign:DrawerHost DockPanel.Dock="Bottom" materialDesign:ShadowAssist.ShadowDepth="Depth5" Name="DrawerHost" IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
+    <materialDesign:DrawerHost DockPanel.Dock="Bottom" materialDesign:ShadowAssist.ShadowDepth="Depth5" Name="DrawerHost" IsBottomDrawerOpen="True">
       <materialDesign:DrawerHost.BottomDrawerContent>
-        <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}">
-          <StackPanel Width="200" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal" Height="128" Background="{StaticResource MaterialDesignCardBackground}">
+          <StackPanel Width="152" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <CheckBox IsChecked="{Binding IsByDateBirth}">По дате рождения</CheckBox>
             <DatePicker SelectedDate="{Binding LowDateBirthBound}" materialDesign:HintAssist.Hint="Нижняя граница"
                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
@@ -23,11 +23,40 @@
                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
                         HorizontalAlignment="Stretch" IsEnabled="{Binding IsByDateBirth}"/>
           </StackPanel>
+          <StackPanel Width="144" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+            <CheckBox IsChecked="{Binding IsByOrdersCount}" Height="22">По кол-ву заказов</CheckBox>
+            <TextBox Text="{Binding LowOrdersCountBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+                        Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        HorizontalAlignment="Stretch" IsEnabled="{Binding IsByOrdersCount}" Height="36"/>
+            <TextBox Text="{Binding TopOrdersCountBound}" materialDesign:HintAssist.Hint="Верхняя граница"
+                        Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        HorizontalAlignment="Stretch" IsEnabled="{Binding IsByOrdersCount}" Height="36"/>
+          </StackPanel>
+          <StackPanel Width="201" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
+            <CheckBox IsChecked="{Binding IsByOrdersPrice}" Height="22">По стоимости всех заказов</CheckBox>
+            <TextBox Text="{Binding LowOrdersPriceBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+                     Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     HorizontalAlignment="Stretch" IsEnabled="{Binding IsByOrdersPrice}" Height="36"/>
+            <TextBox Text="{Binding TopOrdersPriceBound }" materialDesign:HintAssist.Hint="Верхняя граница"
+                     Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     HorizontalAlignment="Stretch" IsEnabled="{Binding IsByOrdersPrice}" Height="36"/>
+          </StackPanel>
+          <StackPanel Width="94" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
+            <CheckBox IsChecked="{Binding IsByGender}" Height="24">По полу</CheckBox>
+              <RadioButton Margin="0,26,8,4" IsEnabled="{Binding IsByGender}" Style="{StaticResource MaterialDesignRadioButton}"
+                           IsChecked="{Binding Path=Gender, Converter={StaticResource EnumBooleanConverter}, ConverterParameter=Male}">
+                Мужской
+              </RadioButton>
+            <RadioButton Margin="0,8,8,4"  IsEnabled="{Binding IsByGender}" Style="{StaticResource MaterialDesignRadioButton}"
+                           IsChecked="{Binding Path=Gender, Converter={StaticResource EnumBooleanConverter}, ConverterParameter=Female}">
+              Женский
+            </RadioButton>
+          </StackPanel>
         </StackPanel>
       </materialDesign:DrawerHost.BottomDrawerContent>
 
     </materialDesign:DrawerHost>
-    
+
     <DataGrid
       Margin="16"
       SelectionMode="Single"

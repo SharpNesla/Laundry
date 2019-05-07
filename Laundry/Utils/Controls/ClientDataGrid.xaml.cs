@@ -35,9 +35,19 @@ namespace Laundry.Utils.Controls
     public Client Client { get; set; }
 
     public bool IsByDateBirth { get; set; }
-
     public DateTime? LowDateBirthBound { get; set; }
     public DateTime? HighDateBirthBound { get; set; }
+
+    public bool IsByOrdersCount { get; set; }
+    public int? LowOrdersCountBound { get; set; }
+    public int? TopOrdersCountBound { get; set; }
+
+    public bool IsByOrdersPrice { get; set; }
+    public int? LowOrdersPriceBound { get; set; }
+    public int? TopOrdersPriceBound { get; set; }
+
+    public bool IsByGender { get; set; }
+    public Gender Gender { get; set; }
 
     public override FilterDefinition<Client> Filter
     {
@@ -51,6 +61,29 @@ namespace Laundry.Utils.Controls
             filter,
             Builders<Client>.Filter.Gte(nameof(Client.DateBirth), this.LowDateBirthBound ?? DateTime.MinValue),
             Builders<Client>.Filter.Lte(nameof(Client.DateBirth), this.HighDateBirthBound ?? DateTime.MaxValue));
+        }
+
+        if (this.IsByOrdersCount)
+        {
+          filter = Builders<Client>.Filter.And(
+            filter,
+            Builders<Client>.Filter.Gte(nameof(Client.OrdersCount), this.LowOrdersCountBound ?? int.MinValue),
+            Builders<Client>.Filter.Lte(nameof(Client.OrdersCount), this.TopOrdersCountBound ?? int.MaxValue));
+        }
+
+        if (this.IsByOrdersPrice)
+        {
+          filter = Builders<Client>.Filter.And(
+            filter,
+            Builders<Client>.Filter.Gte(nameof(Client.OrdersPrice), this.LowOrdersPriceBound ?? int.MinValue),
+            Builders<Client>.Filter.Lte(nameof(Client.OrdersPrice), this.TopOrdersPriceBound ?? int.MaxValue));
+        }
+
+        if (this.IsByGender)
+        {
+          filter = Builders<Client>.Filter.And(
+            filter,
+            Builders<Client>.Filter.Eq(nameof(Client.Gender), Gender));
         }
 
         return filter;

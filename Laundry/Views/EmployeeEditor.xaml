@@ -106,15 +106,16 @@
               <TextBox Text="{Binding Entity.PhoneNumber}" Margin="0,0,0,8"
                        materialDesign:HintAssist.Hint="Номер телефона"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Margin="0,16,0,8" materialDesign:HintAssist.Hint="Серия и номер паспорта"
+              <TextBox Margin="0,16,0,8"
+                       Text="{Binding Entity.PassportSerial}"  materialDesign:HintAssist.Hint="Серия и номер паспорта"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Паспорт выдан"
+              <TextBox Text="{Binding Entity.PassportDistributor}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Паспорт выдан"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Код подразделения"
+              <TextBox Text="{Binding Entity.PassportDistributorCode}" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Код подразделения"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <StackPanel Margin="0,8,0,0" Orientation="Horizontal">
+              <StackPanel Margin="0,16,0,0" Orientation="Horizontal">
                 <TextBlock Margin="0,2,8,8">
-                  Пол
+                  Пол:
                 </TextBlock>
                 <RadioButton Margin="0,0,8,4" Style="{StaticResource MaterialDesignRadioButton}"
                              IsChecked="{Binding Path=Entity.Gender, Converter={StaticResource EnumBooleanConverter}, ConverterParameter=Male}">
@@ -185,7 +186,7 @@
               <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.ColumnSpan="3" Style="{StaticResource MaterialDesignTitleTextBlock}"
-                       Text="Комментарий" />
+                       Text="Должность" />
             <ComboBox Margin="2,0,16,0" Grid.Row="1" Grid.Column="0"
                       materialDesign:HintAssist.Hint="Должность"
                       VerticalAlignment="Bottom"

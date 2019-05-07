@@ -154,7 +154,7 @@ namespace Laundry.Model.CollectionRepositories
       }
       
     }
-    
+
     public void SetClient(Order order, Client client)
     {
       if (client != null)

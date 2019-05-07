@@ -10,10 +10,6 @@ namespace Laundry.Model
   [BsonIgnoreExtraElements]
   public class Client : Person
   {
-
-    [BsonIgnoreIfNull]
-    public ObservableCollection<Order> Orders { get; set; }
-
     [BsonIgnoreIfDefault]
     public bool IsPremiumClient { get; set; }
 
@@ -23,6 +19,18 @@ namespace Laundry.Model
     [BsonIgnoreIfDefault]
     public bool IsCorporative { get; set; }
 
-    public long OrdersCount { get; internal set; }
+    [BsonIgnoreIfNull]
+    [BsonElement("OrdersCount")]
+    internal long? OrdersCountImpl;
+
+    [BsonIgnoreIfNull]
+    [BsonElement("OrdersPrice")]
+    internal long? OrdersPriceImpl;
+    
+    [BsonIgnore]
+    public long OrdersCount => OrdersCountImpl ?? 0;
+
+    [BsonIgnore]
+    public long OrdersPrice => OrdersPriceImpl ?? 0;
   }
 }

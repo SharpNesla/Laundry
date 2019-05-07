@@ -3,19 +3,93 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Laundry.Model.CollectionRepositories
 {
   public class ClothKindRepository : Repository<ClothKind>
   {
+    private static readonly BsonArray _aggrStages = new BsonArray
+    {
+      new BsonDocument("$unwind",
+        new BsonDocument("path", "$Instances")),
+      new BsonDocument("$replaceRoot",
+        new BsonDocument("newRoot", "$Instances")),
+      new BsonDocument("$lookup",
+        new BsonDocument
+        {
+          {"from", "clothkinds"},
+          {"localField", "ClothKind"},
+          {"foreignField", "_id"},
+          {"as", "ClothKind"}
+        }),
+      new BsonDocument("$unwind",
+        new BsonDocument("path", "$ClothKind")),
+      new BsonDocument("$addFields",
+        new BsonDocument("ClothKind.Amount", "$Amount")),
+      new BsonDocument("$replaceRoot",
+        new BsonDocument("newRoot", "$ClothKind")),
+      new BsonDocument("$group",
+        new BsonDocument
+        {
+          {"_id", "$_id"},
+          {
+            "Name",
+            new BsonDocument("$first", "$Name")
+          },
+          {
+            "Parent",
+            new BsonDocument("$first", "$Parent")
+          },
+          {
+            "MeasureKind",
+            new BsonDocument("$first", "$MeasureKind")
+          },
+          {
+            "SumPrice",
+            new BsonDocument("$sum",
+              new BsonDocument("$multiply",
+                new BsonArray
+                {
+                  "$Price",
+                  "$Amount"
+                }))
+          },
+          {
+            "Count",
+            new BsonDocument("$sum", "$Amount")
+          }
+        }),
+      new BsonDocument("$sort",
+        new BsonDocument("_id", 1))
+    };
+
+    
+
     public ClothKindRepository(IModel model, IMongoCollection<ClothKind> collection) : base(model, collection)
     {
     }
 
     public override IReadOnlyList<ClothKind> Get(int offset, int limit, FilterDefinition<ClothKind> filter = null)
     {
-      var clothKinds = base.Get(offset, limit, filter);
+      var clothKinds =
+        this.Collection
+          .Database
+          .GetCollection<BsonDocument>("orders")
+          .Aggregate()
+          .AppendStage<BsonDocument>(_aggrStages[0].AsBsonDocument)
+          .AppendStage<BsonDocument>(_aggrStages[1].AsBsonDocument)
+          .AppendStage<BsonDocument>(_aggrStages[2].AsBsonDocument)
+          .AppendStage<BsonDocument>(_aggrStages[3].AsBsonDocument)
+          .AppendStage<BsonDocument>(_aggrStages[4].AsBsonDocument)
+          .AppendStage<BsonDocument>(_aggrStages[5].AsBsonDocument)
+          .AppendStage<BsonDocument>(_aggrStages[6].AsBsonDocument)
+          .AppendStage<BsonDocument>(_aggrStages[7].AsBsonDocument)
+          .As<ClothKind>()
+          .Match(filter ?? Builders<ClothKind>.Filter.Empty)
+          .Skip(offset)
+          .Limit(limit).ToList();
       foreach (var clothKind in clothKinds)
       {
         clothKind.ChildrenCount = GetChildrenCount(clothKind);

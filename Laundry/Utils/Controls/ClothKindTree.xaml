@@ -107,11 +107,17 @@
           <local:DataGridAdaptiveColumn Binding="{Binding Price, StringFormat='{}{0:0.00} ₽'}" CanUserReorder="True"
                                         IsReadOnly="True" MinWidth="32"
                                         Header="Цена" />
+          <local:DataGridAdaptiveColumn Binding="{Binding Count}" CanUserReorder="True"
+                                        IsReadOnly="True" MinWidth="32"
+                                        Header="Предметов одежды"/>
           <local:DataGridAdaptiveColumn CanUserReorder="True"
                                         Binding="{Binding MeasureKind, Converter={StaticResource MeasureKindConverter}}"
                                         IsReadOnly="True" MinWidth="32"
                                         SortMemberPath="Name"
                                         Header="Мера измерения" />
+          <local:DataGridAdaptiveColumn Binding="{Binding SumPrice, StringFormat='{}{0:0.00} ₽'}" CanUserReorder="True"
+                                        IsReadOnly="True" MinWidth="32"
+                                        Header="На суммарную цену"/>
           <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" Width="*" />
           <DataGridTemplateColumn CanUserReorder="False" MinWidth="80" IsReadOnly="True">
             <DataGridTemplateColumn.CellTemplate>
@@ -172,11 +178,17 @@
           <local:DataGridAdaptiveColumn Binding="{Binding Price, StringFormat='{}{0:0.00} ₽'}" CanUserReorder="True"
                                         IsReadOnly="True" MinWidth="32"
                                         Header="Цена" />
+          <local:DataGridAdaptiveColumn Binding="{Binding Count}" CanUserReorder="True"
+                                        IsReadOnly="True" MinWidth="32"
+                                        Header="Предметов одежды"/>
           <local:DataGridAdaptiveColumn CanUserReorder="True"
                                         Binding="{Binding MeasureKind, Converter={StaticResource MeasureKindConverter}}"
                                         IsReadOnly="True" MinWidth="32"
                                         SortMemberPath="Name"
                                         Header="Мера измерения" />
+          <local:DataGridAdaptiveColumn Binding="{Binding SumPrice, StringFormat='{}{0:0.00} ₽'}" CanUserReorder="True"
+                                        IsReadOnly="True" MinWidth="32"
+                                        Header="На суммарную цену"/>
           <DataGridTemplateColumn CanUserReorder="False" IsReadOnly="True" Width="*" />
           <DataGridTemplateColumn CanUserReorder="False" MinWidth="80" IsReadOnly="True">
             <DataGridTemplateColumn.CellTemplate>

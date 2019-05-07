@@ -8,21 +8,15 @@ namespace Laundry.Model
 {
   public enum EmployeeProfession
   {
-    [Description("Курьер")]
-    Courier = 0,
-    [Description("Директор")]
-    Director,
-    [Description("Прачечник")]
-    Washer,
-    [Description("Приёмщик")]
-    Advisor,
-    [Description("Водитель")]
-    Driver
+    [Description("Курьер")] Courier = 0,
+    [Description("Директор")] Director,
+    [Description("Прачечник")] Washer,
+    [Description("Приёмщик")] Advisor,
+    [Description("Водитель")] Driver
   }
 
   public class Employee : Person
   {
-
     public EmployeeProfession Profession { get; set; }
 
     public bool IsCourierCarDriver { get; set; }
@@ -32,6 +26,12 @@ namespace Laundry.Model
     public long Car { get; internal set; }
 
     public string Username { get; set; }
+
+    public string PassportSerial { get; set; }
+
+    public string PassportDistributor { get; set; }
+
+    public string PassportDistributorCode { get; set; }
 
     [BsonIgnoreIfNull]
     public string Comment { get; set; }
@@ -43,6 +43,7 @@ namespace Laundry.Model
     }
 
     public string Password { get; set; }
+
     [BsonIgnore]
     public long OrdersCount { get; set; }
   }
