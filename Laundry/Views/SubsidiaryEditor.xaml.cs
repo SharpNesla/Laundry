@@ -43,7 +43,7 @@ namespace Laundry.Views
       );
       this.Advisors.DisplaySelectionColumn = false;
       this.Advisors.IsCompact = true;
-      
+
       this.MainAdvisorSearch = new EmployeeSearchViewModel(model, "Главный приёмщик",
         Builders<Employee>.Filter.And(
           Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
@@ -60,12 +60,8 @@ namespace Laundry.Views
       view.ZipCodeTextBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
       if (!Validation.GetHasError(view.ZipCodeTextBox))
       {
-        
+        this.ApplyChanges();
       }
-      else
-      {
-        MessageBox.Show("Ошибки");
-      }
-      }
+    }
   }
 }

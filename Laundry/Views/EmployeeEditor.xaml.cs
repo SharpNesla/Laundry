@@ -117,6 +117,23 @@ namespace Laundry.Views
       }
     }
 
+    public void ApplyChanges(EmployeeEditorView view)
+    {
+
+      view.Name.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+      view.Surname.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+      view.Patronymic.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+      view.Login.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+      if (
+        !Validation.GetHasError(view.Name) &&
+        !Validation.GetHasError(view.Surname) &&
+        !Validation.GetHasError(view.Patronymic) &&
+        !Validation.GetHasError(view.Login))
+      {
+        this.ApplyChanges();
+      }
+    }
+
     public override void Handle(Employee message)
     {
       base.Handle(message);

@@ -137,9 +137,17 @@
                   </Binding>
                 </TextBox.Text>
               </TextBox>
-              <TextBox Text="{Binding Entity.Patronymic}" Margin="0,0,0,8"
+              <TextBox Margin="0,0,0,8"
                        materialDesign:HintAssist.Hint="Отчество (если есть)"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                  <Binding Path="Entity.Patronymic">
+                    <Binding.ValidationRules>
+                      <validationRules:PersonTextDataValidation FieldName="Отчество" ValidatesOnTargetUpdated="False" />
+                    </Binding.ValidationRules>
+                  </Binding>
+                </TextBox.Text>
+              </TextBox>
               <TextBox Name="PhoneNumber"
                 Margin="0,0,0,8" materialDesign:ValidationAssist.Background="Transparent"
                 materialDesign:HintAssist.Hint="Номер телефона"
