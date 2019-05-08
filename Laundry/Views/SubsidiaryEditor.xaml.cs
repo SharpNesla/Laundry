@@ -43,9 +43,7 @@ namespace Laundry.Views
       );
       this.Advisors.DisplaySelectionColumn = false;
       this.Advisors.IsCompact = true;
-
       
-
       this.MainAdvisorSearch = new EmployeeSearchViewModel(model, "Главный приёмщик",
         Builders<Employee>.Filter.And(
           Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
@@ -56,5 +54,18 @@ namespace Laundry.Views
         this.Advisors.Refresh(0, int.MaxValue);
       }
     }
+
+    public void ApplyChanges(SubsidiaryEditorView view)
+    {
+      view.ZipCodeTextBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+      if (!Validation.GetHasError(view.ZipCodeTextBox))
+      {
+        
+      }
+      else
+      {
+        MessageBox.Show("Ошибки");
+      }
+      }
   }
 }

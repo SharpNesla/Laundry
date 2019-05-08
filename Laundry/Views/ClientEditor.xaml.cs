@@ -25,7 +25,7 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for ClientEditor.xaml
   /// </summary>
-  public class ClientEditorViewModel : EditorScreen<ClientRepository ,Client>
+  public class ClientEditorViewModel : EditorScreen<ClientRepository, Client>
   {
     public bool IsOrdersEnabled
     {
@@ -56,12 +56,13 @@ namespace Laundry.Views
     public OrderDataGridViewModel OrderDataGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
 
-    public ClientEditorViewModel(IEventAggregator aggregator, IModel model, OrderDataGridViewModel grid, PaginatorViewModel paginator) : base(
+    public ClientEditorViewModel(IEventAggregator aggregator, IModel model, OrderDataGridViewModel grid,
+      PaginatorViewModel paginator) : base(
       aggregator, model, model.Clients, "клиента")
     {
       InfoChecked = true;
       OrderDataGrid = grid;
-      
+
       Paginator = paginator;
       Paginator.ElementsName = "Заказов";
       Paginator.RegisterPaginable(OrderDataGrid, false);
@@ -84,6 +85,16 @@ namespace Laundry.Views
       base.Handle(client);
       OrderDataGrid.Client = client;
       Paginator.RefreshPaginable();
+    }
+
+    public void ApplyChanges(ClientEditorView view)
+    {
+      view.PhoneNumber.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+
+      if (!Validation.GetHasError(view.PhoneNumber))
+      {
+        base.ApplyChanges();
+      }
     }
   }
 }

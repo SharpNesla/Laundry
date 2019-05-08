@@ -10,6 +10,8 @@
              xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
              xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:validationRules="clr-namespace:Laundry.Utils.ValidationRules"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="600" d:DesignWidth="800"
 
              Background="{DynamicResource MaterialDesignPaper}">
@@ -114,12 +116,13 @@
             <StackPanel>
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                          Text="{StaticResource ClientEditor.MainInfoTitle}" />
-              <TextBox Margin="0,16,0,12" materialDesign:HintAssist.Hint="Фамилия"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+              <TextBox Name="Name"  Margin="0,16,0,12" materialDesign:HintAssist.Hint="Фамилия"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                       materialDesign:ValidationAssist.Background="Transparent">
                 <TextBox.Text>
-                  <Binding Path="Entity.Surname" ValidatesOnNotifyDataErrors="True">
+                  <Binding Path="Entity.Surname" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                      <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
+                      <validationRules:PersonTextDataValidation FieldName="Фамилия" ValidatesOnTargetUpdated="False" />
                     </Binding.ValidationRules>
                   </Binding>
                 </TextBox.Text>
@@ -127,9 +130,9 @@
               <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Имя"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                  <Binding Path="Entity.Name" ValidatesOnNotifyDataErrors="True">
+                  <Binding Path="Entity.Name" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                      <DataErrorValidationRule ValidatesOnTargetUpdated="False" />
+                      <validationRules:PersonTextDataValidation FieldName="Имя" ValidatesOnTargetUpdated="False" />
                     </Binding.ValidationRules>
                   </Binding>
                 </TextBox.Text>
@@ -137,10 +140,18 @@
               <TextBox Text="{Binding Entity.Patronymic}" Margin="0,0,0,8"
                        materialDesign:HintAssist.Hint="Отчество (если есть)"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Entity.PhoneNumber}"
-                       Margin="0,0,0,8"
-                       materialDesign:HintAssist.Hint="Номер телефона"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+              <TextBox Name="PhoneNumber"
+                Margin="0,0,0,8" materialDesign:ValidationAssist.Background="Transparent"
+                materialDesign:HintAssist.Hint="Номер телефона"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                  <Binding Path="Entity.PhoneNumber" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                      <validationRules:PhoneValidation ValidatesOnTargetUpdated="False" />
+                    </Binding.ValidationRules>
+                  </Binding>
+                </TextBox.Text>
+              </TextBox>
               <StackPanel Margin="0,8,0,0" Orientation="Horizontal">
                 <TextBlock Margin="0,2,8,8">
                   Пол:

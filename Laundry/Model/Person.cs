@@ -14,10 +14,11 @@ namespace Laundry.Model
   public enum Gender
   {
     Male,
-    Female
+    Female,
+    Undefined
   }
 
-  public class Person : IRepositoryElement, IDataErrorInfo, INotifyDataErrorInfo
+  public class Person : IRepositoryElement, IDataErrorInfo
   {
     [BsonId]
     public long Id { get; set; }
@@ -73,11 +74,7 @@ namespace Laundry.Model
         switch (columnName)
         {
           case nameof(this.Name):
-            if (this.Name == null)
-              error = "Имя не может быть пустым полем";
-            else if(!Regex.IsMatch(this.Name, @"^[а-яА-Я-а-яА-Я ]*([а-я])$")) { 
-              error = "Имя содержит не правильные символы";
-            }
+            
             break;
           case nameof(this.Surname):
             error = string.IsNullOrWhiteSpace(Surname) ? "Фамилия не может быть пустым полем" : string.Empty;
@@ -88,20 +85,6 @@ namespace Laundry.Model
       }
     }
 
-    
-
     public string Error { get; }
-    public IEnumerable GetErrors(string propertyName)
-    {
-      return this[propertyName];
-    }
-
-    public bool HasErrors { get; } = false;
-
-    public void TriggerValidation()
-    {
-      this.ErrorsChanged?.Invoke(null, null);
-    }
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
   }
 }

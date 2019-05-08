@@ -11,7 +11,8 @@
              d:DesignHeight="450" d:DesignWidth="800" Name="OwnControl">
   <!--{Binding IsSearchDrawerOpened}-->
   <DockPanel LastChildFill="True">
-    <materialDesign:DrawerHost DockPanel.Dock="Bottom" materialDesign:ShadowAssist.ShadowDepth="Depth5" Name="DrawerHost" IsBottomDrawerOpen="True">
+    <materialDesign:DrawerHost DockPanel.Dock="Bottom" materialDesign:ShadowAssist.ShadowDepth="Depth5" 
+                               Name="DrawerHost" IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
       <materialDesign:DrawerHost.BottomDrawerContent>
         <StackPanel Orientation="Horizontal" Height="128" Background="{StaticResource MaterialDesignCardBackground}">
           <StackPanel Width="152" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">

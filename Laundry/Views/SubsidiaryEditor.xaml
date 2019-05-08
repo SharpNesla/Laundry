@@ -9,6 +9,9 @@
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:utils="clr-namespace:Laundry.Utils"
              xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:validationRules="clr-namespace:Laundry.Utils.ValidationRules"
+             xmlns:cal="http://www.caliburnproject.org"
              d:DesignWidth="800" d:DesignHeight="600"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel VerticalAlignment="Stretch">
@@ -29,7 +32,7 @@
               Style="{StaticResource MaterialDesignFlatButton}" Name="Discard">
         ОТМЕНИТЬ
       </Button>
-      <Button Name="ApplyChanges" DockPanel.Dock="Left" MaxWidth="132"
+      <Button cal:Message.Attach="ApplyChanges($view)" DockPanel.Dock="Left" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>
@@ -42,13 +45,13 @@
       <materialDesign:Card Padding="16" Margin="0,0,16,0" VerticalAlignment="Stretch">
         <Grid>
           <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
           </Grid.RowDefinitions>
           <StackPanel Margin="2,0,0,0">
             <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                        Text="Общая информация" />
-            <ContentControl Name="MainAdvisorSearch" IsEnabled="{Binding MainAdvisorSearchEnabled}"/>
+            <ContentControl Name="MainAdvisorSearch" IsEnabled="{Binding MainAdvisorSearchEnabled}" />
 
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Торговое название"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -73,8 +76,15 @@
                      Text="{Binding Entity.Flat}" />
 
             <TextBox Name="ZipCodeTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Почтовый индекс"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                     Text="{Binding Entity.ZipCode}" />
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+              <TextBox.Text>
+                <Binding Path="Entity.ZipCode" UpdateSourceTrigger="PropertyChanged">
+                  <Binding.ValidationRules>
+                    <validationRules:NumericValidationRule ValidationType="{x:Type system:Int32}" ValidatesOnTargetUpdated="False" />
+                  </Binding.ValidationRules>
+                </Binding>
+              </TextBox.Text>
+            </TextBox>
           </StackPanel>
           <TextBox Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0"
                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"

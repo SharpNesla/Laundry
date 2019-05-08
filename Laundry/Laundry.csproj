@@ -221,6 +221,10 @@
     <Compile Include="Utils\DrawerState.cs" />
     <Compile Include="Utils\ScreenFactory.cs" />
     <Compile Include="Utils\Screens.cs" />
+    <Compile Include="Utils\ValidationRules\NumericValidation.cs" />
+    <Compile Include="Utils\ValidationRules\PassportDataValidator.cs" />
+    <Compile Include="Utils\ValidationRules\PersonDataValidation.cs" />
+    <Compile Include="Utils\ValidationRules\PhoneValidation.cs" />
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
