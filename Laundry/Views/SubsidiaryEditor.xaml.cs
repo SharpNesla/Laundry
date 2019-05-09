@@ -49,10 +49,6 @@ namespace Laundry.Views
           Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
           Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
         ));
-      if (!IsNew)
-      {
-        this.Advisors.Refresh(0, int.MaxValue);
-      }
     }
 
     public void ApplyChanges(SubsidiaryEditorView view)
@@ -62,6 +58,14 @@ namespace Laundry.Views
       {
         this.ApplyChanges();
       }
+    }
+
+    public override void Handle(Subsidiary message)
+    {
+      base.Handle(message);
+
+
+      this.Advisors.Refresh(0, int.MaxValue);
     }
   }
 }

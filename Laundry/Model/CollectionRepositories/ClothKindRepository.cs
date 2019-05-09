@@ -13,24 +13,40 @@ namespace Laundry.Model.CollectionRepositories
   {
     private static readonly BsonArray AggrStages = new BsonArray
     {
-      new BsonDocument("$unwind",
-        new BsonDocument("path", "$Instances")),
-      new BsonDocument("$replaceRoot",
-        new BsonDocument("newRoot", "$Instances")),
       new BsonDocument("$lookup",
         new BsonDocument
         {
-          {"from", "clothkinds"},
-          {"localField", "ClothKind"},
-          {"foreignField", "_id"},
-          {"as", "ClothKind"}
+          {"from", "orders"},
+          {
+            "let",
+            new BsonDocument("kindid", "$_id")
+          },
+          {
+            "pipeline",
+            new BsonArray
+            {
+              new BsonDocument("$unwind",
+                new BsonDocument("path", "$Instances")),
+              new BsonDocument("$replaceRoot",
+                new BsonDocument("newRoot", "$Instances")),
+              new BsonDocument("$match",
+                new BsonDocument("$expr",
+                  new BsonDocument("$eq",
+                    new BsonArray
+                    {
+                      "$ClothKind",
+                      "$$kindid"
+                    })))
+            }
+          },
+          {"as", "ClothInstances"}
         }),
       new BsonDocument("$unwind",
-        new BsonDocument("path", "$ClothKind")),
-      new BsonDocument("$addFields",
-        new BsonDocument("ClothKind.Amount", "$Amount")),
-      new BsonDocument("$replaceRoot",
-        new BsonDocument("newRoot", "$ClothKind")),
+        new BsonDocument
+        {
+          {"path", "$ClothInstances"},
+          {"preserveNullAndEmptyArrays", true}
+        }),
       new BsonDocument("$group",
         new BsonDocument
         {
@@ -40,12 +56,20 @@ namespace Laundry.Model.CollectionRepositories
             new BsonDocument("$first", "$Name")
           },
           {
+            "MeasureKind",
+            new BsonDocument("$first", "$MeasureKind")
+          },
+          {
+            "Price",
+            new BsonDocument("$first", "$Price")
+          },
+          {
             "Parent",
             new BsonDocument("$first", "$Parent")
           },
           {
-            "MeasureKind",
-            new BsonDocument("$first", "$MeasureKind")
+            "Count",
+            new BsonDocument("$sum", "$ClothInstances.Amount")
           },
           {
             "SumPrice",
@@ -54,12 +78,8 @@ namespace Laundry.Model.CollectionRepositories
                 new BsonArray
                 {
                   "$Price",
-                  "$Amount"
+                  "$ClothInstances.Amount"
                 }))
-          },
-          {
-            "Count",
-            new BsonDocument("$sum", "$Amount")
           }
         }),
       new BsonDocument("$sort",
@@ -77,29 +97,15 @@ namespace Laundry.Model.CollectionRepositories
         filter ?? Builders<ClothKind>.Filter.Empty,
         Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false)
       );
-      var clothKindsFirst =
+      var clothKinds =
         this.Collection
-          .Database
-          .GetCollection<BsonDocument>("orders")
           .Aggregate()
           .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
           .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
           .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
           .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[4].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[5].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[6].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[7].AsBsonDocument)
           .As<ClothKind>()
           .Match(filters).ToList();
-
-      var second = this.Collection
-        .Aggregate()
-        .Match(Builders<ClothKind>.Filter.And(
-          Builders<ClothKind>.Filter.Nin(nameof(ClothKind.Id), clothKindsFirst.ToList().Select(x => x.Id)), filters))
-        .ToList();
-
-      var clothKinds = clothKindsFirst.Concat(second).Skip(offset).Take(limit).ToList();
 
       foreach (var clothKind in clothKinds)
       {
@@ -127,7 +133,14 @@ namespace Laundry.Model.CollectionRepositories
 
     public override ClothKind GetById(long id)
     {
-      var clothKind = base.GetById(id);
+      var clothKind = this.Collection
+          .Aggregate()
+          .Match(x=>x.Id == id)
+          .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
+          .As<ClothKind>().First();
 
       clothKind.ChildrenCount = GetChildrenCount(clothKind);
       return clothKind;

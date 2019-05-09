@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model.DatabaseClients
 {
+
   public interface IRepositoryElement
   {
     [BsonId]

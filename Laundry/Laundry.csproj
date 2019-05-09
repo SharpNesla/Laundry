@@ -138,6 +138,7 @@
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\ClothInstance.cs" />
     <Compile Include="Model\ClothKind.cs" />
+    <Compile Include="Model\CollectionRepositories\AggregationResult.cs" />
     <Compile Include="Model\CollectionRepositories\CarRepository.cs" />
     <Compile Include="Model\CollectionRepositories\ClientRepository.cs" />
     <Compile Include="Model\CollectionRepositories\ClothInstancesRepository.cs" />

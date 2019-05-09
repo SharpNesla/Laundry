@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Laundry.Utils.Controls;
+using Laundry.Views;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -95,12 +97,10 @@ namespace Laundry.Model.CollectionRepositories
       {
         return "0шт, 0кг";
       }
-      
     }
 
     public double GetAggregatedPrice(FilterDefinition<Order> filter)
     {
-      
       var pipeline =
         new BsonDocument("$group",
           new BsonDocument
@@ -122,7 +122,6 @@ namespace Laundry.Model.CollectionRepositories
       {
         return 0;
       }
-      
     }
 
     public double GetAggregatedPriceForSubsidiary(Subsidiary subsidiary)
@@ -138,7 +137,7 @@ namespace Laundry.Model.CollectionRepositories
             }
           }
         );
-      
+
       try
       {
         var aggregation = this.Collection.Aggregate()
@@ -152,7 +151,6 @@ namespace Laundry.Model.CollectionRepositories
       {
         return 0;
       }
-      
     }
 
     public void SetClient(Order order, Client client)
@@ -168,7 +166,6 @@ namespace Laundry.Model.CollectionRepositories
       return Model.Clients.GetById(order.ClientId);
     }
 
-
     public IReadOnlyList<Order> GetForClient(Client client, int offset, int limit)
     {
       var filter = Builders<Order>.Filter.And(
@@ -178,7 +175,6 @@ namespace Laundry.Model.CollectionRepositories
       var orders = this.Get(offset, limit, filter);
       return orders;
     }
-
 
     public long GetForClientCount(Client client)
     {
@@ -191,7 +187,6 @@ namespace Laundry.Model.CollectionRepositories
 
     public IReadOnlyList<Order> GetForEmployee(Employee employee, int offset, int limit)
     {
-      
       var filter = Builders<Order>.Filter.And(
         Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
         Builders<Order>.Filter.Or(
@@ -221,8 +216,24 @@ namespace Laundry.Model.CollectionRepositories
       return Collection.CountDocuments(filter);
     }
 
+    public IEnumerable<AggregationResult> AggregateOrders(ChartTime time, FilterDefinition<Order> filter = null)
+    {
+      return this.Get(0, int.MaxValue)
+        .GroupBy(s => new
+        {
+          date = new DateTime(
+            s.CreationDate.Year,
+            time == ChartTime.Mounth || time == ChartTime.Year ? s.CreationDate.Month : 1,
+            time == ChartTime.Day ? s.CreationDate.Day : 1)
+        })
+        .Select(g => new AggregationResult {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()})
+        .Where(x => x.DateTime != default(DateTime))
+        .OrderBy(x => x.DateTime);
+    }
 
-    internal void SetObtainer(Order entity, Employee obtainer)
+    #region Сеттеры для связей заказа с работниками
+
+    public void SetObtainer(Order entity, Employee obtainer)
     {
       if (obtainer != null)
       {
@@ -264,6 +275,8 @@ namespace Laundry.Model.CollectionRepositories
         entity.OutSubsidiary = distributer.Subsidiary;
       }
     }
+
+    #endregion
 
     public void SetOrdersStatus(IEnumerable<Order> orders, OrderStatus status)
     {

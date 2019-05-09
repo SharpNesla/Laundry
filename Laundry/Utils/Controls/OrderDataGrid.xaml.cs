@@ -20,13 +20,6 @@ using NPOI.SS.UserModel;
 
 namespace Laundry.Utils.Controls
 {
-  public class AggregationModel
-  {
-    public DateTime DateTime { get; set; }
-    public double Price { get; set; }
-    public long Amount { get; set; }
-  }
-
   /// <summary>
   /// Interaction logic for OrderDataGrid.xaml
   /// </summary>
@@ -148,33 +141,31 @@ namespace Laundry.Utils.Controls
       {
         base.Refresh(page, elements);
       }
-
-      AggregateOrders();
     }
 
-    private void AggregateOrders()
+    private void AggregateOrders(ChartTime time)
     {
-      switch (Time)
+      switch (time)
       {
         case ChartTime.Day:
           this.AggregationByTime = this.Repo.Get(0, int.MaxValue)
             .GroupBy(s => new {date = new DateTime(s.CreationDate.Year, s.CreationDate.Month, s.CreationDate.Day)})
-            .Select(g => new AggregationModel {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()});
+            .Select(g => new AggregationResult {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()});
           break;
         case ChartTime.Mounth:
           this.AggregationByTime = this.Repo.Get(0, int.MaxValue)
             .GroupBy(s => new {date = new DateTime(s.CreationDate.Year, s.CreationDate.Month, 1)})
-            .Select(g => new AggregationModel {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()});
+            .Select(g => new AggregationResult {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()});
           break;
         case ChartTime.Year:
           this.AggregationByTime = this.Repo.Get(0, int.MaxValue)
             .GroupBy(s => new {date = new DateTime(s.CreationDate.Year, 1, 1)})
-            .Select(g => new AggregationModel {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()});
+            .Select(g => new AggregationResult {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()});
           break;
       }
     }
 
-    public IEnumerable<AggregationModel> AggregationByTime { get; set; }
+    public IEnumerable<AggregationResult> AggregationByTime { get; set; }
 
     public override long Count
     {
@@ -295,7 +286,7 @@ namespace Laundry.Utils.Controls
       {
         _time = value;
 
-        AggregateOrders();
+        this.AggregationByTime = this.Repo.AggregateOrders(value, Filter);
       }
     }
 
