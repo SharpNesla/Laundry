@@ -10,6 +10,7 @@
              xmlns:controls="clr-namespace:Laundry.Utils.Controls"
              xmlns:utils="clr-namespace:Laundry.Utils"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
@@ -47,13 +48,20 @@
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
                 cal:Message.Attach="ShowActivityMenu($source)">
           <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
+          <Button.Resources>
+            <converters:BindingProxy x:Key="proxy" Data="{Binding}" />
+          </Button.Resources>
           <Button.ContextMenu>
-            <ContextMenu>
+            <ContextMenu DataContext="{Binding ElementName=Screen, Path=DataContext}">
               <MenuItem Header="Экспортировать как">
-                <MenuItem Header="*.csv" />
-                <MenuItem Header="*.xlsx" cal:Message.Attach="ExportToExcel()" />
+                <MenuItem Header="*.csv" cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                          cal:Message.Attach="[Event Click] = [Action ExportToCSV()]"/>
+                <MenuItem Header="*.xlsx" cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                          cal:Message.Attach="[Event Click] = [Action ExportToExcel()]" />
               </MenuItem>
-              <MenuItem Header="Удалить выбраное" />
+              <MenuItem Header="Удалить выбраное"
+                        cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                        cal:Message.Attach="[Event Click] = [Action RemoveSelectedGroup()]" />
             </ContextMenu>
           </Button.ContextMenu>
         </Button>

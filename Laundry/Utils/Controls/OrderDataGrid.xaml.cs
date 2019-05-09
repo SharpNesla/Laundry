@@ -141,6 +141,8 @@ namespace Laundry.Utils.Controls
       {
         base.Refresh(page, elements);
       }
+
+      this.AggregateOrders(Time);
     }
 
     private void AggregateOrders(ChartTime time)

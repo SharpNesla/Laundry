@@ -125,23 +125,56 @@
                 <TextBox.Text>
                   <Binding Path="Entity.Patronymic" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                      <validationRules:PersonTextDataValidation FieldName="Отчество" ValidatesOnTargetUpdated="False" />
+                      <validationRules:PersonTextDataValidation FieldName="Отчество" IsRequired="False" ValidatesOnTargetUpdated="False" />
                     </Binding.ValidationRules>
                   </Binding>
                 </TextBox.Text>
               </TextBox>
-              <TextBox Text="{Binding Entity.PhoneNumber}" Margin="0,0,0,8"
+              <TextBox Margin="0,0,0,8" Name="PhoneNumber"
                        materialDesign:HintAssist.Hint="Номер телефона"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Margin="0,16,0,8"
-                       Text="{Binding Entity.PassportSerial}" materialDesign:HintAssist.Hint="Серия и номер паспорта"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Entity.PassportDistributor}" Margin="0,0,0,8"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                  <Binding Path="Entity.PhoneNumber">
+                    <Binding.ValidationRules>
+                      <validationRules:PhoneValidation />
+                    </Binding.ValidationRules>
+
+                  </Binding>
+                </TextBox.Text>
+              </TextBox>
+              <TextBox Margin="0,16,0,8" Name="PassportSerial"
+                       materialDesign:HintAssist.Hint="Серия и номер паспорта"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                  <Binding Path="Entity.PassportSerial">
+                    <Binding.ValidationRules>
+                      <validationRules:RequiredValidation FieldName="Серия и номер паспорта" />
+                    </Binding.ValidationRules>
+                  </Binding>
+                </TextBox.Text>
+              </TextBox>
+              <TextBox Margin="0,0,0,8" Name="PassportDistributor"
                        materialDesign:HintAssist.Hint="Паспорт выдан"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-              <TextBox Text="{Binding Entity.PassportDistributorCode}" Margin="0,0,0,8"
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                  <Binding Path="Entity.PassportDistributor">
+                    <Binding.ValidationRules>
+                      <validationRules:RequiredValidation FieldName="Паспорт выдан" />
+                    </Binding.ValidationRules>
+                  </Binding>
+                </TextBox.Text>
+              </TextBox>
+              <TextBox Margin="0,0,0,8" Name="PassportDistributorCode"
                        materialDesign:HintAssist.Hint="Код подразделения"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                  <Binding Path="Entity.PassportDistributorCode">
+                    <Binding.ValidationRules>
+                      <validationRules:RequiredValidation FieldName="Код подразделения" />
+                    </Binding.ValidationRules>
+                  </Binding>
+                </TextBox.Text>
+              </TextBox>
               <StackPanel Margin="0,16,0,0" Orientation="Horizontal">
                 <TextBlock Margin="0,2,8,8">
                   Пол:
@@ -160,7 +193,7 @@
                           HorizontalAlignment="Left" Width="252" />
 
               <Expander Background="{StaticResource MaterialDesignCardBackground}"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                        materialDesign:ShadowAssist.ShadowDepth="Depth3" Name="Address">
                 <Expander.Header>
                   <TextBlock Margin="-24,0,0,0" TextWrapping="Wrap">
                     <TextBlock.Text>
@@ -175,24 +208,59 @@
                 </Expander.Header>
                 <StackPanel Margin="8,0,8,0">
                   <TextBox Name="CityTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город"
-                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                           Text="{Binding Entity.City}" />
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                    <TextBox.Text>
+                      <Binding Path="Entity.City">
+                        <Binding.ValidationRules>
+                          <validationRules:RequiredValidation FieldName="Город" />
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
 
                   <TextBox Name="StreetTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Улица"
-                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                           Text="{Binding Entity.Street}" />
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                    <TextBox.Text>
+                      <Binding Path="Entity.Street">
+                        <Binding.ValidationRules>
+                          <validationRules:RequiredValidation FieldName="Улица" />
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
 
                   <TextBox Name="HouseTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Дом"
-                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                           Text="{Binding Entity.House}" />
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                    <TextBox.Text>
+                      <Binding Path="Entity.House">
+                        <Binding.ValidationRules>
+                          <validationRules:RequiredValidation FieldName="Дом" />
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
 
                   <TextBox Name="FlatTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Квартира"
-                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                           Text="{Binding Entity.Flat}" />
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                    <TextBox.Text>
+                      <Binding Path="Entity.Flat">
+                        <Binding.ValidationRules>
+                          <validationRules:RequiredValidation FieldName="Квартира" />
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
 
-                  <TextBox Name="ZipCodeTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Почтовый индекс"
-                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                           Text="{Binding Entity.ZipCode}" />
+                  <TextBox Name="ZipCodeTextBox" Margin="0,0,0,16" materialDesign:HintAssist.Hint="Почтовый индекс"
+                           Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                    <TextBox.Text>
+                      <Binding Path="Entity.ZipCode">
+                        <Binding.ValidationRules>
+                          <validationRules:RequiredValidation FieldName="Индекс" />
+                        </Binding.ValidationRules>
+                      </Binding>
+                    </TextBox.Text>
+                  </TextBox>
                 </StackPanel>
               </Expander>
 

@@ -1,4 +1,8 @@
-﻿using Caliburn.Micro;
+﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Model.DatabaseClients;
@@ -25,7 +29,8 @@ namespace Laundry.Utils
 
     protected TRepository EntityRepository { get; set; }
 
-    public EditorScreen(IEventAggregator aggregator, IModel model, TRepository entityRepo, string entityTitleName = "объекта") : base(aggregator, model)
+    public EditorScreen(IEventAggregator aggregator, IModel model, TRepository entityRepo,
+      string entityTitleName = "объекта") : base(aggregator, model)
     {
       this.EventAggregator.Subscribe(this);
       this.EntityRepository = entityRepo;
@@ -43,7 +48,6 @@ namespace Laundry.Utils
 
     public virtual void Handle(TEntity message)
     {
-
       this.Entity = this.EntityRepository.GetById(message.Id);
       this.IsNew = false;
       this.EventAggregator.Unsubscribe(this);
@@ -61,6 +65,45 @@ namespace Laundry.Utils
       }
 
       ChangeApplicationScreen(Screens.Context);
+    }
+
+    public virtual void ApplyChanges(DependencyObject view)
+    {
+      var tree = FindVisualChildren<TextBox>(view);
+      foreach (TextBox tb in tree)
+      {
+        tb.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+      }
+
+      foreach (TextBox tb in tree)
+      {
+        if (Validation.GetHasError(tb))
+        {
+          return;
+        }
+      }
+
+      this.ApplyChanges();
+    }
+
+    public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+    {
+      if (depObj != null)
+      {
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+        {
+          DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+          if (child != null && child is T)
+          {
+            yield return (T) child;
+          }
+
+          foreach (T childOfChild in FindVisualChildren<T>(child))
+          {
+            yield return childOfChild;
+          }
+        }
+      }
     }
   }
 }

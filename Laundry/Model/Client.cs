@@ -15,8 +15,7 @@ namespace Laundry.Model
 
     [BsonIgnoreIfNull]
     public string Comment { get; set; }
-
-    [BsonIgnoreIfDefault]
+    
     public bool IsCorporative { get; set; }
 
     [BsonIgnoreIfNull]

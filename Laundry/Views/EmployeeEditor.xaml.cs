@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.DatabaseClients;
@@ -30,6 +32,7 @@ namespace Laundry.Views
     }
 
     public CarSearchViewModel CarSearch { get; set; }
+
     [DependsOn(nameof(EmployeeProfession))]
     public bool IsAdvisor
     {
@@ -119,19 +122,8 @@ namespace Laundry.Views
 
     public void ApplyChanges(EmployeeEditorView view)
     {
-
-      view.Name.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-      view.Surname.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-      view.Patronymic.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-      view.Login.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-      if (
-        !Validation.GetHasError(view.Name) &&
-        !Validation.GetHasError(view.Surname) &&
-        !Validation.GetHasError(view.Patronymic) &&
-        !Validation.GetHasError(view.Login))
-      {
-        this.ApplyChanges();
-      }
+      base.ApplyChanges(view);
+      view.Address.IsExpanded = true;
     }
 
     public override void Handle(Employee message)
@@ -154,5 +146,7 @@ namespace Laundry.Views
     {
       Password = box.Password;
     }
+
+   
   }
 }

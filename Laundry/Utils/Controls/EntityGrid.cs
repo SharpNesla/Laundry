@@ -200,12 +200,13 @@ namespace Laundry.Utils.Controls
       return workbook;
     }
 
+
     protected virtual IRow AppendEntityToTable(ISheet sheet, TEntity entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
       
       row.CreateCell(0).SetCellValue(entity.Id);
-
+      
       return row;
     }
 

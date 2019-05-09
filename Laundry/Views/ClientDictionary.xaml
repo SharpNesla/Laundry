@@ -10,6 +10,7 @@
              xmlns:controls="clr-namespace:Laundry.Utils.Controls"
              xmlns:utils="clr-namespace:Laundry.Utils"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              d:DesignHeight="600" d:DesignWidth="800"
              Name="Screen"
              Background="{DynamicResource MaterialDesignPaper}">
@@ -23,14 +24,20 @@
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="28"
                 cal:Message.Attach="ShowActivityMenu($source)">
           <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
+          <Button.Resources>
+            <converters:BindingProxy x:Key="proxy" Data="{Binding}" />
+          </Button.Resources>
           <Button.ContextMenu>
             <ContextMenu DataContext="{Binding ElementName=Screen, Path=DataContext}">
               <MenuItem Header="Экспортировать как">
-                <MenuItem Header="*.csv" />
-                <MenuItem Header="*.xlsx" cal:Action.Target="ClientDictionary" cal:Message.Attach="[Event Click] = [Action ExportToExcel()]"/>
+                <MenuItem Header="*.csv" cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                          cal:Message.Attach="[Event Click] = [Action ExportToCSV()]"/>
+                <MenuItem Header="*.xlsx" cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                          cal:Message.Attach="[Event Click] = [Action ExportToExcel()]" />
               </MenuItem>
-              <MenuItem Header="Удалить выбраное" 
-                        cal:Action.Target="ClientDictionary" cal:Message.Attach="[Event Click] = [Action RemoveSelectedGroup()]"/>
+              <MenuItem Header="Удалить выбраное"
+                        cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                        cal:Message.Attach="[Event Click] = [Action RemoveSelectedGroup()]" />
             </ContextMenu>
           </Button.ContextMenu>
         </Button>
@@ -47,7 +54,7 @@
           </TextBlock>
         </StackPanel>
       </DockPanel>
-      
+
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
       <Button Name="AddEntity" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
@@ -81,7 +88,7 @@
                     Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button Name="AdvancedSearch"
-                  Style="{DynamicResource MaterialDesignToolButton}">
+                        Style="{DynamicResource MaterialDesignToolButton}">
                   <materialDesign:PackIcon
                     Kind="Magnify"
                     Opacity="0.56" />
@@ -94,7 +101,7 @@
                   BorderThickness="0"
                   MinWidth="200"
                   VerticalAlignment="Center"
-                  Text="{Binding EntityGrid.SearchString}"/>
+                  Text="{Binding EntityGrid.SearchString}" />
               </Grid>
             </materialDesign:ColorZone>
 
@@ -124,6 +131,6 @@
         </DockPanel>
       </materialDesign:ColorZone>
     </StackPanel>
-    <ContentControl Margin="0,0,0,-24" Name="EntityGrid"/>
+    <ContentControl Margin="0,0,0,-24" Name="EntityGrid" />
   </DockPanel>
 </UserControl>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +18,11 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
+using Laundry.Utils.Converters;
 using Laundry.Views;
 using Laundry.Views.Cards;
 using LiveCharts;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
@@ -30,6 +33,7 @@ namespace Laundry.Utils.Controls
   public class ClothKindTreeViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>,
     IChartable<ClothKind>
   {
+    private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
     private readonly IModel _model;
     public float NameWidth { get; set; }
     public ObservableCollection<ClothKind> EditableEntities { get; private set; }
@@ -60,9 +64,19 @@ namespace Laundry.Utils.Controls
       RaiseStateChanged();
     }
 
-    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
+    public override string[] TableSheetHeader => new[] {"№", "Название", "Цена", "Единица измерения", "Единиц одежды", "Общая стоимость"};
+
+    protected override IRow AppendEntityToTable(ISheet sheet, ClothKind entity)
     {
-      throw new NotImplementedException();
+      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
+      row.CreateCell(0).SetCellValue(entity.Id);
+      row.CreateCell(1).SetCellValue(entity.Name);
+      row.CreateCell(2).SetCellValue(entity.Price);
+      row.CreateCell(3).SetCellValue(_measureKindConverter.Convert(entity.MeasureKind, typeof(string), null, CultureInfo.CurrentCulture)?.ToString());
+      row.CreateCell(5).SetCellValue(entity.Count);
+      row.CreateCell(4).SetCellValue(entity.SumPrice);
+      
+      return row;
     }
 
     public void ShowHideDetails(ToggleButton button, ClothKind clothKind, ClothKindTreeView view)
@@ -107,9 +121,9 @@ namespace Laundry.Utils.Controls
     }
 
     public SeriesCollection Values { get; }
-    public string[] Labels { get; }
-    public string LabelsTitle { get; }
-    public string ValuesTitle { get; }
+    public string[] Labels => this.Repo.Get(0, int.MaxValue, Filter).Select(x => x.Name).ToArray();
+    public string LabelsTitle => "Виды";
+    public string ValuesTitle => "";
     public ChartTime Time { get; set; }
     public EntityInfoType EntityInfoType { get; set; }
   }

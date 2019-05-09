@@ -29,13 +29,16 @@
             <converters:BindingProxy x:Key="proxy" Data="{Binding}" />
           </Button.Resources>
           <Button.ContextMenu>
-            <ContextMenu>
-              <MenuItem Header="*.csv"
-                        cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"/>
-              <MenuItem Header="*.xlsx" 
-                        cal:Message.Attach="[Event Click] = [Action ExportToExcel()]"
-                        cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"/>
-              <MenuItem Header="Удалить выбраное" />
+            <ContextMenu DataContext="{Binding ElementName=Screen, Path=DataContext}">
+              <MenuItem Header="Экспортировать как">
+                <MenuItem Header="*.csv" cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                          cal:Message.Attach="[Event Click] = [Action ExportToCSV()]"/>
+                <MenuItem Header="*.xlsx" cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                          cal:Message.Attach="[Event Click] = [Action ExportToExcel()]" />
+              </MenuItem>
+              <MenuItem Header="Удалить выбраное"
+                        cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                        cal:Message.Attach="[Event Click] = [Action RemoveSelectedGroup()]" />
             </ContextMenu>
           </Button.ContextMenu>
         </Button>
