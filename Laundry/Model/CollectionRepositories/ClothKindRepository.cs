@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Laundry.Model.DatabaseClients;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -10,7 +11,7 @@ namespace Laundry.Model.CollectionRepositories
 {
   public class ClothKindRepository : Repository<ClothKind>
   {
-    private static readonly BsonArray _aggrStages = new BsonArray
+    private static readonly BsonArray AggrStages = new BsonArray
     {
       new BsonDocument("$unwind",
         new BsonDocument("path", "$Instances")),
@@ -65,7 +66,6 @@ namespace Laundry.Model.CollectionRepositories
         new BsonDocument("_id", 1))
     };
 
-    
 
     public ClothKindRepository(IModel model, IMongoCollection<ClothKind> collection) : base(model, collection)
     {
@@ -73,23 +73,34 @@ namespace Laundry.Model.CollectionRepositories
 
     public override IReadOnlyList<ClothKind> Get(int offset, int limit, FilterDefinition<ClothKind> filter = null)
     {
-      var clothKinds =
+      var filters = Builders<ClothKind>.Filter.And(
+        filter ?? Builders<ClothKind>.Filter.Empty,
+        Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false)
+      );
+      var clothKindsFirst =
         this.Collection
           .Database
           .GetCollection<BsonDocument>("orders")
           .Aggregate()
-          .AppendStage<BsonDocument>(_aggrStages[0].AsBsonDocument)
-          .AppendStage<BsonDocument>(_aggrStages[1].AsBsonDocument)
-          .AppendStage<BsonDocument>(_aggrStages[2].AsBsonDocument)
-          .AppendStage<BsonDocument>(_aggrStages[3].AsBsonDocument)
-          .AppendStage<BsonDocument>(_aggrStages[4].AsBsonDocument)
-          .AppendStage<BsonDocument>(_aggrStages[5].AsBsonDocument)
-          .AppendStage<BsonDocument>(_aggrStages[6].AsBsonDocument)
-          .AppendStage<BsonDocument>(_aggrStages[7].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[4].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[5].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[6].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[7].AsBsonDocument)
           .As<ClothKind>()
-          .Match(filter ?? Builders<ClothKind>.Filter.Empty)
-          .Skip(offset)
-          .Limit(limit).ToList();
+          .Match(filters).ToList();
+
+      var second = this.Collection
+        .Aggregate()
+        .Match(Builders<ClothKind>.Filter.And(
+          Builders<ClothKind>.Filter.Nin(nameof(ClothKind.Id), clothKindsFirst.ToList().Select(x => x.Id)), filters))
+        .ToList();
+
+      var clothKinds = clothKindsFirst.Concat(second).Skip(offset).Take(limit).ToList();
+
       foreach (var clothKind in clothKinds)
       {
         clothKind.ChildrenCount = GetChildrenCount(clothKind);
@@ -117,6 +128,7 @@ namespace Laundry.Model.CollectionRepositories
     public override ClothKind GetById(long id)
     {
       var clothKind = base.GetById(id);
+
       clothKind.ChildrenCount = GetChildrenCount(clothKind);
       return clothKind;
     }

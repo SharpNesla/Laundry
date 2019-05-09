@@ -50,6 +50,7 @@ namespace Laundry.Views
 
       this.ClientCombo = new ClientSearchViewModel(model);
       this.ClientCombo.EntityChanged += OnEntityChanged;
+      
 
       #region Инициализация поисковых комбобоксов
 
