@@ -56,6 +56,7 @@
       </DockPanel>
 
     </materialDesign:ColorZone>
+
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
       <Button Name="AddEntity" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"

@@ -29,15 +29,10 @@
           <TextBlock
             Style="{StaticResource MaterialDesignTitleTextBlock}"
             VerticalAlignment="Center"
-            Margin="16 0 0 0" Text="Обзор: курьер" />
+            Margin="16 0 0 0" Text="Обзор: приёмщик" />
         </StackPanel>
-
-        <RadioButton
-          Style="{StaticResource MaterialDesignTabRadioButton}" Visibility="Collapsed"
-          IsChecked="{Binding IsObtaining}" Height="42" Grid.Row="1"
-          Content="Создание новых заказов" />
         <RadioButton Grid.Column="0" Grid.ColumnSpan="3"
-                     IsChecked="{Binding IsDistribution}"
+                     IsChecked="True"
                      
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
                      Content="Заказы, ожиданющие выдачи" />
@@ -67,22 +62,10 @@
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
       <Button Name="ObtainOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
-              Visibility="{Binding IsDelivery, Converter={StaticResource BoolVisibilityConverter}}"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
               ToolTip="Отправить постиранные заказы на доставку"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24" />
-      </Button>
-      <Button Name="DistributeOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
-              Visibility="{Binding IsTakeOrders, Converter={StaticResource BoolVisibilityConverter}}"
-              materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              ToolTip="Поставить заказы на стирку"
-              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-        <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24">
-          <materialDesign:PackIcon.RenderTransform>
-            <ScaleTransform ScaleX="-1" CenterX="12"/>
-          </materialDesign:PackIcon.RenderTransform>
-        </materialDesign:PackIcon>
       </Button>
 
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
@@ -93,7 +76,7 @@
             Orientation="Horizontal"
             materialDesign:RippleAssist.IsCentered="True">
 
-            <materialDesign:PackIcon Kind="TruckFast" VerticalAlignment="Center" Height="32" Width="32" />
+            <materialDesign:PackIcon Kind="AccountArrowRight" VerticalAlignment="Center" Height="32" Width="32" />
             <materialDesign:ColorZone
               Mode="Standard"
               Padding="8 4 8 4"
@@ -145,8 +128,14 @@
                 <TextBlock
                   Grid.Column="1"
                   Margin="8 0 0 0"
-                  Text="{Binding OrderGrid.Count, StringFormat='Всего заказов: {0}'}"
-                  VerticalAlignment="Center" />
+                  VerticalAlignment="Center">
+                  <TextBlock.Text>
+                    <MultiBinding StringFormat="Всего заказов: {0}, Всего вещей: {1}">
+                      <Binding Path="OrderGrid.Count"/>
+                      <Binding Path="OrderGrid.AggregatedInstancesCount"/>
+                    </MultiBinding>
+                  </TextBlock.Text>
+                </TextBlock>
               </Grid>
             </materialDesign:ColorZone>
             <ToggleButton Margin="8,0,0,0" Visibility="Collapsed"

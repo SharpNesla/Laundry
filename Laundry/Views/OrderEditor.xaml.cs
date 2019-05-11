@@ -52,21 +52,28 @@ namespace Laundry.Views
       this.ClientCombo.EntityChanged += OnEntityChanged;
       
 
+      
+    }
+
+    protected override void OnActivate()
+    {
+      base.OnActivate();
+
       #region Инициализация поисковых комбобоксов
 
-      this.ObtainerCombo = new EmployeeSearchViewModel(model, "Приёмщик",
+      this.ObtainerCombo = new EmployeeSearchViewModel(Model, "Приёмщик",
         Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor));
-      this.CorpObtainerCombo = new ClientSearchViewModel(model, "Приёмщик (корпоративный)",
+      this.CorpObtainerCombo = new ClientSearchViewModel(Model, "Приёмщик (корпоративный)",
         Builders<Client>.Filter.Eq(nameof(Client.IsCorporative), true));
-      this.InCourierCombo = new EmployeeSearchViewModel(model, "Курьер, забирающий заказ",
+      this.InCourierCombo = new EmployeeSearchViewModel(Model, "Курьер, забирающий заказ",
         Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Courier));
-      this.WasherCombo = new EmployeeSearchViewModel(model, "Прачечник",
+      this.WasherCombo = new EmployeeSearchViewModel(Model, "Прачечник",
         Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Washer));
-      this.OutCourierCombo = new EmployeeSearchViewModel(model, "Курьер, вовзращающий заказ",
+      this.OutCourierCombo = new EmployeeSearchViewModel(Model, "Курьер, вовзращающий заказ",
         Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Courier));
-      this.CorpDistributerCombo = new ClientSearchViewModel(model, "Приёмщик (корпоративный), принимающий заказ",
+      this.CorpDistributerCombo = new ClientSearchViewModel(Model, "Приёмщик (корпоративный), принимающий заказ",
         Builders<Client>.Filter.Eq(nameof(Client.IsCorporative), true));
-      this.DistributerCombo = new EmployeeSearchViewModel(model, "Приёмщик, выдающий заказ",
+      this.DistributerCombo = new EmployeeSearchViewModel(Model, "Приёмщик, выдающий заказ",
         Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor));
 
       this.ObtainerCombo.EntityChanged += obtainer => this.EntityRepository.SetObtainer(this.Entity, obtainer);
@@ -83,7 +90,7 @@ namespace Laundry.Views
       #endregion
     }
 
-    public async void AddCloth()
+    public void AddCloth()
     {
       this.ClothInstancesGrid.Add();
     }
@@ -92,6 +99,7 @@ namespace Laundry.Views
     {
       this.EntityRepository.SetClient(this.Entity, obj);
     }
+
 
     public override void Handle(Order message)
     {
@@ -124,8 +132,6 @@ namespace Laundry.Views
 
     public void Handle(Client message)
     {
-      this.Entity = new Order {CreationDate = DateTime.Now};
-      this.IsNew = true;
       this.ClientCombo.SelectedEntity = Model.Clients.GetById(message.Id);
     }
   }

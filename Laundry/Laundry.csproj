@@ -296,6 +296,9 @@
     <Compile Include="Views\Dashboards\DirectorDashBoard.xaml.cs">
       <DependentUpon>DirectorDashBoard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dashboards\DriverDashBoard.xaml.cs">
+      <DependentUpon>DriverDashBoard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dashboards\WasherDashBoard.xaml.cs">
       <DependentUpon>WasherDashBoard.xaml</DependentUpon>
     </Compile>
@@ -501,6 +504,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dashboards\DirectorDashBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dashboards\DriverDashBoard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

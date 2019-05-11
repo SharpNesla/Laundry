@@ -12,20 +12,15 @@ namespace Laundry.Views
 {
   public enum ChartTime
   {
-    [Description("День")]
-    Day,
-    [Description("Месяц")]
-    Mounth,
-    [Description("Год")]
-    Year
+    [Description("День")] Day,
+    [Description("Месяц")] Mounth,
+    [Description("Год")] Year
   }
 
   public enum EntityInfoType
   {
-    [Description("Количество")]
-    Amount,
-    [Description("Суммарная стоимость")]
-    Cost
+    [Description("Количество")] Amount,
+    [Description("Суммарная стоимость")] Cost
   }
 
   public enum AnalyticEntityType
@@ -82,14 +77,12 @@ namespace Laundry.Views
     {
       Paginator.CurrentPage = 1;
       Paginator.ClearPaginable();
-      Paginator.RegisterPaginable(repository);
+      Paginator.RegisterPaginable(repository, false);
       Paginator.ElementsName = elementsName;
-      
-      this.SearchHintString = $"Поиск {elementsName.ToLower()}";
-      
-      this.EntityGrid = repository;
 
-      Paginator.RefreshPaginable();
+      this.SearchHintString = $"Поиск {elementsName.ToLower()}";
+
+      this.EntityGrid = repository;
     }
 
     protected override void OnActivate()
@@ -102,7 +95,6 @@ namespace Laundry.Views
       OrderDataGridViewModel orderGrid, SubsidiaryGridViewModel subsidiaryGrid, ClothKindTreeViewModel clothKindGrid) :
       base(aggregator, model)
     {
-
       _orderGrid = orderGrid;
       _orderGrid.IsDisplaySubtotals = true;
       _orderGrid.DisplaySelectionColumn = false;

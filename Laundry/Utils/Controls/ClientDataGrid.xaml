@@ -33,7 +33,7 @@
                         Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         HorizontalAlignment="Stretch" IsEnabled="{Binding IsByOrdersCount}" Height="36"/>
           </StackPanel>
-          <StackPanel Width="201" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
+          <StackPanel Width="201" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <CheckBox IsChecked="{Binding IsByOrdersPrice}" Height="22">По стоимости всех заказов</CheckBox>
             <TextBox Text="{Binding LowOrdersPriceBound}" materialDesign:HintAssist.Hint="Нижняя граница"
                      Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -42,7 +42,7 @@
                      Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                      HorizontalAlignment="Stretch" IsEnabled="{Binding IsByOrdersPrice}" Height="36"/>
           </StackPanel>
-          <StackPanel Width="94" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
+          <StackPanel Width="94" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
             <CheckBox IsChecked="{Binding IsByGender}" Height="24">По полу</CheckBox>
               <RadioButton Margin="0,26,8,4" IsEnabled="{Binding IsByGender}" Style="{StaticResource MaterialDesignRadioButton}"
                            IsChecked="{Binding Path=Gender, Converter={StaticResource EnumBooleanConverter}, ConverterParameter=Male}">

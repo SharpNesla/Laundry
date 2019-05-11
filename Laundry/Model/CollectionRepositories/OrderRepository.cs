@@ -216,19 +216,67 @@ namespace Laundry.Model.CollectionRepositories
       return Collection.CountDocuments(filter);
     }
 
-    public IEnumerable<AggregationResult> AggregateOrders(ChartTime time, FilterDefinition<Order> filter = null)
+    public IReadOnlyList<AggregationResult> AggregateOrders(ChartTime time, FilterDefinition<Order> filter = null)
     {
-      return this.Get(0, int.MaxValue)
-        .GroupBy(s => new
-        {
-          date = new DateTime(
-            s.CreationDate.Year,
-            time == ChartTime.Mounth || time == ChartTime.Year ? s.CreationDate.Month : 1,
-            time == ChartTime.Day ? s.CreationDate.Day : 1)
-        })
-        .Select(g => new AggregationResult {DateTime = g.Key.date, Price = g.Sum(x => x.Price), Amount = g.Count()})
-        .Where(x => x.DateTime != default(DateTime))
-        .OrderBy(x => x.DateTime);
+      var groupingDefiniton = @"
+{
+  _id: '$DateTime',
+  Price: {
+    $sum: '$Price'
+  },
+  Count:{$sum:'$Count'}
+}";
+      string projectionDefinition = "";
+
+      switch (time)
+      {
+        case ChartTime.Day:
+          projectionDefinition = @"
+{
+  Price: '$Price',
+  Count: { $size: '$Instances'},
+  DateTime: {
+        $dateFromParts: {
+          'year': {$year: '$ExecutionDate'},
+          'day': {$dayOfMonth: '$ExecutionDate'},
+          'month': {$month: '$ExecutionDate' }
+        }
+      }
+}
+      ";
+          break;
+        case ChartTime.Mounth:
+          projectionDefinition = @"
+{
+  Price: '$Price',
+  Count: { $size: '$Instances'},
+  DateTime: {
+        $dateFromParts: {
+          'year': {$year: '$ExecutionDate'},
+          'month': {$month: '$ExecutionDate' }
+        }
+      }
+}";
+          break;
+        case ChartTime.Year:
+          projectionDefinition = @"
+{
+  Price: '$Price',
+  Count: { $size: '$Instances'},
+  DateTime: {
+        $dateFromParts: {
+          'year': {$year: '$ExecutionDate'},
+        }
+      }
+}";
+          break;
+      }
+
+      return this.Collection.Aggregate()
+        .Project(projectionDefinition)
+        .Group(groupingDefiniton)
+        .As<AggregationResult>()
+        .ToList();
     }
 
     #region Сеттеры для связей заказа с работниками

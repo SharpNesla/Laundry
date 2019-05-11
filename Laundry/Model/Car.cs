@@ -35,9 +35,7 @@ namespace Laundry.Model
     public CarCategory Catergory { get; set; }
     [BsonIgnoreIfDefault]
     public CarCategory Category { get; set; }
-
-    [BsonIgnoreIfDefault] public short CreationYear;
-
+    
     [BsonIgnoreIfNull]
     public string BodyID { get; set; }
 
@@ -56,5 +54,7 @@ namespace Laundry.Model
     }
     [BsonIgnore]
     public bool IsSelected { get; set; }
+    [BsonIgnoreIfNull]
+    public short? CreationYear{ get; set; }
   }
 }

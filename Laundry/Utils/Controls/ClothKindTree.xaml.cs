@@ -22,6 +22,7 @@ using Laundry.Utils.Converters;
 using Laundry.Views;
 using Laundry.Views.Cards;
 using LiveCharts;
+using MongoDB.Driver;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
@@ -33,8 +34,49 @@ namespace Laundry.Utils.Controls
   public class ClothKindTreeViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>,
     IChartable<ClothKind>
   {
+    #region Фильтры
+
+    public bool IsByCount { get; set; }
+    public double? LowCountBound { get; set; }
+    public double? TopCountBound { get; set; }
+
+    public bool IsBySumPrice { get; set; }
+    public int? LowSumPriceBound { get; set; }
+    public int? TopSumPriceBound { get; set; }
+
+    public override FilterDefinition<ClothKind> Filter
+    {
+      get
+      {
+        var filter = BaseFilter;
+
+        if (this.IsBySumPrice)
+        {
+          filter = Builders<ClothKind>.Filter.And(
+            filter,
+            Builders<ClothKind>.Filter.Gte(nameof(ClothKind.SumPrice), this.LowSumPriceBound ?? 0),
+            Builders<ClothKind>.Filter.Lte(nameof(ClothKind.SumPrice), this.TopSumPriceBound ?? double.MaxValue));
+        }
+
+        if (this.IsByCount)
+        {
+          filter = Builders<ClothKind>.Filter.And(
+            filter,
+            Builders<ClothKind>.Filter.Gte(nameof(ClothKind.Count), this.LowCountBound ?? 0),
+            Builders<ClothKind>.Filter.Lte(nameof(ClothKind.Count), this.TopCountBound?? int.MaxValue));
+        }
+
+        return filter;
+      }
+
+      set { base.Filter = value; }
+    }
+
     private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
     private readonly IModel _model;
+
+    #endregion
+
     public float NameWidth { get; set; }
     public ObservableCollection<ClothKind> EditableEntities { get; private set; }
     public ClothKind SelectedTreeEntity { get; set; }

@@ -153,7 +153,7 @@
                   Margin="8 0 0 0"
                   VerticalAlignment="Center">
                   <TextBlock.Text>
-                    <MultiBinding StringFormat="Всего заказов: {0}; Всего вещей: {1}">
+                    <MultiBinding StringFormat="Всего заказов: {0}, Всего вещей: {1}">
                     <Binding Path="OrderGrid.Count"/>
                       <Binding Path="OrderGrid.AggregatedInstancesCount"/>
                     </MultiBinding>

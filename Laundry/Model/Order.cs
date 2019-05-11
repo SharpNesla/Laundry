@@ -33,11 +33,9 @@ namespace Laundry.Model
     public string Comment { get; set; }
 
     [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
-    [BsonIgnoreIfDefault]
     public DateTime CreationDate { get; set; }
 
     [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
-    [BsonIgnoreIfDefault]
     public DateTime ExecutionDate { get; set; }
 
     public OrderStatus Status { get; set; }
@@ -90,6 +88,8 @@ namespace Laundry.Model
     public Order()
     {
       this.Instances = new List<ClothInstance>();
+      this.CreationDate = DateTime.Now;
+      this.ExecutionDate = DateTime.Now;
     }
 
     public long InSubsidiary { get; internal set; }

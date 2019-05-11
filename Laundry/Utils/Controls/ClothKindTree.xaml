@@ -32,10 +32,30 @@
 
       </StackPanel>
 
+
       <materialDesign:DrawerHost Name="DrawerHost"
                                  IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
         <materialDesign:DrawerHost.BottomDrawerContent>
-          <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}" Orientation="Horizontal" />
+          <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}" Orientation="Horizontal">
+            <StackPanel Width="144" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+              <CheckBox IsChecked="{Binding IsByCount}" Height="22">По кол-ву одежды</CheckBox>
+              <TextBox Text="{Binding LowCountBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+                       Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                       HorizontalAlignment="Stretch" IsEnabled="{Binding IsByCount}" Height="36"/>
+              <TextBox Text="{Binding TopCountBound}" materialDesign:HintAssist.Hint="Верхняя граница"
+                       Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                       HorizontalAlignment="Stretch" IsEnabled="{Binding IsByCount}" Height="36"/>
+            </StackPanel>
+            <StackPanel Width="201" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+              <CheckBox IsChecked="{Binding IsBySumPrice}" Height="22">По суммарной цене</CheckBox>
+              <TextBox Text="{Binding LowSumPriceBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+                       Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                       HorizontalAlignment="Stretch" IsEnabled="{Binding IsBySumPrice}" Height="36"/>
+              <TextBox Text="{Binding TopSumPriceBound }" materialDesign:HintAssist.Hint="Верхняя граница"
+                       Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                       HorizontalAlignment="Stretch" IsEnabled="{Binding IsBySumPrice}" Height="36"/>
+            </StackPanel>
+          </StackPanel>
         </materialDesign:DrawerHost.BottomDrawerContent>
 
       </materialDesign:DrawerHost>

@@ -73,7 +73,7 @@
             <StackPanel Orientation="Horizontal">
               <TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
                              Style="{StaticResource MaterialDesignBody2TextBlock}"
-                             Text="{Binding Couriers.Count, StringFormat='{}{0} курьера'}" />
+                             Text="{Binding Couriers.Count, StringFormat='{}Курьеров: {0}'}" />
             </StackPanel>
           </DockPanel>
           <ContentControl Name="Couriers"/>
@@ -91,7 +91,7 @@
             <StackPanel Orientation="Horizontal">
               <TextBlock Margin="8,0,0,0" VerticalAlignment="Center"
                          Style="{StaticResource MaterialDesignBody2TextBlock}"
-                         Text="{Binding Couriers.Count, StringFormat='{}{0} курьера'}" />
+                         Text="{Binding Drivers.Count, StringFormat='{}Водителей: {0}'}" />
             </StackPanel>
           </DockPanel>
           <ContentControl Name="Drivers"/>
