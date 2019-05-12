@@ -60,6 +60,8 @@
               
               <TextBlock Margin="0,16,0,8" Text="{Binding Client.Signature, StringFormat='{}Клиент: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
+              <TextBlock Margin="0,0,0,8" Text="{Binding Entity.Status, StringFormat='{}Статус заказа: {0}', Converter={StaticResource StatusConverter}}"
+                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,0,0,12" Text="{Binding Entity.ExecutionDate , StringFormat='{}Дата и время исполнения: &#x0a;{0:dd.MM.yyyy, HH:mm}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,0,0,8" Text="{Binding Obtainer.Signature , StringFormat='{}Приёмщик: &#x0a;{0}'}"

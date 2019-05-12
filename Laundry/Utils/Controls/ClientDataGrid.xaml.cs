@@ -101,14 +101,14 @@ namespace Laundry.Utils.Controls
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
 
+      row.CreateCell(0).SetCellValue(entity.Id);
+      row.CreateCell(1).SetCellValue(entity.Surname);
+      row.CreateCell(2).SetCellValue(entity.Name);
       row.CreateCell(3).SetCellValue(entity.Patronymic);
       row.CreateCell(4).SetCellValue(entity.PhoneNumber);
-      row.CreateCell(6).SetCellValue(entity.OrdersCount);
-      row.CreateCell(0).SetCellValue(entity.Id);
-      row.CreateCell(2).SetCellValue(entity.Name);
-      row.CreateCell(1).SetCellValue(entity.Surname);
       row.CreateCell(5).SetCellValue(entity.DateBirth.ToString("dd.MM.yyyy"));
-
+      row.CreateCell(6).SetCellValue(entity.OrdersCount);
+      
       return row;
     }
 

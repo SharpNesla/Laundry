@@ -45,6 +45,8 @@ namespace Laundry.Views
       this.ClothKindTree.EntityChanged = x => { this.Entity.ClothKind = x.Id;
         this.Entity.ClothKindObj = x;
       };
+
+      this.Entity.ClothKindObj = ClothKindTree.SelectedEntity;
     }
 
     public override void ApplyChanges()

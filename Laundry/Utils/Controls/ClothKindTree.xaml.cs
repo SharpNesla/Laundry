@@ -161,6 +161,7 @@ namespace Laundry.Utils.Controls
       base.Refresh(page, elements);
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
     }
+    
 
     public SeriesCollection Values { get; }
     public string[] Labels => this.Repo.Get(0, int.MaxValue, Filter).Select(x => x.Name).ToArray();

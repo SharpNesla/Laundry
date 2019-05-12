@@ -166,14 +166,14 @@
                           VerticalAlignment="Bottom"
                           ItemsSource="{Binding Source={converters:Enumeration {x:Type local:ChartTime}}}"
                           DisplayMemberPath="Description"
-                          SelectedValue="{Binding ChartTime}"
+                          SelectedValue="{Binding EntityGrid.Time}"
                           SelectedValuePath="Value" />
                 <ComboBox Margin="8,0,16,0" Height="33" VerticalContentAlignment="Center"
                           materialDesign:HintAssist.Hint="Вид информации"
                           VerticalAlignment="Bottom"
                           ItemsSource="{Binding Source={converters:Enumeration {x:Type local:EntityInfoType}}}"
                           DisplayMemberPath="Description"
-                          SelectedValue="{Binding EntityInfoType}"
+                          SelectedValue="{Binding EntityGrid.EntityInfoType}"
                           SelectedValuePath="Value" Width="197" />
               </StackPanel>
             </materialDesign:ColorZone>
@@ -195,14 +195,14 @@
         <liveCharts:CartesianChart Series="{Binding EntityGrid.Values}" LegendLocation="Left">
 
           <liveCharts:CartesianChart.AxisX>
-            <liveCharts:Axis Title="{Binding EntityGrid.LabelsTitle}" LabelsRotation="-45" Labels="{Binding EntityGrid.Labels}">
+            <liveCharts:Axis LabelsRotation="-45" Labels="{Binding EntityGrid.Labels}">
               <liveCharts:Axis.Separator>
                 <liveCharts:Separator Step="1" />
               </liveCharts:Axis.Separator>
             </liveCharts:Axis>
           </liveCharts:CartesianChart.AxisX>
           <liveCharts:CartesianChart.AxisY>
-            <liveCharts:Axis Title="{Binding EntityGrid.ValuesTitle}"/>
+            <liveCharts:Axis/>
           </liveCharts:CartesianChart.AxisY>
         </liveCharts:CartesianChart>
       </materialDesign:Card>

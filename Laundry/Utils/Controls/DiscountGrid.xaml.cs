@@ -16,6 +16,7 @@ using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
@@ -57,11 +58,19 @@ namespace Laundry.Utils.Controls
     {
       this.SelectedEntity = edge;
     }
-    
 
-    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
+    protected override IRow AppendEntityToTable(ISheet sheet, DiscountEdge entity)
     {
-      throw new NotImplementedException();
+      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
+
+      row.CreateCell(0).SetCellValue(entity.Id);
+      row.CreateCell(1).SetCellValue(entity.Edge);
+      row.CreateCell(2).SetCellValue($"{entity.Discount}%");
+
+      return row;
     }
+
+    public override string[] TableSheetHeader => new[] {"№", "Граница", "Величина скидки"};
+    public override string TableSheetName => "Границы дисконт-системы";
   }
 }

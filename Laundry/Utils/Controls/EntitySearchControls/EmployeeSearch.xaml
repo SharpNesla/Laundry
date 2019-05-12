@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Laundry.Utils.Controls.EntitySearchControls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:validationRules="clr-namespace:Laundry.Utils.ValidationRules"
              mc:Ignorable="d" 
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
@@ -16,11 +17,17 @@
     IsEditable="True"
     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
     ItemsSource="{Binding Entities}"
-    SelectedItem="{Binding SelectedEntity}" 
     IsTextSearchEnabled="True"
     SelectedValuePath="Id"
     DisplayMemberPath="Signature"
     Text="{Binding EntityText}"
     cal:Message.Attach="[Event PreviewTextInput] = [Action OnInputChanged($source)]">
+    <ComboBox.SelectedItem>
+      <Binding Path="SelectedEntity" UpdateSourceTrigger="PropertyChanged">
+        <Binding.ValidationRules>
+          <validationRules:SearchRequiredValidation FieldName="Работник"/>
+        </Binding.ValidationRules>
+      </Binding>
+    </ComboBox.SelectedItem>
   </ComboBox>
 </UserControl>

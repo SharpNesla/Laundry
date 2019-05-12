@@ -4,11 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Laundry.Model.DatabaseClients;
+using Laundry.Views;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 
 namespace Laundry.Model.CollectionRepositories
 {
+  public class ClothKindAggregationResult
+  {
+    [BsonId]
+    public DateTime DateTime { get; set; }
+    MeasureKind MeasureKind { get; set; }
+    public double Price { get; set; }
+    public long Count { get; set; }
+  }
+
   public class ClothKindRepository : Repository<ClothKind>
   {
     private static readonly BsonArray AggrStages = new BsonArray
@@ -134,13 +145,13 @@ namespace Laundry.Model.CollectionRepositories
     public override ClothKind GetById(long id)
     {
       var clothKind = this.Collection
-          .Aggregate()
-          .Match(x=>x.Id == id)
-          .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
-          .As<ClothKind>().First();
+        .Aggregate()
+        .Match(x => x.Id == id)
+        .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
+        .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
+        .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
+        .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
+        .As<ClothKind>().First();
 
       clothKind.ChildrenCount = GetChildrenCount(clothKind);
       return clothKind;

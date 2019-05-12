@@ -15,9 +15,6 @@ namespace Laundry.Utils.Controls
   {
     SeriesCollection Values { get; }
     string[] Labels { get; }
-    string LabelsTitle { get; }
-    string ValuesTitle { get; }
-
     ChartTime Time { get; set; }
     EntityInfoType EntityInfoType { get; set; }
   }

@@ -204,10 +204,25 @@ namespace Laundry.Utils.Controls
     protected virtual IRow AppendEntityToTable(ISheet sheet, TEntity entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
-      
-      row.CreateCell(0).SetCellValue(entity.Id);
+      var appendDef = AppendEntityToTable(entity);
+      if (appendDef != null)
+      {
+        for (var index = 0; index < appendDef.Length; index++)
+        {
+          row.CreateCell(index).SetCellValue (appendDef[index]);
+        }
+      }
+      else
+      {
+        row.CreateCell(0).SetCellValue(entity.Id);
+      }
       
       return row;
+    }
+
+    protected virtual string[] AppendEntityToTable(TEntity entity)
+    {
+      return null;
     }
 
     public void ExportToExcel()

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Model.DatabaseClients;
+using Laundry.Utils.Converters;
 using Laundry.Views;
 using LiveCharts;
 using MaterialDesignThemes.Wpf;
 using MongoDB.Driver;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
@@ -18,6 +21,7 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class EmployeeDataGridViewModel : EntityGrid<Employee, EmployeeRepository, EmployeeCardViewModel>
   {
+    private readonly ProfessionConverter _employeeProfessionConverter = new ProfessionConverter();
 
     public bool IsByDateBirth { get; set; }
     public DateTime? LowDateBirthBound { get; set; }
@@ -83,10 +87,21 @@ namespace Laundry.Utils.Controls
     {
     }
 
-
-    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
+    protected override IRow AppendEntityToTable(ISheet sheet, Employee entity)
     {
-      throw new NotImplementedException();
+      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
+
+      row.CreateCell(0).SetCellValue(entity.Id);
+      row.CreateCell(1).SetCellValue(entity.Surname);
+      row.CreateCell(2).SetCellValue(entity.Name);
+      row.CreateCell(3).SetCellValue(entity.Patronymic);
+      row.CreateCell(4).SetCellValue(entity.PhoneNumber);
+      row.CreateCell(5).SetCellValue(this._employeeProfessionConverter.Convert(entity.Profession,
+        typeof(string), null, CultureInfo.CurrentCulture) as string);
+      row.CreateCell(6).SetCellValue(entity.DateBirth.ToString("dd.MM.yyyy"));
+      row.CreateCell(7).SetCellValue(entity.OrdersCount);
+
+      return row;
     }
   }
 }

@@ -40,9 +40,7 @@ namespace Laundry.Views
     public PaginatorViewModel Paginator { get; set; }
 
     public string SearchHintString { get; private set; }
-
-    public EntityInfoType EntityInfoType { get; set; }
-
+    
     public bool IsGridChecked { get; set; }
     public bool IsChartChecked { get; set; }
 

@@ -12,6 +12,7 @@ namespace Laundry.Model.CollectionRepositories
     [BsonId]
     public DateTime DateTime { get; set; }
     public double Price { get; set; }
-    public long Amount { get; set; }
+    public long Count { get; set; }
+    public double UnCountableCount { get; set; }
   }
 }

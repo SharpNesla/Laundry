@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Laundry.Model.CollectionRepositories;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using MongoDB.Driver;
+using NPOI.XWPF.UserModel;
 
 namespace Laundry.Views.Actions
 {
@@ -37,5 +39,26 @@ namespace Laundry.Views.Actions
     }
 
     public abstract void PrintReport();
+
+    public virtual void WriteDocumentation()
+    {
+      XWPFDocument document = null;
+      try
+      {
+        using (FileStream file = new FileStream("Bill.docx", FileMode.Open, FileAccess.Read))
+        {
+          document = new XWPFDocument(file);
+        }
+      }
+      catch (Exception e)
+      {
+
+      }
+
+      if (document != null)
+      {
+        
+      }
+    }
   }
 }

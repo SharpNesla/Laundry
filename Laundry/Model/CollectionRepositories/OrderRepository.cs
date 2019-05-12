@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Laundry.Model.DatabaseClients;
 using Laundry.Utils.Controls;
 using Laundry.Views;
 using MongoDB.Bson;
@@ -218,15 +219,42 @@ namespace Laundry.Model.CollectionRepositories
 
     public IReadOnlyList<AggregationResult> AggregateOrders(ChartTime time, FilterDefinition<Order> filter = null)
     {
+      var filters = Builders<Order>.Filter.And(
+        Builders<Order>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+        filter ?? Builders<Order>.Filter.Empty);
+      var measureKindGroupDefinition = @"
+{
+  _id: '$ClothKind.MeasureKind',
+  Price: {$first:'$Price'},
+  ExecutionDate : {$first : '$ExecutionDate'},
+  UnCountableCount : { 
+    $sum : { 
+      $cond:[
+          {$eq: ['$ClothKind.MeasureKind', 1]},
+          '$Instances.Amount', 
+          0]
+      }
+  },
+  Count : { 
+    $sum : { 
+      $cond:[
+          {$in: ['$ClothKind.MeasureKind', [0,2]]},
+          '$Instances.Amount', 
+          0]
+      }
+  }
+}
+";
       var groupingDefiniton = @"
 {
   _id: '$DateTime',
   Price: {
     $sum: '$Price'
   },
-  Count:{$sum:'$Count'}
+  Count:{$sum:'$Count'},
+  UnCountableCount:{$sum:'$UnCountableCount'}
 }";
-      string projectionDefinition = "";
+      string projectionDefinition = string.Empty;
 
       switch (time)
       {
@@ -234,7 +262,8 @@ namespace Laundry.Model.CollectionRepositories
           projectionDefinition = @"
 {
   Price: '$Price',
-  Count: { $size: '$Instances'},
+  Count: '$Count',
+  UnCountableCount:'$UnCountableCount',
   DateTime: {
         $dateFromParts: {
           'year': {$year: '$ExecutionDate'},
@@ -249,7 +278,8 @@ namespace Laundry.Model.CollectionRepositories
           projectionDefinition = @"
 {
   Price: '$Price',
-  Count: { $size: '$Instances'},
+  Count: '$Count',
+  UnCountableCount:'$UnCountableCount',
   DateTime: {
         $dateFromParts: {
           'year': {$year: '$ExecutionDate'},
@@ -262,7 +292,8 @@ namespace Laundry.Model.CollectionRepositories
           projectionDefinition = @"
 {
   Price: '$Price',
-  Count: { $size: '$Instances'},
+  Count: '$Count',
+  UnCountableCount:'$UnCountableCount',
   DateTime: {
         $dateFromParts: {
           'year': {$year: '$ExecutionDate'},
@@ -272,11 +303,18 @@ namespace Laundry.Model.CollectionRepositories
           break;
       }
 
-      return this.Collection.Aggregate()
+      var readOnlyList = this.Collection.Aggregate()
+        .Match(filters)
+        .Unwind("Instances", new AggregateUnwindOptions<Order>() {PreserveNullAndEmptyArrays = true})
+        .Lookup("clothkinds", "Instances.ClothKind", "_id", "ClothKind")
+        .Unwind("ClothKind", new AggregateUnwindOptions<Order>() {PreserveNullAndEmptyArrays = true})
+        .Group(measureKindGroupDefinition)
         .Project(projectionDefinition)
         .Group(groupingDefiniton)
         .As<AggregationResult>()
+        .Sort(@"{_id: 1}")
         .ToList();
+      return readOnlyList;
     }
 
     #region Сеттеры для связей заказа с работниками

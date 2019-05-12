@@ -20,6 +20,8 @@ namespace Laundry.Model
       get { return $"{Id} {Name} {Street} {House}"; }
     }
 
+    public long? MainAdvisor { get; internal set; }
+
     [BsonIgnore]
     public bool IsSelected { get; set; }
 
@@ -33,7 +35,7 @@ namespace Laundry.Model
     public string Name { get; set; }
 
     [BsonIgnoreIfNull]
-    public int? House { get; set; }
+    public string House { get; set; }
 
     [BsonIgnoreIfNull]
     public int? Flat { get; set; }

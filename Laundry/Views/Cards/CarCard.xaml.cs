@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using Caliburn.Micro;
 using Laundry.Model;
 using Laundry.Utils;
+using Laundry.Utils.Controls;
+using MongoDB.Driver;
 
 namespace Laundry.Views.Cards
 {
@@ -23,8 +25,39 @@ namespace Laundry.Views.Cards
   /// </summary>
   public class CarCardViewModel : Card<Car>
   {
-    public CarCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.CarEditor)
+    public override Car Entity
     {
+      get { return base.Entity; }
+
+      set
+      {
+        base.Entity = value;
+        Drivers.Filter = Builders<Employee>.Filter.And(
+          Builders<Employee>.Filter.Eq(nameof(Employee.Car), this.Entity.Id),
+          Builders<Employee>.Filter.Or(
+            Builders<Employee>.Filter.And(
+              Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Courier),
+              Builders<Employee>.Filter.Eq(nameof(Employee.IsCourierCarDriver), true)
+            ),
+            Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Driver)
+          )
+        );
+
+        this.Drivers.Refresh(0, int.MaxValue);
+      }
     }
+
+    public CarCardViewModel(IEventAggregator eventAggregator, EmployeeDataGridViewModel driversGrid) : base(
+      eventAggregator, Screens.CarEditor)
+    {
+      this.Drivers = driversGrid;
+
+      
+      this.Drivers.DisplaySelectionColumn = false;
+      this.Drivers.IsCompact = true;
+
+    }
+
+    public EmployeeDataGridViewModel Drivers { get; set; }
   }
 }

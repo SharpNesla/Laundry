@@ -19,6 +19,7 @@ using Laundry.Views;
 using Laundry.Views.Cards;
 using LiveCharts;
 using LiveCharts.Wpf;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using PropertyChanged;
 
@@ -47,10 +48,6 @@ namespace Laundry.Utils.Controls
       _model = model;
     }
 
-    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
-    {
-      throw new NotImplementedException();
-    }
 
     public SeriesCollection Values => new SeriesCollection
     {
@@ -60,6 +57,35 @@ namespace Laundry.Utils.Controls
         Values = new ChartValues<double>(this.Entities.Select(x => _model.Orders.GetAggregatedPriceForSubsidiary(x)))
       }
     };
+
+    public override string[] TableSheetHeader => new[]
+      {"№", "Торговое название", "Город", "Улица", "Дом", "Квартира (павильон)", "Почтовый индекс", "Номер телефона", "Главный приёмщик"};
+
+    public override string TableSheetName => "Филиал";
+
+    protected override IRow AppendEntityToTable(ISheet sheet, Subsidiary entity)
+    {
+      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
+
+      
+
+      row.CreateCell(0).SetCellValue(entity.Id);
+      row.CreateCell(1).SetCellValue(entity.Name);
+      row.CreateCell(2).SetCellValue(entity.City);
+      row.CreateCell(3).SetCellValue(entity.Street);
+      row.CreateCell(4).SetCellValue(entity.House);
+      row.CreateCell(5).SetCellValue(entity.Flat ?? 0);
+      row.CreateCell(6).SetCellValue(entity.ZipCode ?? 0);
+      row.CreateCell(7).SetCellValue(entity.PhoneNumber);
+      if (entity.MainAdvisor != null)
+      {
+        var mainAdvisor = this._model.Employees.GetById(entity.Id);
+        row.CreateCell(8).SetCellValue(mainAdvisor.Signature);
+      }
+      
+
+      return row;
+    }
 
     public string[] Labels => this.Entities.Select(x => x.Signature).ToArray();
     public string LabelsTitle => "Филиалы";
