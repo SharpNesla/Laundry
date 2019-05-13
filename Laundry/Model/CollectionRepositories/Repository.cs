@@ -59,7 +59,7 @@ namespace Laundry.Model.CollectionRepositories
       Collection.ReplaceOne(x => x.Id == entity.Id, entity);
     }
 
-    public void Remove(T entity)
+    public virtual void Remove(T entity)
     {
       Collection.UpdateOne(Builders<T>.Filter.Where(x => x.Id == entity.Id),
         Builders<T>.Update.Set(nameof(entity.DeletionDate), DateTime.Now));

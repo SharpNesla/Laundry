@@ -105,13 +105,13 @@ namespace Laundry.Model.CollectionRepositories
 
     public override IReadOnlyList<ClothKind> Get(int offset, int limit, FilterDefinition<ClothKind> filter = null)
     {
-      var filters = Builders<ClothKind>.Filter.And(
-        filter ?? Builders<ClothKind>.Filter.Empty,
-        Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false)
-      );
+      var filters =
+        filter ?? Builders<ClothKind>.Filter.Empty;
+
       var clothKinds =
         this.Collection
           .Aggregate()
+          .Match(Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
           .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
           .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
           .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
@@ -167,6 +167,18 @@ namespace Laundry.Model.CollectionRepositories
     {
       clothKind.Children =
         this.Get(0, int.MaxValue, Builders<ClothKind>.Filter.Eq(nameof(ClothKind.Parent), clothKind.Id));
+    }
+
+    public override void Remove(ClothKind entity)
+    {
+      this.FetchChildren(entity);
+
+      foreach (var child in entity.Children)
+      {
+        this.Remove(child);
+      }
+
+      base.Remove(entity);
     }
 
     public override long GetSearchStringCount(string searchString, FilterDefinition<ClothKind> filter)

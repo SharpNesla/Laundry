@@ -71,7 +71,7 @@
                 AutoGenerateColumns="False"
                 Name="MainGrid"
                 ItemsSource="{Binding EditableEntities}"
-                SelectedItem="{Binding SelectedTreeEntity}"
+                SelectedItem="{Binding SelectedEntity}"
                 Background="{Binding ElementName=OwnControl, Path=Background}">
         <DataGrid.ContextMenu>
           <ContextMenu Visibility="{Binding Visibilities.Director}">
