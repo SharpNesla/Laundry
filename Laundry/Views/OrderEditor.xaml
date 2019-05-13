@@ -9,6 +9,7 @@
              xmlns:controls="clr-namespace:Laundry.Utils.Controls"
              xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              xmlns:model="clr-namespace:Laundry.Model"
+             xmlns:cal="http://www.caliburnproject.org"
              d:DesignWidth="1024" d:DesignHeight="768"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel VerticalAlignment="Stretch">
@@ -29,7 +30,7 @@
               Style="{StaticResource MaterialDesignFlatButton}" Name="Discard">
         ОТМЕНИТЬ
       </Button>
-      <Button Name="ApplyChanges" DockPanel.Dock="Left" MaxWidth="132"
+      <Button cal:Message.Attach="ApplyChanges($view)" DockPanel.Dock="Left" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>

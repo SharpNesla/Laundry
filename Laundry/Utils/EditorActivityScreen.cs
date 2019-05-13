@@ -70,14 +70,29 @@ namespace Laundry.Utils
     public virtual void ApplyChanges(DependencyObject view)
     {
       var tree = FindVisualChildren<TextBox>(view);
+      var comboboxes = FindVisualChildren<ComboBox>(view);
       foreach (TextBox tb in tree)
       {
         tb.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
       }
 
+      foreach (ComboBox tb in comboboxes)
+      {
+        tb.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+      }
+
+
       foreach (TextBox tb in tree)
       {
         if (Validation.GetHasError(tb))
+        {
+          return;
+        }
+      }
+
+      foreach (var cb in comboboxes)
+      {
+        if (Validation.GetHasError(cb))
         {
           return;
         }

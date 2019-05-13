@@ -102,6 +102,7 @@ namespace Laundry.Model.DatabaseClients
         .Match(filterdef)
         .AppendStage<BsonDocument>(addfields)
         .AppendStage<BsonDocument>(match)
+        .Lookup("orders", "_id", "Client", "Orders")
         .As<Client>()
         .Skip(offset)
         .Limit(capLimit)

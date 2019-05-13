@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using MongoDB.Driver;
 
 namespace Laundry.Utils.Controls.EntitySearchControls
 {
-  public class EntitySearchBox<TEntity, TRepository> : PropertyChangedBase
+  public class EntitySearchBox<TEntity, TRepository> : PropertyChangedBase, IDataErrorInfo
     where TEntity : IRepositoryElement
     where TRepository : Repository<TEntity>
   {
@@ -45,7 +46,6 @@ namespace Laundry.Utils.Controls.EntitySearchControls
         {
           _entityText = this.SelectedEntity.Signature;
           return this.SelectedEntity.Signature;
-
         }
         else
         {
@@ -55,10 +55,9 @@ namespace Laundry.Utils.Controls.EntitySearchControls
       set
       {
         _entityText = value;
-        
+
         if (value == String.Empty)
         {
-
           this.Entities = new List<TEntity>(Repository.Get(0, 10, Filter));
         }
         else
@@ -84,6 +83,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     {
       this.Entities = (IList<TEntity>) Repository.GetBySearchString(entityText, Filter);
     }
+
     protected EntitySearchBox(TRepository repository, string label = "Объект", FilterDefinition<TEntity> filter = null)
     {
       this.Repository = repository;
@@ -96,6 +96,24 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     {
       box.IsDropDownOpen = true;
     }
-    
+
+    public string this[string columnName]
+    {
+      get
+      {
+        var errorString = "";
+        if (columnName == nameof(this.SelectedEntity))
+        {
+          if (this.SelectedEntity == null)
+          {
+            errorString = "Работник не может быть пустым";
+          }
+        }
+
+        return errorString;
+      }
+    }
+
+    public string Error { get; }
   }
 }
