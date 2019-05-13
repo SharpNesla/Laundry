@@ -105,7 +105,7 @@ namespace Laundry.Utils.Controls
       await DialogHostExtensions.ShowCaliburnVM(editor);
       RaiseStateChanged();
     }
-
+    public override string TableSheetName => "Виды одежды";
     public override string[] TableSheetHeader => new[] {"№", "Название", "Цена", "Единица измерения", "Единиц одежды", "Общая стоимость"};
 
     protected override IRow AppendEntityToTable(ISheet sheet, ClothKind entity)

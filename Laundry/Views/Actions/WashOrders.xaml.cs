@@ -18,6 +18,7 @@ using Laundry.Model.CollectionRepositories;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using MongoDB.Driver;
+using NPOI.XWPF.UserModel;
 
 namespace Laundry.Views.Actions
 {
@@ -28,9 +29,10 @@ namespace Laundry.Views.Actions
     {
     }
 
-    public override void PrintReport()
+
+    public override Document PrepareDocument(Document document, Order order)
     {
-      
+      throw new NotImplementedException();
     }
   }
 

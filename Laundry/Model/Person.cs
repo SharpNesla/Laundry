@@ -86,5 +86,10 @@ namespace Laundry.Model
     }
 
     public string Error { get; }
+
+    public override string ToString()
+    {
+      return $"{this.Surname} {this.Name} {this.Patronymic}";
+    }
   }
 }

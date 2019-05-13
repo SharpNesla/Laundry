@@ -36,7 +36,7 @@ namespace Laundry.Model
       string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
 
       MongoClient client = new MongoClient(connectionString);
-
+      
       this._dataBase = client.GetDatabase("laundry");
       this._clients = _dataBase.GetCollection<Client>("clients");
       this._orders = _dataBase.GetCollection<Order>("orders");

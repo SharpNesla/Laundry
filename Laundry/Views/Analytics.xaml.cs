@@ -116,5 +116,11 @@ namespace Laundry.Views
     {
       this.Paginator.RefreshPaginable();
     }
+
+    public void ExportToExcel()
+    {
+      EntityGrid.ExportToExcel();
+    }
+
   }
 }

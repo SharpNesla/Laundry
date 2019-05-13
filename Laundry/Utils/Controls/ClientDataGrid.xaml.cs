@@ -93,7 +93,7 @@ namespace Laundry.Utils.Controls
     }
 
     public override string[] TableSheetHeader => new[]
-      {"№", "Имя", "Фамилия", "Отчество", "Номер телефона", "Дата рождения", "Количество заказов"};
+      {"№", "Имя", "Фамилия", "Отчество", "Номер телефона", "Дата рождения", "Количество заказов", "Общая сумма всех заказов"};
 
     public override string TableSheetName => "Клиенты";
 
@@ -108,7 +108,7 @@ namespace Laundry.Utils.Controls
       row.CreateCell(4).SetCellValue(entity.PhoneNumber);
       row.CreateCell(5).SetCellValue(entity.DateBirth.ToString("dd.MM.yyyy"));
       row.CreateCell(6).SetCellValue(entity.OrdersCount);
-      
+      row.CreateCell(7).SetCellValue(entity.OrdersPrice);
       return row;
     }
 

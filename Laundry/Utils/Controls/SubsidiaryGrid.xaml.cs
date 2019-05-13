@@ -61,14 +61,12 @@ namespace Laundry.Utils.Controls
     public override string[] TableSheetHeader => new[]
       {"№", "Торговое название", "Город", "Улица", "Дом", "Квартира (павильон)", "Почтовый индекс", "Номер телефона", "Главный приёмщик"};
 
-    public override string TableSheetName => "Филиал";
+    public override string TableSheetName => "Филиалы";
 
     protected override IRow AppendEntityToTable(ISheet sheet, Subsidiary entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
-
       
-
       row.CreateCell(0).SetCellValue(entity.Id);
       row.CreateCell(1).SetCellValue(entity.Name);
       row.CreateCell(2).SetCellValue(entity.City);

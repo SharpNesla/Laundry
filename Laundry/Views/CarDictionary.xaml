@@ -10,20 +10,48 @@
              xmlns:utils="clr-namespace:Laundry.Utils"
              xmlns:controls1="clr-namespace:Laundry.Utils.Controls"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16">
-      <StackPanel Orientation="Horizontal">
-        <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
-                      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
-        <TextBlock
+      <DockPanel>
 
-          Style="{StaticResource MaterialDesignTitleTextBlock}"
-          VerticalAlignment="Center"
-          Margin="16 0 0 0" Text="{StaticResource CarDictionary.Title}" />
-      </StackPanel>
+        <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" DockPanel.Dock="Right"
+                Style="{StaticResource MaterialDesignToolButton}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="28"
+                cal:Message.Attach="ShowActivityMenu($source)">
+          <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
+          <Button.Resources>
+            <converters:BindingProxy x:Key="proxy" Data="{Binding}" />
+          </Button.Resources>
+          <Button.ContextMenu>
+            <ContextMenu DataContext="{Binding ElementName=Screen, Path=DataContext}">
+              <MenuItem Header="Экспортировать как">
+                <MenuItem Header="*.csv" cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                          cal:Message.Attach="[Event Click] = [Action ExportToCSV()]"/>
+                <MenuItem Header="*.xlsx" cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                          cal:Message.Attach="[Event Click] = [Action ExportToExcel()]" />
+              </MenuItem>
+              <MenuItem Header="Удалить выбраное"
+                        cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
+                        cal:Message.Attach="[Event Click] = [Action RemoveSelectedGroup()]" />
+            </ContextMenu>
+          </Button.ContextMenu>
+        </Button>
+        <StackPanel Orientation="Horizontal">
+          <ToggleButton Name="MenuToggleButton"
+                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32"
+                        IsChecked="{Binding IsDrawerButtonChecked}" Width="32" />
+          <TextBlock
+
+            Style="{StaticResource MaterialDesignTitleTextBlock}"
+            VerticalAlignment="Center"
+            Margin="16 0 0 0" Text="{StaticResource CarDictionary.Title}"/>
+        </StackPanel>
+      </DockPanel>
+
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
       <Button Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"

@@ -17,6 +17,7 @@ using Laundry.Model;
 using Laundry.Model.CollectionRepositories;
 using Laundry.Views;
 using Laundry.Views.Cards;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
@@ -31,10 +32,25 @@ namespace Laundry.Utils.Controls
     {
     }
 
-    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
+    public override string[] TableSheetHeader => new []{"№", "Марка и модель", "VIN", "Цвет", "Номерной знак", "Год выпуска", "Комментарий"};
+
+    public override string TableSheetName => "Автомобили";
+
+    protected override IRow AppendEntityToTable(ISheet sheet, Car entity)
     {
-      throw new NotImplementedException();
+      var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
+
+      row.CreateCell(0).SetCellValue(entity.Id);
+      row.CreateCell(1).SetCellValue(entity.BrandAndModel);
+      row.CreateCell(2).SetCellValue(entity.VIN);
+      row.CreateCell(3).SetCellValue(entity.Color);
+      row.CreateCell(4).SetCellValue(entity.Sign);
+      row.CreateCell(5).SetCellValue(entity.CreationYear ?? 0);
+      row.CreateCell(6).SetCellValue(entity.Comment);
+      
+      return row;
     }
-    
+
+
   }
 }

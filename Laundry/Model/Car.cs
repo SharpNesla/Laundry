@@ -56,5 +56,7 @@ namespace Laundry.Model
     public bool IsSelected { get; set; }
     [BsonIgnoreIfNull]
     public short? CreationYear{ get; set; }
+
+    public string Comment { get; set; }
   }
 }

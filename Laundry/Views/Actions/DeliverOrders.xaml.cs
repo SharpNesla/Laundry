@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Laundry.Model;
 using Laundry.Utils.Controls;
+using NPOI.XWPF.UserModel;
 
 namespace Laundry.Views.Actions
 {
@@ -25,7 +26,7 @@ namespace Laundry.Views.Actions
 
     }
 
-    public override void PrintReport()
+    public override Document PrepareDocument(Document document, Order order)
     {
       throw new NotImplementedException();
     }

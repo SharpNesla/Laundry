@@ -30,7 +30,7 @@ namespace Laundry.Utils.Controls
     private EmployeeProfession _profession;
 
     private readonly OrderStatusConverter _statusConverter = new OrderStatusConverter();
-
+    private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
     public override IReadOnlyList<Order> Entities
     {
       get { return base.Entities; }
@@ -171,7 +171,7 @@ namespace Laundry.Utils.Controls
 
       this.Profession = EmployeeProfession.Courier;
     }
-
+    public override string TableSheetName => "Заказы";
     public override string[] TableSheetHeader =>
       new[]
       {
@@ -182,14 +182,16 @@ namespace Laundry.Utils.Controls
         "Забирающий курьер (№)", "Забирающий курьер (ФИО)",
         "Прачечник (№)", "Прачечник (ФИО)",
         "Доставляющий курьер (№)", "Доставляющий курьер (ФИО)",
-        "Выдающий приёмщик (№)", "Выдающий приёмщик(№)",
+        "Выдающий приёмщик (№)", "Количество вещей", "Список вещей"
       };
 
     protected override IRow AppendEntityToTable(ISheet sheet, Order entity)
     {
       #region Общая информация
 
+
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
+
       row.CreateCell(0).SetCellValue(entity.Id);
       row.CreateCell(1).SetCellValue(entity.CreationDate.ToString("d"));
       row.CreateCell(2).SetCellValue(entity.ExecutionDate.ToString("d"));
@@ -206,32 +208,44 @@ namespace Laundry.Utils.Controls
       #endregion
 
       row.CreateCell(8).SetCellValue(entity.ClientId);
-      row.CreateCell(9).SetCellValue(_model.Clients.GetById(entity.ClientId).Signature);
+      row.CreateCell(9).SetCellValue(_model.Clients.GetById(entity.ClientId).ToString());
 
       #region Персонал
 
       row.CreateCell(10).SetCellValue(entity.ObtainerId);
 
       row.CreateCell(11).SetCellValue(entity.IsCorporative
-        ? _model.Clients.GetById(entity.CorpObtainerId).Signature
-        : _model.Employees.GetById(entity.ObtainerId).Signature);
+        ? _model.Clients.GetById(entity.CorpObtainerId).ToString()
+        : _model.Employees.GetById(entity.ObtainerId).ToString());
 
       row.CreateCell(12).SetCellValue(entity.InCourierId);
-      row.CreateCell(13).SetCellValue(_model.Employees.GetById(entity.InCourierId).Signature);
+      row.CreateCell(13).SetCellValue(_model.Employees.GetById(entity.InCourierId).ToString());
 
       row.CreateCell(14).SetCellValue(entity.WasherCourierId);
-      row.CreateCell(15).SetCellValue(_model.Employees.GetById(entity.WasherCourierId).Signature);
+      row.CreateCell(15).SetCellValue(_model.Employees.GetById(entity.WasherCourierId).ToString());
 
       row.CreateCell(16).SetCellValue(entity.OutCourierId);
-      row.CreateCell(17).SetCellValue(_model.Employees.GetById(entity.OutCourierId).Signature);
+      row.CreateCell(17).SetCellValue(_model.Employees.GetById(entity.OutCourierId).ToString());
 
       row.CreateCell(18).SetCellValue(entity.IsCorporative
-        ? _model.Clients.GetById(entity.CorpDistributerId).Signature
-        : _model.Employees.GetById(entity.DistributerId).Signature);
+        ? _model.Clients.GetById(entity.CorpDistributerId).ToString()
+        : _model.Employees.GetById(entity.DistributerId).ToString());
 
       #endregion
 
-      row.CreateCell(19).SetCellValue(entity.Comment);
+      row.CreateCell(19).SetCellValue(entity.InstancesCount);
+     
+
+      var clothString = string.Empty;
+
+      foreach (var instance in entity.Instances)
+      {
+        var measure = _measureKindConverter.Convert(instance.ClothKindObj.MeasureKind, typeof(string), null,
+          CultureInfo.CurrentCulture);
+        clothString += $"{instance.ClothKindObj.Name}: {instance.Amount} {measure}; ";
+      }
+
+      row.CreateCell(20).SetCellValue(clothString != String.Empty ? clothString : "Нет вещей");
       return row;
     }
 

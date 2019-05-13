@@ -86,6 +86,9 @@ namespace Laundry.Utils.Controls
       : base(eventAggregator, card, model.Employees, deleteDialog, Screens.EmployeeEditor, visibilities)
     {
     }
+    public override string TableSheetName => "Работники";
+    public override string[] TableSheetHeader => new[]
+      {"№", "Имя", "Фамилия", "Отчество", "Номер телефона","Должность" ,"Дата рождения", "Количество заказов", /*"Общая сумма всех заказов"*/};
 
     protected override IRow AppendEntityToTable(ISheet sheet, Employee entity)
     {
@@ -100,7 +103,7 @@ namespace Laundry.Utils.Controls
         typeof(string), null, CultureInfo.CurrentCulture) as string);
       row.CreateCell(6).SetCellValue(entity.DateBirth.ToString("dd.MM.yyyy"));
       row.CreateCell(7).SetCellValue(entity.OrdersCount);
-
+      //row.CreateCell(8).SetCellValue(entity.OrdersPrice);
       return row;
     }
   }
