@@ -36,7 +36,7 @@ namespace Laundry.Utils.Controls
 
     public override string TableSheetName => "Автомобили";
 
-    protected override IRow AppendEntityToTable(ISheet sheet, Car entity)
+    protected override IRow PrepareEntityRow(ISheet sheet, Car entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
 

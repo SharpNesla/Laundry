@@ -54,10 +54,10 @@
 
           <DockPanel VerticalAlignment="Stretch" LastChildFill="True">
             <StackPanel DockPanel.Dock="Top">
-              
+
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
                          Text="{StaticResource ClientEditor.MainInfoTitle}" />
-              
+
               <TextBlock Margin="0,16,0,8" Text="{Binding Client.Signature, StringFormat='{}Клиент: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,0,0,8" Text="{Binding Entity.Status, StringFormat='{}Статус заказа: {0}', Converter={StaticResource StatusConverter}}"
@@ -104,9 +104,10 @@
               <TextBlock VerticalAlignment="Center"
                          Style="{StaticResource MaterialDesignBody2TextBlock}">
                 <TextBlock.Text>
-                  <MultiBinding StringFormat="{}Количество вещей: {0} на общую сумму {1:0.00}₽">
+                  <MultiBinding StringFormat="{}Количество вещей: {0} на общую сумму {2:0.00}₽; Цена заказа: {1:0.00}₽">
                     <Binding Path="Entity.InstancesCount" />
                     <Binding Path="Entity.Price"/>
+                    <Binding Path="Entity.CalculatedPrice"/>
                   </MultiBinding>
                 </TextBlock.Text>
               </TextBlock>

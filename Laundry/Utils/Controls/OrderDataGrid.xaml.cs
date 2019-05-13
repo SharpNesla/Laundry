@@ -185,7 +185,7 @@ namespace Laundry.Utils.Controls
         "Выдающий приёмщик (№)", "Количество вещей", "Список вещей"
       };
 
-    protected override IRow AppendEntityToTable(ISheet sheet, Order entity)
+    protected override IRow PrepareEntityRow(ISheet sheet, Order entity)
     {
       #region Общая информация
 

@@ -90,7 +90,7 @@ namespace Laundry.Utils.Controls
     public override string[] TableSheetHeader => new[]
       {"№", "Имя", "Фамилия", "Отчество", "Номер телефона","Должность" ,"Дата рождения", "Количество заказов", /*"Общая сумма всех заказов"*/};
 
-    protected override IRow AppendEntityToTable(ISheet sheet, Employee entity)
+    protected override IRow PrepareEntityRow(ISheet sheet, Employee entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
 

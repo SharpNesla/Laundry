@@ -80,7 +80,7 @@
         Grid.Column="1" VerticalAlignment="Stretch">
         <DockPanel>
           <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="16,16,16,0" DockPanel.Dock="Top"
-                     Text="{StaticResource ClientEditor.MainInfoTitle}" />
+                     Text="Водители" />
           <DockPanel Margin="16,0,16,16" DockPanel.Dock="Bottom" LastChildFill="True">
             <Button DockPanel.Dock="Right" Margin="0,0,9,0" Style="{StaticResource MaterialDesignFlatButton}"
                     HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton" Visibility="Collapsed">

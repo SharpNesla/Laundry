@@ -63,7 +63,7 @@ namespace Laundry.Utils.Controls
 
     public override string TableSheetName => "Филиалы";
 
-    protected override IRow AppendEntityToTable(ISheet sheet, Subsidiary entity)
+    protected override IRow PrepareEntityRow(ISheet sheet, Subsidiary entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
       

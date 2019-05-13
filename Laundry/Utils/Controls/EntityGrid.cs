@@ -26,6 +26,7 @@ namespace Laundry.Utils.Controls
     IReadOnlyList<TEntity> Entities { get; }
     TEntity SelectedEntity { get; }
 
+    void ExportToCSV();
     void ExportToExcel();
     void Add();
     void Edit();
@@ -42,7 +43,7 @@ namespace Laundry.Utils.Controls
     private Card<TEntity> _card;
     protected readonly IEventAggregator EventAggregator;
     private Screens _editScreen;
-    public virtual IReadOnlyList<TEntity> Entities { get;set; }
+    public virtual IReadOnlyList<TEntity> Entities { get; set; }
     public TEntity SelectedEntity { get; set; }
 
     public bool IsCompact { get; set; }
@@ -65,12 +66,12 @@ namespace Laundry.Utils.Controls
     public bool IsDisplaySubtotals { get; set; }
     public Visibilities Visibilities { get; }
 
-    public virtual string[] TableSheetHeader => new []{"№"};
+    public virtual string[] TableSheetHeader => new[] {"№"};
     public virtual string TableSheetName => "Объекты";
     public bool IsSearchDrawerOpened { get; set; }
 
     public bool DisplaySelectionColumn { get; set; }
-    
+
     public string SearchString { get; set; }
 
     protected EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
@@ -111,7 +112,6 @@ namespace Laundry.Utils.Controls
       }
       else
       {
-
         this.Entities = Repo.Get(page * elements, elements, Filter);
       }
     }
@@ -184,43 +184,111 @@ namespace Laundry.Utils.Controls
       {
         header.CreateCell(i).SetCellValue(this.TableSheetHeader[i]);
       }
-      
+
       foreach (var entity in entities)
       {
-        AppendEntityToTable(sheet, entity);
+        PrepareEntityRow(sheet, entity);
       }
 
       for (var i = 0; i < this.TableSheetHeader.Length; i++)
       {
         sheet.AutoSizeColumn(i);
-
-        
       }
-      sheet.SetAutoFilter(new CellRangeAddress(0, 0, this.TableSheetHeader.Length, this.TableSheetHeader.Length));
+
+      sheet.SetAutoFilter(new CellRangeAddress(0, 0, 0, TableSheetHeader.Length - 1));
       return workbook;
     }
 
+    public void ExportToCSV()
+    {
+      var builder = new StringBuilder();
 
-    protected virtual IRow AppendEntityToTable(ISheet sheet, TEntity entity)
+      var entities = this.Repo.Get(0, int.MaxValue, Filter);
+      var workbook = new XSSFWorkbook();
+      var sheet = workbook.CreateSheet();
+      foreach (var header in this.TableSheetHeader)
+      {
+        builder.Append($"{header};");
+      }
+
+      builder.Remove(builder.Length - 1, 1);
+      builder.Append(Environment.NewLine);
+      
+
+      foreach (var entity in entities)
+      {
+        var row = this.PrepareEntityRow(sheet, entity);
+
+        foreach (var rowCell in row.Cells)
+        {
+          string value = string.Empty;
+          switch (rowCell.CellType)
+          {
+            case CellType.Unknown:
+              break;
+            case CellType.Numeric:
+              value = rowCell.NumericCellValue.ToString(CultureInfo.CurrentCulture);
+              break;
+            case CellType.String:
+              value = rowCell.StringCellValue;
+              break;
+            case CellType.Formula:
+              break;
+            case CellType.Blank:
+              break;
+            case CellType.Boolean:
+              break;
+            case CellType.Error:
+              break;
+            default:
+              throw new ArgumentOutOfRangeException();
+          }
+
+          //value = value.Replace(@"""", @"");
+          builder.Append($@"{value}; ");
+        }
+        builder.Remove(builder.Length - 1, 1);
+        builder.Append(Environment.NewLine);
+      }
+      
+      var dialog = new SaveFileDialog
+      {
+        InitialDirectory = @"~/Documents",
+        Title = $"Путь к экспортируемой таблице {EntityName}",
+        AddExtension = true,
+        Filter = "Файлы CSV (*.csv)|*.csv|Все остальные файлы (*.*)|*.*"
+      };
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        if (!File.Exists(dialog.FileName))
+        {
+          File.Delete(dialog.FileName);
+        }
+
+        File.WriteAllText(dialog.FileName, builder.ToString(), Encoding.UTF8);
+      }
+    }
+
+    protected virtual IRow PrepareEntityRow(ISheet sheet, TEntity entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
-      var appendDef = AppendEntityToTable(entity);
+      var appendDef = PrepareEntityRow(entity);
       if (appendDef != null)
       {
         for (var index = 0; index < appendDef.Length; index++)
         {
-          row.CreateCell(index).SetCellValue (appendDef[index]);
+          row.CreateCell(index).SetCellValue(appendDef[index]);
         }
       }
       else
       {
         row.CreateCell(0).SetCellValue(entity.Id);
       }
-      
+
       return row;
     }
 
-    protected virtual string[] AppendEntityToTable(TEntity entity)
+    protected virtual string[] PrepareEntityRow(TEntity entity)
     {
       return null;
     }
@@ -230,7 +298,7 @@ namespace Laundry.Utils.Controls
       var workbook = new XSSFWorkbook();
 
       var preparedWorkBook = PrepareWorkBook(workbook);
-      
+
       var dialog = new SaveFileDialog
       {
         InitialDirectory = @"~/Documents",
@@ -260,5 +328,4 @@ namespace Laundry.Utils.Controls
       this.StateChanged?.Invoke();
     }
   }
-  
 }

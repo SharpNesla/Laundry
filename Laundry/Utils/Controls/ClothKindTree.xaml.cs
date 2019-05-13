@@ -108,7 +108,7 @@ namespace Laundry.Utils.Controls
     public override string TableSheetName => "Виды одежды";
     public override string[] TableSheetHeader => new[] {"№", "Название", "Цена", "Единица измерения", "Единиц одежды", "Общая стоимость"};
 
-    protected override IRow AppendEntityToTable(ISheet sheet, ClothKind entity)
+    protected override IRow PrepareEntityRow(ISheet sheet, ClothKind entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
       row.CreateCell(0).SetCellValue(entity.Id);

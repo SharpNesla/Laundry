@@ -97,7 +97,7 @@ namespace Laundry.Utils.Controls
 
     public override string TableSheetName => "Клиенты";
 
-    protected override IRow AppendEntityToTable(ISheet sheet, Client entity)
+    protected override IRow PrepareEntityRow(ISheet sheet, Client entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
 

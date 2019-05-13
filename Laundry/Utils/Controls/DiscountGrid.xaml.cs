@@ -59,7 +59,7 @@ namespace Laundry.Utils.Controls
       this.SelectedEntity = edge;
     }
 
-    protected override IRow AppendEntityToTable(ISheet sheet, DiscountEdge entity)
+    protected override IRow PrepareEntityRow(ISheet sheet, DiscountEdge entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
 

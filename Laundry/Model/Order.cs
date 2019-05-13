@@ -71,9 +71,18 @@ namespace Laundry.Model
       }
     }
 
+
+    [BsonIgnore]
+    public double CalculatedPrice => Instances.Sum(x => x.Price);
+
+
     public double Price
     {
-      get { return IsCustomPrice ? CustomPrice : Instances.Sum(x => x.Price); }
+      get
+      {
+        var price = IsCustomPrice ? CustomPrice : CalculatedPrice;
+        return price;
+      }
       set { CustomPrice = value; }
     }
 

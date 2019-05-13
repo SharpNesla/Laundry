@@ -49,6 +49,11 @@ namespace Laundry.Utils
       EntityGrid.ExportToExcel();
     }
 
+    public void ExportToCSV()
+    {
+      EntityGrid.ExportToCSV();
+    }
+
     public void RemoveSelectedGroup()
     {
       EntityGrid.RemoveSelectedGroup();
