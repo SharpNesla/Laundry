@@ -85,6 +85,7 @@
                     Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button
+                  Name="AdvancedSearch"
                   Style="{DynamicResource MaterialDesignToolButton}">
                   <materialDesign:PackIcon
                     Kind="Magnify"
@@ -97,7 +98,8 @@
                   materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                   BorderThickness="0"
                   MinWidth="200"
-                  VerticalAlignment="Center" />
+                  VerticalAlignment="Center"
+                  Text="{Binding EntityGrid.SearchString}"/>
               </Grid>
             </materialDesign:ColorZone>
             <materialDesign:ColorZone

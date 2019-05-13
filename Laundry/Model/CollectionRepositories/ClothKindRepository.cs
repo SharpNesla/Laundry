@@ -15,6 +15,7 @@ namespace Laundry.Model.CollectionRepositories
   {
     [BsonId]
     public DateTime DateTime { get; set; }
+
     MeasureKind MeasureKind { get; set; }
     public double Price { get; set; }
     public long Count { get; set; }
@@ -166,6 +167,46 @@ namespace Laundry.Model.CollectionRepositories
     {
       clothKind.Children =
         this.Get(0, int.MaxValue, Builders<ClothKind>.Filter.Eq(nameof(ClothKind.Parent), clothKind.Id));
+    }
+
+    public override long GetSearchStringCount(string searchString, FilterDefinition<ClothKind> filter)
+    {
+      var searchChunks = searchString.Split(' ');
+
+      var regex = @"^";
+
+      foreach (var searchChunk in searchChunks)
+      {
+        regex += $"(?=.*{searchChunk})";
+      }
+
+      regex += @".*$";
+
+      //Бсондокументы, описывающие стадии агрегации (экспортированы из mongo compass)
+      //(добавление поля Signature и его match по сооветствующему составляемому регулярному выражению)
+      var match = new BsonDocument("$match",
+        new BsonDocument("Signature",
+          new BsonDocument("$regex", regex)));
+      var addfields = new BsonDocument("$addFields",
+        new BsonDocument("Signature",
+          new BsonDocument("$concat",
+            new BsonArray
+            {
+              new BsonDocument("$toString", "$_id"),
+            })));
+      var filterdef = filter ?? Builders<ClothKind>.Filter.Empty;
+      try
+      {
+        var result = Collection.Aggregate()
+          .Match(filterdef)
+          .AppendStage<BsonDocument>(addfields)
+          .AppendStage<BsonDocument>(match).Count().First();
+        return result.Count;
+      }
+      catch (InvalidOperationException e)
+      {
+        return 0;
+      }
     }
   }
 }

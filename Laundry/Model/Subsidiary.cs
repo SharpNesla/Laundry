@@ -8,6 +8,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Laundry.Model
 {
+  [BsonIgnoreExtraElements]
   public class Subsidiary : IRepositoryElement
   {
     public long Id { get; set; }

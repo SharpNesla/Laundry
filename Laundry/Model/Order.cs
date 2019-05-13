@@ -21,7 +21,7 @@ namespace Laundry.Model
     MoveToSubs,
     [Description("Выдан")] Granted
   }
-
+  [BsonIgnoreExtraElements]
   public class Order : IRepositoryElement
   {
     [BsonIgnoreIfDefault]

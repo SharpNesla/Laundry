@@ -19,6 +19,7 @@ namespace Laundry.Model.CollectionRepositories
     public override IReadOnlyList<Order> Get(int offset, int limit, FilterDefinition<Order> filter = null)
     {
       var basee = base.Get(offset, limit, filter);
+
       foreach (var order in basee)
       {
         foreach (var instance in order.Instances)
@@ -369,6 +370,93 @@ namespace Laundry.Model.CollectionRepositories
       foreach (var order in orders)
       {
         Collection.UpdateOne(x => x.Id == order.Id, Builders<Order>.Update.Set(x => x.Status, status));
+      }
+    }
+
+    public override IReadOnlyList<Order> GetBySearchString(string searchString, FilterDefinition<Order> filter,
+      int offset = 0, int capLimit = 10)
+    {
+      var searchChunks = searchString.Split(' ');
+
+      var regex = @"^";
+
+      foreach (var searchChunk in searchChunks)
+      {
+        regex += $"(?=.*{searchChunk})";
+      }
+
+      regex += @".*$";
+
+      //Бсондокументы, описывающие стадии агрегации (экспортированы из mongo compass)
+      //(добавление поля Signature и его match по сооветствующему составляемому регулярному выражению)
+      var match = new BsonDocument("$match",
+        new BsonDocument("Signature",
+          new BsonDocument("$regex", regex)));
+      var addfields = new BsonDocument("$addFields",
+        new BsonDocument("Signature",
+          new BsonDocument("$concat",
+            new BsonArray
+            {
+              new BsonDocument("$toString", "$_id")
+            })));
+      var filterdef = filter ?? Builders<Order>.Filter.Empty;
+      var bySearchString = Collection.Aggregate()
+        .Match(filterdef)
+        .AppendStage<BsonDocument>(addfields)
+        .AppendStage<BsonDocument>(match)
+        .As<Order>()
+        .Skip(offset)
+        .Limit(capLimit)
+        .ToList();
+
+      foreach (var order in bySearchString)
+      {
+        foreach (var instance in order.Instances)
+        {
+          instance.ClothKindObj = Model.ClothKinds.GetById(instance.ClothKind);
+        }
+      }
+
+      return bySearchString;
+    }
+
+    public override long GetSearchStringCount(string searchString, FilterDefinition<Order> filter = null)
+    {
+      var searchChunks = searchString.Split(' ');
+
+      var regex = @"^";
+
+      foreach (var searchChunk in searchChunks)
+      {
+        regex += $"(?=.*{searchChunk})";
+      }
+
+      regex += @".*$";
+
+      //Бсондокументы, описывающие стадии агрегации (экспортированы из mongo compass)
+      //(добавление поля Signature и его match по сооветствующему составляемому регулярному выражению)
+      var match = new BsonDocument("$match",
+        new BsonDocument("Signature",
+          new BsonDocument("$regex", regex)));
+      var addfields = new BsonDocument("$addFields",
+        new BsonDocument("Signature",
+          new BsonDocument("$concat",
+            new BsonArray
+            {
+              new BsonDocument("$toString", "$_id")
+            })));
+      var filterdef = filter ?? Builders<Order>.Filter.Empty;
+      try
+      {
+        var result = Collection.Aggregate()
+          .Match(filterdef)
+          .AppendStage<BsonDocument>(addfields)
+          .AppendStage<BsonDocument>(match).Count().First();
+        return result.Count;
+      }
+      catch (InvalidOperationException e)
+      {
+        return 0;
       }
     }
   }

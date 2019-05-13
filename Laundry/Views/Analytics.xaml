@@ -112,7 +112,8 @@
                   materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                   BorderThickness="0"
                   MinWidth="200"
-                  VerticalAlignment="Center" />
+                  VerticalAlignment="Center"
+                  Text="{Binding EntityGrid.SearchString}"/>
               </Grid>
             </materialDesign:ColorZone>
 
