@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Laundry.Model
+namespace Model
 {
   public enum EmployeeProfession
   {

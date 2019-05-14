@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Linq;
 
-namespace Laundry.Model
+namespace Model
 {
   public enum OrderStatus
   {
@@ -47,7 +47,7 @@ namespace Laundry.Model
     public string Signature { get; }
 
     [BsonIgnore]
-    public DiscountEdge DiscountEdge { get; set; }
+    public DiscountEdge DiscountEdge { get; internal set; }
 
     [BsonIgnore]
     public bool IsSelected { get; set; }
@@ -97,8 +97,6 @@ namespace Laundry.Model
     public Order()
     {
       this.Instances = new List<ClothInstance>();
-      this.CreationDate = DateTime.Now;
-      this.ExecutionDate = DateTime.Now;
     }
 
     public long InSubsidiary { get; internal set; }

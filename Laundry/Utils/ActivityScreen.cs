@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using Caliburn.Micro;
-using Laundry.Model;
+using Model;
 using Laundry.Views;
 
 namespace Laundry.Utils

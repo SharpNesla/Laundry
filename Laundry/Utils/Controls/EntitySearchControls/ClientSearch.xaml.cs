@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using Caliburn.Micro;
-using Laundry.Model;
-using Laundry.Model.DatabaseClients;
+using Model;
+using Model.DatabaseClients;
 using MongoDB.Driver;
 
 namespace Laundry.Utils.Controls.EntitySearchControls

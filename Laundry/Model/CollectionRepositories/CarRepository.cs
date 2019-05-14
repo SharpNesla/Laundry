@@ -7,7 +7,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace Laundry.Model.CollectionRepositories
+namespace Model.CollectionRepositories
 {
   public class CarRepository : Repository<Car>
   {

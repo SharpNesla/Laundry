@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Laundry.Model
+namespace Model
 {
   [BsonIgnoreExtraElements]
   public class Subsidiary : IRepositoryElement

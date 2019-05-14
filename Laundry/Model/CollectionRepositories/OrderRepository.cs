@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using Laundry.Utils.Controls;
 using Laundry.Views;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace Laundry.Model.CollectionRepositories
+namespace Model.CollectionRepositories
 {
   public class OrderRepository : Repository<Order>
   {
@@ -371,6 +371,16 @@ namespace Laundry.Model.CollectionRepositories
       {
         Collection.UpdateOne(x => x.Id == order.Id, Builders<Order>.Update.Set(x => x.Status, status));
       }
+    }
+
+    public DiscountEdge FetchDiscountEdge(Order order)
+    {
+      var client = this.Model.Clients.GetById(order.ClientId);
+
+      var edge = this.Model.DiscountEdges.GetForClient(client);
+
+      order.DiscountEdge = edge;
+      return edge;
     }
 
     public override IReadOnlyList<Order> GetBySearchString(string searchString, FilterDefinition<Order> filter,

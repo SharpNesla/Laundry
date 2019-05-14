@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:converters="clr-namespace:Laundry.Utils.Converters"
-             xmlns:model="clr-namespace:Laundry.Model"
+             xmlns:model="clr-namespace:Model"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:validationRules="clr-namespace:Laundry.Utils.ValidationRules"
              d:DesignWidth="800" d:DesignHeight="800"

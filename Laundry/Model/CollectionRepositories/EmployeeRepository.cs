@@ -4,12 +4,12 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Laundry.Model.CollectionRepositories;
+using Model.CollectionRepositories;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace Laundry.Model.DatabaseClients
+namespace Model.DatabaseClients
 {
   public class EmployeeRepository : Repository<Employee>
   {

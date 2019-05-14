@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AutoDependencyPropertyMarker;
 using Caliburn.Micro;
-using Laundry.Model;
+using Model;
 using PropertyChanged;
 using Action = System.Action;
 

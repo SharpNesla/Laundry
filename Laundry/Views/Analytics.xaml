@@ -10,7 +10,7 @@
              xmlns:liveCharts="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:converters="clr-namespace:Laundry.Utils.Converters"
-             xmlns:model="clr-namespace:Laundry.Model"
+             xmlns:model="clr-namespace:Model"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1024"
              Background="{DynamicResource MaterialDesignPaper}">

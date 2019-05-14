@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Laundry.Utils.Controls"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:model="clr-namespace:Laundry.Model"
+             xmlns:model="clr-namespace:Model"
              xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              mc:Ignorable="d"
              Name="OwnControl"

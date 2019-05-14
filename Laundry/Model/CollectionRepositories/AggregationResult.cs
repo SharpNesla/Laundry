@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Laundry.Model.CollectionRepositories
+namespace Model.CollectionRepositories
 {
   public class AggregationResult
   {

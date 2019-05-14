@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Laundry.Views;
-using Laundry.Model;
+using Model;
 using Caliburn.Micro;
 using Laundry.Utils.Controls.EntitySearchControls;
 

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using MaterialDesignThemes.Wpf;
 using Caliburn.Micro;
-using Laundry.Model;
+using Model;
 using Laundry.Utils;
 
 namespace Laundry.Views

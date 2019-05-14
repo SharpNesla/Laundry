@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using Laundry.Views;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 
-namespace Laundry.Model.CollectionRepositories
+namespace Model.CollectionRepositories
 {
   public class ClothKindAggregationResult
   {

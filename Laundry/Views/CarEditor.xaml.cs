@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
-using Laundry.Model;
-using Laundry.Model.CollectionRepositories;
+using Model;
+using Model.CollectionRepositories;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using MongoDB.Driver;

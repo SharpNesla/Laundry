@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using Laundry.Model;
+using Model;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 

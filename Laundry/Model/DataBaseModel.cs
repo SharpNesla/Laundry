@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Laundry.Model.CollectionRepositories;
-using Laundry.Model.DatabaseClients;
+using Model.CollectionRepositories;
+using Model.DatabaseClients;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
-namespace Laundry.Model
+namespace Model
 {
   class DataBaseModel : IModel
   {

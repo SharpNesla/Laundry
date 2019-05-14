@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using Caliburn.Micro;
-using Laundry.Model;
-using Laundry.Model.DatabaseClients;
+using Model;
+using Model.DatabaseClients;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using LiveCharts;

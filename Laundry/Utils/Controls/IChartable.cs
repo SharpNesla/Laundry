@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using Laundry.Views;
 using LiveCharts;
 

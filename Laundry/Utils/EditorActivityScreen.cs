@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Caliburn.Micro;
-using Laundry.Model;
-using Laundry.Model.CollectionRepositories;
-using Laundry.Model.DatabaseClients;
+using Model;
+using Model.CollectionRepositories;
+using Model.DatabaseClients;
 using PropertyChanged;
 
 namespace Laundry.Utils

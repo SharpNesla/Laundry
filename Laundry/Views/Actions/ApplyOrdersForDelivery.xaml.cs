@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Laundry.Model;
-using Laundry.Model.CollectionRepositories;
+using Model;
+using Model.CollectionRepositories;
 using Laundry.Utils.Controls;
 using NPOI.XWPF.UserModel;
 

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 using PropertyChanged;
 
-namespace Laundry.Model
+namespace Model
 {
   [BsonIgnoreExtraElements]
   public class Client : Person

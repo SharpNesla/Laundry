@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:converters="clr-namespace:Laundry.Utils.Converters"
-             xmlns:model="clr-namespace:Laundry.Model"
+             xmlns:model="clr-namespace:Model"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"

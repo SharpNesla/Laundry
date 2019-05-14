@@ -13,8 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MongoDB.Driver;
-using Laundry.Model;
-using Laundry.Model.DatabaseClients;
+using Model;
+using Model.DatabaseClients;
 
 namespace Laundry.Utils.Controls.EntitySearchControls
 {

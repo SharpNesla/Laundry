@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using Laundry.Utils;
 
 namespace Laundry.Views

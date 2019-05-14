@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Caliburn.Micro;
-using Laundry.Model;
-using Laundry.Model.CollectionRepositories;
-using Laundry.Model.DatabaseClients;
+using Model;
+using Model.CollectionRepositories;
+using Model.DatabaseClients;
 using MongoDB.Bson;
 using MongoDB.Driver;
 

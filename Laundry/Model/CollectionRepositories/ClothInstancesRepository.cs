@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace Laundry.Model.CollectionRepositories
+namespace Model.CollectionRepositories
 {
   public class ClothInstancesRepository : Repository<ClothInstance>
   {

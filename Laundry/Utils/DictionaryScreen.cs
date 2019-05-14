@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using Laundry.Model;
-using Laundry.Model.CollectionRepositories;
-using Laundry.Model.DatabaseClients;
+using Model;
+using Model.CollectionRepositories;
+using Model.DatabaseClients;
 using Laundry.Utils.Controls;
 
 namespace Laundry.Utils

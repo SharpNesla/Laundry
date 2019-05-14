@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Caliburn.Micro;
-using Laundry.Model;
+using Model;
 using Laundry.Utils;
 using Laundry.Views;
 using MaterialDesignThemes.Wpf;

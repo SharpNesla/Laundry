@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Laundry.Model.CollectionRepositories;
-using Laundry.Model.DatabaseClients;
+using Model.CollectionRepositories;
+using Model.DatabaseClients;
 
-namespace Laundry.Model
+namespace Model
 {
   public interface IModel
   {

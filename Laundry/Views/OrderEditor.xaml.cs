@@ -1,7 +1,7 @@
 ﻿using System;
 using Caliburn.Micro;
-using Laundry.Model;
-using Laundry.Model.CollectionRepositories;
+using Model;
+using Model.CollectionRepositories;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using Laundry.Utils.Controls.EntitySearchControls;
@@ -28,6 +28,8 @@ namespace Laundry.Views
     public ClothDataGridViewModel ClothInstancesGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
 
+    public DiscountEdge Edge { get; private set; }
+
     public EmployeeSearchViewModel ObtainerCombo { get; set; }
     public ClientSearchViewModel CorpObtainerCombo { get; set; }
     public EmployeeSearchViewModel InCourierCombo { get; set; }
@@ -50,9 +52,6 @@ namespace Laundry.Views
 
       this.ClientCombo = new ClientSearchViewModel(model);
       this.ClientCombo.EntityChanged += OnEntityChanged;
-      
-
-      
     }
 
     protected override void OnActivate()

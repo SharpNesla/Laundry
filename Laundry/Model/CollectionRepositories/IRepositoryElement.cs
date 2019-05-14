@@ -1,7 +1,7 @@
 ﻿using System;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Laundry.Model.DatabaseClients
+namespace Model.DatabaseClients
 {
 
   public interface IRepositoryElement

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using Caliburn.Micro;
-using Laundry.Model;
+using Model;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using MaterialDesignThemes.Wpf;

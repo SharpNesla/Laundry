@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using MongoDB.Driver;
 
-namespace Laundry.Model.CollectionRepositories
+namespace Model.CollectionRepositories
 {
   public class DiscountSystemRepository : Repository<DiscountEdge>
   {
@@ -26,6 +26,14 @@ namespace Laundry.Model.CollectionRepositories
 
     public DiscountSystemRepository(IModel model, IMongoCollection<DiscountEdge> collection) : base(model, collection)
     {
+    }
+
+    public DiscountEdge GetForClient(Client client)
+    {
+      var filters = Builders<DiscountEdge>.Filter.And(
+        Builders<DiscountEdge>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+        Builders<DiscountEdge>.Filter.Gte(nameof(DiscountEdge.Edge), client.OrdersPrice));
+      return Collection.Find(filters).First();
     }
   }
 }

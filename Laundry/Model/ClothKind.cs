@@ -4,11 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 using PropertyChanged;
 
-namespace Laundry.Model
+namespace Model
 {
   public enum MeasureKind
   {

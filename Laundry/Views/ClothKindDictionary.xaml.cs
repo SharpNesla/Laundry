@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using Laundry.Model;
+using Model;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 

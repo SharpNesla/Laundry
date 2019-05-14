@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Laundry.Model.DatabaseClients;
+using Model.DatabaseClients;
 using MongoDB.Driver;
 
-namespace Laundry.Model.CollectionRepositories
+namespace Model.CollectionRepositories
 {
   /// <summary>
   /// Базовый класс для работы с коллекциями элементов типа T

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Controls;
 using Caliburn.Micro;
-using Laundry.Model;
-using Laundry.Model.CollectionRepositories;
+using Model;
+using Model.CollectionRepositories;
 using Laundry.Utils.Controls.EntitySearchControls;
 using Laundry.Views;
 using LiveCharts;
@@ -31,12 +31,6 @@ namespace Laundry.Utils.Controls
 
     private readonly OrderStatusConverter _statusConverter = new OrderStatusConverter();
     private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
-    public override IReadOnlyList<Order> Entities
-    {
-      get { return base.Entities; }
-
-      set { base.Entities = value; }
-    }
 
     public override FilterDefinition<Order> Filter
     {
@@ -126,13 +120,13 @@ namespace Laundry.Utils.Controls
     {
       if (Client != null)
       {
-        this.Entities = Repo.GetForClient(Client, page * elements, elements);
+        Repo.GetForClient(Client, page * elements, elements);
         return;
       }
 
       if (Employee != null)
       {
-        this.Entities = Repo.GetForEmployee(Employee, page * elements, elements);
+        Repo.GetForEmployee(Employee, page * elements, elements);
       }
       else
       {

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Laundry.Model.CollectionRepositories;
+using Model.CollectionRepositories;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System.Linq;
 using NPOI.SS.Formula.Functions;
 
-namespace Laundry.Model.DatabaseClients
+namespace Model.DatabaseClients
 {
   public class ClientRepository : Repository<Client>
   {
