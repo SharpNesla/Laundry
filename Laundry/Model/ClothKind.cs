@@ -7,17 +7,14 @@ using System.Threading.Tasks;
 using Laundry.Model.DatabaseClients;
 using MongoDB.Bson.Serialization.Attributes;
 using PropertyChanged;
+
 namespace Laundry.Model
 {
-
   public enum MeasureKind
   {
-    [Description("шт")]
-    Thing,
-    [Description("кг")]
-    Kg,
-    [Description("пар")]
-    Pair
+    [Description("шт")] Thing,
+    [Description("кг")] Kg,
+    [Description("пар")] Pair
   }
 
   [AddINotifyPropertyChangedInterface]
@@ -25,18 +22,22 @@ namespace Laundry.Model
   {
     [BsonIgnoreIfDefault]
     public long? Parent { get; set; }
+
     [BsonIgnoreIfNull]
     public string Name { get; set; }
-    
-    public MeasureKind MeasureKind { get; set; }
 
-    [BsonIgnoreIfDefault]
+    public MeasureKind MeasureKind { get; set; }
+    
     public float Price { get; set; }
+    
+    public float WashPrice { get; set; }
 
     [BsonIgnoreIfNull]
     public string Comment { get; set; }
+
     [BsonId]
     public long Id { get; set; }
+
     [BsonIgnore]
     public long ChildrenCount { get; internal set; }
 
@@ -48,23 +49,22 @@ namespace Laundry.Model
 
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
+
     public string Signature { get; }
 
     [BsonIgnore]
     public bool IsSelected { get; set; }
+
     [BsonIgnore]
     public int Level { get; set; }
 
-    [BsonIgnoreIfNull]
-    [BsonElement("SumPrice")]
+    [BsonIgnoreIfNull] [BsonElement("SumPrice")]
     internal double? SumPriceImpl;
 
-    [BsonIgnoreIfNull]
-    [BsonElement("Count")]
+    [BsonIgnoreIfNull] [BsonElement("Count")]
     internal int? CountImpl;
 
     public double Count => CountImpl ?? 0;
     public double SumPrice => SumPriceImpl ?? 0;
-
   }
 }

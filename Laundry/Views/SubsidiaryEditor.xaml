@@ -86,9 +86,9 @@
               </TextBox.Text>
             </TextBox>
           </StackPanel>
-          <TextBox Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0"
+          <TextBox Grid.Row="1" Grid.Column="0"
                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                   Margin="2,16,0,0"
+                   Margin="2,8,0,0"
                    AcceptsReturn="True"
                    TextAlignment="Left"
                    TextWrapping="Wrap"

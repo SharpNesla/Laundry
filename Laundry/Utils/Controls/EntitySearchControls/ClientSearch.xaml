@@ -16,11 +16,17 @@
     IsEditable="True"
     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
     ItemsSource="{Binding Entities}"
-    SelectedItem="{Binding SelectedEntity}" 
     IsTextSearchEnabled="True"
     SelectedValuePath="Id"
     DisplayMemberPath="Signature"
     Text="{Binding EntityText}"
     cal:Message.Attach="[Event PreviewTextInput] = [Action OnInputChanged($source)]">
+    <ComboBox.SelectedItem>
+      <Binding Path="SelectedEntity" UpdateSourceTrigger="PropertyChanged">
+        <Binding.ValidationRules>
+          <DataErrorValidationRule ValidatesOnTargetUpdated="False"/>
+        </Binding.ValidationRules>
+      </Binding>
+    </ComboBox.SelectedItem>
   </ComboBox>
 </UserControl>

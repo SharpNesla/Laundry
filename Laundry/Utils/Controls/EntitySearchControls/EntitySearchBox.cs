@@ -20,6 +20,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
   {
     private TEntity _selectedEntity;
     protected readonly TRepository Repository;
+    private readonly bool _isRequired;
     private string _entityText;
     private FilterDefinition<TEntity> _filter;
 
@@ -84,9 +85,10 @@ namespace Laundry.Utils.Controls.EntitySearchControls
       this.Entities = (IList<TEntity>) Repository.GetBySearchString(entityText, Filter);
     }
 
-    protected EntitySearchBox(TRepository repository, string label = "Объект", FilterDefinition<TEntity> filter = null)
+    protected EntitySearchBox(TRepository repository, string label = "Объект", FilterDefinition<TEntity> filter = null, bool isRequired = true)
     {
       this.Repository = repository;
+      _isRequired = isRequired;
       this.Label = label;
       this.Filter = filter;
       this.Entities = new List<TEntity>(Repository.Get(0, 10, Filter));
@@ -102,7 +104,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
       get
       {
         var errorString = "";
-        if (columnName == nameof(this.SelectedEntity))
+        if (columnName == nameof(this.SelectedEntity) && _isRequired)
         {
           if (this.SelectedEntity == null)
           {

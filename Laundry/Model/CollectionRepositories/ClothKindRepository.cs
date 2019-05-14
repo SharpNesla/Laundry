@@ -80,6 +80,14 @@ namespace Laundry.Model.CollectionRepositories
             new BsonDocument("$first", "$Parent")
           },
           {
+            "Comment",
+            new BsonDocument("$first", "$Comment")
+          },
+          {
+            "WashPrice",
+            new BsonDocument("$first", "$WashPrice")
+          },
+          {
             "Count",
             new BsonDocument("$sum", "$ClothInstances.Amount")
           },

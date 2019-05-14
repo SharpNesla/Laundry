@@ -19,7 +19,8 @@ namespace Laundry.Model
     public int Amount { get; set; }
     [BsonIgnoreIfDefault]
     public long TagNumber { get; set; }
-
+    [BsonIgnoreIfNull]
+    public string Comment { get; set; }
     [BsonId]
     public long Id { get; set; }
 

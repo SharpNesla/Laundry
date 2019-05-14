@@ -11,9 +11,8 @@
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
-             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-             >
-  <DockPanel Width="500"
+             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+  <DockPanel Width="450"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              VerticalAlignment="Stretch">
@@ -40,23 +39,28 @@
         ПРИНЯТЬ
       </Button>
     </DockPanel>
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-      <StackPanel Margin="24">
-
-        <materialDesign:Card
-          Padding="16"
-          BorderThickness="0">
-          <StackPanel>
-            <ContentControl Name="ClothKindTree"></ContentControl>
-            <TextBox materialDesign:HintAssist.Hint="Номер бирки" Text="{Binding Entity.TagNumber}"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-            <TextBox materialDesign:HintAssist.Hint="Процент износа" Text="{Binding Entity.WearPercentage}"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-            <TextBox materialDesign:HintAssist.Hint="Количесто" Text="{Binding Entity.Amount}"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-          </StackPanel>
-        </materialDesign:Card>
+    <materialDesign:Card
+      Padding="16"
+      Margin="25">
+      <StackPanel>
+        <ContentControl Name="ClothKindTree" />
+        <StackPanel Margin="2,0,0,0">
+        <TextBox materialDesign:HintAssist.Hint="Номер бирки" Text="{Binding Entity.TagNumber}"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
+        <TextBox materialDesign:HintAssist.Hint="Процент износа" Text="{Binding Entity.WearPercentage}"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
+        <TextBox materialDesign:HintAssist.Hint="Количесто" Text="{Binding Entity.Amount}"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+        </StackPanel>
+        <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                 Margin="2,8,0,0"
+                 AcceptsReturn="True"
+                 TextAlignment="Left"
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"
+                 Text="{Binding Entity.Comment}"
+                 materialDesign:HintAssist.Hint="Комментарий" Height="137" />
       </StackPanel>
-    </ScrollViewer>
+    </materialDesign:Card>
   </DockPanel>
 </UserControl>
