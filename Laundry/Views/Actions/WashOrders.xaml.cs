@@ -24,16 +24,10 @@ namespace Laundry.Views.Actions
 {
   public class WashOrdersViewModel : OrderActionsBase
   {
-    public WashOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid) 
-      : base(model.Orders, model.CurrentUser, nameof(Order.WasherCourierId), orderGrid, OrderStatus.ReadyToWash, OrderStatus.Washing)
+    public WashOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
+      : base(model.Orders, model.CurrentUser, nameof(Order.WasherCourierId), orderGrid, OrderStatus.ReadyToWash,
+        OrderStatus.Washing)
     {
-    }
-
-
-    public override Document PrepareDocument(Document document, Order order)
-    {
-      throw new NotImplementedException();
     }
   }
-
 }

@@ -20,7 +20,8 @@ namespace Laundry.Utils.Controls.EntitySearchControls
 {
   public class SubsidiarySearchViewModel : EntitySearchBox<Subsidiary, SubsidiaryRepository>
   {
-    public SubsidiarySearchViewModel(IModel model, string label = "Филиал", FilterDefinition<Subsidiary> filter = null) : base(model.Subsidiaries, label, filter)
+    public SubsidiarySearchViewModel(IModel model, string label = "Филиал", FilterDefinition<Subsidiary> filter = null, bool isRequired = true)
+      : base(model.Subsidiaries, label, filter, isRequired)
     {
     }
   }

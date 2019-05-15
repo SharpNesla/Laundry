@@ -21,15 +21,10 @@ namespace Laundry.Views.Actions
 {
   public class TakeOrdersViewModel : OrderActionsBase
   {
-    public TakeOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid) 
-      : base(model.Orders, model.CurrentUser, nameof(Order.InCourierId), orderGrid, OrderStatus.Taken, OrderStatus.MoveFromSubs)
+    public TakeOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
+      : base(model.Orders, model.CurrentUser, nameof(Order.InCourierId), orderGrid, OrderStatus.Taken,
+        OrderStatus.MoveFromSubs)
     {
-
-    }
-
-    public override Document PrepareDocument(Document document, Order order)
-    {
-      throw new NotImplementedException();
     }
   }
 }

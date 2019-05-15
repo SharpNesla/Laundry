@@ -108,7 +108,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
         {
           if (this.SelectedEntity == null)
           {
-            errorString = "Работник не может быть пустым";
+            errorString = $"{this.Label} не может быть пустым";
           }
         }
 

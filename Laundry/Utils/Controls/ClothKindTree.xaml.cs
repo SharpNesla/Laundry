@@ -22,9 +22,11 @@ using Laundry.Utils.Converters;
 using Laundry.Views;
 using Laundry.Views.Cards;
 using LiveCharts;
+using LiveCharts.Wpf;
 using MongoDB.Driver;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using PropertyChanged;
 
 namespace Laundry.Utils.Controls
 {
@@ -161,12 +163,65 @@ namespace Laundry.Utils.Controls
       base.Refresh(page, elements);
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
     }
-    
 
-    public SeriesCollection Values { get; }
-    public string[] Labels => this.Repo.Get(0, int.MaxValue, Filter).Select(x => x.Name).ToArray();
-    public string LabelsTitle => "Виды";
-    public string ValuesTitle => "";
+
+    public SeriesCollection Values
+    {
+
+      get
+      {
+        switch (this.EntityInfoType)
+        {
+          case EntityInfoType.Amount:
+            return new SeriesCollection
+            {
+              new ColumnSeries
+              {
+                Title = "шт",
+                Values = new ChartValues<long>(this.AggregationResults.Select(x=> x.Count))
+              },
+              new ColumnSeries
+              {
+                Title = "кг",
+                Values = new ChartValues<double>(this.AggregationResults.Select(x=> x.UnCountableCount))
+              }
+            };
+          case EntityInfoType.Cost:
+            return new SeriesCollection
+            {
+              new ColumnSeries
+              {
+                Title = "₽",
+                Values = new ChartValues<double>(this.AggregationResults.Select(x=> x.Price))
+              }
+            };
+          default:
+            return null;
+        }
+      }
+    }
+
+    public IReadOnlyList<AggregationResult> AggregationResults => 
+      this.Repo.AggregateInstances(Time, Filter);
+
+    public string[] Labels
+    {
+      get
+      {
+        switch (Time)
+        {
+          case ChartTime.Day:
+            return this.AggregationResults.Select(x => x.DateTime.ToString("d")).ToArray();
+          case ChartTime.Mounth:
+            return this.AggregationResults.Select(x => x.DateTime.ToString("y")).ToArray();
+          case ChartTime.Year:
+            return this.AggregationResults.Select(x => x.DateTime.ToString("yyyy")).ToArray();
+          default:
+            return null;
+        }
+      }
+    }
+    [AlsoNotifyFor(nameof(Labels))]
     public ChartTime Time { get; set; }
     public EntityInfoType EntityInfoType { get; set; }
   }

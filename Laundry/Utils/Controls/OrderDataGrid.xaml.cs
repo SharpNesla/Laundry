@@ -74,6 +74,30 @@ namespace Laundry.Utils.Controls
             ));
         }
 
+        if (IsBySubsidiary)
+        {
+          if (this.InSubsidiaryCombo.SelectedEntity != null)
+          {
+            filter = Builders<Order>.Filter.And(
+              filter,
+              Builders<Order>.Filter.Eq(nameof(Order.InSubsidiary), this.InSubsidiaryCombo.SelectedEntity.Id));
+          }
+
+          if (this.OutSubsidiaryCombo.SelectedEntity != null)
+          {
+            filter = Builders<Order>.Filter.And(
+              filter,
+              Builders<Order>.Filter.Eq(nameof(Order.OutSubsidiary), this.OutSubsidiaryCombo.SelectedEntity.Id));
+          }
+        }
+
+        if (IsByStatus)
+        {
+          filter = Builders<Order>.Filter.And(
+            filter,
+            Builders<Order>.Filter.Eq(nameof(Order.Status), this.Status));
+        }
+
         return filter;
       }
 
@@ -109,7 +133,11 @@ namespace Laundry.Utils.Controls
     public EmployeeSearchViewModel EmployeeCombo { get; }
 
     public bool IsBySubsidiary { get; set; }
-    public SubsidiarySearchViewModel SubsidiaryCombo { get; set; }
+    public SubsidiarySearchViewModel InSubsidiaryCombo { get; set; }
+    public SubsidiarySearchViewModel OutSubsidiaryCombo { get; set; }
+
+    public bool IsByStatus { get; set; }
+    public OrderStatus Status { get; set; }
 
     #endregion
 
@@ -159,7 +187,8 @@ namespace Laundry.Utils.Controls
 
       this.ClientCombo = new ClientSearchViewModel(model);
 
-      this.SubsidiaryCombo = new SubsidiarySearchViewModel(model);
+      this.InSubsidiaryCombo = new SubsidiarySearchViewModel(model, "Филиал принятия", null, false);
+      this.OutSubsidiaryCombo = new SubsidiarySearchViewModel(model, "Филиал выдачи", null, false);
 
       this.EmployeeCombo = new EmployeeSearchViewModel(model) {Label = "Работник"};
 

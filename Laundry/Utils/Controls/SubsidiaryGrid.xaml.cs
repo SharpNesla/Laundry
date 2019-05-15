@@ -54,7 +54,7 @@ namespace Laundry.Utils.Controls
       new ColumnSeries
       {
         Title = "Сумма",
-        Values = new ChartValues<double>(this.Entities.Select(x => _model.Orders.GetAggregatedPriceForSubsidiary(x)))
+        Values = new ChartValues<double>(this.Repo.Get(0,int.MaxValue).Select(x => _model.Orders.GetAggregatedPriceForSubsidiary(x)))
       }
     };
 

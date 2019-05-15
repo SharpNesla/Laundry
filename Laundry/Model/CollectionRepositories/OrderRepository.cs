@@ -50,34 +50,30 @@ namespace Model.CollectionRepositories
         new BsonDocument("$unwind",
           new BsonDocument
           {
-            {"path", "$Instances"},
-            {"preserveNullAndEmptyArrays", false}
+            { "path", "$Instances" },
+            { "preserveNullAndEmptyArrays", false }
           }),
         new BsonDocument("$lookup",
           new BsonDocument
           {
-            {"from", "clothkinds"},
-            {"localField", "Instances.ClothKind"},
-            {"foreignField", "_id"},
-            {"as", "ClothKind"}
+            { "from", "clothkinds" },
+            { "localField", "Instances.ClothKind" },
+            { "foreignField", "_id" },
+            { "as", "ClothKind" }
           }),
         new BsonDocument("$unwind",
           new BsonDocument
           {
-            {"path", "$Instances"},
-            {"preserveNullAndEmptyArrays", false}
+            { "path", "$Instances" },
+            { "preserveNullAndEmptyArrays", false }
           }),
         new BsonDocument("$group",
           new BsonDocument
           {
-            {"_id", "$ClothKind.MeasureKind"},
-            {
-              "Count",
-              new BsonDocument("$sum", "$Instances.Amount")
-            }
+            { "_id", "$ClothKind.MeasureKind" },
+            { "Count",
+              new BsonDocument("$sum", "$Instances.Amount") }
           }),
-        new BsonDocument("$unwind",
-          new BsonDocument("path", "$_id")),
         new BsonDocument("$sort",
           new BsonDocument("_id", 1))
       };
@@ -90,15 +86,35 @@ namespace Model.CollectionRepositories
         .AppendStage<BsonDocument>(pipeline[3].AsBsonDocument)
         .AppendStage<BsonDocument>(pipeline[4].AsBsonDocument).ToList();
 
+      int things = 0;
+      int pairs = 0;
+      int kgs = 0;
       try
       {
-        return
-          $"{aggregation[0]["Count"].AsInt32 + aggregation[2]["Count"].AsInt32}шт, {aggregation[1]["Count"].AsInt32}кг";
+        things = aggregation[0]["Count"].AsInt32;
       }
       catch (ArgumentOutOfRangeException e)
       {
-        return "0шт, 0кг";
       }
+
+      try
+      {
+        pairs = aggregation[2]["Count"].AsInt32;
+      }
+      catch (ArgumentOutOfRangeException e)
+      {
+      }
+
+      try
+      {
+        kgs = aggregation[1]["Count"].AsInt32;
+      }
+      catch (ArgumentOutOfRangeException e)
+      {
+      }
+
+      return
+        $"{things + pairs}шт, {kgs}кг";
     }
 
     public double GetAggregatedPrice(FilterDefinition<Order> filter)

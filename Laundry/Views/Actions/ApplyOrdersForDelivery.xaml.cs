@@ -25,11 +25,5 @@ namespace Laundry.Views.Actions
       : base(model.Orders, model.CurrentUser, nameof(Order.WasherCourierId), orderGrid, OrderStatus.Washing , OrderStatus.Washed)
     {
     }
-
-
-    public override Document PrepareDocument(Document document, Order order)
-    {
-      throw new NotImplementedException();
-    }
   }
 }

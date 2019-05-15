@@ -11,16 +11,6 @@ using MongoDB.Driver;
 
 namespace Model.CollectionRepositories
 {
-  public class ClothKindAggregationResult
-  {
-    [BsonId]
-    public DateTime DateTime { get; set; }
-
-    MeasureKind MeasureKind { get; set; }
-    public double Price { get; set; }
-    public long Count { get; set; }
-  }
-
   public class ClothKindRepository : Repository<ClothKind>
   {
     private static readonly BsonArray AggrStages = new BsonArray
@@ -106,6 +96,126 @@ namespace Model.CollectionRepositories
         new BsonDocument("_id", 1))
     };
 
+    private static readonly BsonArray AggrStagesForChart = new BsonArray
+    {
+      new BsonDocument("$lookup",
+        new BsonDocument
+        {
+          {"from", "orders"},
+          {
+            "let",
+            new BsonDocument("kindid", "$_id")
+          },
+          {
+            "pipeline",
+            new BsonArray
+            {
+              new BsonDocument("$unwind",
+                new BsonDocument("path", "$Instances")),
+              new BsonDocument("$addFields",
+                new BsonDocument("Instances.ExecutionDate", "$ExecutionDate")),
+              new BsonDocument("$replaceRoot",
+                new BsonDocument("newRoot", "$Instances")),
+              new BsonDocument("$match",
+                new BsonDocument("$expr",
+                  new BsonDocument("$eq",
+                    new BsonArray
+                    {
+                      "$ClothKind",
+                      "$$kindid"
+                    })))
+            }
+          },
+          {"as", "ClothInstances"}
+        }),
+      new BsonDocument("$unwind",
+        new BsonDocument("path", "$ClothInstances")),
+      new BsonDocument("$project",
+        new BsonDocument
+        {
+          {
+            "SumPrice",
+            new BsonDocument("$multiply",
+              new BsonArray
+              {
+                "$Price",
+                "$ClothInstances.Amount"
+              })
+          },
+          {"MeasureKind", "$MeasureKind"},
+          {"Price", "$Price"},
+          {"Count", "$Count"},
+          {"WashPrice", "$WashPrice"},
+          {"Name", "$Name"},
+          {"Amount", "$ClothInstances.Amount"},
+          {
+            "DateTime",
+            new BsonDocument("$dateFromParts",
+              new BsonDocument
+              {
+                {
+                  "year",
+                  new BsonDocument("$year", "$ClothInstances.ExecutionDate")
+                },
+                {
+                  "day",
+                  new BsonDocument("$dayOfMonth", "$ClothInstances.ExecutionDate")
+                },
+                {
+                  "month",
+                  new BsonDocument("$month", "$ClothInstances.ExecutionDate")
+                }
+              })
+          }
+        }),
+      new BsonDocument("$group",
+        new BsonDocument
+        {
+          {"_id", "$DateTime"},
+          {
+            "UnCountableCount",
+            new BsonDocument("$sum",
+              new BsonDocument("$cond",
+                new BsonArray
+                {
+                  new BsonDocument("$eq",
+                    new BsonArray
+                    {
+                      "$MeasureKind",
+                      1
+                    }),
+                  "$Amount",
+                  0
+                }))
+          },
+          {
+            "Price",
+            new BsonDocument("$sum", "$SumPrice")
+          },
+          {
+            "Count",
+            new BsonDocument("$sum",
+              new BsonDocument("$cond",
+                new BsonArray
+                {
+                  new BsonDocument("$in",
+                    new BsonArray
+                    {
+                      "$MeasureKind",
+                      new BsonArray
+                      {
+                        0,
+                        2
+                      }
+                    }),
+                  "$Amount",
+                  0
+                }))
+          }
+        }),
+      new BsonDocument("$sort",
+        new BsonDocument("_id", 1))
+    };
 
     public ClothKindRepository(IModel model, IMongoCollection<ClothKind> collection) : base(model, collection)
     {
@@ -227,6 +337,45 @@ namespace Model.CollectionRepositories
       {
         return 0;
       }
+    }
+
+    public IReadOnlyList<AggregationResult> AggregateInstances(ChartTime time,
+      FilterDefinition<ClothKind> filter = null)
+    {
+      var filters = Builders<ClothKind>.Filter.And(
+        Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+        filter ?? Builders<ClothKind>.Filter.Empty);
+      var projectDef = @"{
+      SumPrice: {$multiply:['$Price', '$ClothInstances.Amount']}, 
+      MeasureKind: '$MeasureKind',
+      Price : '$Price',
+      Count: '$Count',
+      WashPrice: '$WashPrice',
+      Name: '$Name',
+      Amount: '$ClothInstances.Amount',
+      DateTime: {
+        '$dateFromParts': {
+          'year': {
+            '$year': '$ClothInstances.ExecutionDate'
+          }, 
+          'day': {
+            '$dayOfMonth': '$ClothInstances.ExecutionDate'
+          }, 
+          'month': {
+            '$month': '$ClothInstances.ExecutionDate'
+          }
+        }
+      }
+    }";
+      var readOnlyList = this.Collection
+        .Aggregate()
+        .AppendStage<BsonDocument>(AggrStagesForChart[0].AsBsonDocument)
+        .AppendStage<BsonDocument>(AggrStagesForChart[1].AsBsonDocument)
+        .AppendStage<BsonDocument>(AggrStagesForChart[2].AsBsonDocument)
+        .AppendStage<BsonDocument>(AggrStagesForChart[3].AsBsonDocument)
+        .AppendStage<BsonDocument>(AggrStagesForChart[4].AsBsonDocument)
+        .As<AggregationResult>().ToList();
+      return readOnlyList;
     }
   }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using Model;
 using Model.CollectionRepositories;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
+using Laundry.Utils.Converters;
 using MongoDB.Driver;
 using NPOI.XWPF.UserModel;
 using Screen = Caliburn.Micro.Screen;
@@ -19,13 +21,17 @@ namespace Laundry.Views.Actions
   {
     protected readonly OrderRepository Repository;
     private readonly OrderStatus _changingStatus;
+    private readonly string _documentName;
     public OrderDataGridViewModel OrderGrid { get; set; }
+    private readonly OrderStatusConverter _converter = new OrderStatusConverter();
+
 
     public OrderActionsBase(OrderRepository orderRepo, Employee currentUser, string orderEmployeeInvolvement, OrderDataGridViewModel orderGrid,
-      OrderStatus startStatus, OrderStatus changingStatus)
+      OrderStatus startStatus, OrderStatus changingStatus, string documentName = "Bill.docx")
     {
       Repository = orderRepo;
       _changingStatus = changingStatus;
+      _documentName = documentName;
       OrderGrid = orderGrid;
       OrderGrid.Filter =
         Builders<Order>.Filter.And(
@@ -44,14 +50,63 @@ namespace Laundry.Views.Actions
       }
     }
 
-    public abstract Document PrepareDocument(Document document, Order order);
+    public virtual Document PrepareDocument(XWPFDocument document, Order order)
+    {
+      var replacePhrases = new[]
+      {
+        new Tuple<string, string>("#Дата_Передачи", DateTime.Now.ToString("D")),
+        new Tuple<string, string>("#Номер_Заказа", order.Id.ToString()),
+        new Tuple<string, string>("#Статус_Заказа", _converter.Convert(order.Status, typeof(string), null, CultureInfo.CurrentCulture)?.ToString())
+      };
+
+      foreach (var paragraph in document.Paragraphs)
+      {
+        foreach (var replacePhrase in replacePhrases)
+        {
+          try
+          {
+            paragraph.ReplaceText(replacePhrase.Item1, replacePhrase.Item2);
+          }
+          catch (Exception e)
+          {
+            
+          }
+        }
+      }
+
+      
+
+      foreach (var documentTable in CheckTables(document))
+      {
+        documentTable.RemoveRow(1);
+        //documentTable.AddRow();
+      }
+
+      return document;
+    }
+
+    private List<XWPFTable> CheckTables(XWPFDocument document)
+    {
+      var matchingTables = document.Tables.Where(x =>
+      {
+        var row = x.GetRow(1);
+        return
+          row.GetCell(0).GetText() == "#№" &&
+          row.GetCell(1).GetText() == "#Наименование" &&
+          row.GetCell(2).GetText() == "#Ед_Изм" &&
+          row.GetCell(3).GetText() == "#Кол-во" &&
+          row.GetCell(4).GetText() == "#Комментарий";
+      }).ToList();
+
+      return matchingTables;
+    }
 
     private void WriteDocumentation(Order order)
     {
       XWPFDocument document = null;
       try
       {
-        using (FileStream file = new FileStream("Resources/Bill.docx", FileMode.Open, FileAccess.Read))
+        using (FileStream file = new FileStream($"Resources/{_documentName}", FileMode.Open, FileAccess.Read))
         {
           document = new XWPFDocument(file);
         }

@@ -25,10 +25,5 @@ namespace Laundry.Views.Actions
     {
 
     }
-
-    public override Document PrepareDocument(Document document, Order order)
-    {
-      throw new NotImplementedException();
-    }
   }
 }

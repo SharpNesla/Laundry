@@ -35,7 +35,7 @@
                      IsChecked="True"
                      
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
-                     Content="Заказы, ожиданющие выдачи" />
+                     Content="Заказы, ожидающие выдачи" />
         <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="2" DockPanel.Dock="Right"
                 Style="{StaticResource MaterialDesignToolButton}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
@@ -65,7 +65,7 @@
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
               ToolTip="Отправить постиранные заказы на доставку"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-        <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24" />
+        <materialDesign:PackIcon Kind="AccountArrowRight" Height="24" Width="24" />
       </Button>
 
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
