@@ -21,11 +21,11 @@ namespace Laundry.Views.Actions
   /// <summary>
   /// Interaction logic for DistributeOrders.xaml
   /// </summary>
-  public class DistributeOrdersViewModel : OrderActionsBase
+  public class DistributeCorpOrdersViewModel : OrderActionsBase
   {
-    public DistributeOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
+    public DistributeCorpOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
       : base(model.Orders, model.CurrentUser, nameof(Order.DistributerId), orderGrid, OrderStatus.ReadyToDistribute,
-        OrderStatus.Distributed, "Check.docx", Builders<Order>.Filter.Eq(nameof(Order.IsCorporative), false))
+        OrderStatus.Distributed, "Check.docx", Builders<Order>.Filter.Eq(nameof(Order.IsCorporative), true))
     {
     }
   }

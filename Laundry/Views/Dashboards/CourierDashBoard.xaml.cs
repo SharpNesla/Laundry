@@ -85,14 +85,14 @@ namespace Laundry.Views.Dashboards
       OrderDataGridViewModel orderGrid, OrderDataGridViewModel actionsOrderGrid) : base(
       aggregator, model, orderGrid, actionsOrderGrid)
     {
-      this.IsTakeOrders = true;
     }
 
     protected override void OnActivate()
     {
       base.OnActivate();
+
+      this.IsTakeOrders = true;
       this.OrderGrid.Refresh(0, int.MaxValue);
-      
     }
 
     public async void Delivery()
@@ -105,6 +105,13 @@ namespace Laundry.Views.Dashboards
     public async void TakeOrders()
     {
       var applyorders = new TakeOrdersViewModel(Model, ActionsOrderGrid);
+      await DialogHostExtensions.ShowCaliburnVM(applyorders);
+      this.OrderGrid.Refresh(0, int.MaxValue);
+    }
+
+    public async void DistributeCorp()
+    {
+      var applyorders = new DistributeCorpOrdersViewModel(Model, ActionsOrderGrid);
       await DialogHostExtensions.ShowCaliburnVM(applyorders);
       this.OrderGrid.Refresh(0, int.MaxValue);
     }

@@ -31,11 +31,14 @@
             VerticalAlignment="Center"
             Margin="16 0 0 0" Text="Обзор: приёмщик" />
         </StackPanel>
-        <RadioButton Grid.Column="0" Grid.ColumnSpan="3"
-                     IsChecked="True"
-                     
+        <RadioButton Grid.Column="0"
+                     IsChecked="{Binding IsDistribute}"
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
                      Content="Заказы, ожидающие выдачи" />
+        <RadioButton Grid.Column="1" Grid.ColumnSpan="2"
+                     IsChecked="{Binding IsAcceptDelivery}"
+                     Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
+                     Content="Принять доставленные заказы" />
         <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="2" DockPanel.Dock="Right"
                 Style="{StaticResource MaterialDesignToolButton}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
@@ -61,11 +64,19 @@
       </Grid>
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
-      <Button Name="ObtainOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+      <Button Name="Distribute" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+              Visibility="{Binding IsDistribute, Converter={StaticResource BoolVisibilityConverter}}"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
               ToolTip="Отправить постиранные заказы на доставку"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-        <materialDesign:PackIcon Kind="AccountArrowRight" Height="24" Width="24" />
+        <materialDesign:PackIcon Kind="AccountArrowLeft" Height="24" Width="24" />
+        </Button>
+      <Button Name="AcceptDelivery" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+              Visibility="{Binding IsAcceptDelivery, Converter={StaticResource BoolVisibilityConverter}}"
+              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              ToolTip="Отправить постиранные заказы на доставку"
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+        <materialDesign:PackIcon Kind="AccountArrowLeft" Height="24" Width="24" />
       </Button>
 
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Laundry.Views.Actions.ApplyOrdersForDeliveryView"
+﻿<UserControl x:Class="Laundry.Views.Actions.DistributeCorpOrdersView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel  Height="700" Width="970">
+  <DockPanel Height="700" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16,20,20,20">
       <StackPanel Orientation="Horizontal">
@@ -16,9 +16,10 @@
         <TextBlock
           Style="{StaticResource MaterialDesignTitleTextBlock}"
           VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="Подготовить заказы к доставке" />
+          Margin="8 0 0 0" Text="Выдать корпоративные заказы" />
       </StackPanel>
     </materialDesign:ColorZone>
+
 
     <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="24,0,24,24">
       <Button IsCancel="True" DockPanel.Dock="Right" MaxWidth="132"
@@ -32,16 +33,15 @@
         ПРИНЯТЬ
       </Button>
     </DockPanel>
-    <materialDesign:Card
-                           Padding="16" Margin="24"
-                           BorderThickness="0" VerticalAlignment="Stretch">
+    <materialDesign:Card Margin="24"
+      BorderThickness="0" VerticalAlignment="Stretch">
 
       <DockPanel LastChildFill="True">
         <Grid DockPanel.Dock="Bottom">
           <DockPanel>
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
               <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
-                           Style="{StaticResource MaterialDesignBody2TextBlock}">
+                         Style="{StaticResource MaterialDesignBody2TextBlock}">
                 <TextBlock.Text>
                   <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
                     <Binding Path="Client.OrdersCount" />

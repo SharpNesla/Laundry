@@ -25,7 +25,8 @@
                                  cal:Message.Attach="[Event MouseRightButtonDown] = [Action SelectEdge($dataContext)]"
                                  Background="{StaticResource PrimaryHueMidBrush}">
               <materialDesign:Card.ContextMenu>
-                <ContextMenu cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                <ContextMenu Visibility="{Binding Visibilities.DirectorAdvisor, Converter={StaticResource BoolVisibilityConverter}}"
+                  cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
                   <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
                   <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
                 </ContextMenu>

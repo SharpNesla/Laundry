@@ -95,6 +95,7 @@ namespace Laundry
         .Singleton<AdvisorDashBoardViewModel>()
         .Singleton<WasherDashBoardViewModel>()
         .Singleton<CourierDashBoardViewModel>();
+
     }
 
     protected override object GetInstance(Type service, string key)

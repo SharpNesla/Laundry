@@ -27,9 +27,11 @@ namespace Laundry.Views.Actions
     private readonly OrderStatusConverter _converter = new OrderStatusConverter();
     private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
 
+
     public OrderActionsBase(OrderRepository orderRepo, Employee currentUser, string orderEmployeeInvolvement,
       OrderDataGridViewModel orderGrid,
-      OrderStatus startStatus, OrderStatus changingStatus, string documentName = "Bill.docx")
+      OrderStatus startStatus, OrderStatus changingStatus, string documentName = null,
+      FilterDefinition<Order> additionalFilter = null)
     {
       Repository = orderRepo;
       _changingStatus = changingStatus;
@@ -38,19 +40,38 @@ namespace Laundry.Views.Actions
       OrderGrid.Filter =
         Builders<Order>.Filter.And(
           Builders<Order>.Filter.Eq(nameof(Order.Status), startStatus),
-          Builders<Order>.Filter.Eq(orderEmployeeInvolvement, currentUser.Id));
+          Builders<Order>.Filter.Eq(orderEmployeeInvolvement, currentUser.Id),
+          additionalFilter ?? Builders<Order>.Filter.Empty);
       this.OrderGrid.Refresh(0, int.MaxValue);
+    }
+
+    protected virtual IEnumerable<Tuple<string, string>> PrepareReplaceText(Order order)
+    {
+      return new[]
+      {
+        new Tuple<string, string>("#Дата_Передачи", DateTime.Now.ToString("D")),
+        new Tuple<string, string>("#Номер_Заказа", order.Id.ToString()),
+        new Tuple<string, string>("#Статус_Заказа",
+          _converter.Convert(order.Status, typeof(string), null, CultureInfo.CurrentCulture)?.ToString())
+      };
     }
 
     public virtual async void Apply()
     {
       this.Repository.SetOrdersStatus(this.OrderGrid.SelectedEntities, _changingStatus);
 
+
+      if (string.IsNullOrEmpty(_documentName))
+      {
+        return;
+      }
+
       foreach (var order in this.OrderGrid.SelectedEntities)
       {
         this.WriteDocumentation(order);
       }
     }
+
     /// <summary>
     /// Подготовка документа для дальнейшего экспорта (накладная, договоры и.т.п.)
     /// </summary>
@@ -59,17 +80,9 @@ namespace Laundry.Views.Actions
     /// <returns></returns>
     public virtual Document PrepareDocument(XWPFDocument document, Order order)
     {
-      var replacePhrases = new[]
-      {
-        new Tuple<string, string>("#Дата_Передачи", DateTime.Now.ToString("D")),
-        new Tuple<string, string>("#Номер_Заказа", order.Id.ToString()),
-        new Tuple<string, string>("#Статус_Заказа",
-          _converter.Convert(order.Status, typeof(string), null, CultureInfo.CurrentCulture)?.ToString())
-      };
-
       foreach (var paragraph in document.Paragraphs)
       {
-        foreach (var replacePhrase in replacePhrases)
+        foreach (var replacePhrase in this.PrepareReplaceText(order))
         {
           try
           {
@@ -87,11 +100,11 @@ namespace Laundry.Views.Actions
       foreach (var documentTable in documentTables)
       {
         var rowTemplate = documentTable.GetRow(1);
-      
+
         foreach (var orderInstance in order.Instances)
         {
           var row = documentTable.CreateRow();
-        
+
           row.GetCell(0).SetText(orderInstance.TagNumber.ToString());
           row.GetCell(1).SetText(orderInstance.ClothKindObj.Name);
           row.GetCell(2).SetText(
@@ -110,6 +123,12 @@ namespace Laundry.Views.Actions
       return document;
     }
 
+    /// <summary>
+    /// Проверить документ на содержание в нём подходящей таблицы для
+    /// вставки информации об экземплярах одежды
+    /// </summary>
+    /// <param name="document">Документ</param>
+    /// <returns>Лист с таблицами, прошедшими проверку</returns>
     private List<XWPFTable> CheckTables(XWPFDocument document)
     {
       var matchingTables = document.Tables.Where(x =>
@@ -128,7 +147,8 @@ namespace Laundry.Views.Actions
 
     private void WriteDocumentation(Order order)
     {
-      XWPFDocument document = null;
+
+      XWPFDocument document;
       try
       {
         using (FileStream file = new FileStream($"Resources/{_documentName}", FileMode.Open, FileAccess.Read))

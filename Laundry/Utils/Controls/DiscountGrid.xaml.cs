@@ -26,8 +26,8 @@ namespace Laundry.Utils.Controls
     private readonly IModel _model;
     private readonly IEventAggregator _eventAggregator;
 
-    public DiscountGridViewModel(IModel model, IEventAggregator eventAggregator, DeleteDialogViewModel deleteDialog) :
-      base(eventAggregator, null, model.DiscountEdges, deleteDialog, Screens.About)
+    public DiscountGridViewModel(IModel model, IEventAggregator eventAggregator, DeleteDialogViewModel deleteDialog, Visibilities visibilities) :
+      base(eventAggregator, null, model.DiscountEdges, deleteDialog, Screens.About, visibilities)
     {
       _model = model;
       _eventAggregator = eventAggregator;

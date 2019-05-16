@@ -19,7 +19,9 @@ namespace Model
 
     [Description("Перевозка из прачечной")]
     MoveToSubs,
-    [Description("Выдан")] Granted
+    [Description("Готов к выдаче")]
+    ReadyToDistribute,
+    [Description("Выполнен")] Distributed
   }
   [BsonIgnoreExtraElements]
   public class Order : IRepositoryElement
@@ -51,13 +53,9 @@ namespace Model
 
     [BsonIgnore]
     public bool IsSelected { get; set; }
-
-    [BsonIgnoreIfDefault]
+    
     public bool IsCorporative { get; set; }
-
-    [BsonIgnoreIfDefault]
-    public bool IsDiscount { get; set; }
-
+    
     [BsonIgnoreIfDefault]
     public bool IsCustomPrice { get; set; }
 

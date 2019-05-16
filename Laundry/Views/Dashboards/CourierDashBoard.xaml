@@ -70,6 +70,13 @@
       </Grid>
     </materialDesign:ColorZone>
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
+      <Button Name="DistributeCorp" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+              Visibility="{Binding IsCorp, Converter={StaticResource BoolVisibilityConverter}}"
+              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              ToolTip="Поставить заказы на стирку"
+              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+        <materialDesign:PackIcon Kind="AccountArrowRight" Height="24" Width="24" />
+      </Button>
       <Button Name="Delivery" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               Visibility="{Binding IsDelivery, Converter={StaticResource BoolVisibilityConverter}}"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"

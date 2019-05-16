@@ -76,8 +76,6 @@ namespace Model.CollectionRepositories
       }
       catch (Exception e)
       {
-        throw;
-        ConnectionLost?.Invoke();
         return null;
       }
     }

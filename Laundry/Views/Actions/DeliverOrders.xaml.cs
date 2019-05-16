@@ -20,10 +20,22 @@ namespace Laundry.Views.Actions
 {
   public class DeliverOrdersViewModel : OrderActionsBase
   {
-    public DeliverOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
-      : base(model.Orders, model.CurrentUser, nameof(Order.OutCourierId), orderGrid, OrderStatus.Washed, OrderStatus.MoveToSubs)
-    {
+    private readonly IModel _model;
 
+    public DeliverOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
+      : base(model.Orders, model.CurrentUser, nameof(Order.OutCourierId), orderGrid, OrderStatus.Washed, OrderStatus.MoveToSubs, "Bill.docx")
+    {
+      _model = model;
+    }
+
+    protected override IEnumerable<Tuple<string, string>> PrepareReplaceText(Order order)
+    {
+      return base.PrepareReplaceText(order)
+        .Concat(new[]
+        {
+          new Tuple<string, string>("#ФИО_Отпускающего", _model.Employees.GetById(order.WasherCourierId).ToString()),
+          new Tuple<string, string>("#ФИО_Принимающего", _model.CurrentUser.ToString())
+        });
     }
   }
 }

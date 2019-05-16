@@ -174,6 +174,7 @@ namespace Laundry.Utils.Controls
       }
     }
 
+    [AlsoNotifyFor(nameof(AggregatedInstancesCount), nameof(AggregatedPrice))]
     public override long Count
     {
       get

@@ -241,6 +241,9 @@
     <Compile Include="Views\Actions\DeliverOrders.xaml.cs">
       <DependentUpon>DeliverOrders.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Actions\DistributeCorpOrders.xaml.cs">
+      <DependentUpon>DistributeCorpOrders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Actions\RecieveOrders.xaml.cs">
       <DependentUpon>RecieveOrders.xaml</DependentUpon>
     </Compile>
@@ -437,6 +440,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Actions\DistributeCorpOrders.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Actions\RecieveOrders.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -632,6 +639,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\Bill.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Check.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Contract.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

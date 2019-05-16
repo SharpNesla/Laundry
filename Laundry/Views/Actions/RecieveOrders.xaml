@@ -6,9 +6,8 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:Laundry.Utils.Controls" d:DesignWidth="800" d:DesignHeight="600"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel Width="800" Height="600">
+  <DockPanel  Height="700" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16,20,20,20">
       <StackPanel Orientation="Horizontal">

@@ -50,7 +50,7 @@
       cal:Message.Attach="[Event MouseDoubleClick] = [Action ShowInfoCard()]"
       ItemsSource="{Binding Entities}">
       <DataGrid.ContextMenu>
-        <ContextMenu>
+        <ContextMenu Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}">
           <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
           <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
         </ContextMenu>
