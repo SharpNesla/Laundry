@@ -12,6 +12,7 @@ using Laundry.Utils;
 using Laundry.Utils.Controls;
 using Laundry.Utils.Converters;
 using MongoDB.Driver;
+using NPOI.OpenXmlFormats.Wordprocessing;
 using NPOI.XWPF.UserModel;
 using Screen = Caliburn.Micro.Screen;
 
@@ -24,9 +25,10 @@ namespace Laundry.Views.Actions
     private readonly string _documentName;
     public OrderDataGridViewModel OrderGrid { get; set; }
     private readonly OrderStatusConverter _converter = new OrderStatusConverter();
+    private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
 
-
-    public OrderActionsBase(OrderRepository orderRepo, Employee currentUser, string orderEmployeeInvolvement, OrderDataGridViewModel orderGrid,
+    public OrderActionsBase(OrderRepository orderRepo, Employee currentUser, string orderEmployeeInvolvement,
+      OrderDataGridViewModel orderGrid,
       OrderStatus startStatus, OrderStatus changingStatus, string documentName = "Bill.docx")
     {
       Repository = orderRepo;
@@ -49,14 +51,20 @@ namespace Laundry.Views.Actions
         this.WriteDocumentation(order);
       }
     }
-
+    /// <summary>
+    /// Подготовка документа для дальнейшего экспорта (накладная, договоры и.т.п.)
+    /// </summary>
+    /// <param name="document">Загруженный документ из файла</param>
+    /// <param name="order">Заказ</param>
+    /// <returns></returns>
     public virtual Document PrepareDocument(XWPFDocument document, Order order)
     {
       var replacePhrases = new[]
       {
         new Tuple<string, string>("#Дата_Передачи", DateTime.Now.ToString("D")),
         new Tuple<string, string>("#Номер_Заказа", order.Id.ToString()),
-        new Tuple<string, string>("#Статус_Заказа", _converter.Convert(order.Status, typeof(string), null, CultureInfo.CurrentCulture)?.ToString())
+        new Tuple<string, string>("#Статус_Заказа",
+          _converter.Convert(order.Status, typeof(string), null, CultureInfo.CurrentCulture)?.ToString())
       };
 
       foreach (var paragraph in document.Paragraphs)
@@ -69,17 +77,34 @@ namespace Laundry.Views.Actions
           }
           catch (Exception e)
           {
-            
           }
         }
       }
 
-      
 
-      foreach (var documentTable in CheckTables(document))
+      var documentTables = CheckTables(document);
+
+      foreach (var documentTable in documentTables)
       {
+        var rowTemplate = documentTable.GetRow(1);
+      
+        foreach (var orderInstance in order.Instances)
+        {
+          var row = documentTable.CreateRow();
+        
+          row.GetCell(0).SetText(orderInstance.TagNumber.ToString());
+          row.GetCell(1).SetText(orderInstance.ClothKindObj.Name);
+          row.GetCell(2).SetText(
+            _measureKindConverter
+              .Convert(orderInstance.ClothKindObj.MeasureKind, typeof(string), null, CultureInfo.CurrentCulture)
+              ?.ToString());
+          row.GetCell(3).SetText(orderInstance.Amount.ToString());
+          row.GetCell(4).SetText(orderInstance.Comment ?? string.Empty);
+
+          documentTable.AddRow(row);
+        }
+
         documentTable.RemoveRow(1);
-        //documentTable.AddRow();
       }
 
       return document;
@@ -140,8 +165,6 @@ namespace Laundry.Views.Actions
           }
         }
       }
-
-      
     }
   }
 }

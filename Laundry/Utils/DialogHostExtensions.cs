@@ -21,7 +21,12 @@ namespace Laundry.Utils
     /// <typeparam name="T">Тип VM</typeparam>
     /// <param name="viewModel">VM</param>
     /// 
-   
+
+    public static void CloseCurrent()
+    {
+      Current.CurrentSession.Close();
+    }
+
     public static async Task ShowCaliburnVM<T>(T viewModel)
     {
       var view = ViewLocator.LocateForModel(viewModel, null, null);

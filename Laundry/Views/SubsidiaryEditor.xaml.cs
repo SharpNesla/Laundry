@@ -1,17 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Caliburn.Micro;
 using Model;
 using Model.CollectionRepositories;
@@ -37,10 +23,7 @@ namespace Laundry.Views
       : base(aggregator, model, model.Subsidiaries, entityTitleName)
     {
       this.Advisors = advisorsGrid;
-      Advisors.Filter = Builders<Employee>.Filter.And(
-        Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
-        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
-      );
+
       this.Advisors.DisplaySelectionColumn = false;
       this.Advisors.IsCompact = true;
 
@@ -48,24 +31,24 @@ namespace Laundry.Views
         Builders<Employee>.Filter.And(
           Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
           Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
-        ));
+        ),false);
     }
 
-    public void ApplyChanges(SubsidiaryEditorView view)
-    {
-      view.ZipCodeTextBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-      if (!Validation.GetHasError(view.ZipCodeTextBox))
-      {
-        this.ApplyChanges();
-      }
-    }
-
+    
     public override void Handle(Subsidiary message)
     {
       base.Handle(message);
-
-
       this.Advisors.Refresh(0, int.MaxValue);
+
+      MainAdvisorSearch.Filter = Builders<Employee>.Filter.And(
+        Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
+      );
+
+      Advisors.Filter = Builders<Employee>.Filter.And(
+        Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
+      );
     }
   }
 }

@@ -167,7 +167,7 @@
               CornerRadius="2"
               Panel.ZIndex="1"
               Margin="16 0 0 0"
-              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="396">
+              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="426">
               <StackPanel Orientation="Horizontal" Height="33">
                 <ComboBox Margin="8,0,16,0" Height="33" VerticalContentAlignment="Center"
                           materialDesign:HintAssist.Hint="Временной промежуток"
@@ -182,7 +182,7 @@
                           ItemsSource="{Binding Source={converters:Enumeration {x:Type local:EntityInfoType}}}"
                           DisplayMemberPath="Description"
                           SelectedValue="{Binding EntityGrid.EntityInfoType}"
-                          SelectedValuePath="Value" Width="197" />
+                          SelectedValuePath="Value" Width="226" />
               </StackPanel>
             </materialDesign:ColorZone>
           </StackPanel>
@@ -203,7 +203,7 @@
         <liveCharts:CartesianChart Series="{Binding EntityGrid.Values}" LegendLocation="Left">
 
           <liveCharts:CartesianChart.AxisX>
-            <liveCharts:Axis LabelsRotation="-45" Labels="{Binding EntityGrid.Labels}">
+            <liveCharts:Axis MinRange="20" LabelsRotation="-45" Labels="{Binding EntityGrid.Labels}">
               <liveCharts:Axis.Separator>
                 <liveCharts:Separator Step="1" />
               </liveCharts:Axis.Separator>

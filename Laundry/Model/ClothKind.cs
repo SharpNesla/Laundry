@@ -27,9 +27,9 @@ namespace Model
     public string Name { get; set; }
 
     public MeasureKind MeasureKind { get; set; }
-    
+
     public float Price { get; set; }
-    
+
     public float WashPrice { get; set; }
 
     [BsonIgnoreIfNull]

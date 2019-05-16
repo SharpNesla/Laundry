@@ -9,6 +9,8 @@
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:converters="clr-namespace:Laundry.Utils.Converters"
              xmlns:model="clr-namespace:Model"
+             xmlns:validationRules="clr-namespace:Laundry.Utils.ValidationRules"
+             xmlns:cal="http://www.caliburnproject.org"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
@@ -34,8 +36,7 @@
               Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
         ОТМЕНИТЬ
       </Button>
-      <Button Name="ApplyChanges" DockPanel.Dock="Left" MaxWidth="132"
-              Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+      <Button cal:Message.Attach="ApplyChanges($view)" DockPanel.Dock="Left" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>
@@ -47,8 +48,16 @@
       BorderThickness="0" Height="368">
       <StackPanel>
         <StackPanel Margin="2,0,0,0">
-          <TextBox materialDesign:HintAssist.Hint="Название" Text="{Binding Entity.Name}"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <TextBox materialDesign:HintAssist.Hint="Название"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+            <TextBox.Text>
+              <Binding Path="Entity.Name" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                  <validationRules:RequiredValidation FieldName="Название" />
+                </Binding.ValidationRules>
+              </Binding>
+            </TextBox.Text>
+          </TextBox>
 
 
           <ComboBox materialDesign:HintAssist.Hint="Мера измерения"
@@ -59,10 +68,26 @@
                     SelectedValue="{Binding Entity.MeasureKind}"
                     SelectedValuePath="Value" />
 
-          <TextBox materialDesign:HintAssist.Hint="Цена за единицу" Text="{Binding Entity.Price}"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-          <TextBox materialDesign:HintAssist.Hint="Себестоимость стирки за единицу" Text="{Binding Entity.WashPrice}"
-                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <TextBox materialDesign:HintAssist.Hint="Цена за единицу"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2">
+            <TextBox.Text>
+              <Binding Path="Entity.Price" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                  <validationRules:RequiredValidation FieldName="Цена за единицу" />
+                </Binding.ValidationRules>
+              </Binding>
+            </TextBox.Text>
+          </TextBox>
+          <TextBox materialDesign:HintAssist.Hint="Себестоимость стирки за единицу"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+            <TextBox.Text>
+              <Binding Path="Entity.WashPrice" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                  <validationRules:RequiredValidation FieldName="Себестоимость стирки" />
+                </Binding.ValidationRules>
+              </Binding>
+            </TextBox.Text>
+          </TextBox>
         </StackPanel>
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                  Margin="2,8,2,0"

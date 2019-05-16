@@ -125,7 +125,8 @@
                 <TextBox.Text>
                   <Binding Path="Entity.Patronymic" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                      <validationRules:PersonTextDataValidation FieldName="Отчество" IsRequired="False" ValidatesOnTargetUpdated="False" />
+                      <validationRules:PersonTextDataValidation FieldName="Отчество" IsRequired="False"
+                                                                ValidatesOnTargetUpdated="False" />
                     </Binding.ValidationRules>
                   </Binding>
                 </TextBox.Text>
@@ -146,7 +147,7 @@
                        materialDesign:HintAssist.Hint="Серия и номер паспорта"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                  <Binding Path="Entity.PassportSerial">
+                  <Binding Path="Entity.PassportSerial" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                       <validationRules:RequiredValidation FieldName="Серия и номер паспорта" />
                     </Binding.ValidationRules>
@@ -157,7 +158,7 @@
                        materialDesign:HintAssist.Hint="Паспорт выдан"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                  <Binding Path="Entity.PassportDistributor">
+                  <Binding Path="Entity.PassportDistributor" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                       <validationRules:RequiredValidation FieldName="Паспорт выдан" />
                     </Binding.ValidationRules>
@@ -168,7 +169,7 @@
                        materialDesign:HintAssist.Hint="Код подразделения"
                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                  <Binding Path="Entity.PassportDistributorCode">
+                  <Binding Path="Entity.PassportDistributorCode" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                       <validationRules:RequiredValidation FieldName="Код подразделения" />
                     </Binding.ValidationRules>
@@ -210,7 +211,7 @@
                   <TextBox Name="CityTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город"
                            Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                     <TextBox.Text>
-                      <Binding Path="Entity.City">
+                      <Binding Path="Entity.City" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                           <validationRules:RequiredValidation FieldName="Город" />
                         </Binding.ValidationRules>
@@ -221,7 +222,7 @@
                   <TextBox Name="StreetTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Улица"
                            Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                     <TextBox.Text>
-                      <Binding Path="Entity.Street">
+                      <Binding Path="Entity.Street" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                           <validationRules:RequiredValidation FieldName="Улица" />
                         </Binding.ValidationRules>
@@ -232,7 +233,7 @@
                   <TextBox Name="HouseTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Дом"
                            Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                     <TextBox.Text>
-                      <Binding Path="Entity.House">
+                      <Binding Path="Entity.House" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                           <validationRules:RequiredValidation FieldName="Дом" />
                         </Binding.ValidationRules>
@@ -243,7 +244,7 @@
                   <TextBox Name="FlatTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Квартира"
                            Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                     <TextBox.Text>
-                      <Binding Path="Entity.Flat">
+                      <Binding Path="Entity.Flat" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                           <validationRules:RequiredValidation FieldName="Квартира" />
                         </Binding.ValidationRules>
@@ -254,7 +255,7 @@
                   <TextBox Name="ZipCodeTextBox" Margin="0,0,0,16" materialDesign:HintAssist.Hint="Почтовый индекс"
                            Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                     <TextBox.Text>
-                      <Binding Path="Entity.ZipCode">
+                      <Binding Path="Entity.ZipCode" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                           <validationRules:RequiredValidation FieldName="Индекс" />
                         </Binding.ValidationRules>
@@ -294,10 +295,11 @@
 
             <ContentControl Grid.Row="1" Grid.Column="1"
                             Visibility="{Binding IsDriverOrCourier, Converter={StaticResource BoolVisibilityConverter}}"
+                            IsEnabled="{Binding IsDriverOrCourier}"
                             Name="CarSearch" />
             <ContentControl Grid.Row="1" Grid.Column="1"
                             Visibility="{Binding IsAdvisor, Converter={StaticResource BoolVisibilityConverter}}"
-                            Name="SubsidiarySearch" />
+                            Name="SubsidiarySearch" IsEnabled="{Binding IsAdvisor}" />
             <CheckBox IsChecked="{Binding Entity.IsCourierCarDriver}" Grid.Row="2" Grid.Column="1"
                       Margin="0,0,0,8" VerticalAlignment="Bottom"
                       Style="{StaticResource MaterialDesignCheckBox}"

@@ -85,8 +85,8 @@ namespace Laundry.Utils.Controls
     public bool IsTreeMode { get; set; }
 
     public ClothKindTreeViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
-      IModel model, DeleteDialogViewModel shure)
-      : base(eventAggregator, card, model.ClothKinds, shure, Screens.ClothKindEditor)
+      IModel model, DeleteDialogViewModel removeDialog)
+      : base(eventAggregator, card, model.ClothKinds, removeDialog, Screens.ClothKindEditor)
     {
       _model = model;
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
@@ -157,6 +157,9 @@ namespace Laundry.Utils.Controls
         }
       }
     }
+
+    public string AggregatedInstancesCount => Repo.GetAggregatedInstacesCount(Filter);
+    public double AggregatedPrice => Repo.GetAggregatedPrice(Filter);
 
     public override void Refresh(int page, int elements)
     {

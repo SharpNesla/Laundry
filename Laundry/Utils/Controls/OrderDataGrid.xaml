@@ -85,22 +85,13 @@
                               cal:View.Model="{Binding OutSubsidiaryCombo}" />
             </StackPanel>
             <StackPanel Width="201" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-              <CheckBox IsChecked="{Binding IsByOrdersPrice}" Height="22">По стоимости всех заказов</CheckBox>
-              <TextBox Text="{Binding LowOrdersPriceBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+              <CheckBox IsChecked="{Binding IsByPrice}" Height="22">По стоимости всех заказов</CheckBox>
+              <TextBox Text="{Binding LowPriceBound}" materialDesign:HintAssist.Hint="Нижняя граница"
                        Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                       HorizontalAlignment="Stretch" IsEnabled="{Binding IsByOrdersPrice}" Height="36"/>
-              <TextBox Text="{Binding TopOrdersPriceBound }" materialDesign:HintAssist.Hint="Верхняя граница"
+                       HorizontalAlignment="Stretch" IsEnabled="{Binding IsByPrice}" Height="36"/>
+              <TextBox Text="{Binding TopPriceBound }" materialDesign:HintAssist.Hint="Верхняя граница"
                        Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                       HorizontalAlignment="Stretch" IsEnabled="{Binding IsByOrdersPrice}" Height="36"/>
-            </StackPanel>
-            <StackPanel Width="201" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-              <CheckBox IsChecked="{Binding IsByOrdersPrice}" Height="22">По стоимости всех заказов</CheckBox>
-              <TextBox Text="{Binding LowOrdersPriceBound}" materialDesign:HintAssist.Hint="Нижняя граница"
-                       Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                       HorizontalAlignment="Stretch" IsEnabled="{Binding IsByOrdersPrice}" Height="36"/>
-              <TextBox Text="{Binding TopOrdersPriceBound }" materialDesign:HintAssist.Hint="Верхняя граница"
-                       Margin="0,0,0,8" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                       HorizontalAlignment="Stretch" IsEnabled="{Binding IsByOrdersPrice}" Height="36"/>
+                       HorizontalAlignment="Stretch" IsEnabled="{Binding IsByPrice}" Height="36"/>
             </StackPanel>
             <StackPanel Width="201" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
               <CheckBox IsChecked="{Binding IsByStatus}" Height="22">По статусу</CheckBox>

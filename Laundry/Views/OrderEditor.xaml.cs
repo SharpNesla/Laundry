@@ -43,6 +43,10 @@ namespace Laundry.Views
       : base(aggregator, model, model.Orders, "заказа")
     {
       aggregator.Subscribe(this);
+
+      this.Entity.CreationDate = DateTime.Now;
+      this.Entity.ExecutionDate = DateTime.Now.AddDays(1);
+
       this.ClothInstancesGrid = clothGrid;
       this.ClothInstancesGrid.Order = this.Entity;
 

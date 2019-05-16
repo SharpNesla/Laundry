@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Caliburn.Micro;
 using Model;
 using Model.CollectionRepositories;
@@ -20,14 +8,10 @@ using Laundry.Views.Cards;
 using LiveCharts;
 using LiveCharts.Wpf;
 using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 using PropertyChanged;
 
 namespace Laundry.Utils.Controls
 {
-  /// <summary>
-  /// Interaction logic for SubsidiaryGrid.xaml
-  /// </summary>
   public class SubsidiaryGridViewModel : EntityGrid<Subsidiary, Repository<Subsidiary>, SubsidiaryCardViewModel>,
     IChartable<Subsidiary>
   {
@@ -40,6 +24,7 @@ namespace Laundry.Utils.Controls
     }
 
     private readonly IModel _model;
+
 
     public SubsidiaryGridViewModel(IEventAggregator eventAggregator, SubsidiaryCardViewModel card,
       DeleteDialogViewModel deleteDialog,
@@ -85,7 +70,7 @@ namespace Laundry.Utils.Controls
       return row;
     }
 
-    public string[] Labels => this.Entities.Select(x => x.Signature).ToArray();
+    public string[] Labels => this.Repo.Get(0, int.MaxValue).Select(x => $"{x.Id} {x.Name}").ToArray();
     public string LabelsTitle => "Филиалы";
     public string ValuesTitle => "Суммы";
     public ChartTime Time { get; set; }

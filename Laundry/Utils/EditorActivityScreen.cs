@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -70,7 +71,7 @@ namespace Laundry.Utils
     public virtual void ApplyChanges(DependencyObject view)
     {
       var tree = FindVisualChildren<TextBox>(view);
-      var comboboxes = FindVisualChildren<ComboBox>(view);
+      var comboboxes = FindVisualChildren<ComboBox>(view).Where(x=>x.IsEnabled);
       foreach (TextBox tb in tree)
       {
         tb.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();

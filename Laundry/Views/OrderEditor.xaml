@@ -71,8 +71,7 @@
             Converter={StaticResource BoolNotVisibilityConverter}}"
                           Name="ObtainerCombo" />
           <ContentControl Margin="2,0,0,0" Grid.Row="3" Grid.ColumnSpan="3"
-                          Visibility="{Binding Entity.IsCorporative, 
-            Converter={StaticResource BoolVisibilityConverter}}"
+                          Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolVisibilityConverter}}"
                           Name="CorpObtainerCombo" />
           <ContentControl Margin="2,0,0,0" Grid.Row="4" Grid.ColumnSpan="3" Name="InCourierCombo" />
           <ContentControl Margin="2,0,0,0" Grid.Row="5" Grid.ColumnSpan="3" Name="WasherCombo" />

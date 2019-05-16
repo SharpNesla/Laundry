@@ -8,6 +8,8 @@
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:model="clr-namespace:Model"
+             xmlns:validationRules="clr-namespace:Laundry.Utils.ValidationRules"
+             xmlns:cal="http://www.caliburnproject.org"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
@@ -33,8 +35,7 @@
               Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
         ОТМЕНИТЬ
       </Button>
-      <Button Name="ApplyChanges" DockPanel.Dock="Left" MaxWidth="132"
-              Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+      <Button cal:Message.Attach="ApplyChanges($view)" DockPanel.Dock="Left" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>
@@ -43,14 +44,39 @@
       Padding="16"
       Margin="25">
       <StackPanel>
-        <ContentControl Name="ClothKindTree" />
+
         <StackPanel Margin="2,0,0,0">
-        <TextBox materialDesign:HintAssist.Hint="Номер бирки" Text="{Binding Entity.TagNumber}"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-        <TextBox materialDesign:HintAssist.Hint="Процент износа" Text="{Binding Entity.WearPercentage}"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-        <TextBox materialDesign:HintAssist.Hint="Количесто" Text="{Binding Entity.Amount}"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+          <ContentControl Name="ClothKindTree" />
+          <TextBox materialDesign:HintAssist.Hint="Номер бирки"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2">
+            <TextBox.Text>
+              <Binding Path="Entity.TagNumber" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                  <validationRules:RequiredValidation FieldName="Номер бирки" />
+                </Binding.ValidationRules>
+              </Binding>
+            </TextBox.Text>
+          </TextBox>
+          <TextBox materialDesign:HintAssist.Hint="Процент износа"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2">
+            <TextBox.Text>
+              <Binding Path="Entity.WearPercentage" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                  <validationRules:RequiredValidation FieldName="Процент износа" />
+                </Binding.ValidationRules>
+              </Binding>
+            </TextBox.Text>
+          </TextBox>
+          <TextBox materialDesign:HintAssist.Hint="Количесто"
+                   Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+            <TextBox.Text>
+              <Binding Path="Entity.Amount" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                  <validationRules:RequiredValidation FieldName="Количество" />
+                </Binding.ValidationRules>
+              </Binding>
+            </TextBox.Text>
+          </TextBox>
         </StackPanel>
         <TextBox Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                  Margin="2,8,0,0"

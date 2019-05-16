@@ -22,7 +22,7 @@
         <TextBlock Margin="8,12,81,0" TextAlignment="Left">
           <TextBlock.Text>
             <MultiBinding
-              StringFormat="{}Всего заказов по критериям: {0}&#x0a;Всего единиц одежды: {1}&#x0a;На общую сумму: {2:0.00}₽">
+              StringFormat="{}Всего видов одежды заказов по критериям: {0}&#x0a;Всего единиц одежды: {1}&#x0a;На общую сумму: {2:0.00}₽">
               <Binding Path="Count" />
               <Binding Path="AggregatedInstancesCount" />
               <Binding Path="AggregatedPrice" />

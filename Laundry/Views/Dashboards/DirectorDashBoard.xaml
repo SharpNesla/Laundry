@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:validationRules="clr-namespace:Laundry.Utils.ValidationRules"
+             xmlns:converters="clr-namespace:Laundry.Utils.Converters"
+             xmlns:model="clr-namespace:Model"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
@@ -18,19 +22,84 @@
         <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
                       Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
         <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center"
-                   Text="{StaticResource Dashboard.Title}" Margin="16 0 0 0" />
+                   Text="Обзор: директор" Margin="16 0 0 0" />
       </StackPanel>
     </materialDesign:ColorZone>
+    <Grid Margin="24" Visibility="{Binding InfoVisibility}">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="197*" MinWidth="300" MaxWidth="500" />
+        <ColumnDefinition Width="371*" />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <materialDesign:Card Margin="0,0,16,16"
+                           BorderThickness="0" VerticalAlignment="Stretch">
+        <DockPanel LastChildFill="True" Margin="16">
+          <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" DockPanel.Dock="Top"
+                     Text="Итоги" Margin="0,0,0,16"/>
+          <StackPanel>
+            <TextBlock Text="{Binding OrdersCountByMounth, StringFormat='Принято заказов за последний месяц: {0}'}"/>
+            <TextBlock TextWrapping="Wrap"
+              Text="{Binding AggregatedInstancesCountByMounth, StringFormat='Принято вещей за последний месяц: {0}'}"/>
+            <TextBlock Text="{Binding AggregatedPriceByMounth, StringFormat='На общую сумму: {0}₽'}"/>
+          </StackPanel>
+        </DockPanel>
+      </materialDesign:Card>
+      <materialDesign:Card Margin="0,0,16,0" Grid.Row="1"
+                           BorderThickness="0" VerticalAlignment="Stretch">
+        <ScrollViewer Padding="16" VerticalScrollBarVisibility="Auto">
+          <DockPanel LastChildFill="True">
+            <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" DockPanel.Dock="Top"
+                       Text="Состояние предприятия" Margin="0,0,0,16"/>
+            <StackPanel>
+              <TextBlock Text="{Binding EmployeeCount, StringFormat='Количество работников: {0} человек'}"/>
+            </StackPanel>
+          </DockPanel>
+        </ScrollViewer>
+      </materialDesign:Card>
+      <materialDesign:Card
+        Padding="16" Grid.Column="1" VerticalAlignment="Stretch" Margin="0,0,0,16">
+        <DockPanel LastChildFill="True">
+          <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" DockPanel.Dock="Top"
+                     Text="Стоимость принятых заказов за последний месяц" />
+          <wpf:CartesianChart Series="{Binding MoneyValues}" LegendLocation="Left">
 
-    <StackPanel Margin="0" Width="400">
-      <Button Name="MoveFromSubs" Margin="0,0,0,16" Content="Отвезти заказы из филиала на стирку"
-              Visibility="{Binding Visibilities.Courier}" />
-      <Button Name="RecieveOrders" Margin="0,0,0,16" Content="Принять заказы на стирку" Visibility="{Binding Visibilities.Washer}" />
-      <Button Name="Wash" Margin="0,0,0,16" Content="Постирать заказы" Visibility="{Binding Visibilities.Washer}" />
-      <Button Name="ApplyOrdersForDelivery" Margin="0,0,0,16" Content="Подготовить заказы к доставке" Visibility="{Binding Visibilities.Washer}" />
-      <Button Margin="0,0,0,16" Content="Выдать заказы" Visibility="{Binding Visibilities.Advisor}" />
-      <Button Name="MoveToSubs" Margin="0,0,0,16" Content="Отвезти заказы на выдачу" Visibility="{Binding Visibilities.Courier}" />
-      <Button Margin="0,0,0,16" Content="Доставить корпоративные заказы" Visibility="{Binding Visibilities.Courier}" />
-    </StackPanel>
+            <wpf:CartesianChart.AxisX>
+              <wpf:Axis MinRange="20" LabelsRotation="-45" Labels="{Binding DayLabels}">
+                <wpf:Axis.Separator>
+                  <wpf:Separator Step="1" />
+                </wpf:Axis.Separator>
+              </wpf:Axis>
+            </wpf:CartesianChart.AxisX>
+            <wpf:CartesianChart.AxisY>
+              <wpf:Axis />
+            </wpf:CartesianChart.AxisY>
+          </wpf:CartesianChart>
+        </DockPanel>
+      </materialDesign:Card>
+      <materialDesign:Card
+        Padding="16" Grid.Column="1" VerticalAlignment="Stretch" Grid.Row="1">
+        <DockPanel LastChildFill="True">
+          <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" DockPanel.Dock="Top"
+                     Text="Количество принятых вещей за последний месяц" />
+          <wpf:CartesianChart Series="{Binding ThingsValues}" LegendLocation="Left">
+
+            <wpf:CartesianChart.AxisX>
+              <wpf:Axis MinRange="20" LabelsRotation="-45" Labels="{Binding DayLabels}">
+                <wpf:Axis.Separator>
+                  <wpf:Separator Step="1" />
+                </wpf:Axis.Separator>
+              </wpf:Axis>
+            </wpf:CartesianChart.AxisX>
+            <wpf:CartesianChart.AxisY>
+              <wpf:Axis />
+            </wpf:CartesianChart.AxisY>
+          </wpf:CartesianChart>
+        </DockPanel>
+      </materialDesign:Card>
+
+    </Grid>
   </DockPanel>
 </UserControl>

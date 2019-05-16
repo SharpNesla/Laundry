@@ -50,29 +50,31 @@ namespace Model.CollectionRepositories
         new BsonDocument("$unwind",
           new BsonDocument
           {
-            { "path", "$Instances" },
-            { "preserveNullAndEmptyArrays", false }
+            {"path", "$Instances"},
+            {"preserveNullAndEmptyArrays", false}
           }),
         new BsonDocument("$lookup",
           new BsonDocument
           {
-            { "from", "clothkinds" },
-            { "localField", "Instances.ClothKind" },
-            { "foreignField", "_id" },
-            { "as", "ClothKind" }
+            {"from", "clothkinds"},
+            {"localField", "Instances.ClothKind"},
+            {"foreignField", "_id"},
+            {"as", "ClothKind"}
           }),
         new BsonDocument("$unwind",
           new BsonDocument
           {
-            { "path", "$Instances" },
-            { "preserveNullAndEmptyArrays", false }
+            {"path", "$Instances"},
+            {"preserveNullAndEmptyArrays", false}
           }),
         new BsonDocument("$group",
           new BsonDocument
           {
-            { "_id", "$ClothKind.MeasureKind" },
-            { "Count",
-              new BsonDocument("$sum", "$Instances.Amount") }
+            {"_id", "$ClothKind.MeasureKind"},
+            {
+              "Count",
+              new BsonDocument("$sum", "$Instances.Amount")
+            }
           }),
         new BsonDocument("$sort",
           new BsonDocument("_id", 1))
@@ -239,93 +241,57 @@ namespace Model.CollectionRepositories
       var filters = Builders<Order>.Filter.And(
         Builders<Order>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
         filter ?? Builders<Order>.Filter.Empty);
-      var measureKindGroupDefinition = @"
-{
-  _id: '$ClothKind.MeasureKind',
-  Price: {$first:'$Price'},
-  ExecutionDate : {$first : '$ExecutionDate'},
-  UnCountableCount : { 
-    $sum : { 
-      $cond:[
-          {$eq: ['$ClothKind.MeasureKind', 1]},
-          '$Instances.Amount', 
-          0]
-      }
-  },
-  Count : { 
-    $sum : { 
-      $cond:[
-          {$in: ['$ClothKind.MeasureKind', [0,2]]},
-          '$Instances.Amount', 
-          0]
-      }
-  }
-}
-";
       var groupingDefiniton = @"
 {
   _id: '$DateTime',
   Price: {
     $sum: '$Price'
   },
-  Count:{$sum:'$Count'},
-  UnCountableCount:{$sum:'$UnCountableCount'}
+  UnCountableCount : { 
+    $sum : { 
+      $cond:[
+          {$eq: ['$MeasureKind', 1]},
+          '$Amount', 
+          0]
+      }
+  },
+  Count : { 
+    $sum : { 
+      $cond:[
+          {$in: ['$MeasureKind', [0,2]]},
+          '$Amount', 
+          0]
+      }
+  }
 }";
-      string projectionDefinition = string.Empty;
+      var daysPart = time == ChartTime.Day
+        ? "'day': {  '$dayOfMonth': '$ExecutionDate'  },"
+        : string.Empty;
+      var monthPart = time == ChartTime.Day || time == ChartTime.Mounth
+        ? "'month' : {'$month': '$ExecutionDate'},"
+        : string.Empty;
 
-      switch (time)
-      {
-        case ChartTime.Day:
-          projectionDefinition = @"
-{
+      var projectionDefinition = $@"
+{{
   Price: '$Price',
+  Amount: '$Instances.Amount',
   Count: '$Count',
+  MeasureKind : '$ClothKind.MeasureKind',
   UnCountableCount:'$UnCountableCount',
-  DateTime: {
-        $dateFromParts: {
-          'year': {$year: '$ExecutionDate'},
-          'day': {$dayOfMonth: '$ExecutionDate'},
-          'month': {$month: '$ExecutionDate' }
-        }
-      }
-}
-      ";
-          break;
-        case ChartTime.Mounth:
-          projectionDefinition = @"
-{
-  Price: '$Price',
-  Count: '$Count',
-  UnCountableCount:'$UnCountableCount',
-  DateTime: {
-        $dateFromParts: {
-          'year': {$year: '$ExecutionDate'},
-          'month': {$month: '$ExecutionDate' }
-        }
-      }
-}";
-          break;
-        case ChartTime.Year:
-          projectionDefinition = @"
-{
-  Price: '$Price',
-  Count: '$Count',
-  UnCountableCount:'$UnCountableCount',
-  DateTime: {
-        $dateFromParts: {
-          'year': {$year: '$ExecutionDate'},
-        }
-      }
-}";
-          break;
-      }
+  DateTime:{{$dateFromParts:{{
+    {daysPart}
+    {monthPart}
+    'year': {{$year: ""$ExecutionDate""}}
+    }}
+  }}
+}}";
+
 
       var readOnlyList = this.Collection.Aggregate()
         .Match(filters)
         .Unwind("Instances", new AggregateUnwindOptions<Order>() {PreserveNullAndEmptyArrays = true})
         .Lookup("clothkinds", "Instances.ClothKind", "_id", "ClothKind")
-        .Unwind("ClothKind", new AggregateUnwindOptions<Order>() {PreserveNullAndEmptyArrays = true})
-        .Group(measureKindGroupDefinition)
+        .Unwind("ClothKind")
         .Project(projectionDefinition)
         .Group(groupingDefiniton)
         .As<AggregationResult>()

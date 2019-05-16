@@ -43,7 +43,16 @@ namespace Model.DatabaseClients
 
     public Employee GetCurrentEmployee(string username, string password)
     {
-      var user = this.Collection.Find(Builders<Employee>.Filter.Eq("Username", username)).First();
+      Employee user = null;
+      try
+      {
+        user = this.Collection.Find(Builders<Employee>.Filter.Eq("Username", username)).First();
+      }
+      catch (InvalidOperationException e)
+      {
+        throw new UnauthorizedAccessException();
+      }
+
       byte[] hashBytes = Convert.FromBase64String(GetPasswordHash(user));
       /* Get the salt */
       byte[] salt = new byte[16];

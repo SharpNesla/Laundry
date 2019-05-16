@@ -91,6 +91,14 @@ namespace Laundry.Utils.Controls
           }
         }
 
+        if (IsByPrice)
+        {
+          filter = Builders<Order>.Filter.And(
+            filter,
+            Builders<Order>.Filter.Gte(nameof(Order.Price), this.LowPriceBound ?? 0),
+            Builders<Order>.Filter.Lte(nameof(Order.Price), this.TopPriceBound ?? double.MaxValue));
+        }
+
         if (IsByStatus)
         {
           filter = Builders<Order>.Filter.And(
@@ -135,6 +143,10 @@ namespace Laundry.Utils.Controls
     public bool IsBySubsidiary { get; set; }
     public SubsidiarySearchViewModel InSubsidiaryCombo { get; set; }
     public SubsidiarySearchViewModel OutSubsidiaryCombo { get; set; }
+
+    public bool IsByPrice { get; set; }
+    public double? LowPriceBound { get; set; }
+    public double? TopPriceBound { get; set; }
 
     public bool IsByStatus { get; set; }
     public OrderStatus Status { get; set; }
@@ -194,7 +206,9 @@ namespace Laundry.Utils.Controls
 
       this.Profession = EmployeeProfession.Courier;
     }
+
     public override string TableSheetName => "Заказы";
+
     public override string[] TableSheetHeader =>
       new[]
       {
@@ -211,7 +225,6 @@ namespace Laundry.Utils.Controls
     protected override IRow PrepareEntityRow(ISheet sheet, Order entity)
     {
       #region Общая информация
-
 
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
 
@@ -257,7 +270,7 @@ namespace Laundry.Utils.Controls
       #endregion
 
       row.CreateCell(19).SetCellValue(entity.InstancesCount);
-     
+
 
       var clothString = string.Empty;
 
@@ -277,7 +290,6 @@ namespace Laundry.Utils.Controls
 
     public SeriesCollection Values
     {
-
       get
       {
         switch (this.EntityInfoType)
@@ -288,12 +300,12 @@ namespace Laundry.Utils.Controls
               new ColumnSeries
               {
                 Title = "шт",
-                Values = new ChartValues<long>(this.AggregationResults.Select(x=> x.Count))
+                Values = new ChartValues<long>(this.AggregationResults.Select(x => x.Count))
               },
               new ColumnSeries
               {
                 Title = "кг",
-                Values = new ChartValues<double>(this.AggregationResults.Select(x=> x.UnCountableCount))
+                Values = new ChartValues<double>(this.AggregationResults.Select(x => x.UnCountableCount))
               }
             };
           case EntityInfoType.Cost:
@@ -302,7 +314,7 @@ namespace Laundry.Utils.Controls
               new ColumnSeries
               {
                 Title = "₽",
-                Values = new ChartValues<double>(this.AggregationResults.Select(x=> x.Price))
+                Values = new ChartValues<double>(this.AggregationResults.Select(x => x.Price))
               }
             };
           default:
@@ -310,7 +322,7 @@ namespace Laundry.Utils.Controls
         }
       }
     }
-    
+
     public IReadOnlyList<AggregationResult> AggregationResults => this.Repo.AggregateOrders(Time, Filter);
 
     public string[] Labels
@@ -330,8 +342,10 @@ namespace Laundry.Utils.Controls
         }
       }
     }
+
     [AlsoNotifyFor(nameof(Labels))]
     public ChartTime Time { get; set; }
+
     public EntityInfoType EntityInfoType { get; set; }
   }
 }

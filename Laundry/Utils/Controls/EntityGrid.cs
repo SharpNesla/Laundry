@@ -59,7 +59,7 @@ namespace Laundry.Utils.Controls
       set { BaseFilter = value; }
     }
 
-    private readonly DeleteDialogViewModel _shure;
+    protected readonly DeleteDialogViewModel RemoveDialog;
 
     protected FilterDefinition<TEntity> BaseFilter { get; private set; }
     public TRepository Repo { get; }
@@ -75,7 +75,7 @@ namespace Laundry.Utils.Controls
     public string SearchString { get; set; }
 
     protected EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
-      DeleteDialogViewModel shure, Screens editScreen, Visibilities visibilities = null, string entityName = "объекта",
+      DeleteDialogViewModel removeDialog, Screens editScreen, Visibilities visibilities = null, string entityName = "объекта",
       bool displaySelectColumn = true)
     {
       this._card = card;
@@ -83,7 +83,7 @@ namespace Laundry.Utils.Controls
       this.EventAggregator = eventAggregator;
       this.Repo = repo;
       this.EntityName = entityName;
-      this._shure = shure;
+      this.RemoveDialog = removeDialog;
       this.DisplaySelectionColumn = displaySelectColumn;
       this.BaseFilter = Builders<TEntity>.Filter.Empty;
       this.Visibilities = visibilities;
@@ -150,9 +150,9 @@ namespace Laundry.Utils.Controls
       EventAggregator.PublishOnUIThread(SelectedEntity);
     }
 
-    public async void Remove()
+    public virtual async void Remove()
     {
-      var isDelete = await _shure.AskQuestion();
+      var isDelete = await RemoveDialog.AskQuestion();
       if (isDelete)
       {
         this.Repo.Remove(SelectedEntity);

@@ -26,7 +26,6 @@ namespace Laundry.Utils.Controls
 {
   public class ClothDataGridViewModel : EntityGrid<ClothInstance, ClothInstancesRepository, ClothInstanceCardViewModel>
   {
-
     //public override FilterDefinition<Client> Filter
     //{
     //  get
@@ -50,10 +49,11 @@ namespace Laundry.Utils.Controls
     private readonly IEventAggregator _eventAggregator;
     private readonly IModel _model;
     public Order Order { get; set; }
-    
+
     public ClothDataGridViewModel(IEventAggregator eventAggregator,
       ClothInstanceCardViewModel card, IModel model,
-      DeleteDialogViewModel shure) : base(eventAggregator, card, model.ClothInstances, shure, Screens.About)
+      DeleteDialogViewModel removeDialog) : base(eventAggregator, card, model.ClothInstances, removeDialog,
+      Screens.About)
     {
       _eventAggregator = eventAggregator;
       _model = model;
@@ -75,17 +75,21 @@ namespace Laundry.Utils.Controls
       RaiseStateChanged();
     }
 
+    public override async void Remove()
+    {
+      var isDelete = await RemoveDialog.AskQuestion();
+      if (isDelete)
+      {
+        Order.Instances.Remove(SelectedEntity);
+        RaiseStateChanged();
+      }
+    }
+
     public override void Refresh(int page, int elements)
     {
       this.Entities = Order.Instances.AsReadOnly();
     }
 
     public override long Count => Order.Instances.Count;
-
-    protected override XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
-    {
-      throw new NotImplementedException();
-    }
-
   }
 }

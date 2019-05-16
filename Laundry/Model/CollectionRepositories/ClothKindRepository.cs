@@ -226,6 +226,7 @@ namespace Model.CollectionRepositories
       var filters =
         filter ?? Builders<ClothKind>.Filter.Empty;
 
+
       var clothKinds =
         this.Collection
           .Aggregate()
@@ -345,37 +346,132 @@ namespace Model.CollectionRepositories
       var filters = Builders<ClothKind>.Filter.And(
         Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
         filter ?? Builders<ClothKind>.Filter.Empty);
-      var projectDef = @"{
-      SumPrice: {$multiply:['$Price', '$ClothInstances.Amount']}, 
+
+      var daysPart = time == ChartTime.Day
+        ? "'day': {  '$dayOfMonth': '$ClothInstances.ExecutionDate'  },"
+        : string.Empty;
+      var monthPart = time == ChartTime.Day || time == ChartTime.Mounth
+        ? "'month' : {'$month': '$ClothInstances.ExecutionDate'},"
+        : string.Empty;
+      var projectDef = $@"
+{{
+      SumPrice: {{$multiply:['$Price', '$ClothInstances.Amount']}}, 
       MeasureKind: '$MeasureKind',
       Price : '$Price',
       Count: '$Count',
       WashPrice: '$WashPrice',
       Name: '$Name',
       Amount: '$ClothInstances.Amount',
-      DateTime: {
-        '$dateFromParts': {
-          'year': {
+      DateTime: {{
+        '$dateFromParts': {{
+          {daysPart}
+          {monthPart}
+          'year': {{
             '$year': '$ClothInstances.ExecutionDate'
-          }, 
-          'day': {
-            '$dayOfMonth': '$ClothInstances.ExecutionDate'
-          }, 
-          'month': {
-            '$month': '$ClothInstances.ExecutionDate'
-          }
-        }
-      }
-    }";
+          }}        
+        }}
+      }}
+}}";
       var readOnlyList = this.Collection
         .Aggregate()
+        .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
+        .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
+        .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
+        .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
+        .As<ClothKind>()
+        .Match(filters)
         .AppendStage<BsonDocument>(AggrStagesForChart[0].AsBsonDocument)
         .AppendStage<BsonDocument>(AggrStagesForChart[1].AsBsonDocument)
-        .AppendStage<BsonDocument>(AggrStagesForChart[2].AsBsonDocument)
+        .Project(projectDef)
         .AppendStage<BsonDocument>(AggrStagesForChart[3].AsBsonDocument)
         .AppendStage<BsonDocument>(AggrStagesForChart[4].AsBsonDocument)
         .As<AggregationResult>().ToList();
       return readOnlyList;
+    }
+
+    public string GetAggregatedInstacesCount(FilterDefinition<ClothKind> filter)
+    {
+      var filters =
+        filter ?? Builders<ClothKind>.Filter.Empty;
+
+      var groupDef = @"
+{
+  _id: '$MeasureKind',
+  Count: {$sum: '$Amount'}
+}";
+
+      var aggregation =
+        this.Collection
+          .Aggregate()
+          .Match(Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
+          .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
+          .As<ClothKind>()
+          .Match(filters)
+          .Group(groupDef).ToList();
+
+
+      int things = 0;
+      int pairs = 0;
+      int kgs = 0;
+      try
+      {
+        things = aggregation[0]["Count"].AsInt32;
+      }
+      catch (ArgumentOutOfRangeException e)
+      {
+      }
+
+      try
+      {
+        pairs = aggregation[2]["Count"].AsInt32;
+      }
+      catch (ArgumentOutOfRangeException e)
+      {
+      }
+
+      try
+      {
+        kgs = aggregation[1]["Count"].AsInt32;
+      }
+      catch (ArgumentOutOfRangeException e)
+      {
+      }
+
+      return
+        $"{things + pairs}шт, {kgs}кг";
+    }
+
+    public double GetAggregatedPrice(FilterDefinition<ClothKind> filter)
+    {
+      var groupDef = @"{
+  _id: 1,
+  Price: {$sum: {$multiply: ['$Price', '$Count']}}
+}";
+      var filters =
+        filter ?? Builders<ClothKind>.Filter.Empty;
+
+      //В случае, если при агрегации в последовательности не оказалось элементов возвращаем ноль
+      try
+      {
+        var doc = this.Collection
+          .Aggregate()
+          .Match(Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
+          .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
+          .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
+          .As<ClothKind>()
+          .Match(filters)
+          .Group(groupDef).ToList()[0]["Price"].AsDouble;
+        return doc;
+      }
+      catch (ArgumentOutOfRangeException e)
+      {
+        return 0;
+      }
     }
   }
 }

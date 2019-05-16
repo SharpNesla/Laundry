@@ -20,7 +20,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
 {
   public class CarSearchViewModel : EntitySearchBox<Car, CarRepository>
   {
-    public CarSearchViewModel(IModel model, string label = "Объект", FilterDefinition<Car> filter = null) : base(model.Cars, label, filter)
+    public CarSearchViewModel(IModel model, string label = "Автомобиль", FilterDefinition<Car> filter = null) : base(model.Cars, label, filter)
     {
     }
   }

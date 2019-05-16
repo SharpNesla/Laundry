@@ -75,9 +75,9 @@ namespace Laundry.Views
     {
       Paginator.CurrentPage = 1;
       Paginator.ClearPaginable();
-      Paginator.RegisterPaginable(repository, false);
+      Paginator.RegisterPaginable(repository);
       Paginator.ElementsName = elementsName;
-
+      
       this.SearchHintString = $"Поиск {elementsName.ToLower()}";
 
       this.EntityGrid = repository;

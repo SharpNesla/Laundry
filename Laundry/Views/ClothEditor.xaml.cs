@@ -17,6 +17,7 @@ using Model;
 using Model.CollectionRepositories;
 using Laundry.Utils;
 using Laundry.Utils.Controls.EntitySearchControls;
+using MaterialDesignThemes.Wpf;
 using Action = System.Action;
 
 namespace Laundry.Views
@@ -59,6 +60,8 @@ namespace Laundry.Views
       {
         this.Order.Instances[_instancePos] = this.Entity;
       }
+
+      DialogHostExtensions.CloseCurrent();
 
       Changed?.Invoke();
     }

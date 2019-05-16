@@ -54,33 +54,76 @@
             <ContentControl Name="MainAdvisorSearch" IsEnabled="{Binding MainAdvisorSearchEnabled}" />
 
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Торговое название"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                     Text="{Binding Entity.Name}" />
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+              <TextBox.Text>
+                <Binding Path="Entity.Name" UpdateSourceTrigger="PropertyChanged">
+                  <Binding.ValidationRules>
+                    <validationRules:RequiredValidation FieldName="Торговое название" />
+                  </Binding.ValidationRules>
+                </Binding>
+              </TextBox.Text>
+            </TextBox>
             <TextBox Margin="0,0,0,8" materialDesign:HintAssist.Hint="Номер телефона"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                     Text="{Binding Entity.PhoneNumber}" />
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+              <TextBox.Text>
+                <Binding Path="Entity.PhoneNumber" UpdateSourceTrigger="PropertyChanged">
+                  <Binding.ValidationRules>
+                    <validationRules:PhoneValidation />
+                  </Binding.ValidationRules>
+
+                </Binding>
+              </TextBox.Text>
+            </TextBox>
             <TextBox Name="CityTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Город"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                     Text="{Binding Entity.City}" />
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+              <TextBox.Text>
+                <Binding Path="Entity.City" UpdateSourceTrigger="PropertyChanged">
+                  <Binding.ValidationRules>
+                    <validationRules:RequiredValidation FieldName="Город" />
+                  </Binding.ValidationRules>
+                </Binding>
+              </TextBox.Text>
+            </TextBox>
 
             <TextBox Name="StreetTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Улица"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                     Text="{Binding Entity.Street}" />
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+              <TextBox.Text>
+                <Binding Path="Entity.Street" UpdateSourceTrigger="PropertyChanged">
+                  <Binding.ValidationRules>
+                    <validationRules:RequiredValidation FieldName="Улица" />
+                  </Binding.ValidationRules>
+                </Binding>
+              </TextBox.Text>
+            </TextBox>
 
             <TextBox Name="HouseTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Дом"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                     Text="{Binding Entity.House}" />
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+              <TextBox.Text>
+                <Binding Path="Entity.House" UpdateSourceTrigger="PropertyChanged">
+                  <Binding.ValidationRules>
+                    <validationRules:RequiredValidation FieldName="Дом" />
+                  </Binding.ValidationRules>
+                </Binding>
+              </TextBox.Text>
+            </TextBox>
 
             <TextBox Name="FlatTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Квартира"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                     Text="{Binding Entity.Flat}" />
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+              <TextBox.Text>
+                <Binding Path="Entity.Flat" UpdateSourceTrigger="PropertyChanged">
+                  <Binding.ValidationRules>
+                    <validationRules:RequiredValidation FieldName="Квартира" />
+                  </Binding.ValidationRules>
+                </Binding>
+              </TextBox.Text>
+            </TextBox>
 
-            <TextBox Name="ZipCodeTextBox" Margin="0,0,0,8" materialDesign:HintAssist.Hint="Почтовый индекс"
+            <TextBox Name="ZipCodeTextBox" materialDesign:HintAssist.Hint="Почтовый индекс"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}">
               <TextBox.Text>
                 <Binding Path="Entity.ZipCode" UpdateSourceTrigger="PropertyChanged">
                   <Binding.ValidationRules>
-                    <validationRules:NumericValidationRule ValidationType="{x:Type system:Int32}" ValidatesOnTargetUpdated="False" />
+                    <validationRules:RequiredValidation FieldName="Индекс" />
                   </Binding.ValidationRules>
                 </Binding>
               </TextBox.Text>

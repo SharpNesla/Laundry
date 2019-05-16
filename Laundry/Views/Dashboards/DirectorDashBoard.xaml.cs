@@ -17,14 +17,16 @@ using Model;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using Laundry.Views.Actions;
+using LiveCharts;
+using LiveCharts.Wpf;
+using Model.CollectionRepositories;
+using MongoDB.Driver;
+using PropertyChanged;
 
 namespace Laundry.Views.Dashboards
 {
   public class DirectorDashBoardViewModel : DashBoardBase
   {
-    private readonly IEventAggregator _aggregator;
-    private readonly IModel _mockModel;
-    private readonly OrderDataGridViewModel _orderGrid;
     private readonly TakeOrdersViewModel _takeOrders;
     private readonly WashOrdersViewModel _wash;
 
@@ -32,36 +34,56 @@ namespace Laundry.Views.Dashboards
       OrderDataGridViewModel orderGrid, OrderDataGridViewModel actionsOrderGrid) : base(
       aggregator, model, orderGrid, actionsOrderGrid)
     {
-      _aggregator = aggregator;
-      _mockModel = model;
-      _orderGrid = orderGrid;
     }
 
-    public void OpenOrderEditor()
-    {
-      this.ChangeApplicationScreen(Utils.Screens.OrderEditor);
-    }
+    #region Св-ва, отражающие состояние предприятия
 
-    public void MoveFromSubs()
-    {
-      var takeOrders = new TakeOrdersViewModel(_mockModel, _orderGrid);
-      DialogHostExtensions.ShowCaliburnVM(takeOrders);
-    }
+    public long EmployeeCount => this.Model.Employees.GetCount();
 
-    public void MoveToSubs()
-    {
-      var deliverOrders = new DeliverOrdersViewModel(_mockModel, _orderGrid);
-      DialogHostExtensions.ShowCaliburnVM(deliverOrders);
-    }
+    #endregion
 
+    public long OrdersCountByMounth => this.Model.Orders.GetCount(
+      Builders<Order>.Filter.Gte(nameof(Order.ExecutionDate), DateTime.Now.AddMonths(-1)));
+
+    public string AggregatedInstancesCountByMounth => this.Model.Orders.GetAggregatedInstacesCount(
+      Builders<Order>.Filter.Gte(nameof(Order.ExecutionDate), DateTime.Now.AddMonths(-1)));
+
+    public double AggregatedPriceByMounth => this.Model.Orders.GetAggregatedPrice(
+      Builders<Order>.Filter.Gte(nameof(Order.ExecutionDate), DateTime.Now.AddMonths(-1)));
     
+    #region Св-ва относящиеся к графикам за последний месяц
 
-    
-
-    public void Wash()
+    public SeriesCollection MoneyValues => new SeriesCollection
     {
-      var wash = new WashOrdersViewModel(_mockModel, _orderGrid);
-      DialogHostExtensions.ShowCaliburnVM(wash);
-    }
+      new ColumnSeries
+      {
+        Title = "₽",
+        Values = new ChartValues<double>(this.AggregationResults.Select(x => x.Price))
+      }
+    };
+
+    public SeriesCollection ThingsValues => new SeriesCollection
+    {
+      new ColumnSeries
+      {
+        Title = "шт",
+        Values = new ChartValues<long>(this.AggregationResults.Select(x => x.Count))
+      },
+      new ColumnSeries
+      {
+        Title = "кг",
+        Values = new ChartValues<double>(this.AggregationResults.Select(x => x.UnCountableCount))
+      }
+    };
+
+    public IReadOnlyList<AggregationResult> AggregationResults => this.Model.Orders.AggregateOrders(Time,
+      Builders<Order>.Filter.Gte(nameof(Order.ExecutionDate), DateTime.Now.AddMonths(-1)));
+
+    public string[] DayLabels => this.AggregationResults.Select(x => x.DateTime.ToString("d")).ToArray();
+
+    [AlsoNotifyFor(nameof(DayLabels))]
+    public ChartTime Time { get; set; }
+
+    #endregion
   }
 }
