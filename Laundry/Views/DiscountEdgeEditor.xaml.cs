@@ -36,6 +36,8 @@ namespace Laundry.Views
       {
         EntityRepository.Update(this.Entity);
       }
+
+      DialogHostExtensions.CloseCurrent();
     }
   }
 }

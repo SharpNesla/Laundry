@@ -12,17 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Laundry.Utils.Controls;
+using Model;
 
 namespace Laundry.Views.Actions
 {
-  /// <summary>
-  /// Interaction logic for ObtainOrders.xaml
-  /// </summary>
-  public partial class ObtainOrders : UserControl
+  public class RecieveOrdersViewModel : OrderActionsBase
   {
-    public ObtainOrders()
+    public RecieveOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
+      : base(model.Orders, model.CurrentUser, nameof(Order.WasherCourierId), orderGrid, OrderStatus.MoveFromSubs,
+        OrderStatus.ReadyToWash)
     {
-      InitializeComponent();
     }
   }
 }

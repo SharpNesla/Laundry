@@ -26,7 +26,7 @@ namespace Laundry.Views.Dashboards
     private bool _isWashOrders;
     private bool _isApplyOrdersForDelivery;
     private bool _isRecieveOrders;
-    
+
 
     public bool IsWashOrders
     {
@@ -36,8 +36,10 @@ namespace Laundry.Views.Dashboards
         _isWashOrders = value;
         if (value)
         {
-          OrderGrid.Filter =
-            Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.ReadyToWash);
+          OrderGrid.Filter = Builders<Order>.Filter.And(
+            Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.ReadyToWash),
+            Builders<Order>.Filter.Eq(nameof(Order.WasherCourierId), this.Model.CurrentUser.Id)
+          );
           this.OrderGrid.Refresh(0, int.MaxValue);
         }
       }
@@ -51,8 +53,10 @@ namespace Laundry.Views.Dashboards
         _isApplyOrdersForDelivery = value;
         if (value)
         {
-          OrderGrid.Filter =
-            Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.Washing);
+          OrderGrid.Filter = Builders<Order>.Filter.And(
+            Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.Washing),
+            Builders<Order>.Filter.Eq(nameof(Order.WasherCourierId), this.Model.CurrentUser.Id)
+          );
           this.OrderGrid.Refresh(0, int.MaxValue);
         }
       }
@@ -66,8 +70,10 @@ namespace Laundry.Views.Dashboards
         _isRecieveOrders = value;
         if (value)
         {
-          OrderGrid.Filter =
-            Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.MoveToSubs);
+          OrderGrid.Filter = Builders<Order>.Filter.And(
+            Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.MoveFromSubs),
+            Builders<Order>.Filter.Eq(nameof(Order.WasherCourierId), this.Model.CurrentUser.Id)
+          );
           this.OrderGrid.Refresh(0, int.MaxValue);
         }
       }
@@ -77,7 +83,7 @@ namespace Laundry.Views.Dashboards
       OrderDataGridViewModel orderGrid, OrderDataGridViewModel actionsOrderGrid) : base(
       aggregator, model, orderGrid, actionsOrderGrid)
     {
-     IsWashOrders = true;
+      IsWashOrders = true;
     }
 
     public async void WashOrders()
@@ -96,11 +102,15 @@ namespace Laundry.Views.Dashboards
 
     public async void RecieveOrders()
     {
-      var takeOrders = new TakeOrdersViewModel(Model, ActionsOrderGrid);
-      await DialogHostExtensions.ShowCaliburnVM(takeOrders);
+      var recieveOrders = new RecieveOrdersViewModel(Model, ActionsOrderGrid);
+      await DialogHostExtensions.ShowCaliburnVM(recieveOrders);
       this.OrderGrid.Refresh(0, int.MaxValue);
     }
 
-    
+    protected override void OnActivate()
+    {
+      base.OnActivate();
+      this.OrderGrid.Refresh(0, int.MaxValue);
+    }
   }
 }

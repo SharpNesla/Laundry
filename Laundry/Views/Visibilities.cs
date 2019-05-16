@@ -12,18 +12,15 @@ namespace Laundry.Views
   {
     private readonly IModel _model;
 
-    public Visibility Courier => _model.CurrentUser.Profession == EmployeeProfession.Courier ? Visibility.Visible : Visibility.Collapsed;
-    public Visibility Advisor => _model.CurrentUser.Profession == EmployeeProfession.Advisor ? Visibility.Visible : Visibility.Collapsed;
-    public Visibility Driver => _model.CurrentUser.Profession == EmployeeProfession.Driver ? Visibility.Visible : Visibility.Collapsed;
-    public Visibility Washer => _model.CurrentUser.Profession == EmployeeProfession.Washer ? Visibility.Visible : Visibility.Collapsed;
-    public Visibility Director => _model.CurrentUser.Profession == EmployeeProfession.Director ? Visibility.Visible : Visibility.Collapsed;
-    
+    public bool Courier => _model.CurrentUser.Profession == EmployeeProfession.Courier;
+    public bool Advisor => _model.CurrentUser.Profession == EmployeeProfession.Advisor;
+    public bool Driver => _model.CurrentUser.Profession == EmployeeProfession.Driver;
+    public bool Washer => _model.CurrentUser.Profession == EmployeeProfession.Washer;
+    public bool Director => _model.CurrentUser.Profession == EmployeeProfession.Director;
 
-    public Visibility DirectorAdvisor =>
+    public bool DirectorAdvisor =>
       _model.CurrentUser.Profession == EmployeeProfession.Director ||
-      _model.CurrentUser.Profession == EmployeeProfession.Advisor
-        ? Visibility.Visible
-        : Visibility.Collapsed;
+      _model.CurrentUser.Profession == EmployeeProfession.Advisor;
 
     public Visibilities(IModel model)
     {

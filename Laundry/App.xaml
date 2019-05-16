@@ -54,6 +54,7 @@
       <converters:BoolRowDetailsVizConverter x:Key="BoolRowDetailsVizConverter"></converters:BoolRowDetailsVizConverter>
       <converters:LevelToMargin x:Key="LevelToMarginConverter"></converters:LevelToMargin>
       <converters:MeasureKindConverter x:Key="MeasureKindConverter"></converters:MeasureKindConverter>
+      <converters:BoolNotConverter x:Key="BoolNotConverter"></converters:BoolNotConverter>
     </ResourceDictionary>
 
   </Application.Resources>

@@ -190,8 +190,8 @@ namespace Laundry.Utils.Controls
     }
 
     public OrderDataGridViewModel(IEventAggregator eventAggregator, OrderCardViewModel card,
-      DeleteDialogViewModel deleteDialog, IModel model
-    ) : base(eventAggregator, card, model.Orders, deleteDialog, Screens.OrderEditor)
+      DeleteDialogViewModel deleteDialog, IModel model, Visibilities visibilities
+    ) : base(eventAggregator, card, model.Orders, deleteDialog, Screens.OrderEditor, visibilities)
     {
       _eventAggregator = eventAggregator;
       _model = model;

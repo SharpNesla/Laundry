@@ -25,6 +25,7 @@ namespace Laundry.Views.Dashboards
   {
     private bool _takeOrders;
     private bool _isDelivery;
+    private bool _isCorp;
 
     public bool IsTakeOrders
     {
@@ -34,8 +35,11 @@ namespace Laundry.Views.Dashboards
         _takeOrders = value;
         if (value)
         {
-          OrderGrid.Filter =
-            Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.Taken);
+          OrderGrid.Filter = Builders<Order>.Filter.And(
+            Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.Taken),
+            Builders<Order>.Filter.Eq(nameof(Order.InCourierId), this.Model.CurrentUser.Id)
+          );
+
           this.OrderGrid.Refresh(0, int.MaxValue);
         }
       }
@@ -49,8 +53,29 @@ namespace Laundry.Views.Dashboards
         _isDelivery = value;
         if (value)
         {
+          OrderGrid.Filter = Builders<Order>.Filter.And(
+            Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.Washed),
+            Builders<Order>.Filter.Eq(nameof(Order.OutCourierId), this.Model.CurrentUser.Id)
+          );
+          this.OrderGrid.Refresh(0, int.MaxValue);
+        }
+      }
+    }
+
+    public bool IsCorp
+    {
+      get { return _isCorp; }
+      set
+      {
+        _isCorp = value;
+        if (value)
+        {
           OrderGrid.Filter =
-            Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.Washed);
+            Builders<Order>.Filter.And(
+              Builders<Order>.Filter.Eq(nameof(Order.Status), OrderStatus.MoveToSubs),
+              Builders<Order>.Filter.Eq(nameof(Order.OutCourierId), this.Model.CurrentUser.Id),
+              Builders<Order>.Filter.Eq(nameof(Order.IsCorporative), true)
+            );
           this.OrderGrid.Refresh(0, int.MaxValue);
         }
       }
@@ -61,6 +86,13 @@ namespace Laundry.Views.Dashboards
       aggregator, model, orderGrid, actionsOrderGrid)
     {
       this.IsTakeOrders = true;
+    }
+
+    protected override void OnActivate()
+    {
+      base.OnActivate();
+      this.OrderGrid.Refresh(0, int.MaxValue);
+      
     }
 
     public async void Delivery()
@@ -76,6 +108,5 @@ namespace Laundry.Views.Dashboards
       await DialogHostExtensions.ShowCaliburnVM(applyorders);
       this.OrderGrid.Refresh(0, int.MaxValue);
     }
-
   }
 }

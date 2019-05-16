@@ -16,6 +16,7 @@
         Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="400*" />
+          <ColumnDefinition Width="400*" />
           <ColumnDefinition Width="361*" />
           <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
@@ -35,12 +36,16 @@
         <RadioButton
           Style="{StaticResource MaterialDesignTabRadioButton}"
           IsChecked="{Binding IsTakeOrders}" Height="42" Grid.Row="1"
-          Content="Заказы ожидающие отправки на стирку" />
-        <RadioButton Grid.Column="1" Grid.ColumnSpan="2"
+          Content="Заказы ожидающие отправки" />
+        <RadioButton Grid.Column="1"
                      IsChecked="{Binding IsDelivery}"
                      Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
                      Content="Заказы, ожидающие доставки" />
-        <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="2" DockPanel.Dock="Right"
+        <RadioButton Grid.Column="2" Grid.ColumnSpan="2"
+                     IsChecked="{Binding IsCorp}"
+                     Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
+                     Content="Корпоративные заказы на выдачу" />
+        <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"
                 Style="{StaticResource MaterialDesignToolButton}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
                 cal:Message.Attach="ShowActivityMenu($source)">
@@ -70,18 +75,18 @@
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
               ToolTip="Отправить постиранные заказы на доставку"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-        <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24" />
+        <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24">
+          <materialDesign:PackIcon.RenderTransform>
+            <ScaleTransform ScaleX="-1" CenterX="12"/>
+          </materialDesign:PackIcon.RenderTransform>
+        </materialDesign:PackIcon>
       </Button>
       <Button Name="TakeOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               Visibility="{Binding IsTakeOrders, Converter={StaticResource BoolVisibilityConverter}}"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
               ToolTip="Поставить заказы на стирку"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-        <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24">
-          <materialDesign:PackIcon.RenderTransform>
-            <ScaleTransform ScaleX="-1" CenterX="12"/>
-          </materialDesign:PackIcon.RenderTransform>
-        </materialDesign:PackIcon>
+        <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24" />
       </Button>
 
       <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
@@ -147,8 +152,8 @@
                   VerticalAlignment="Center">
                   <TextBlock.Text>
                     <MultiBinding StringFormat="Всего заказов: {0}, Всего вещей: {1}">
-                      <Binding Path="OrderGrid.Count"/>
-                      <Binding Path="OrderGrid.AggregatedInstancesCount"/>
+                      <Binding Path="OrderGrid.Count" />
+                      <Binding Path="OrderGrid.AggregatedInstancesCount" />
                     </MultiBinding>
                   </TextBlock.Text>
                 </TextBlock>

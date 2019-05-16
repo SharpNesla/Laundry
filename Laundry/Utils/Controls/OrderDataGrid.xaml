@@ -124,7 +124,7 @@
       Background="{Binding ElementName=OwnControl, Path=Background}">
       <DataGrid.ContextMenu>
 
-        <ContextMenu>
+        <ContextMenu Visibility="{Binding Visibilities.DirectorAdvisor, Converter={StaticResource BoolVisibilityConverter}}">
           <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
           <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
         </ContextMenu>

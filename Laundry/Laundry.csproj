@@ -199,6 +199,7 @@
     <Compile Include="Utils\Controls\SubsidiaryGrid.xaml.cs">
       <DependentUpon>SubsidiaryGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Converters\BoolNotConverter.cs" />
     <Compile Include="Utils\Converters\BoolVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\EnumBooleanConverter.cs" />
     <Compile Include="Utils\Converters\LevelToMargin.cs" />
@@ -240,11 +241,11 @@
     <Compile Include="Views\Actions\DeliverOrders.xaml.cs">
       <DependentUpon>DeliverOrders.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Actions\RecieveOrders.xaml.cs">
+      <DependentUpon>RecieveOrders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Actions\DistributeOrders.xaml.cs">
       <DependentUpon>DistributeOrders.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Actions\ObtainOrders.xaml.cs">
-      <DependentUpon>ObtainOrders.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Actions\OrderActionsBase.cs" />
     <Compile Include="Views\Actions\TakeOrders.xaml.cs">
@@ -436,11 +437,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Actions\DistributeOrders.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\Actions\RecieveOrders.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Actions\ObtainOrders.xaml">
+    <Page Include="Views\Actions\DistributeOrders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

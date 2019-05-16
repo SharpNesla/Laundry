@@ -67,21 +67,22 @@
           </CheckBox>
           <ContentControl Margin="2,0,0,0" Grid.Row="2" Grid.ColumnSpan="3" Name="ClientCombo" />
           <ContentControl Margin="2,0,0,0" Grid.Row="3" Grid.ColumnSpan="3"
-                          Visibility="{Binding Entity.IsCorporative, 
-            Converter={StaticResource BoolNotVisibilityConverter}}"
+                          Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolNotVisibilityConverter}}"
+                          IsEnabled="{Binding Entity.IsCorporative, Converter={StaticResource BoolNotConverter}}"
                           Name="ObtainerCombo" />
           <ContentControl Margin="2,0,0,0" Grid.Row="3" Grid.ColumnSpan="3"
+                          IsEnabled="{Binding Entity.IsCorporative}"
                           Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolVisibilityConverter}}"
                           Name="CorpObtainerCombo" />
           <ContentControl Margin="2,0,0,0" Grid.Row="4" Grid.ColumnSpan="3" Name="InCourierCombo" />
           <ContentControl Margin="2,0,0,0" Grid.Row="5" Grid.ColumnSpan="3" Name="WasherCombo" />
           <ContentControl Margin="2,0,0,0" Grid.Row="6" Grid.ColumnSpan="3" Name="OutCourierCombo" />
           <ContentControl Margin="2,0,0,0" Grid.Row="7" Grid.ColumnSpan="3" Name="CorpDistributerCombo"
-                          Visibility="{Binding Entity.IsCorporative, 
-            Converter={StaticResource BoolVisibilityConverter}}" />
+                          IsEnabled="{Binding Entity.IsCorporative}"
+                          Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolVisibilityConverter}}" />
           <ContentControl Margin="2,0,0,0" Grid.Row="7" Grid.ColumnSpan="3" Name="DistributerCombo"
-                          Visibility="{Binding Entity.IsCorporative, 
-            Converter={StaticResource BoolNotVisibilityConverter}}" />
+                          Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolNotVisibilityConverter}}"
+                          IsEnabled="{Binding Entity.IsCorporative, Converter={StaticResource BoolNotConverter}}"/>
           <DatePicker Grid.Row="8" Grid.Column="0"
                       Margin="2,0,0,0"
                       materialDesign:HintAssist.Hint="Дата исполнения"

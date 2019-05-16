@@ -8,12 +8,14 @@
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:Laundry.Views"
              xmlns:model="clr-namespace:Model"
+             xmlns:validationRules="clr-namespace:Laundry.Utils.ValidationRules"
+             xmlns:cal="http://www.caliburnproject.org"
              Background="{DynamicResource MaterialDesignPaper}"
              TextElement.FontWeight="Medium"
              TextElement.FontSize="14"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
              >
-  <DockPanel Width="500"
+  <DockPanel Width="414"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              VerticalAlignment="Stretch">
@@ -34,8 +36,7 @@
               Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
         ОТМЕНИТЬ
       </Button>
-      <Button Name="ApplyChanges" DockPanel.Dock="Left" MaxWidth="132"
-              Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+      <Button cal:Message.Attach="ApplyChanges($view)" DockPanel.Dock="Left" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,20,0">
         ПРИНЯТЬ
       </Button>
@@ -48,10 +49,26 @@
           BorderThickness="0">
           <StackPanel>
             <ContentControl Name="ClothKindTree"></ContentControl>
-            <TextBox materialDesign:HintAssist.Hint="Вернхяя граница" Text="{Binding Entity.Edge}"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2" />
-            <TextBox materialDesign:HintAssist.Hint="Величина скидки" Text="{Binding Entity.Discount}"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox materialDesign:HintAssist.Hint="Вернхяя граница"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,0,0,2">
+              <TextBox.Text>
+                <Binding Path="Entity.Edge" UpdateSourceTrigger="PropertyChanged">
+                  <Binding.ValidationRules>
+                    <validationRules:RequiredValidation FieldName="Верхняя граница" />
+                  </Binding.ValidationRules>
+                </Binding>
+              </TextBox.Text>
+            </TextBox>
+            <TextBox materialDesign:HintAssist.Hint="Величина скидки"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+              <TextBox.Text>
+                <Binding Path="Entity.Discount" UpdateSourceTrigger="PropertyChanged">
+                  <Binding.ValidationRules>
+                    <validationRules:RequiredValidation FieldName="Величина скидки" />
+                  </Binding.ValidationRules>
+                </Binding>
+              </TextBox.Text>
+            </TextBox>
           </StackPanel>
         </materialDesign:Card>
       </StackPanel>

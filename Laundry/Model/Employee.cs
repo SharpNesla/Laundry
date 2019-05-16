@@ -15,6 +15,7 @@ namespace Model
     [Description("Водитель")] Driver
   }
 
+  [BsonIgnoreExtraElements]
   public class Employee : Person
   {
     public EmployeeProfession Profession { get; set; }
