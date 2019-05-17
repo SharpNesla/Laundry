@@ -28,7 +28,7 @@ namespace Model
   {
     [BsonIgnoreIfDefault]
     public double CustomPrice { get; set; }
-
+    
     public long Id { get; set; }
 
     [BsonIgnoreIfNull]
@@ -71,8 +71,14 @@ namespace Model
 
 
     [BsonIgnore]
-    public double CalculatedPrice => Instances.Sum(x => x.Price);
-
+    public double CalculatedPrice
+    {
+      get
+      {
+        var calculatedPrice = Instances.Sum(x => x.Price);
+        return calculatedPrice;
+      }
+    }
 
     public double Price
     {

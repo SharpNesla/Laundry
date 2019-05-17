@@ -1,11 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 using Caliburn.Micro;
 using Model;
 using Model.CollectionRepositories;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using Laundry.Utils.Controls.EntitySearchControls;
+using Laundry.Utils.Converters;
 using MongoDB.Driver;
+using NPOI.OpenXmlFormats.Wordprocessing;
+using NPOI.XWPF.UserModel;
 
 namespace Laundry.Views
 {
@@ -136,6 +144,172 @@ namespace Laundry.Views
     public void Handle(Client message)
     {
       this.ClientCombo.SelectedEntity = Model.Clients.GetById(message.Id);
+    }
+
+    private readonly OrderStatusConverter _converter = new OrderStatusConverter();
+    private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
+
+    protected virtual IEnumerable<Tuple<string, string>> PrepareReplaceText(Order order)
+    {
+      if (order == null)
+      {
+        order = this.Entity;
+      }
+
+      var client = Model.Clients.GetById(order.ClientId);
+
+      return new[]
+      {
+        new Tuple<string, string>("#Дата_Передачи", DateTime.Now.ToString("D")),
+        new Tuple<string, string>("#Дата_Выдачи", DateTime.Now.ToString("D")),
+        new Tuple<string, string>("#Дата_Приёма", order.CreationDate.ToString("D")),
+        new Tuple<string, string>("#Дата_Исполнения", order.ExecutionDate.ToString("D")),
+
+        new Tuple<string, string>("#Цена_Заказа", $"{order.Price}₽"),
+        new Tuple<string, string>("#Номер_Заказа", order.Id.ToString()),
+        new Tuple<string, string>("#Статус_Заказа",
+          _converter.Convert(order.Status, typeof(string), null, CultureInfo.CurrentCulture)?.ToString()),
+
+        new Tuple<string, string>("#ФИО_Клиента", client.ToString()),
+        new Tuple<string, string>("#Номер_Телефона_Клиента", client.PhoneNumber),
+        new Tuple<string, string>("#ФИО_Выдающего_Приёмщика",
+          Entity.IsCorporative
+            ? Model.Clients.GetById(order.CorpDistributerId).ToString()
+            : Model.Employees.GetById(order.DistributerId).ToString()),
+        new Tuple<string, string>("#Адрес_Клиента", $"Г. {client.City}, ул. {client.Street}," +
+                                                    $" д. {client.House}, кв. {client.Flat}, почтовый индекс {client.ZipCode}")
+      };
+    }
+
+    public override void ApplyChanges()
+    {
+      base.ApplyChanges();
+      if (IsNew)
+      {
+        this.WriteDocumentation();
+      }
+    }
+
+    public virtual Document PrepareDocument(XWPFDocument document, Order order)
+    {
+      foreach (var paragraph in document.Paragraphs)
+      {
+        foreach (var replacePhrase in this.PrepareReplaceText(order))
+        {
+          //catch на случай, если искомая фраза не была найдена
+          try
+          {
+            paragraph.ReplaceText(replacePhrase.Item1, replacePhrase.Item2);
+          }
+          catch (Exception e)
+          {
+          }
+        }
+      }
+
+
+      var documentTables = CheckTables(document);
+
+      foreach (var documentTable in documentTables)
+      {
+        var rowTemplate = documentTable.GetRow(1);
+
+        foreach (var orderInstance in order.Instances)
+        {
+          try
+          {
+            var row = documentTable.CreateRow();
+
+            row.GetCell(0).SetText(orderInstance.TagNumber.ToString());
+            row.GetCell(1).SetText(orderInstance.ClothKindObj.Name);
+            row.GetCell(2).SetText(
+              _measureKindConverter
+                .Convert(orderInstance.ClothKindObj.MeasureKind, typeof(string), null, CultureInfo.CurrentCulture)
+                ?.ToString());
+            row.GetCell(3).SetText(orderInstance.Amount.ToString());
+            row.GetCell(4).SetText(orderInstance.Comment ?? string.Empty);
+          }
+          catch (NullReferenceException e)
+          {
+            break;
+          }
+        }
+
+        documentTable.RemoveRow(1);
+      }
+
+      return document;
+    }
+
+    /// <summary>
+    /// Проверить документ на содержание в нём подходящей таблицы для
+    /// вставки информации об экземплярах одежды
+    /// </summary>
+    /// <param name="document">Документ</param>
+    /// <returns>Лист с таблицами, прошедшими проверку</returns>
+    private List<XWPFTable> CheckTables(XWPFDocument document)
+    {
+      var matchingTables = document.Tables.Where(x =>
+      {
+        try
+        {
+          var row = x.GetRow(1);
+          return
+            row.GetCell(0).Paragraphs[0].Text == "#№" &&
+            row.GetCell(1).Paragraphs[0].Text == "#Наименование" &&
+            row.GetCell(2).Paragraphs[0].Text == "#Ед_Изм" &&
+            row.GetCell(3).Paragraphs[0].Text == "#Кол-во" &&
+            row.GetCell(4).Paragraphs[0].Text == "#Комментарий";
+        }
+        catch (NullReferenceException e)
+        {
+          return false;
+        }
+      }).ToList();
+
+      return matchingTables;
+    }
+
+    public void WriteDocumentation()
+    {
+      var documentName = Entity.IsCorporative ? "Contract.docx" : "ObtainCheck.docx";
+      XWPFDocument document;
+      try
+      {
+        using (FileStream file = new FileStream($"Resources/{documentName}", FileMode.Open, FileAccess.Read))
+        {
+          document = new XWPFDocument(file);
+        }
+      }
+      catch (Exception e)
+      {
+        return;
+      }
+
+      if (document != null)
+      {
+        PrepareDocument(document, this.Entity);
+
+        var dialog = new SaveFileDialog
+        {
+          InitialDirectory = @"~/Documents",
+          Title = $"Путь к экспортируемому документу",
+          AddExtension = true,
+          Filter = "Файлы Word 2007 (*.docx)|*.docx|Все остальные файлы (*.*)|*.*"
+        };
+        if (dialog.ShowDialog() == DialogResult.OK)
+        {
+          if (!File.Exists(dialog.FileName))
+          {
+            File.Delete(dialog.FileName);
+          }
+
+          using (var fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
+          {
+            document.Write(fs);
+          }
+        }
+      }
     }
   }
 }

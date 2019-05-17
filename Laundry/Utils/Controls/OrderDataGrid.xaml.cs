@@ -32,6 +32,20 @@ namespace Laundry.Utils.Controls
     private readonly OrderStatusConverter _statusConverter = new OrderStatusConverter();
     private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
 
+    [AlsoNotifyFor(nameof(AggregatedInstancesCount), nameof(AggregatedPrice), nameof(AggregationResults))]
+    public override IReadOnlyList<Order> Entities
+    {
+      get
+      {
+        return base.Entities;
+      }
+
+      set
+      {
+        base.Entities = value;
+      }
+    }
+
     public override FilterDefinition<Order> Filter
     {
       get
@@ -173,8 +187,6 @@ namespace Laundry.Utils.Controls
         base.Refresh(page, elements);
       }
     }
-
-    [AlsoNotifyFor(nameof(AggregatedInstancesCount), nameof(AggregatedPrice))]
     public override long Count
     {
       get

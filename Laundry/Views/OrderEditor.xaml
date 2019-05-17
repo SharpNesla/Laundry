@@ -15,14 +15,22 @@
   <DockPanel VerticalAlignment="Stretch">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16,20,20,20">
-      <StackPanel Orientation="Horizontal">
+      <DockPanel>
+        <Button DockPanel.Dock="Right" Name="WriteDocumentation" Style="{StaticResource MaterialDesignToolButton}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
+                ToolTip="Распечатать чек (договор)">
+          <materialDesign:PackIcon Kind="Printer" VerticalAlignment="Center" Height="24" Width="24" />
+        </Button>
+        <StackPanel Orientation="Horizontal">
 
-        <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="24" Width="24" />
-        <TextBlock
-          Style="{StaticResource MaterialDesignTitleTextBlock}"
-          VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="{Binding EditorTitle}" />
-      </StackPanel>
+          <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="24" Width="24" />
+          <TextBlock
+            Style="{StaticResource MaterialDesignTitleTextBlock}"
+            VerticalAlignment="Center"
+            Margin="8 0 0 0" Text="{Binding EditorTitle}" />
+        </StackPanel>
+
+      </DockPanel>
     </materialDesign:ColorZone>
 
     <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="24,0,24,24">
@@ -137,12 +145,8 @@
                 <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
               </Button>
               <StackPanel Orientation="Horizontal">
-                <TextBlock>
-                  <TextBlock.Text>
-                    <MultiBinding StringFormat="{}Количество вещей: {0}">
-                      <Binding Path="Entity.InstancesCount"></Binding>
-                    </MultiBinding>
-                  </TextBlock.Text>
+                <TextBlock VerticalAlignment="Center"
+                  Text="{Binding Entity.InstancesCount, StringFormat='{}Количество вещей: {0}'}">
                 </TextBlock>
                 <TextBox VerticalAlignment="Center" Width="62"
                          Visibility="{Binding Entity.IsCustomPrice, Converter={StaticResource BoolVisibilityConverter}}"
@@ -152,7 +156,7 @@
                   Нестандартная цена
                 </CheckBox>
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding Entity.IsDiscount}"
-                          Visibility="{Binding Entity.IsCustomPrice, Converter={StaticResource BoolNotVisibilityConverter}}"
+                          Visibility="{Binding Entity.IsDiscount, Converter={StaticResource BoolNotVisibilityConverter}}"
                           Style="{StaticResource MaterialDesignCheckBox}" Margin="10,0,0,0" Height="20">
                   Скидка
                 </CheckBox>

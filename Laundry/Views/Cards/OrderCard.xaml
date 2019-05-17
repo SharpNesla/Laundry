@@ -68,7 +68,7 @@
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,0,0,8" Text="{Binding InCourier.Signature, StringFormat='{}Курьер, забирающий заказ: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,0,0,8" Text="{Binding Obtainer.CorpObtainer}"
+              <TextBlock Margin="0,0,0,8" Text="{Binding CorpObtainer.Signature}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}"
                          Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolVisibilityConverter}}" />
               <TextBlock Margin="0,0,0,8" Text="{Binding Washer.Signature , StringFormat='{}Прачечник: &#x0a;{0}'}"
@@ -78,7 +78,7 @@
               <TextBlock Margin="0,0,0,0" Text="{Binding Distributer.Signature, StringFormat='{}Приёмщик, выдающий заказ: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}" 
                          Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolNotVisibilityConverter}}"/>
-              <TextBlock Margin="0,0,0,12" Text="{Binding Obtainer.CorpDistributer, StringFormat='{}Принимающий корпоративный клиент: &#x0a;{0}'}"
+              <TextBlock Margin="0,0,0,12" Text="{Binding CorpDistributer.Signature, StringFormat='{}Принимающий корпоративный клиент: &#x0a;{0}'}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}"
                          Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolVisibilityConverter}}" />
 
@@ -87,6 +87,7 @@
             </StackPanel>
             <TextBlock ScrollViewer.VerticalScrollBarVisibility="Visible"
                        ScrollViewer.CanContentScroll="True"
+                       TextTrimming="CharacterEllipsis"
                        Margin="0,4,0,0" TextWrapping="Wrap" Text="{Binding Entity.Comment}"
                        Style="{StaticResource MaterialDesignBody1TextBlock}" />
           </DockPanel>

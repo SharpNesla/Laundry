@@ -65,7 +65,7 @@ namespace Laundry.Views
 
       Paginator = paginator;
       Paginator.ElementsName = "Заказов";
-      Paginator.RegisterPaginable(OrderDataGrid, false);
+      Paginator.RegisterPaginable(OrderDataGrid);
     }
 
     protected override void OnActivate()

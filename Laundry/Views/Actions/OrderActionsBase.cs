@@ -51,9 +51,17 @@ namespace Laundry.Views.Actions
       return new[]
       {
         new Tuple<string, string>("#Дата_Передачи", DateTime.Now.ToString("D")),
+        new Tuple<string, string>("#Дата_Выдачи", DateTime.Now.ToString("D")),
+        new Tuple<string, string>("#Дата_Приёма", order.CreationDate.ToString("D")),
+        new Tuple<string, string>("#Дата_Исполнения", order.ExecutionDate.ToString("D")),
+
         new Tuple<string, string>("#Номер_Заказа", order.Id.ToString()),
         new Tuple<string, string>("#Статус_Заказа",
-          _converter.Convert(order.Status, typeof(string), null, CultureInfo.CurrentCulture)?.ToString())
+          _converter.Convert(order.Status, typeof(string), null, CultureInfo.CurrentCulture)?.ToString()),
+
+        new Tuple<string, string>("#ФИО_Клиента", Model.Clients.GetById(order.ClientId).ToString()),
+        new Tuple<string, string>("#ФИО_Выдающего_Приёмщика", Model.Employees.GetById(order.DistributerId).ToString()),
+        new Tuple<string, string>("#ФИО_Прачечника", Model.Employees.GetById(order.WasherCourierId).ToString()),
       };
     }
 
@@ -107,26 +115,24 @@ namespace Laundry.Views.Actions
         {
           try
           {
-            var row = new XWPFTableRow(rowTemplate.GetCTRow(), documentTable);
-
-            row.GetCell(0).Paragraphs[0].ReplaceText("#№", orderInstance.TagNumber.ToString());
-            row.GetCell(1).Paragraphs[0].ReplaceText("#Наименование", orderInstance.ClothKindObj.Name);
-            row.GetCell(2).Paragraphs[0].ReplaceText("#Ед_Изм",
+            var row = documentTable.CreateRow();
+            var rowW = new CT_Row();
+            
+            row.GetCell(0).SetText(orderInstance.TagNumber.ToString());
+            row.GetCell(1).SetText(orderInstance.ClothKindObj.Name);
+            row.GetCell(2).SetText(
               _measureKindConverter
                 .Convert(orderInstance.ClothKindObj.MeasureKind, typeof(string), null, CultureInfo.CurrentCulture)
                 ?.ToString());
-            row.GetCell(3).Paragraphs[0].ReplaceText("#Кол-во",
-              orderInstance.Amount.ToString());
-            row.GetCell(4).Paragraphs[0].ReplaceText("#Комментарий", orderInstance.Comment ?? string.Empty);
-
-            documentTable.AddRow(row);
+            row.GetCell(3).SetText(orderInstance.Amount.ToString());
+            row.GetCell(4).SetText(orderInstance.Comment ?? string.Empty);
+            
           }
           catch (NullReferenceException e)
           {
             break;
           }
         }
-
         documentTable.RemoveRow(1);
       }
 
@@ -167,7 +173,7 @@ namespace Laundry.Views.Actions
       }
       catch (Exception e)
       {
-        throw e;
+        return;
       }
 
       if (document != null)
