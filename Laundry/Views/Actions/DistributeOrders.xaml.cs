@@ -24,7 +24,7 @@ namespace Laundry.Views.Actions
   public class DistributeOrdersViewModel : OrderActionsBase
   {
     public DistributeOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
-      : base(model.Orders, model.CurrentUser, nameof(Order.DistributerId), orderGrid, OrderStatus.ReadyToDistribute,
+      : base(model.Orders, model, nameof(Order.DistributerId), orderGrid, OrderStatus.ReadyToDistribute,
         OrderStatus.Distributed, "Check.docx", Builders<Order>.Filter.Eq(nameof(Order.IsCorporative), false))
     {
     }

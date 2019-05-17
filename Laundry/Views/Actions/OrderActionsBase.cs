@@ -26,13 +26,14 @@ namespace Laundry.Views.Actions
     public OrderDataGridViewModel OrderGrid { get; set; }
     private readonly OrderStatusConverter _converter = new OrderStatusConverter();
     private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
+    protected IModel Model;
 
-
-    public OrderActionsBase(OrderRepository orderRepo, Employee currentUser, string orderEmployeeInvolvement,
+    public OrderActionsBase(OrderRepository orderRepo, IModel model, string orderEmployeeInvolvement,
       OrderDataGridViewModel orderGrid,
       OrderStatus startStatus, OrderStatus changingStatus, string documentName = null,
       FilterDefinition<Order> additionalFilter = null)
     {
+      this.Model = model;
       Repository = orderRepo;
       _changingStatus = changingStatus;
       _documentName = documentName;
@@ -40,7 +41,7 @@ namespace Laundry.Views.Actions
       OrderGrid.Filter =
         Builders<Order>.Filter.And(
           Builders<Order>.Filter.Eq(nameof(Order.Status), startStatus),
-          Builders<Order>.Filter.Eq(orderEmployeeInvolvement, currentUser.Id),
+          Builders<Order>.Filter.Eq(orderEmployeeInvolvement, this.Model.CurrentUser.Id),
           additionalFilter ?? Builders<Order>.Filter.Empty);
       this.OrderGrid.Refresh(0, int.MaxValue);
     }
@@ -84,6 +85,7 @@ namespace Laundry.Views.Actions
       {
         foreach (var replacePhrase in this.PrepareReplaceText(order))
         {
+          //catch на случай, если искомая фраза не была найдена
           try
           {
             paragraph.ReplaceText(replacePhrase.Item1, replacePhrase.Item2);
@@ -103,18 +105,26 @@ namespace Laundry.Views.Actions
 
         foreach (var orderInstance in order.Instances)
         {
-          var row = documentTable.CreateRow();
+          try
+          {
+            var row = new XWPFTableRow(rowTemplate.GetCTRow(), documentTable);
 
-          row.GetCell(0).SetText(orderInstance.TagNumber.ToString());
-          row.GetCell(1).SetText(orderInstance.ClothKindObj.Name);
-          row.GetCell(2).SetText(
-            _measureKindConverter
-              .Convert(orderInstance.ClothKindObj.MeasureKind, typeof(string), null, CultureInfo.CurrentCulture)
-              ?.ToString());
-          row.GetCell(3).SetText(orderInstance.Amount.ToString());
-          row.GetCell(4).SetText(orderInstance.Comment ?? string.Empty);
+            row.GetCell(0).Paragraphs[0].ReplaceText("#№", orderInstance.TagNumber.ToString());
+            row.GetCell(1).Paragraphs[0].ReplaceText("#Наименование", orderInstance.ClothKindObj.Name);
+            row.GetCell(2).Paragraphs[0].ReplaceText("#Ед_Изм",
+              _measureKindConverter
+                .Convert(orderInstance.ClothKindObj.MeasureKind, typeof(string), null, CultureInfo.CurrentCulture)
+                ?.ToString());
+            row.GetCell(3).Paragraphs[0].ReplaceText("#Кол-во",
+              orderInstance.Amount.ToString());
+            row.GetCell(4).Paragraphs[0].ReplaceText("#Комментарий", orderInstance.Comment ?? string.Empty);
 
-          documentTable.AddRow(row);
+            documentTable.AddRow(row);
+          }
+          catch (NullReferenceException e)
+          {
+            break;
+          }
         }
 
         documentTable.RemoveRow(1);
@@ -122,7 +132,7 @@ namespace Laundry.Views.Actions
 
       return document;
     }
-
+    
     /// <summary>
     /// Проверить документ на содержание в нём подходящей таблицы для
     /// вставки информации об экземплярах одежды
@@ -135,11 +145,11 @@ namespace Laundry.Views.Actions
       {
         var row = x.GetRow(1);
         return
-          row.GetCell(0).GetText() == "#№" &&
-          row.GetCell(1).GetText() == "#Наименование" &&
-          row.GetCell(2).GetText() == "#Ед_Изм" &&
-          row.GetCell(3).GetText() == "#Кол-во" &&
-          row.GetCell(4).GetText() == "#Комментарий";
+          row.GetCell(0).Paragraphs[0].Text == "#№" &&
+          row.GetCell(1).Paragraphs[0].Text == "#Наименование" &&
+          row.GetCell(2).Paragraphs[0].Text == "#Ед_Изм" &&
+          row.GetCell(3).Paragraphs[0].Text == "#Кол-во" &&
+          row.GetCell(4).Paragraphs[0].Text == "#Комментарий";
       }).ToList();
 
       return matchingTables;
@@ -147,7 +157,6 @@ namespace Laundry.Views.Actions
 
     private void WriteDocumentation(Order order)
     {
-
       XWPFDocument document;
       try
       {

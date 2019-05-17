@@ -25,7 +25,7 @@ namespace Laundry.Views.Actions
   public class WashOrdersViewModel : OrderActionsBase
   {
     public WashOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
-      : base(model.Orders, model.CurrentUser, nameof(Order.WasherCourierId), orderGrid, OrderStatus.ReadyToWash,
+      : base(model.Orders, model, nameof(Order.WasherCourierId), orderGrid, OrderStatus.ReadyToWash,
         OrderStatus.Washing)
     {
     }

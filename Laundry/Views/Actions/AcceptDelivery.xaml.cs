@@ -24,7 +24,7 @@ namespace Laundry.Views.Actions
     private readonly IModel _model;
 
     public AcceptDeliveryViewModel(IModel model, OrderDataGridViewModel orderGrid)
-      : base(model.Orders, model.CurrentUser, nameof(Order.DistributerId), orderGrid, OrderStatus.MoveToSubs,
+      : base(model.Orders, model, nameof(Order.DistributerId), orderGrid, OrderStatus.MoveToSubs,
         OrderStatus.ReadyToDistribute, "Bill.Docx", Builders<Order>.Filter.Eq(nameof(Order.IsCorporative), false))
     {
       _model = model;

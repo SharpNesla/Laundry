@@ -22,7 +22,7 @@ namespace Laundry.Views.Actions
     private readonly IModel _model;
 
     public RecieveOrdersViewModel(IModel model, OrderDataGridViewModel orderGrid)
-      : base(model.Orders, model.CurrentUser, nameof(Order.WasherCourierId), orderGrid, OrderStatus.MoveFromSubs,
+      : base(model.Orders, model, nameof(Order.WasherCourierId), orderGrid, OrderStatus.MoveFromSubs,
         OrderStatus.ReadyToWash, "Bill.docx")
     {
       _model = model;
