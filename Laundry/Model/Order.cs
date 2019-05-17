@@ -19,16 +19,16 @@ namespace Model
 
     [Description("Перевозка из прачечной")]
     MoveToSubs,
-    [Description("Готов к выдаче")]
-    ReadyToDistribute,
+    [Description("Готов к выдаче")] ReadyToDistribute,
     [Description("Выполнен")] Distributed
   }
+
   [BsonIgnoreExtraElements]
   public class Order : IRepositoryElement
   {
     [BsonIgnoreIfDefault]
     public double CustomPrice { get; set; }
-    
+
     public long Id { get; set; }
 
     [BsonIgnoreIfNull]
@@ -41,7 +41,7 @@ namespace Model
     public DateTime ExecutionDate { get; set; }
 
     public OrderStatus Status { get; set; }
-    
+
     [BsonIgnoreIfDefault]
     public DateTime DeletionDate { get; set; }
 
@@ -53,9 +53,11 @@ namespace Model
 
     [BsonIgnore]
     public bool IsSelected { get; set; }
-    
+
     public bool IsCorporative { get; set; }
-    
+
+    public bool IsDiscount { get; set; }
+
     [BsonIgnoreIfDefault]
     public bool IsCustomPrice { get; set; }
 
@@ -75,7 +77,8 @@ namespace Model
     {
       get
       {
-        var calculatedPrice = Instances.Sum(x => x.Price);
+        var calculatedPrice = Instances.Sum(x => x.Price)
+                              * ((1 - this.DiscountEdge?.Discount ?? 0) / 100);
         return calculatedPrice;
       }
     }
@@ -90,12 +93,6 @@ namespace Model
       set { CustomPrice = value; }
     }
 
-    [BsonIgnore]
-    public double DiscountPrice
-    {
-      get { return Price * (1 - this.DiscountEdge.Discount / 100); }
-    }
-
     public List<ClothInstance> Instances { get; set; }
 
     public Order()
@@ -105,6 +102,7 @@ namespace Model
 
     public long InSubsidiary { get; internal set; }
     public long OutSubsidiary { get; internal set; }
+
     #region Ids
 
     [BsonElement("Client")]

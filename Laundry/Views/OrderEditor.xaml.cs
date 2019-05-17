@@ -117,8 +117,7 @@ namespace Laundry.Views
       base.Handle(message);
 
       this.Entity = this.EntityRepository.GetById(message.Id);
-
-
+      
       this.ClothInstancesGrid.Order = this.Entity;
       this.Paginator.RefreshPaginable();
 
