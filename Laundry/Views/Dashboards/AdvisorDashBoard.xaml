@@ -67,14 +67,14 @@
       <Button Name="Distribute" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               Visibility="{Binding IsDistribute, Converter={StaticResource BoolVisibilityConverter}}"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              ToolTip="Отправить постиранные заказы на доставку"
+              ToolTip="Выдать заказы"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="AccountArrowLeft" Height="24" Width="24" />
         </Button>
       <Button Name="AcceptDelivery" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               Visibility="{Binding IsAcceptDelivery, Converter={StaticResource BoolVisibilityConverter}}"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              ToolTip="Отправить постиранные заказы на доставку"
+              ToolTip="Принять доставляемые заказы"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="AccountArrowLeft" Height="24" Width="24" />
       </Button>

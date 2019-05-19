@@ -10,14 +10,22 @@
   <DockPanel  Height="700" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16,20,20,20">
-      <StackPanel Orientation="Horizontal">
+      <DockPanel>
+        <Button DockPanel.Dock="Right" Name="WriteDocumentation" Style="{StaticResource MaterialDesignToolButton}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
+                ToolTip="Распечатать накладную на доставку">
+          <materialDesign:PackIcon Kind="Printer" VerticalAlignment="Center" Height="24" Width="24" />
+        </Button>
+        <StackPanel Orientation="Horizontal">
 
-        <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="24" Width="24" />
-        <TextBlock
-          Style="{StaticResource MaterialDesignTitleTextBlock}"
-          VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="Выдать заказы" />
-      </StackPanel>
+          <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="24" Width="24" />
+          <TextBlock
+            Style="{StaticResource MaterialDesignTitleTextBlock}"
+            VerticalAlignment="Center"
+            Margin="8 0 0 0" Text="Принять заказы на выдачу" />
+        </StackPanel>
+
+      </DockPanel>
     </materialDesign:ColorZone>
 
 

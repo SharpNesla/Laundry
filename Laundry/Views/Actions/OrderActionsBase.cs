@@ -65,11 +65,13 @@ namespace Laundry.Views.Actions
       };
     }
 
-    public virtual async void Apply()
+    public virtual void Apply()
     {
       this.Repository.SetOrdersStatus(this.OrderGrid.SelectedEntities, _changingStatus);
+    }
 
-
+    public void WriteDocumentation()
+    {
       if (string.IsNullOrEmpty(_documentName))
       {
         return;
@@ -117,7 +119,7 @@ namespace Laundry.Views.Actions
           {
             var row = documentTable.CreateRow();
             var rowW = new CT_Row();
-            
+
             row.GetCell(0).SetText(orderInstance.TagNumber.ToString());
             row.GetCell(1).SetText(orderInstance.ClothKindObj.Name);
             row.GetCell(2).SetText(
@@ -126,19 +128,19 @@ namespace Laundry.Views.Actions
                 ?.ToString());
             row.GetCell(3).SetText(orderInstance.Amount.ToString());
             row.GetCell(4).SetText(orderInstance.Comment ?? string.Empty);
-            
           }
           catch (NullReferenceException e)
           {
             break;
           }
         }
+
         documentTable.RemoveRow(1);
       }
 
       return document;
     }
-    
+
     /// <summary>
     /// Проверить документ на содержание в нём подходящей таблицы для
     /// вставки информации об экземплярах одежды

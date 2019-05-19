@@ -73,14 +73,14 @@
       <Button Name="DistributeCorp" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               Visibility="{Binding IsCorp, Converter={StaticResource BoolVisibilityConverter}}"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              ToolTip="Поставить заказы на стирку"
+              ToolTip="Доставить корпоративные заказы"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="AccountArrowRight" Height="24" Width="24" />
       </Button>
       <Button Name="Delivery" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               Visibility="{Binding IsDelivery, Converter={StaticResource BoolVisibilityConverter}}"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              ToolTip="Отправить постиранные заказы на доставку"
+              ToolTip="Доставить постиранные заказы"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24">
           <materialDesign:PackIcon.RenderTransform>
@@ -91,7 +91,7 @@
       <Button Name="TakeOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               Visibility="{Binding IsTakeOrders, Converter={StaticResource BoolVisibilityConverter}}"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              ToolTip="Поставить заказы на стирку"
+              ToolTip="Перевести заказы в прачечную"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24" />
       </Button>

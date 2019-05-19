@@ -10,17 +10,23 @@
   <DockPanel  Height="700" Width="970">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
                               Padding="16,20,20,20">
-      <StackPanel Orientation="Horizontal">
+      <DockPanel>
+        <Button DockPanel.Dock="Right" Name="WriteDocumentation" Style="{StaticResource MaterialDesignToolButton}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
+                ToolTip="Распечатать накладную по доставке">
+          <materialDesign:PackIcon Kind="Printer" VerticalAlignment="Center" Height="24" Width="24" />
+        </Button>
+        <StackPanel Orientation="Horizontal">
 
-        <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="24" Width="24" />
-        <TextBlock
-          Style="{StaticResource MaterialDesignTitleTextBlock}"
-          VerticalAlignment="Center"
-          Margin="8 0 0 0" Text="Доставка постиранных заказов" />
-      </StackPanel>
+          <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="24" Width="24" />
+          <TextBlock
+            Style="{StaticResource MaterialDesignTitleTextBlock}"
+            VerticalAlignment="Center"
+            Margin="8 0 0 0" Text="Доставка постиранных заказов" />
+        </StackPanel>
+
+      </DockPanel>
     </materialDesign:ColorZone>
-
-
     <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" Margin="24,0,24,24">
       <Button IsCancel="True" DockPanel.Dock="Right" MaxWidth="132"
               Style="{StaticResource MaterialDesignFlatButton}"
