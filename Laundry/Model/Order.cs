@@ -77,8 +77,20 @@ namespace Model
     {
       get
       {
-        var calculatedPrice = Instances.Sum(x => x.Price)
-                              * ((1 - this.DiscountEdge?.Discount ?? 0) / 100);
+        var calculatedPrice = Instances.Sum(x => x.Price);
+                              
+        return calculatedPrice;
+      }
+    }
+    
+    [BsonIgnore]
+    public double DiscountPrice
+    {
+      get
+      {
+        var discount = ((100 - this.DiscountEdge?.Discount ?? 0)) / 100;
+        var calculatedPrice = CalculatedPrice * discount; 
+
         return calculatedPrice;
       }
     }
@@ -87,7 +99,8 @@ namespace Model
     {
       get
       {
-        var price = IsCustomPrice ? CustomPrice : CalculatedPrice;
+        var price = IsCustomPrice ? CustomPrice :
+          (IsDiscount ? DiscountPrice : CalculatedPrice);
         return price;
       }
       set { CustomPrice = value; }

@@ -109,6 +109,7 @@ namespace Laundry.Views
     private void OnEntityChanged(Client obj)
     {
       this.EntityRepository.SetClient(this.Entity, obj);
+      this.Model.Orders.FetchDiscountEdge(this.Entity);
     }
 
 
@@ -119,8 +120,8 @@ namespace Laundry.Views
       this.Entity = this.EntityRepository.GetById(message.Id);
       
       this.ClothInstancesGrid.Order = this.Entity;
-      this.Paginator.RefreshPaginable();
-
+      this.ClothInstancesGrid.Refresh(0, int.MaxValue);
+      this.Model.Orders.FetchDiscountEdge(this.Entity);
       this.ClientCombo.SelectedEntity = EntityRepository.GetClient(this.Entity);
       if (message.IsCorporative)
       {
@@ -143,6 +144,7 @@ namespace Laundry.Views
     public void Handle(Client message)
     {
       this.ClientCombo.SelectedEntity = Model.Clients.GetById(message.Id);
+      this.Model.Orders.FetchDiscountEdge(this.Entity);
     }
 
     private readonly OrderStatusConverter _converter = new OrderStatusConverter();

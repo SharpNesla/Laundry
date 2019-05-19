@@ -15,6 +15,7 @@ namespace Model.CollectionRepositories
       var filters = Builders<DiscountEdge>.Filter.And(
         Builders<DiscountEdge>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
         filter ?? Builders<DiscountEdge>.Filter.Empty);
+
       return Collection.Find(filters).Skip(offset).Limit(limit).SortBy(x => x.Edge).ToList();
     }
 
@@ -33,7 +34,17 @@ namespace Model.CollectionRepositories
       var filters = Builders<DiscountEdge>.Filter.And(
         Builders<DiscountEdge>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
         Builders<DiscountEdge>.Filter.Gte(nameof(DiscountEdge.Edge), client.OrdersPrice));
-      return Collection.Find(filters).First();
+
+      try
+      {
+        return Collection.Find(filters).First();
+      }
+      catch (InvalidOperationException e)
+      {
+        return null;
+      }
+
+      
     }
   }
 }

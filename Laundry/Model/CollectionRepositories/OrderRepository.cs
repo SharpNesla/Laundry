@@ -26,6 +26,8 @@ namespace Model.CollectionRepositories
         {
           instance.ClothKindObj = Model.ClothKinds.GetById(instance.ClothKind);
         }
+
+        this.FetchDiscountEdge(order);
       }
 
       return basee;
@@ -407,6 +409,8 @@ namespace Model.CollectionRepositories
         {
           instance.ClothKindObj = Model.ClothKinds.GetById(instance.ClothKind);
         }
+
+        this.FetchDiscountEdge(order);
       }
 
       return bySearchString;
