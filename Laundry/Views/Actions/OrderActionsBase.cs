@@ -28,7 +28,7 @@ namespace Laundry.Views.Actions
     private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
     protected IModel Model;
 
-    public OrderActionsBase(OrderRepository orderRepo, IModel model, string orderEmployeeInvolvement,
+    protected OrderActionsBase(OrderRepository orderRepo, IModel model, string orderEmployeeInvolvement,
       OrderDataGridViewModel orderGrid,
       OrderStatus startStatus, OrderStatus changingStatus, string documentName = null,
       FilterDefinition<Order> additionalFilter = null)
@@ -50,10 +50,10 @@ namespace Laundry.Views.Actions
     {
       return new[]
       {
-        new Tuple<string, string>("#Дата_Передачи", DateTime.Now.ToString("D")),
-        new Tuple<string, string>("#Дата_Выдачи", DateTime.Now.ToString("D")),
-        new Tuple<string, string>("#Дата_Приёма", order.CreationDate.ToString("D")),
-        new Tuple<string, string>("#Дата_Исполнения", order.ExecutionDate.ToString("D")),
+        new Tuple<string, string>("#Дата_Передачи", DateTime.Now.ToString("f")),
+        new Tuple<string, string>("#Дата_Выдачи", DateTime.Now.ToString("f")),
+        new Tuple<string, string>("#Дата_Приёма", order.CreationDate.ToString("f")),
+        new Tuple<string, string>("#Дата_Исполнения", order.ExecutionDate.ToString("f")),
 
         new Tuple<string, string>("#Номер_Заказа", order.Id.ToString()),
         new Tuple<string, string>("#Статус_Заказа",

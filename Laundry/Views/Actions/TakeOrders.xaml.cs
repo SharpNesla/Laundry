@@ -37,7 +37,7 @@ namespace Laundry.Views.Actions
       return base.PrepareReplaceText(order)
         .Concat(new []
         {
-          order.IsCorporative ? new Tuple<string,string>("#ФИО_Отпускающего", _model.Employees.GetById(order.ObtainerId).ToString())
+          !order.IsCorporative ? new Tuple<string,string>("#ФИО_Отпускающего", _model.Employees.GetById(order.ObtainerId).ToString())
           : new Tuple<string,string>("#ФИО_Отпускающего", _model.Clients.GetById(order.CorpObtainerId).ToString()),
           new Tuple<string,string>("#ФИО_Принимающего", _model.CurrentUser.ToString())
         });

@@ -52,6 +52,7 @@ namespace Model
       this.ClothInstances = new ClothInstancesRepository(this, _dataBase.GetCollection<ClothInstance>("clothinstances"));
       this.ClothKinds = new ClothKindRepository(this, _dataBase.GetCollection<ClothKind>("clothkinds"));
       this.DiscountEdges = new DiscountSystemRepository(this, _dataBase.GetCollection<DiscountEdge>("discountsystem"));
+
       this.CurrentUser = this.Employees.GetCurrentEmployee(username, password);
 
       Connected?.Invoke(CurrentUser);

@@ -8,7 +8,12 @@ using Model;
 
 namespace Laundry.Views
 {
-  public class Visibilities
+
+  /// <summary>
+  /// Класс для работы с отсечением областей видимости,
+  /// принимает модель, как зависимость и читает из неё профессию текущего пользователя
+  /// </summary>
+  public class Visibilities : Caliburn.Micro.PropertyChangedBase
   {
     private readonly IModel _model;
 
@@ -25,6 +30,17 @@ namespace Laundry.Views
     public Visibilities(IModel model)
     {
       _model = model;
+      _model.Connected += OnModelOnConnected;
+    }
+    /// <summary>
+    /// Обработчик подключения к модели, необходим для
+    /// сигнализации изменения visibility всего приложения
+    /// при входе нового пользователя
+    /// </summary>
+    /// <param name="x"></param>
+    private void OnModelOnConnected(Employee x)
+    {
+      this.NotifyOfPropertyChange(string.Empty);
     }
   }
 }
