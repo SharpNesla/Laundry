@@ -34,7 +34,7 @@ namespace Laundry
       
       container.Handler<IScreenFactory>((container) => new ScreenFactory(container));
 
-      container.PerRequest<IShell, ShellViewModel>();
+      container.Singleton<IShell, ShellViewModel>();
 
       //ViewModels
       container.PerRequest<LoginScreenViewModel>();

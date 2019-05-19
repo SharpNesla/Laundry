@@ -18,6 +18,7 @@ using Model;
 using Model.DatabaseClients;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
+using MongoDB.Driver;
 using PropertyChanged;
 
 namespace Laundry.Views
@@ -83,7 +84,10 @@ namespace Laundry.Views
     public override void Handle(Client client)
     {
       base.Handle(client);
-      OrderDataGrid.Client = client;
+      OrderDataGrid.Filter = Builders<Order>.Filter.And(
+        Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
+        Builders<Order>.Filter.Eq(nameof(Order.ClientId), client.Id)
+      );
       Paginator.RefreshPaginable();
     }
 

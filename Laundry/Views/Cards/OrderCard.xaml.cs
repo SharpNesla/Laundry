@@ -59,7 +59,7 @@ namespace Laundry.Views
         Washer = _model.Employees.GetById(value.WasherCourierId);
 
         OutCourier = _model.Employees.GetById(value.OutCourierId);
-        
+
         if (value.IsCorporative)
         {
           CorpObtainer = _model.Clients.GetById(value.CorpObtainerId);
@@ -67,19 +67,48 @@ namespace Laundry.Views
         }
         else
         {
-
           Obtainer = _model.Employees.GetById(value.ObtainerId);
           Distributer = _model.Employees.GetById(value.DistributerId);
         }
       }
     }
 
-    public OrderCardViewModel(IModel model, IEventAggregator eventAggregator, ClothDataGridViewModel clothGrid) : base(
-      eventAggregator, Screens.OrderEditor)
+    public OrderCardViewModel(IModel model, IEventAggregator eventAggregator,
+      ClothDataGridViewModel clothGrid, Visibilities visibilities) : base(
+      eventAggregator, Screens.OrderEditor, visibilities)
     {
       _model = model;
       this.ClothInstancesGrid = clothGrid;
       clothGrid.DisplaySelectionColumn = false;
+    }
+
+    public async void ShowClientCard()
+    {
+      if (this.Client != null)
+      {
+        var orderDataGridViewModel =
+          new OrderDataGridViewModel(_eventAggregator, this, new DeleteDialogViewModel(), _model, null);
+
+        var clientCard = new ClientCardViewModel(this._eventAggregator,
+          orderDataGridViewModel);
+        clientCard.Entity = this.Client;
+        await DialogHostExtensions.ShowCaliburnVM(clientCard);
+      }
+    }
+
+    public void Apply()
+    {
+      if (Visibilities.Washer)
+      {
+        this._model.Orders.Update(this.Entity);
+      }
+
+      DialogHostExtensions.CloseCurrent();
+    }
+
+    public void Discard()
+    {
+      DialogHostExtensions.CloseCurrent();
     }
   }
 }

@@ -23,28 +23,22 @@ namespace Laundry.Views
   /// </summary>
   public class SettingsViewModel : DrawerActivityScreen
   {
-    private readonly PaletteHelper _paletteHelper;
-    private bool _isChecked;
+    private readonly IShell _shell;
 
     public bool IsChecked
     {
-      get { return _isChecked; }
-      set
-      {
-        _isChecked = value; 
-
-      }
+      get { return _shell.IsDarkTheme; }
+      set { _shell.IsDarkTheme = value; }
     }
 
-    public SettingsViewModel(IEventAggregator aggregator, IModel model) : base(aggregator, model)
+    public SettingsViewModel(IEventAggregator aggregator, IModel model, IShell shell) : base(aggregator, model)
     {
-      this._paletteHelper = new PaletteHelper();
-      this._isChecked = true;
+      _shell = shell;
     }
 
     public void ChangeColorScheme(bool isDark)
     {
-      _paletteHelper.SetLightDark(isDark);
+      this._shell.IsDarkTheme = isDark;
     }
 
 

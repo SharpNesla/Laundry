@@ -47,5 +47,7 @@ namespace Model
 
     [BsonIgnore]
     public long OrdersCount { get; set; }
+
+    public bool IsDarkTheme { get; set; }
   }
 }

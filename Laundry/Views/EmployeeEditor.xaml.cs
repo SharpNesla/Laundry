@@ -11,6 +11,7 @@ using Laundry.Utils;
 using Laundry.Utils.Controls;
 using Laundry.Utils.Controls.EntitySearchControls;
 using MaterialDesignThemes.Wpf;
+using MongoDB.Driver;
 using PropertyChanged;
 
 namespace Laundry.Views
@@ -129,7 +130,17 @@ namespace Laundry.Views
     public override void Handle(Employee message)
     {
       base.Handle(message);
-      OrderDataGrid.Employee = Entity;
+
+      this.OrderDataGrid.Filter = Builders<Order>.Filter.And(
+        Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
+        Builders<Order>.Filter.Or(
+          Builders<Order>.Filter.Eq(nameof(Order.ObtainerId), Entity.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.InCourierId), Entity.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.WasherCourierId), Entity.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.OutCourierId), Entity.Id),
+          Builders<Order>.Filter.Eq(nameof(Order.DistributerId), Entity.Id)
+        )
+      );
 
       SubsidiarySearch.SelectedEntity = Model.Subsidiaries.GetById(message.Subsidiary);
       CarSearch.SelectedEntity = Model.Cars.GetById(message.Car);

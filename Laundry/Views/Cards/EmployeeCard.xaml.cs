@@ -17,6 +17,7 @@ using Model;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using MaterialDesignThemes.Wpf;
+using MongoDB.Driver;
 using PropertyChanged;
 
 namespace Laundry.Views
@@ -40,7 +41,16 @@ namespace Laundry.Views
       set
       {
         base.Entity = value;
-        this.OrderGrid.Employee = value;
+        this.OrderGrid.Filter = Builders<Order>.Filter.And(
+          Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
+          Builders<Order>.Filter.Or(
+            Builders<Order>.Filter.Eq(nameof(Order.ObtainerId), value.Id),
+            Builders<Order>.Filter.Eq(nameof(Order.InCourierId), value.Id),
+            Builders<Order>.Filter.Eq(nameof(Order.WasherCourierId), value.Id),
+            Builders<Order>.Filter.Eq(nameof(Order.OutCourierId), value.Id),
+            Builders<Order>.Filter.Eq(nameof(Order.DistributerId), value.Id)
+          )
+        );
         this.OrderGrid.Refresh(0, 10);
       }
     }

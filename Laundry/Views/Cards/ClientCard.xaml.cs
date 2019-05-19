@@ -17,6 +17,7 @@ using Model;
 using Laundry.Utils;
 using Laundry.Utils.Controls;
 using MaterialDesignThemes.Wpf;
+using MongoDB.Driver;
 using PropertyChanged;
 
 namespace Laundry.Views
@@ -30,7 +31,10 @@ namespace Laundry.Views
       set
       {
         base.Entity = value;
-        this.OrderGrid.Client = value;
+        this.OrderGrid.Filter = Builders<Order>.Filter.And(
+          Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
+          Builders<Order>.Filter.Eq(nameof(Order.ClientId), value.Id)
+        );
         this.OrderGrid.Refresh(0, 10);
       }
     }

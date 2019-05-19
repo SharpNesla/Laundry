@@ -31,10 +31,10 @@ namespace Laundry.Views
         Builders<Employee>.Filter.And(
           Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
           Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
-        ),false);
+        ), false);
     }
 
-    
+
     public override void Handle(Subsidiary message)
     {
       base.Handle(message);
@@ -49,6 +49,8 @@ namespace Laundry.Views
         Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),
         Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Advisor)
       );
+
+      Advisors.Refresh(0, int.MaxValue);
     }
   }
 }

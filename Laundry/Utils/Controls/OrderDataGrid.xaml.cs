@@ -167,40 +167,6 @@ namespace Laundry.Utils.Controls
 
     #endregion
 
-    public Client Client { get; set; }
-    public Employee Employee { get; set; }
-
-    public override void Refresh(int page, int elements)
-    {
-      if (Client != null)
-      {
-        Repo.GetForClient(Client, page * elements, elements);
-        return;
-      }
-
-      if (Employee != null)
-      {
-        Repo.GetForEmployee(Employee, page * elements, elements);
-      }
-      else
-      {
-        base.Refresh(page, elements);
-      }
-    }
-    public override long Count
-    {
-      get
-      {
-        if (Client != null)
-          return Repo.GetForClientCount(Client);
-        if (Employee != null)
-        {
-          return Repo.GetForEmployeeCount(Employee);
-        }
-
-        return base.Count;
-      }
-    }
 
     public OrderDataGridViewModel(IEventAggregator eventAggregator, OrderCardViewModel card,
       DeleteDialogViewModel deleteDialog, IModel model, Visibilities visibilities

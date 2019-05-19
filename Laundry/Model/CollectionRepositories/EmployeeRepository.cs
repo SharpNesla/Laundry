@@ -139,5 +139,10 @@ namespace Model.DatabaseClients
     {
       if (car != null) entity.Car = car.Id;
     }
+
+    public void UpdateTheme(Employee currentUser, bool IsDark)
+    {
+      this.Collection.UpdateOne(x=>x.Id == currentUser.Id, Builders<Employee>.Update.Set(x=>x.IsDarkTheme, IsDark));
+    }
   }
 }

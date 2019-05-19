@@ -144,7 +144,7 @@
       <materialDesign:Card Margin="0,0,0,0" VerticalAlignment="Stretch" Grid.Column="1">
         <DockPanel>
           <TextBlock Margin="16,16,16,0" Style="{StaticResource MaterialDesignTitleTextBlock}"
-                     Text="Общая информация" DockPanel.Dock="Top" />
+                     Text="Приёмщики" DockPanel.Dock="Top" />
           <DockPanel DockPanel.Dock="Bottom" Margin="16,0,16,16" LastChildFill="True">
             <Button DockPanel.Dock="Right" Margin="0,0,9,0" IsEnabled="{Binding IsNew}"
                     Style="{StaticResource MaterialDesignFlatButton}"

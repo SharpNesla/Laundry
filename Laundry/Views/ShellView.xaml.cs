@@ -11,12 +11,14 @@ namespace Laundry
   /// <summary>
   /// Логика взаимодействия для ShellView.xaml
   /// </summary>
-
   public class ShellViewModel : Conductor<ActivityScreen>, IShell, IHandle<Screens>, IHandle<DrawerState>
   {
+    public Visibilities Visibilities { get; }
     private readonly EmployeeCardViewModel _employeeCard;
     private IScreenFactory _factory;
     private ConnectionLostDialogViewModel _connectionLostDialog;
+    private readonly IModel _model;
+    private PaletteHelper _paletteHelper;
 
     public bool IsDrawerOpened { get; set; }
 
@@ -30,18 +32,25 @@ namespace Laundry
 
     public string CurrentName
     {
-      get { return $"{CurrentEmployee?.Surname ?? ""} {CurrentEmployee?.Name ?? ""} {CurrentEmployee?.Patronymic ?? ""}"; }
+      get
+      {
+        return $"{CurrentEmployee?.Surname ?? ""} {CurrentEmployee?.Name ?? ""} {CurrentEmployee?.Patronymic ?? ""}";
+      }
     }
 
-    public ShellViewModel(IEventAggregator eventAggregator,ConnectionLostDialogViewModel connectionLostDialog, IModel model, IScreenFactory factory)
+    public ShellViewModel(IEventAggregator eventAggregator, Visibilities visibilities,
+      ConnectionLostDialogViewModel connectionLostDialog, IModel model, IScreenFactory factory)
     {
+      Visibilities = visibilities;
       eventAggregator.Subscribe(this);
 
       //_employeeCard = employeeCard;
       this._factory = factory;
       this._connectionLostDialog = connectionLostDialog;
+      _model = model;
       this.Handle(Screens.Login);
-      this.CurrentUser = model.CurrentUser;
+      _paletteHelper = new PaletteHelper();
+
       model.Connected += OnConnected;
       model.ConnectionLost += OnConnectionLost;
     }
@@ -49,10 +58,8 @@ namespace Laundry
     private void OnConnected(Employee obj)
     {
       this.CurrentEmployee = obj;
+      this._paletteHelper.SetLightDark(obj.IsDarkTheme);
     }
-
-
-    public Employee CurrentUser { get; set; }
 
 
     public void SetScreen(Screens message)
@@ -84,7 +91,6 @@ namespace Laundry
         screen.Context = ActiveItem;
         this.ActivateItem(screen);
       }
-      
     }
 
     public async void OnConnectionLost()
@@ -92,7 +98,20 @@ namespace Laundry
       await DialogHostExtensions.ShowCaliburnVM(_connectionLostDialog);
       this.Handle(Screens.Login);
     }
+
+    public void ChangeColorScheme()
+    {
+    }
+
+    public bool IsDarkTheme
+    {
+      get { return this.CurrentEmployee.IsDarkTheme; }
+      set
+      {
+        this.CurrentEmployee.IsDarkTheme = value;
+        this._model.Employees.UpdateTheme(CurrentEmployee, value);
+        this._paletteHelper.SetLightDark(value);
+      }
+    }
   }
 }
-
-

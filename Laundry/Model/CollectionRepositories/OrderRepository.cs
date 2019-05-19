@@ -188,41 +188,6 @@ namespace Model.CollectionRepositories
       return Model.Clients.GetById(order.ClientId);
     }
 
-    public IReadOnlyList<Order> GetForClient(Client client, int offset, int limit)
-    {
-      var filter = Builders<Order>.Filter.And(
-        Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
-        Builders<Order>.Filter.Eq(nameof(Order.ClientId), client.Id)
-      );
-      var orders = this.Get(offset, limit, filter);
-      return orders;
-    }
-
-    public long GetForClientCount(Client client)
-    {
-      var filter = Builders<Order>.Filter.And(
-        Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
-        Builders<Order>.Filter.Eq(nameof(Order.ClientId), client.Id)
-      );
-      return Collection.CountDocuments(filter);
-    }
-
-    public IReadOnlyList<Order> GetForEmployee(Employee employee, int offset, int limit)
-    {
-      var filter = Builders<Order>.Filter.And(
-        Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
-        Builders<Order>.Filter.Or(
-          Builders<Order>.Filter.Eq(nameof(Order.ObtainerId), employee.Id),
-          Builders<Order>.Filter.Eq(nameof(Order.InCourierId), employee.Id),
-          Builders<Order>.Filter.Eq(nameof(Order.WasherCourierId), employee.Id),
-          Builders<Order>.Filter.Eq(nameof(Order.OutCourierId), employee.Id),
-          Builders<Order>.Filter.Eq(nameof(Order.DistributerId), employee.Id)
-        )
-      );
-      var orders = this.Get(offset, limit, filter);
-      return orders;
-    }
-
     public long GetForEmployeeCount(Employee employee)
     {
       var filter = Builders<Order>.Filter.And(

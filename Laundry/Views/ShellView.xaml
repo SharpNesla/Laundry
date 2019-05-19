@@ -43,7 +43,8 @@
 
             <controls:DrawerItem Label="Клиенты" Kind="ManMan"
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('CLIENTDICTIONARY')]" />
-            <controls:DrawerItem Label="Аналитика" Kind="ChartBarStacked"
+            <controls:DrawerItem Label="Аналитика" Kind="ChartBarStacked" 
+                                 Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('ANALYTICS')]" />
 
             <Separator />
