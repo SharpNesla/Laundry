@@ -33,6 +33,7 @@
                           cal:Message.Attach="[Event Click] = [Action ExportToExcel()]" />
               </MenuItem>
               <MenuItem Header="Удалить выбраное"
+                        Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
                         cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
                         cal:Message.Attach="[Event Click] = [Action RemoveSelectedGroup()]" />
             </ContextMenu>
@@ -56,7 +57,7 @@
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
       <Button Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               cal:Message.Attach="AddEntity()"
-              Visibility="{Binding Visibilities.Director}"
+              Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
         <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />

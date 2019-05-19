@@ -113,8 +113,8 @@ namespace Laundry.Utils.Controls
     }
 
     public ClientDataGridViewModel(IEventAggregator eventAggregator, ClientCardViewModel card,
-      DeleteDialogViewModel deleteDialog, IModel model) :
-      base(eventAggregator, card, model.Clients, deleteDialog, Screens.ClientEditor)
+      DeleteDialogViewModel deleteDialog, IModel model, Visibilities visibilities) :
+      base(eventAggregator, card, model.Clients, deleteDialog, Screens.ClientEditor, visibilities)
     {
     }
   }

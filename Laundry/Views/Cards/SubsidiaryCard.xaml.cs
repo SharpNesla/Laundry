@@ -42,8 +42,9 @@ namespace Laundry.Views.Cards
       }
     }
 
-    public SubsidiaryCardViewModel(IEventAggregator eventAggregator, EmployeeDataGridViewModel advisorsGrid) : base(
-      eventAggregator, Screens.SubsidiaryEditor)
+    public SubsidiaryCardViewModel(IEventAggregator eventAggregator, EmployeeDataGridViewModel advisorsGrid,
+      Visibilities visibilities) : base(
+      eventAggregator, Screens.SubsidiaryEditor, visibilities)
     {
       this.AdvisorsGrid = advisorsGrid;
       this.AdvisorsGrid.IsCompact = true;

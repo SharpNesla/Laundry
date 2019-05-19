@@ -50,10 +50,10 @@ namespace Laundry.Utils.Controls
     private readonly IModel _model;
     public Order Order { get; set; }
 
-    public ClothDataGridViewModel(IEventAggregator eventAggregator,
-      ClothInstanceCardViewModel card, IModel model,
-      DeleteDialogViewModel removeDialog) : base(eventAggregator, card, model.ClothInstances, removeDialog,
-      Screens.About)
+    public ClothDataGridViewModel(IEventAggregator eventAggregator, ClothInstanceCardViewModel card, IModel model,
+      DeleteDialogViewModel removeDialog, Visibilities visibilities) : base(eventAggregator, card, model.ClothInstances,
+      removeDialog,
+      Screens.About, visibilities)
     {
       _eventAggregator = eventAggregator;
       _model = model;

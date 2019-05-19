@@ -18,7 +18,7 @@
                               Padding="16">
       <DockPanel>
 
-        <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" DockPanel.Dock="Right"
+        <Button Visibility="{Binding OrderGridVisibility}" DockPanel.Dock="Right"
                 Style="{StaticResource MaterialDesignToolButton}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="28"
                 cal:Message.Attach="ShowActivityMenu($source)">
@@ -35,6 +35,7 @@
                           cal:Message.Attach="[Event Click] = [Action ExportToExcel()]" />
               </MenuItem>
               <MenuItem Header="Удалить выбраное"
+                        Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
                         cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
                         cal:Message.Attach="[Event Click] = [Action RemoveSelectedGroup()]" />
             </ContextMenu>
@@ -56,6 +57,7 @@
     <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
       <Button Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
               materialDesign:ShadowAssist.ShadowDepth="Depth3"
+              Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
               Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
               cal:Message.Attach="AddEntity()">
         <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
@@ -113,19 +115,6 @@
               materialDesign:ShadowAssist.ShadowDepth="Depth1" Height="40">
               <ContentControl Name="Paginator" />
             </materialDesign:ColorZone>
-            <ToggleButton Margin="8,0,0,0"
-                          Style="{StaticResource MaterialDesignActionToggleButton}"
-                          IsChecked="{Binding IsSearchDrawerOpened}"
-                          ToolTip="Расширенный поиск">
-              <ToggleButton.Content>
-                <materialDesign:PackIcon
-                  Kind="Search" />
-              </ToggleButton.Content>
-              <materialDesign:ToggleButtonAssist.OnContent>
-                <materialDesign:PackIcon
-                  Kind="ArrowDown" />
-              </materialDesign:ToggleButtonAssist.OnContent>
-            </ToggleButton>
           </StackPanel>
         </DockPanel>
       </materialDesign:ColorZone>

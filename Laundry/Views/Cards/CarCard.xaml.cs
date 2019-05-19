@@ -47,8 +47,8 @@ namespace Laundry.Views.Cards
       }
     }
 
-    public CarCardViewModel(IEventAggregator eventAggregator, EmployeeDataGridViewModel driversGrid) : base(
-      eventAggregator, Screens.CarEditor)
+    public CarCardViewModel(IEventAggregator eventAggregator, EmployeeDataGridViewModel driversGrid,
+      Visibilities visibilities) : base(eventAggregator, Screens.CarEditor, visibilities)
     {
       this.Drivers = driversGrid;
 

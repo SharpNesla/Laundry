@@ -41,7 +41,9 @@ namespace Laundry.Views
 
     public OrderDataGridViewModel OrderGrid { get; set; }
 
-    public ClientCardViewModel(IEventAggregator eventAggregator, OrderDataGridViewModel orderGrid) : base(eventAggregator, Screens.ClientEditor)
+    public ClientCardViewModel(IEventAggregator eventAggregator, OrderDataGridViewModel orderGrid,
+      Visibilities visibilities = null) :
+      base(eventAggregator, Screens.ClientEditor, visibilities)
     {
       this.OrderGrid = orderGrid;
       orderGrid.DisplaySelectionColumn = false;

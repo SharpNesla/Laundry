@@ -23,7 +23,8 @@ namespace Laundry.Views.Cards
   /// </summary>
   public class ClothInstanceCardViewModel : Card<ClothInstance>
   {
-    public ClothInstanceCardViewModel(IEventAggregator eventAggregator) : base(eventAggregator, Screens.About)
+    public ClothInstanceCardViewModel(IEventAggregator eventAggregator,
+      Visibilities visibilities) : base(eventAggregator, Screens.About, visibilities)
     {
     }
     

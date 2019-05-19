@@ -27,8 +27,9 @@ namespace Laundry.Utils.Controls
   /// </summary>
   public class CarDataGridViewModel : EntityGrid<Car, Repository<Car>, CarCardViewModel>
   {
-    public CarDataGridViewModel(IEventAggregator eventAggregator, CarCardViewModel card, DeleteDialogViewModel deleteDialog, IModel model) 
-      : base(eventAggregator, card, model.Cars,deleteDialog, Screens.CarEditor)
+    public CarDataGridViewModel(IEventAggregator eventAggregator, CarCardViewModel card, 
+      DeleteDialogViewModel deleteDialog, IModel model, Visibilities visibilities) 
+      : base(eventAggregator, card, model.Cars,deleteDialog, Screens.CarEditor, visibilities)
     {
     }
 

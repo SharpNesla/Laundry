@@ -17,6 +17,7 @@
         <Button DockPanel.Dock="Right" Name="EditClient" Style="{StaticResource MaterialDesignToolButton}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
                 Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
                 cal:Message.Attach="Edit()">
           <materialDesign:PackIcon Kind="SquareEditOutline" VerticalAlignment="Center" Height="24" Width="24" />
         </Button>

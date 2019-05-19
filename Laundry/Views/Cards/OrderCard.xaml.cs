@@ -89,8 +89,7 @@ namespace Laundry.Views
         var orderDataGridViewModel =
           new OrderDataGridViewModel(_eventAggregator, this, new DeleteDialogViewModel(), _model, null);
 
-        var clientCard = new ClientCardViewModel(this._eventAggregator,
-          orderDataGridViewModel);
+        var clientCard = new ClientCardViewModel(this._eventAggregator, orderDataGridViewModel);
         clientCard.Entity = this.Client;
         await DialogHostExtensions.ShowCaliburnVM(clientCard);
       }

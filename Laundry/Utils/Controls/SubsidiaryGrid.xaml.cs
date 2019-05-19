@@ -27,8 +27,8 @@ namespace Laundry.Utils.Controls
 
 
     public SubsidiaryGridViewModel(IEventAggregator eventAggregator, SubsidiaryCardViewModel card,
-      DeleteDialogViewModel deleteDialog,
-      IModel model) : base(eventAggregator, card, model.Subsidiaries, deleteDialog, Screens.SubsidiaryEditor)
+      DeleteDialogViewModel deleteDialog, IModel model, Visibilities visibilities) :
+      base(eventAggregator, card, model.Subsidiaries, deleteDialog, Screens.SubsidiaryEditor, visibilities)
     {
       _model = model;
     }

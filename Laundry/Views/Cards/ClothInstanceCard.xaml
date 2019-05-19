@@ -20,7 +20,8 @@
         <Button DockPanel.Dock="Right" Name="EditClient" Style="{StaticResource MaterialDesignToolButton}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
                 Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                cal:Message.Attach="Edit()">
+                cal:Message.Attach="Edit()"
+                Visibility="{Binding Visibilities.DirectorAdvisor, Converter={StaticResource BoolVisibilityConverter}}">
           <materialDesign:PackIcon Kind="SquareEditOutline" VerticalAlignment="Center" Height="24" Width="24" />
         </Button>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">

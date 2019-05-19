@@ -74,7 +74,7 @@
                 SelectedItem="{Binding SelectedEntity}"
                 Background="{Binding ElementName=OwnControl, Path=Background}">
         <DataGrid.ContextMenu>
-          <ContextMenu Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}">
+          <ContextMenu Visibility="{Binding Visibilities.DirectorAdvisor, Converter={StaticResource BoolVisibilityConverter}}">
             <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
             <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
           </ContextMenu>
@@ -167,7 +167,8 @@
                 SelectedItem="{Binding SelectedEntity}"
                 Background="{Binding ElementName=OwnControl, Path=Background}">
         <DataGrid.ContextMenu>
-          <ContextMenu Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}">
+          <ContextMenu 
+            Visibility="{Binding Visibilities.DirectorAdvisor, Converter={StaticResource BoolVisibilityConverter}}">
             <MenuItem cal:Message.Attach="[Event Click] = [Action Edit()]" Header="Изменить" />
             <MenuItem cal:Message.Attach="[Event Click] = [Action Remove()]" Header="Удалить" />
           </ContextMenu>

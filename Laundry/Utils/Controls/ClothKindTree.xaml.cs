@@ -85,8 +85,8 @@ namespace Laundry.Utils.Controls
     public bool IsTreeMode { get; set; }
 
     public ClothKindTreeViewModel(IEventAggregator eventAggregator, ClothKindCardViewModel card,
-      IModel model, DeleteDialogViewModel removeDialog)
-      : base(eventAggregator, card, model.ClothKinds, removeDialog, Screens.ClothKindEditor)
+      IModel model, DeleteDialogViewModel removeDialog, Visibilities visibilities)
+      : base(eventAggregator, card, model.ClothKinds, removeDialog, Screens.ClothKindEditor, visibilities)
     {
       _model = model;
       this.EditableEntities = new ObservableCollection<ClothKind> {Repo.GetById(0)};
