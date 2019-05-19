@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Model.DatabaseClients;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Model.CollectionRepositories
@@ -11,12 +12,14 @@ namespace Model.CollectionRepositories
   /// <typeparam name="T">Тип объекта находящегося в коллекции</typeparam>
   public class Repository<T> where T : IRepositoryElement
   {
+    private readonly string[] _searchStringCriterias;
     protected IMongoCollection<T> Collection { get; set; }
     internal event Action ConnectionLost;
     protected IModel Model { get; set; }
 
-    public Repository(IModel model, IMongoCollection<T> collection)
+    public Repository(IModel model, IMongoCollection<T> collection, string[] searchStringCriterias = null)
     {
+      _searchStringCriterias = searchStringCriterias;
       this.Collection = collection;
       this.Model = model;
     }
@@ -24,9 +27,9 @@ namespace Model.CollectionRepositories
     protected virtual IAggregateFluent<T> GetAggregationFluent(bool includeDeleted = false,
       FilterDefinition<T> filter = null)
     {
-      var filters = Builders<T>.Filter.And(
-        includeDeleted ? Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false) : Builders<T>.Filter.Empty,
-        filter ?? Builders<T>.Filter.Empty);
+      var filters = includeDeleted
+        ? Builders<T>.Filter.Empty
+        : Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false);
 
       return this.Collection.Aggregate().Match(filters);
     }
@@ -43,7 +46,7 @@ namespace Model.CollectionRepositories
     {
       try
       {
-        return GetAggregationFluent(filter).Skip(offset).Limit(limit).ToList();
+        return GetAggregationFluent().Match(filter ?? Builders<T>.Filter.Empty).Skip(offset).Limit(limit).ToList();
       }
       catch (Exception e)
       {
@@ -74,13 +77,62 @@ namespace Model.CollectionRepositories
 
     public virtual long GetSearchStringCount(string searchString, FilterDefinition<T> filter = null)
     {
-      return this.GetCount();
+      try
+      {
+        var result = GetBySearchStringFluent(searchString, filter).Count().First();
+        return result.Count;
+      }
+      catch (InvalidOperationException e)
+      {
+        return 0;
+      }
+    }
+
+    public IAggregateFluent<T> GetBySearchStringFluent(string searchString, FilterDefinition<T> filter)
+    {
+      var searchChunks = searchString.Split(' ');
+
+      var regex = @"^";
+
+      foreach (var searchChunk in searchChunks)
+      {
+        regex += $"(?=.*{searchChunk})";
+      }
+
+      regex += @".*$";
+
+      var bsonArray = new BsonArray
+      {
+        new BsonDocument("$toString", "$_id"),
+        " ",
+      };
+
+      foreach (var fieldDefinition in _searchStringCriterias)
+      {
+        bsonArray.Add($"${fieldDefinition}");
+        bsonArray.Add(" ");
+      }
+
+      var addfields = new BsonDocument("$addFields",
+        new BsonDocument("Signature",
+          new BsonDocument("$concat",
+            bsonArray)));
+
+      var filterdef = filter ?? Builders<T>.Filter.Empty;
+      return this.GetAggregationFluent()
+        .Match(filterdef)
+        .AppendStage<BsonDocument>(addfields)
+        .Match(Builders<BsonDocument>.Filter.Regex(nameof(IRepositoryElement.Signature), regex))
+        .As<T>();
     }
 
     public virtual IReadOnlyList<T> GetBySearchString(string searchString, FilterDefinition<T> filter, int offset = 0,
       int capLimit = 10)
     {
-      return this.Get(0, 10, filter);
+      return this.GetBySearchStringFluent(searchString, filter)
+        .Skip(offset)
+        .Limit(capLimit)
+        .ToList();
     }
 
     /// <summary>
@@ -108,7 +160,7 @@ namespace Model.CollectionRepositories
     /// <returns></returns>
     public virtual T GetById(long id)
     {
-      return Collection.Find(Builders<T>.Filter.Eq(nameof(IRepositoryElement.Id), id)).First();
+      return GetAggregationFluent().Match(Builders<T>.Filter.Eq(nameof(IRepositoryElement.Id), id)).First();
     }
 
     /// <summary>
