@@ -18,7 +18,7 @@ namespace Model
     Undefined
   }
 
-  public class Person : IRepositoryElement, IDataErrorInfo
+  public class Person : IRepositoryElement
   {
     [BsonId]
     public long Id { get; set; }
@@ -65,27 +65,6 @@ namespace Model
     }
     [BsonIgnore]
     public bool IsSelected { get; set; }
-
-    public string this[string columnName]
-    {
-      get
-      {
-        string error = string.Empty;
-        switch (columnName)
-        {
-          case nameof(this.Name):
-            
-            break;
-          case nameof(this.Surname):
-            error = string.IsNullOrWhiteSpace(Surname) ? "Фамилия не может быть пустым полем" : string.Empty;
-            break;
-        }
-
-        return error;
-      }
-    }
-
-    public string Error { get; }
 
     public override string ToString()
     {

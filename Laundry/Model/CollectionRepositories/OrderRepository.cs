@@ -96,7 +96,7 @@ namespace Model.CollectionRepositories
       {
         things = aggregation[0]["Count"].AsInt32;
       }
-      catch (ArgumentOutOfRangeException e)
+      catch (ArgumentOutOfRangeException)
       {
       }
 
@@ -104,7 +104,7 @@ namespace Model.CollectionRepositories
       {
         pairs = aggregation[2]["Count"].AsInt32;
       }
-      catch (ArgumentOutOfRangeException e)
+      catch (ArgumentOutOfRangeException)
       {
       }
 
@@ -112,7 +112,7 @@ namespace Model.CollectionRepositories
       {
         kgs = aggregation[1]["Count"].AsInt32;
       }
-      catch (ArgumentOutOfRangeException e)
+      catch (ArgumentOutOfRangeException)
       {
       }
 
@@ -180,7 +180,7 @@ namespace Model.CollectionRepositories
           .AppendStage<BsonDocument>(pipeline).ToList()[0]["Price"].AsDouble;
         return doc;
       }
-      catch (ArgumentOutOfRangeException e)
+      catch (ArgumentOutOfRangeException)
       {
         return 0;
       }
@@ -211,7 +211,7 @@ namespace Model.CollectionRepositories
 
         return aggregation["Price"].AsDouble;
       }
-      catch (InvalidOperationException e)
+      catch (InvalidOperationException)
       {
         return 0;
       }

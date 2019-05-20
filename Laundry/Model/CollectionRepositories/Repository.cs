@@ -48,7 +48,7 @@ namespace Model.CollectionRepositories
       {
         return GetAggregationFluent().Match(filter ?? Builders<T>.Filter.Empty).Skip(offset).Limit(limit).ToList();
       }
-      catch (Exception e)
+      catch (Exception)
       {
         return null;
       }
@@ -68,7 +68,7 @@ namespace Model.CollectionRepositories
           filter ?? Builders<T>.Filter.Empty);
         return Collection.CountDocuments(filters);
       }
-      catch (Exception e)
+      catch (Exception)
       {
         ConnectionLost?.Invoke();
         return 0;
@@ -82,7 +82,7 @@ namespace Model.CollectionRepositories
         var result = GetBySearchStringFluent(searchString, filter).Count().First();
         return result.Count;
       }
-      catch (InvalidOperationException e)
+      catch (InvalidOperationException)
       {
         return 0;
       }

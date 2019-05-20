@@ -48,7 +48,7 @@ namespace Laundry.Utils.Controls
       RaiseStateChanged();
     }
 
-    public async void Edit(DiscountEdge edge)
+    public void Edit(DiscountEdge edge)
     {
       this.SelectEdge(edge);
       this.Edit();

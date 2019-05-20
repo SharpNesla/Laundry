@@ -35,7 +35,7 @@ namespace Model.CollectionRepositories
         var discountEdge = GetAggregationFluent().Match(filters).SortByDescending(x=>x.Edge).First();
         return discountEdge;
       }
-      catch (InvalidOperationException e)
+      catch (InvalidOperationException)
       {
         return null;
       }

@@ -34,23 +34,10 @@ namespace Laundry.Views
     }
 
     #region TabBindings
-
-    [AlsoNotifyFor(nameof(InfoVisibility))]
+    
     public bool InfoChecked { get; set; }
-
-    [AlsoNotifyFor(nameof(OrderGridVisibility))]
+    
     public bool OrderChecked { get; set; }
-
-
-    public Visibility InfoVisibility
-    {
-      get { return InfoChecked ? Visibility.Visible : Visibility.Collapsed; }
-    }
-
-    public Visibility OrderGridVisibility
-    {
-      get { return OrderChecked ? Visibility.Visible : Visibility.Collapsed; }
-    }
 
     #endregion
 

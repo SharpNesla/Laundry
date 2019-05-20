@@ -48,7 +48,7 @@ namespace Model.DatabaseClients
       {
         user = this.Collection.Find(Builders<Employee>.Filter.Eq("Username", username)).First();
       }
-      catch (InvalidOperationException e)
+      catch (InvalidOperationException)
       {
         throw new UnauthorizedAccessException();
       }

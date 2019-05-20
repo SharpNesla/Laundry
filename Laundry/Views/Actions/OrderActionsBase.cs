@@ -100,7 +100,7 @@ namespace Laundry.Views.Actions
           {
             paragraph.ReplaceText(replacePhrase.Item1, replacePhrase.Item2);
           }
-          catch (Exception e)
+          catch (Exception)
           {
           }
         }
@@ -129,7 +129,7 @@ namespace Laundry.Views.Actions
             row.GetCell(3).SetText(orderInstance.Amount.ToString());
             row.GetCell(4).SetText(orderInstance.Comment ?? string.Empty);
           }
-          catch (NullReferenceException e)
+          catch (NullReferenceException)
           {
             break;
           }
@@ -173,7 +173,7 @@ namespace Laundry.Views.Actions
           document = new XWPFDocument(file);
         }
       }
-      catch (Exception e)
+      catch (Exception)
       {
         return;
       }

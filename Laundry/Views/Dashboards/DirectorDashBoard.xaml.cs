@@ -27,9 +27,6 @@ namespace Laundry.Views.Dashboards
 {
   public class DirectorDashBoardViewModel : DashBoardBase
   {
-    private readonly RecieveOrdersViewModel _recieveOrders;
-    private readonly WashOrdersViewModel _wash;
-
     public DirectorDashBoardViewModel(IEventAggregator aggregator, IModel model,
       OrderDataGridViewModel orderGrid, OrderDataGridViewModel actionsOrderGrid) : base(
       aggregator, model, orderGrid, actionsOrderGrid)

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Model.DatabaseClients;
 using Laundry.Views;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 
 namespace Model.CollectionRepositories
@@ -334,7 +330,7 @@ namespace Model.CollectionRepositories
           .AppendStage<BsonDocument>(match).Count().First();
         return result.Count;
       }
-      catch (InvalidOperationException e)
+      catch (InvalidOperationException)
       {
         return 0;
       }
@@ -420,7 +416,7 @@ namespace Model.CollectionRepositories
       {
         things = aggregation[0]["Count"].AsInt32;
       }
-      catch (ArgumentOutOfRangeException e)
+      catch (ArgumentOutOfRangeException)
       {
       }
 
@@ -428,7 +424,7 @@ namespace Model.CollectionRepositories
       {
         pairs = aggregation[2]["Count"].AsInt32;
       }
-      catch (ArgumentOutOfRangeException e)
+      catch (ArgumentOutOfRangeException)
       {
       }
 
@@ -436,7 +432,7 @@ namespace Model.CollectionRepositories
       {
         kgs = aggregation[1]["Count"].AsInt32;
       }
-      catch (ArgumentOutOfRangeException e)
+      catch (ArgumentOutOfRangeException)
       {
       }
 
@@ -468,7 +464,7 @@ namespace Model.CollectionRepositories
           .Group(groupDef).ToList()[0]["Price"].AsDouble;
         return doc;
       }
-      catch (ArgumentOutOfRangeException e)
+      catch (ArgumentOutOfRangeException)
       {
         return 0;
       }

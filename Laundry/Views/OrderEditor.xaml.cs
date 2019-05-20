@@ -224,7 +224,7 @@ namespace Laundry.Views
           {
             paragraph.ReplaceText(replacePhrase.Item1, replacePhrase.Item2);
           }
-          catch (Exception e)
+          catch (Exception)
           {
           }
         }
@@ -252,7 +252,7 @@ namespace Laundry.Views
             row.GetCell(3).SetText(orderInstance.Amount.ToString());
             row.GetCell(4).SetText(orderInstance.Comment ?? string.Empty);
           }
-          catch (NullReferenceException e)
+          catch (NullReferenceException)
           {
             break;
           }
@@ -284,7 +284,7 @@ namespace Laundry.Views
             row.GetCell(3).Paragraphs[0].Text == "#Кол-во" &&
             row.GetCell(4).Paragraphs[0].Text == "#Комментарий";
         }
-        catch (NullReferenceException e)
+        catch (NullReferenceException)
         {
           return false;
         }
@@ -304,7 +304,7 @@ namespace Laundry.Views
           document = new XWPFDocument(file);
         }
       }
-      catch (Exception e)
+      catch (Exception)
       {
         return;
       }

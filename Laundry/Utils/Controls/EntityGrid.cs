@@ -118,13 +118,13 @@ namespace Laundry.Utils.Controls
 
     public event Action StateChanged;
 
-    public void ShowInfoCard()
+    public async void ShowInfoCard()
     {
       if (SelectedEntity != null)
       {
         _card.Entity = SelectedEntity;
 
-        DialogHostExtensions.ShowCaliburnVM(_card);
+        await DialogHostExtensions.ShowCaliburnVM(_card);
       }
     }
 

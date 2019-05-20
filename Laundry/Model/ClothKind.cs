@@ -58,10 +58,12 @@ namespace Model
     [BsonIgnore]
     public int Level { get; set; }
 
-    [BsonIgnoreIfNull] [BsonElement("SumPrice")]
+    [BsonIgnoreIfNull]
+    [BsonElement("SumPrice")]
     internal double? SumPriceImpl;
 
-    [BsonIgnoreIfNull] [BsonElement("Count")]
+    [BsonIgnoreIfNull]
+    [BsonElement("Count")]
     internal int? CountImpl;
 
     public double Count => CountImpl ?? 0;
