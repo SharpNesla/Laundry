@@ -25,7 +25,7 @@ namespace Laundry.Views
   /// <summary>
   /// Interaction logic for ClothEditor.xaml
   /// </summary>
-  public class ClothEditorViewModel : EditorScreen<ClothInstancesRepository, ClothInstance>
+  public class ClothEditorViewModel : EditorScreen<Repository<ClothInstance>, ClothInstance>
   {
     private int _instancePos;
     public Order Order { get; set; }
@@ -36,7 +36,7 @@ namespace Laundry.Views
     public event Action Changed;
 
     public ClothEditorViewModel(IEventAggregator aggregator, IModel model, Order order) :
-      base(aggregator, model, model.ClothInstances, "предмета одежды")
+      base(aggregator, model, null, "предмета одежды")
     {
       this.Order = order;
       this.ClothKindTree = new ClothKindSelectorViewModel(model);

@@ -20,7 +20,6 @@ namespace Model
     public ClientRepository Clients { get; set; }
     public EmployeeRepository Employees { get; set; }
     public OrderRepository Orders { get; set; }
-    public ClothInstancesRepository ClothInstances { get; set; }
     public SubsidiaryRepository Subsidiaries { get; set; }
     public CarRepository Cars { get; set; }
     public ClothKindRepository ClothKinds { get; set; }
@@ -49,7 +48,6 @@ namespace Model
       this.Orders = new OrderRepository(this, _orders);
       this.Subsidiaries = new SubsidiaryRepository(this, _dataBase.GetCollection<Subsidiary>("subsidiaries"));
       this.Cars = new CarRepository(this, _dataBase.GetCollection<Car>("cars"));
-      this.ClothInstances = new ClothInstancesRepository(this, _dataBase.GetCollection<ClothInstance>("clothinstances"));
       this.ClothKinds = new ClothKindRepository(this, _dataBase.GetCollection<ClothKind>("clothkinds"));
       this.DiscountEdges = new DiscountSystemRepository(this, _dataBase.GetCollection<DiscountEdge>("discountsystem"));
 

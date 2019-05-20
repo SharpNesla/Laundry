@@ -188,6 +188,8 @@ namespace Model.CollectionRepositories
 
     public double GetAggregatedPriceForSubsidiary(Subsidiary subsidiary)
     {
+      
+
       var group =
         new BsonDocument("$group",
           new BsonDocument

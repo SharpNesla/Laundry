@@ -49,5 +49,6 @@ namespace Model
 
     [BsonIgnoreIfNull]
     public int? ZipCode { get; set; }
+ 
   }
 }

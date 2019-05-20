@@ -13,7 +13,7 @@ namespace Laundry
   /// </summary>
   public class ShellViewModel : Conductor<ActivityScreen>, IShell, IHandle<Screens>, IHandle<DrawerState>
   {
-    public Visibilities Visibilities { get; }
+    public Visibilities Visibilities { get; private set; }
     private readonly EmployeeCardViewModel _employeeCard;
     private IScreenFactory _factory;
     private ConnectionLostDialogViewModel _connectionLostDialog;

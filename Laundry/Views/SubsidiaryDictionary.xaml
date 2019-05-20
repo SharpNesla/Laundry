@@ -12,7 +12,7 @@
              Background="{DynamicResource MaterialDesignPaper}">
   <DockPanel LastChildFill="True">
     <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
-                              Padding="16" HorizontalAlignment="Left" Width="800">
+                              Padding="16">
       <DockPanel>
 
         <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" DockPanel.Dock="Right"
@@ -32,7 +32,7 @@
                           cal:Message.Attach="[Event Click] = [Action ExportToExcel()]" />
               </MenuItem>
               <MenuItem Header="Удалить выбраное"
-                        Visibility="{Binding Visibilities.DirectorAdvisor, Converter={StaticResource BoolVisibilityConverter}}"
+                        Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
                         cal:Action.Target="{Binding Data, Source={StaticResource proxy}}"
                         cal:Message.Attach="[Event Click] = [Action RemoveSelectedGroup()]" />
             </ContextMenu>
@@ -47,7 +47,7 @@
             Style="{StaticResource MaterialDesignTitleTextBlock}"
             VerticalAlignment="Center"
             Margin="16 0 0 0">
-            Справочник филиалов
+            Филиалы
           </TextBlock>
         </StackPanel>
       </DockPanel>

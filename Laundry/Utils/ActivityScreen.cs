@@ -13,6 +13,9 @@ using Laundry.Views;
 
 namespace Laundry.Utils
 {
+  /// <summary>
+  /// Базовый класс для работы с экранами в прачечной
+  /// </summary>
   public abstract class ActivityScreen : Screen
   {
     public IEventAggregator EventAggregator { get; private set; }
@@ -29,17 +32,25 @@ namespace Laundry.Utils
       
       this.Visibilities = new Visibilities(model);
     }
-
+    /// <summary>
+    /// Смена экрана приложения
+    /// </summary>
+    /// <param name="screen">Перечисление-экран</param>
     public void ChangeApplicationScreen(Screens screen)
     {
       this.EventAggregator.PublishOnUIThread(screen);
     }
 
+    /// <summary>
+    /// Часто activitysceen имеет основную кнопку с тремя точками,
+    /// за который скрывается вложенной меню, данный метод показывает
+    /// меню (реализованное как контекстное) для данной кнопки
+    /// </summary>
+    /// <param name="button">Кнопка</param>
     public void ShowActivityMenu(Button button)
     {
       if (button.ContextMenu != null) button.ContextMenu.IsOpen = true;
     }
-
     public void RaiseActivated()
     {
       this.OnActivate();

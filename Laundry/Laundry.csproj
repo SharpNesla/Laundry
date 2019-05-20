@@ -141,7 +141,6 @@
     <Compile Include="Model\CollectionRepositories\AggregationResult.cs" />
     <Compile Include="Model\CollectionRepositories\CarRepository.cs" />
     <Compile Include="Model\CollectionRepositories\ClientRepository.cs" />
-    <Compile Include="Model\CollectionRepositories\ClothInstancesRepository.cs" />
     <Compile Include="Model\CollectionRepositories\ClothKindRepository.cs" />
     <Compile Include="Model\CollectionRepositories\DiscountSystemRepository.cs" />
     <Compile Include="Model\CollectionRepositories\OrderRepository.cs" />

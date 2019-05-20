@@ -13,7 +13,6 @@ namespace Model
     ClientRepository Clients { get; }
     EmployeeRepository Employees { get; }
     OrderRepository Orders { get; }
-    ClothInstancesRepository ClothInstances { get; }
     SubsidiaryRepository Subsidiaries { get; }
     CarRepository Cars { get; }
     ClothKindRepository ClothKinds { get; }

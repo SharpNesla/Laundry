@@ -16,10 +16,10 @@ namespace Model.CollectionRepositories
     public double UnCountableCount { get; set; }
   }
 
-  public class AggregationResultForSubsidiary
+  public class SubsidiaryAggregationResult
   {
     [BsonId] public int SubsidiaryId;
-
+    public string Signature { get; set; }
     public double Price { get; set; }
     public long Count { get; set; }
     public double UnCountableCount { get; set; }

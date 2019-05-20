@@ -34,14 +34,40 @@ namespace Laundry.Utils.Controls
     }
 
 
-    public SeriesCollection Values => new SeriesCollection
+    public SeriesCollection Values
     {
-      new ColumnSeries
+      get
       {
-        Title = "Сумма",
-        Values = new ChartValues<double>(this.Repo.Get(0,int.MaxValue).Select(x => _model.Orders.GetAggregatedPriceForSubsidiary(x)))
+        switch (this.EntityInfoType)
+        {
+          case EntityInfoType.Amount:
+            return new SeriesCollection
+            {
+              new ColumnSeries
+              {
+                Title = "шт",
+                Values = new ChartValues<long>(this.Type.Select(x => x.Count))
+              },
+              new ColumnSeries
+              {
+                Title = "кг",
+                Values = new ChartValues<double>(this.Type.Select(x => x.UnCountableCount))
+              }
+            };
+          case EntityInfoType.Cost:
+            return new SeriesCollection
+            {
+              new ColumnSeries
+              {
+                Title = "₽",
+                Values = new ChartValues<double>(this.Type.Select(x => x.Price))
+              }
+            };
+          default:
+            return null;
+        }
       }
-    };
+    }
 
     public override string[] TableSheetHeader => new[]
       {"№", "Торговое название", "Город", "Улица", "Дом", "Квартира (павильон)", "Почтовый индекс", "Номер телефона", "Главный приёмщик"};
@@ -70,7 +96,9 @@ namespace Laundry.Utils.Controls
       return row;
     }
 
-    public string[] Labels => this.Repo.Get(0, int.MaxValue).Select(x => $"{x.Id} {x.Name}").ToArray();
+    public IReadOnlyList<SubsidiaryAggregationResult> Type => this._model.Subsidiaries.AggregateSubsidiaries();
+
+    public string[] Labels => Type.Select(x=>x.Signature).ToArray();
     public string LabelsTitle => "Филиалы";
     public string ValuesTitle => "Суммы";
     public ChartTime Time { get; set; }

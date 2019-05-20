@@ -14,7 +14,13 @@ using MongoDB.Driver;
 
 namespace Laundry.Utils.Controls.EntitySearchControls
 {
-  public class EntitySearchBox<TEntity, TRepository> : PropertyChangedBase, IDataErrorInfo
+  /// <summary>
+  /// Базовый класс для динамических 
+  /// полей со списком поисковых строк
+  /// </summary>
+  /// <typeparam name="TEntity">Сущность, по которой ведётся поиск</typeparam>
+  /// <typeparam name="TRepository">Репозиторий сущности</typeparam>
+  public abstract class EntitySearchBox<TEntity, TRepository> : PropertyChangedBase, IDataErrorInfo
     where TEntity : IRepositoryElement
     where TRepository : Repository<TEntity>
   {
@@ -24,6 +30,9 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     private string _entityText;
     private FilterDefinition<TEntity> _filter;
 
+    /// <summary>
+    /// Фильтр с учётом которого ведётся поиск
+    /// </summary>
     public FilterDefinition<TEntity> Filter
     {
       get { return _filter; }
@@ -37,8 +46,17 @@ namespace Laundry.Utils.Controls.EntitySearchControls
 
     public IList<TEntity> Entities { get; set; }
 
+    /// <summary>
+    /// Текст в подсказке к полю
+    /// </summary>
     public string Label { get; set; }
 
+
+    /// <summary>
+    /// Строка поиска
+    /// в геттере проверка на null,
+    /// в сеттере при изменении строки триггерится поиск
+    /// </summary>
     public string EntityText
     {
       get
@@ -57,7 +75,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
       {
         _entityText = value;
 
-        if (value == String.Empty)
+        if (string.IsNullOrEmpty(value))
         {
           this.Entities = new List<TEntity>(Repository.Get(0, 10, Filter));
         }
@@ -68,6 +86,9 @@ namespace Laundry.Utils.Controls.EntitySearchControls
       }
     }
 
+    /// <summary>
+    /// Выбранная сущность, при смене триггерит событие EntityChanged
+    /// </summary>
     public TEntity SelectedEntity
     {
       get { return _selectedEntity; }
@@ -79,10 +100,10 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     }
 
     public event Action<TEntity> EntityChanged;
-
+    
     public void OnEntitySearch(string entityText)
     {
-      this.Entities = (IList<TEntity>) Repository.GetBySearchString(entityText, Filter);
+      this.Entities = Repository.GetBySearchString(entityText, Filter) as IList<TEntity>;
     }
 
     protected EntitySearchBox(TRepository repository, string label = "Объект", FilterDefinition<TEntity> filter = null, bool isRequired = true)
@@ -98,6 +119,8 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     {
       box.IsDropDownOpen = true;
     }
+
+    #region Реализация IDataErrorInfo для валидации
 
     public string this[string columnName]
     {
@@ -117,5 +140,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     }
 
     public string Error { get; }
+
+    #endregion
   }
 }

@@ -24,34 +24,14 @@ using PropertyChanged;
 
 namespace Laundry.Utils.Controls
 {
-  public class ClothDataGridViewModel : EntityGrid<ClothInstance, ClothInstancesRepository, ClothInstanceCardViewModel>
+  public class ClothDataGridViewModel : EntityGrid<ClothInstance, Repository<ClothInstance>, ClothInstanceCardViewModel>
   {
-    //public override FilterDefinition<Client> Filter
-    //{
-    //  get
-    //  {
-    //    var filter = BaseFilter;
-
-    //    if (this.I)
-    //    {
-    //      filter = Builders<Client>.Filter.And(
-    //        this.BaseFilter,
-    //        Builders<Client>.Filter.Gte(nameof(Client.DateBirth), this.LowDateBirthBound ?? DateTime.MinValue),
-    //        Builders<Client>.Filter.Lte(nameof(Client.DateBirth), this.HighDateBirthBound ?? DateTime.MaxValue));
-    //    }
-
-    //    return filter;
-    //  }
-
-    //  set { base.Filter = value; }
-    //}
-
     private readonly IEventAggregator _eventAggregator;
     private readonly IModel _model;
     public Order Order { get; set; }
 
     public ClothDataGridViewModel(IEventAggregator eventAggregator, ClothInstanceCardViewModel card, IModel model,
-      DeleteDialogViewModel removeDialog, Visibilities visibilities) : base(eventAggregator, card, model.ClothInstances,
+      DeleteDialogViewModel removeDialog, Visibilities visibilities) : base(eventAggregator, card, null,
       removeDialog,
       Screens.About, visibilities)
     {
