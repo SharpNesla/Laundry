@@ -26,8 +26,7 @@ namespace Model.CollectionRepositories
         {
           instance.ClothKindObj = Model.ClothKinds.GetById(instance.ClothKind);
         }
-
-        this.FetchDiscountEdge(order);
+        
       }
 
       return basee;
@@ -119,6 +118,47 @@ namespace Model.CollectionRepositories
 
       return
         $"{things + pairs}шт, {kgs}кг";
+    }
+
+
+    public override void Add(Order entity)
+    {
+      entity.Price = CalculatePrice(entity);
+      base.Add(entity);
+    }
+
+    public override void Update(Order entity)
+    {
+      entity.Price = CalculatePrice(entity);
+      base.Update(entity);
+    }
+
+
+    /// <summary>
+    /// Подсчёт цены для заказа с учётом скидки
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public double CalculatePrice(Order entity)
+    {
+      if (!entity.IsCustomPrice)
+      {
+        var calculatedPrice = entity.Instances.Sum(x => x.Price);
+        if (entity.IsDiscount)
+        {
+          var discountEdge = Model.DiscountEdges.GetForClient(entity.ClientId);
+
+          return calculatedPrice * (100 - (discountEdge?.Discount ?? 0)) / 100;
+        }
+        else
+        {
+          return calculatedPrice;
+        }
+      }
+      else
+      {
+        return entity.Price;
+      }
     }
 
     public double GetAggregatedPrice(FilterDefinition<Order> filter)
@@ -322,103 +362,5 @@ namespace Model.CollectionRepositories
       }
     }
 
-    public DiscountEdge FetchDiscountEdge(Order order)
-    {
-      var client = this.Model.Clients.GetById(order.ClientId);
-
-      var edge = this.Model.DiscountEdges.GetForClient(client);
-
-      order.DiscountEdge = edge;
-      return edge;
-    }
-
-    public override IReadOnlyList<Order> GetBySearchString(string searchString, FilterDefinition<Order> filter,
-      int offset = 0, int capLimit = 10)
-    {
-      var searchChunks = searchString.Split(' ');
-
-      var regex = @"^";
-
-      foreach (var searchChunk in searchChunks)
-      {
-        regex += $"(?=.*{searchChunk})";
-      }
-
-      regex += @".*$";
-
-      //Бсондокументы, описывающие стадии агрегации (экспортированы из mongo compass)
-      //(добавление поля Signature и его match по сооветствующему составляемому регулярному выражению)
-      var match = new BsonDocument("$match",
-        new BsonDocument("Signature",
-          new BsonDocument("$regex", regex)));
-      var addfields = new BsonDocument("$addFields",
-        new BsonDocument("Signature",
-          new BsonDocument("$concat",
-            new BsonArray
-            {
-              new BsonDocument("$toString", "$_id")
-            })));
-      var filterdef = filter ?? Builders<Order>.Filter.Empty;
-      var bySearchString = Collection.Aggregate()
-        .Match(filterdef)
-        .AppendStage<BsonDocument>(addfields)
-        .AppendStage<BsonDocument>(match)
-        .As<Order>()
-        .Skip(offset)
-        .Limit(capLimit)
-        .ToList();
-
-      foreach (var order in bySearchString)
-      {
-        foreach (var instance in order.Instances)
-        {
-          instance.ClothKindObj = Model.ClothKinds.GetById(instance.ClothKind);
-        }
-
-        this.FetchDiscountEdge(order);
-      }
-
-      return bySearchString;
-    }
-
-    public override long GetSearchStringCount(string searchString, FilterDefinition<Order> filter = null)
-    {
-      var searchChunks = searchString.Split(' ');
-
-      var regex = @"^";
-
-      foreach (var searchChunk in searchChunks)
-      {
-        regex += $"(?=.*{searchChunk})";
-      }
-
-      regex += @".*$";
-
-      //Бсондокументы, описывающие стадии агрегации (экспортированы из mongo compass)
-      //(добавление поля Signature и его match по сооветствующему составляемому регулярному выражению)
-      var match = new BsonDocument("$match",
-        new BsonDocument("Signature",
-          new BsonDocument("$regex", regex)));
-      var addfields = new BsonDocument("$addFields",
-        new BsonDocument("Signature",
-          new BsonDocument("$concat",
-            new BsonArray
-            {
-              new BsonDocument("$toString", "$_id")
-            })));
-      var filterdef = filter ?? Builders<Order>.Filter.Empty;
-      try
-      {
-        var result = Collection.Aggregate()
-          .Match(filterdef)
-          .AppendStage<BsonDocument>(addfields)
-          .AppendStage<BsonDocument>(match).Count().First();
-        return result.Count;
-      }
-      catch (InvalidOperationException e)
-      {
-        return 0;
-      }
-    }
   }
 }

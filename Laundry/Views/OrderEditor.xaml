@@ -151,7 +151,7 @@
 
                 <TextBlock VerticalAlignment="Center"
                            Visibility="{Binding Entity.IsCustomPrice, Converter={StaticResource BoolNotVisibilityConverter}}"
-                           Text="{Binding Entity.Price, StringFormat='{}Цена: {0:00}₽'}" Margin="8,0,0,0">
+                           Text="{Binding Price, StringFormat='{}Цена: {0:00}₽'}" Margin="8,0,0,0">
                 </TextBlock>
 
                 <TextBox VerticalAlignment="Center" Width="62" 
@@ -161,7 +161,7 @@
                           Style="{StaticResource MaterialDesignCheckBox}" Margin="10,0,10,0" Height="20">
                   Нестандартная цена
                 </CheckBox>
-                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Entity.IsDiscount}"
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsDiscount}"
                           Visibility="{Binding Entity.IsCustomPrice, Converter={StaticResource BoolNotVisibilityConverter}}"
                           Style="{StaticResource MaterialDesignCheckBox}" Height="20"
                           >

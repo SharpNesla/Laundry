@@ -15,4 +15,13 @@ namespace Model.CollectionRepositories
     public long Count { get; set; }
     public double UnCountableCount { get; set; }
   }
+
+  public class AggregationResultForSubsidiary
+  {
+    [BsonId] public int SubsidiaryId;
+
+    public double Price { get; set; }
+    public long Count { get; set; }
+    public double UnCountableCount { get; set; }
+  }
 }

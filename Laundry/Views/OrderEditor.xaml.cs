@@ -14,6 +14,7 @@ using Laundry.Utils.Converters;
 using MongoDB.Driver;
 using NPOI.OpenXmlFormats.Wordprocessing;
 using NPOI.XWPF.UserModel;
+using PropertyChanged;
 
 namespace Laundry.Views
 {
@@ -32,11 +33,34 @@ namespace Laundry.Views
       }
     }
 
+    public double Price => this.Model.Orders.CalculatePrice(this.Entity);
+
+    public bool IsDiscount
+    {
+      get { return this.Entity.IsDiscount; }
+      set
+      {
+        this.Entity.IsDiscount = value;
+        this.NotifyOfPropertyChange();
+        this.NotifyOfPropertyChange(nameof(Price));
+      }
+    }
+
+    public bool IsCustomPrice
+    {
+      get { return this.Entity.IsCustomPrice; }
+      set
+      {
+        this.Entity.IsCustomPrice = value;
+
+        this.NotifyOfPropertyChange();
+        this.NotifyOfPropertyChange(nameof(Price));
+      }
+    }
+
     public ClientSearchViewModel ClientCombo { get; set; }
     public ClothDataGridViewModel ClothInstancesGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
-
-    public DiscountEdge Edge { get; private set; }
 
     public EmployeeSearchViewModel ObtainerCombo { get; set; }
     public ClientSearchViewModel CorpObtainerCombo { get; set; }
@@ -57,7 +81,7 @@ namespace Laundry.Views
 
       this.ClothInstancesGrid = clothGrid;
       this.ClothInstancesGrid.Order = this.Entity;
-
+      this.ClothInstancesGrid.StateChanged += () => NotifyOfPropertyChange(nameof(Price));
       this.Paginator = paginator;
       this.Paginator.ElementsName = "Вещей";
       this.Paginator.RegisterPaginable(this.ClothInstancesGrid);
@@ -109,7 +133,7 @@ namespace Laundry.Views
     private void OnEntityChanged(Client obj)
     {
       this.EntityRepository.SetClient(this.Entity, obj);
-      this.Model.Orders.FetchDiscountEdge(this.Entity);
+      this.NotifyOfPropertyChange(nameof(Price));
     }
 
 
@@ -118,10 +142,9 @@ namespace Laundry.Views
       base.Handle(message);
 
       this.Entity = this.EntityRepository.GetById(message.Id);
-      
+
       this.ClothInstancesGrid.Order = this.Entity;
       this.ClothInstancesGrid.Refresh(0, int.MaxValue);
-      this.Model.Orders.FetchDiscountEdge(this.Entity);
       this.ClientCombo.SelectedEntity = EntityRepository.GetClient(this.Entity);
       if (message.IsCorporative)
       {
@@ -144,7 +167,6 @@ namespace Laundry.Views
     public void Handle(Client message)
     {
       this.ClientCombo.SelectedEntity = Model.Clients.GetById(message.Id);
-      this.Model.Orders.FetchDiscountEdge(this.Entity);
     }
 
     private readonly OrderStatusConverter _converter = new OrderStatusConverter();

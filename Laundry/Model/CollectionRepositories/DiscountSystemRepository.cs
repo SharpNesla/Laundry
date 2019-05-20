@@ -18,26 +18,22 @@ namespace Model.CollectionRepositories
 
       return Collection.Find(filters).Skip(offset).Limit(limit).SortBy(x => x.Edge).ToList();
     }
-
-    public DiscountEdge GetForOrder(Order order)
-    {
-      var filters = Builders<DiscountEdge>.Filter.Lte(nameof(DiscountEdge.Edge), order.Price);
-      return Collection.Find(filters).SortByDescending(x => x.Edge).First();
-    }
-
+    
     public DiscountSystemRepository(IModel model, IMongoCollection<DiscountEdge> collection) : base(model, collection)
     {
     }
 
-    public DiscountEdge GetForClient(Client client)
+    public DiscountEdge GetForClient(long clientId)
     {
+      var client = this.Model.Clients.GetById(clientId);
       var filters = Builders<DiscountEdge>.Filter.And(
         Builders<DiscountEdge>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
-        Builders<DiscountEdge>.Filter.Gte(nameof(DiscountEdge.Edge), client.OrdersPrice));
+        Builders<DiscountEdge>.Filter.Lte(nameof(DiscountEdge.Edge), client.OrdersPrice));
 
       try
       {
-        return Collection.Find(filters).First();
+        var discountEdge = GetAggregationFluent().Match(filters).SortByDescending(x=>x.Edge).First();
+        return discountEdge;
       }
       catch (InvalidOperationException e)
       {

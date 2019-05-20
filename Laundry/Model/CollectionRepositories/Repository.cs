@@ -87,8 +87,8 @@ namespace Model.CollectionRepositories
         return 0;
       }
     }
-
-    public IAggregateFluent<T> GetBySearchStringFluent(string searchString, FilterDefinition<T> filter)
+    
+    protected IAggregateFluent<T> GetBySearchStringFluent(string searchString, FilterDefinition<T> filter)
     {
       var searchChunks = searchString.Split(' ');
 
@@ -126,6 +126,14 @@ namespace Model.CollectionRepositories
         .As<T>();
     }
 
+    /// <summary>
+    /// Получить элементы, по поисковой строке с учётом фильтров
+    /// </summary>
+    /// <param name="searchString">Строка поиска</param>
+    /// <param name="filter"></param>
+    /// <param name="offset">Смещение</param>
+    /// <param name="capLimit">Количество элементов</param>
+    /// <returns></returns>
     public virtual IReadOnlyList<T> GetBySearchString(string searchString, FilterDefinition<T> filter, int offset = 0,
       int capLimit = 10)
     {
@@ -156,8 +164,8 @@ namespace Model.CollectionRepositories
     /// <summary>
     /// Получить элемент из коллекции по id
     /// </summary>
-    /// <param name="id">id</param>
-    /// <returns></returns>
+    /// <param name="id">id элементы</param>
+    /// <returns>Элемент коллекции</returns>
     public virtual T GetById(long id)
     {
       return GetAggregationFluent().Match(Builders<T>.Filter.Eq(nameof(IRepositoryElement.Id), id)).First();
@@ -175,7 +183,7 @@ namespace Model.CollectionRepositories
     /// <summary>
     /// Установление даты удаления для элемента коллекции
     /// </summary>
-    /// <param name="entity"></param>
+    /// <param name="entity">Удаляемый элемент</param>
     public virtual void Remove(T entity)
     {
       Collection.UpdateOne(Builders<T>.Filter.Where(x => x.Id == entity.Id),

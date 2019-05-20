@@ -26,9 +26,6 @@ namespace Model
   [BsonIgnoreExtraElements]
   public class Order : IRepositoryElement
   {
-    [BsonIgnoreIfDefault]
-    public double CustomPrice { get; set; }
-
     public long Id { get; set; }
 
     [BsonIgnoreIfNull]
@@ -72,39 +69,7 @@ namespace Model
     }
 
 
-    [BsonIgnore]
-    public double CalculatedPrice
-    {
-      get
-      {
-        var calculatedPrice = Instances.Sum(x => x.Price);
-                              
-        return calculatedPrice;
-      }
-    }
-    
-    [BsonIgnore]
-    public double DiscountPrice
-    {
-      get
-      {
-        var discount = ((100 - this.DiscountEdge?.Discount ?? 0)) / 100;
-        var calculatedPrice = CalculatedPrice * discount; 
-
-        return calculatedPrice;
-      }
-    }
-
-    public double Price
-    {
-      get
-      {
-        var price = IsCustomPrice ? CustomPrice :
-          (IsDiscount ? DiscountPrice : CalculatedPrice);
-        return price;
-      }
-      set { CustomPrice = value; }
-    }
+    public double Price { get; set; }
 
     public List<ClothInstance> Instances { get; set; }
 
