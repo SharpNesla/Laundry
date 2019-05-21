@@ -217,29 +217,132 @@ namespace Model.CollectionRepositories
     {
     }
 
-    public override IReadOnlyList<ClothKind> Get(int offset, int limit, FilterDefinition<ClothKind> filter = null)
+    protected override IAggregateFluent<ClothKind> GetAggregationFluent(bool includeDeleted = false,
+      FilterDefinition<ClothKind> filter = null)
     {
       var filters =
         filter ?? Builders<ClothKind>.Filter.Empty;
 
+      var instancesProjectDef = @"{
+  ClothKind : '$Instances.ClothKind',
+  Amount: '$Instances.Amount'
+}";
 
-      var clothKinds =
-        this.Collection
-          .Aggregate()
-          .Match(Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
-          .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
-          .As<ClothKind>()
-          .Match(filters).ToList();
+      PipelineDefinition<Order, BsonDocument> innerpipeline = PipelineDefinition<Order, BsonDocument>
+        .Create(new IPipelineStageDefinition[]
+        {
+          PipelineStageDefinitionBuilder.Unwind<Order>("Instances"),
+          PipelineStageDefinitionBuilder.Project<BsonDocument>(instancesProjectDef),
+          PipelineStageDefinitionBuilder.Match<BsonDocument>(new BsonDocument("$expr",
+            new BsonDocument("$eq",
+              new BsonArray
+              {
+                "$ClothKind",
+                "$$kindid"
+              }))),
+        });
 
-      foreach (var clothKind in clothKinds)
-      {
-        clothKind.ChildrenCount = GetChildrenCount(clothKind);
-      }
+      var groupDef = @"{
+  _id: ""$_id"",
+  Name :{ $first: ""$Name""},
+  MeasureKind: { $first:""$MeasureKind""},
+  Price :{ $first: ""$Price""},
+  Parent:{$first:""$Parent""},
+  Count: {
+    $sum:""$ClothInstances.Amount""
+  },
+  SumPrice:{
+    $sum: {$multiply : [""$Price"", ""$ClothInstances.Amount""]}
+  }
+}";
 
-      return clothKinds;
+      var projectDef = @"{
+  Name: '$Name',
+  MeasureKind: '$MeasureKind',
+  Price : '$Price',
+  Parent : '$Parent',
+  Count : '$Count',
+  SumPrice: '$SumPrice',
+  ChildrenCount : {$size: '$Children'} 
+}";
+
+      var aggregateUnwindOptions = new AggregateUnwindOptions<BsonDocument> {PreserveNullAndEmptyArrays = true};
+
+
+      return base.GetAggregationFluent(includeDeleted, filter)
+        .Lookup<Order, BsonDocument, IList<BsonDocument>, ClothKind>(
+          this.Collection.Database.GetCollection<Order>("orders"),
+          new BsonDocument("kindid", "$_id"), innerpipeline, "ClothInstances")
+        .Unwind("ClothInstances", aggregateUnwindOptions)
+        .Group(groupDef)
+        .Lookup("clothkinds", "_id", "Parent", "Children")
+        .Project(projectDef)
+        .As<ClothKind>()
+        .SortBy(x => x.Id);
+    }
+
+    private IAggregateFluent<ClothKind> GetAggregationFluentForAggregation(bool includeDeleted = false,
+      FilterDefinition<ClothKind> filter = null, FilterDefinition<Order> filterorder = null)
+    {
+      var filters =
+        filter ?? Builders<ClothKind>.Filter.Empty;
+
+      var instancesProjectDef = @"{
+  ClothKind : '$Instances.ClothKind',
+  Amount: '$Instances.Amount'
+}";
+
+      PipelineDefinition<Order, BsonDocument> innerpipeline = PipelineDefinition<Order, BsonDocument>
+        .Create(new IPipelineStageDefinition[]
+        {
+          PipelineStageDefinitionBuilder.Unwind<Order>("Instances"),
+          PipelineStageDefinitionBuilder.Project<BsonDocument>(instancesProjectDef),
+          PipelineStageDefinitionBuilder.Match<BsonDocument>(new BsonDocument("$expr",
+            new BsonDocument("$eq",
+              new BsonArray
+              {
+                "$ClothKind",
+                "$$kindid"
+              }))),
+        });
+
+      var groupDef = @"{
+  _id: ""$_id"",
+  Name :{ $first: ""$Name""},
+  MeasureKind: { $first:""$MeasureKind""},
+  Price :{ $first: ""$Price""},
+  Parent:{$first:""$Parent""},
+  Count: {
+    $sum:""$ClothInstances.Amount""
+  },
+  SumPrice:{
+    $sum: {$multiply : [""$Price"", ""$ClothInstances.Amount""]}
+  }
+}";
+
+      var projectDef = @"{
+  Name: '$Name',
+  MeasureKind: '$MeasureKind',
+  Price : '$Price',
+  Parent : '$Parent',
+  Count : '$Count',
+  SumPrice: '$SumPrice',
+  ChildrenCount : {$size: '$Children'} 
+}";
+
+      var aggregateUnwindOptions = new AggregateUnwindOptions<BsonDocument> { PreserveNullAndEmptyArrays = true };
+
+
+      return base.GetAggregationFluent(includeDeleted, filter)
+        .Lookup<Order, BsonDocument, IList<BsonDocument>, ClothKind>(
+          this.Collection.Database.GetCollection<Order>("orders"),
+          new BsonDocument("kindid", "$_id"), innerpipeline, "ClothInstances")
+        .Unwind("ClothInstances", aggregateUnwindOptions)
+        .Group(groupDef)
+        .Lookup("clothkinds", "_id", "Parent", "Children")
+        .Project(projectDef)
+        .As<ClothKind>()
+        .SortBy(x => x.Id);
     }
 
     public ClothKind GetFullTree()
@@ -256,21 +359,6 @@ namespace Model.CollectionRepositories
       {
         FetchChildrenRecursively(subrootChild);
       }
-    }
-
-    public override ClothKind GetById(long id)
-    {
-      var clothKind = this.Collection
-        .Aggregate()
-        .Match(x => x.Id == id)
-        .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
-        .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
-        .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
-        .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
-        .As<ClothKind>().First();
-
-      clothKind.ChildrenCount = GetChildrenCount(clothKind);
-      return clothKind;
     }
 
     public long GetChildrenCount(ClothKind clothKind)

@@ -37,8 +37,7 @@ namespace Model
 
     [BsonId]
     public long Id { get; set; }
-
-    [BsonIgnore]
+    
     public long ChildrenCount { get; internal set; }
 
     [BsonIgnore]
