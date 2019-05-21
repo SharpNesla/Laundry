@@ -267,6 +267,9 @@ namespace Laundry.Utils.Controls
     public string AggregatedInstancesCount => Repo.GetAggregatedInstacesCount(Filter);
     public double AggregatedPrice => Repo.GetAggregatedPrice(Filter);
 
+    #region Св-ва, относящиеся к графикам
+ 
+
     public SeriesCollection Values
     {
       get
@@ -326,5 +329,7 @@ namespace Laundry.Utils.Controls
     public ChartTime Time { get; set; }
 
     public EntityInfoType EntityInfoType { get; set; }
+
+    #endregion
   }
 }

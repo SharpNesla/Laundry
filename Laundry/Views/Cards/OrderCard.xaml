@@ -62,11 +62,12 @@
             <StackPanel Margin="2,0,0,0" DockPanel.Dock="Top">
 
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}"
-                         Text="{StaticResource ClientEditor.MainInfoTitle}" />
+                         Text="{StaticResource ClientEditor.MainInfoTitle}" Margin="0,0,0,16"/>
 
               <TextBlock cal:Message.Attach="[Event MouseLeftButtonDown] = [Action ShowClientCard]"
                          Cursor="Hand"
-                         Margin="0,16,0,8" Text="{Binding Client.Signature, StringFormat='{}Клиент: &#x0a;{0}'}" />
+                         Visibility="{Binding Visibilities.DirectorAdvisorWasher, Converter={StaticResource BoolVisibilityConverter}}"
+                         Margin="0,0,0,8" Text="{Binding Client.Signature, StringFormat='{}Клиент: &#x0a;{0}'}" />
 
 
               <TextBlock Margin="0,0,0,8"
@@ -79,7 +80,8 @@
                          Style="{StaticResource MaterialDesignBody2TextBlock}" />
               <TextBlock Margin="0,0,0,8"
                          Text="{Binding InCourier.Signature, StringFormat='{}Курьер, забирающий заказ: &#x0a;{0}'}"
-                         Style="{StaticResource MaterialDesignBody2TextBlock}" />
+                         Style="{StaticResource MaterialDesignBody2TextBlock}"
+                         />
               <TextBlock Margin="0,0,0,8" Text="{Binding CorpObtainer.Signature}"
                          Style="{StaticResource MaterialDesignBody2TextBlock}"
                          Visibility="{Binding Entity.IsCorporative, Converter={StaticResource BoolVisibilityConverter}}" />

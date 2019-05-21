@@ -62,7 +62,7 @@ namespace Laundry
       container.PerRequest<CarDataGridViewModel>();
       container.Singleton<CarCardViewModel>();
 
-      container.Singleton<OrderDictionaryViewModel>("OrderDictionary");
+      container.PerRequest<OrderDictionaryViewModel>("OrderDictionary");
       container.PerRequest<OrderEditorViewModel>();
       container.PerRequest<OrderDataGridViewModel>();
       container.Singleton<OrderCardViewModel>();

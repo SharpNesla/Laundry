@@ -375,7 +375,7 @@ namespace Model.CollectionRepositories
       var groupDef = @"
 {
   _id: '$MeasureKind',
-  Count: {$sum: '$Amount'}
+  Count: {$sum: '$Count'}
 }";
 
       var aggregation = this.GetAggregationFluent()

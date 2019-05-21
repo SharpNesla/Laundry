@@ -45,8 +45,18 @@ namespace Model
 
     public string Password { get; set; }
 
+    [BsonElement("OrdersCount")]
+    internal long? OrdersCountImpl;
+
+    [BsonIgnoreIfNull]
+    [BsonElement("OrdersPrice")]
+    internal long? OrdersPriceImpl;
+
     [BsonIgnore]
-    public long OrdersCount { get; set; }
+    public long OrdersCount => OrdersCountImpl ?? 0;
+
+    [BsonIgnore]
+    public long OrdersPrice => OrdersPriceImpl ?? 0;
 
     public bool IsDarkTheme { get; set; }
   }

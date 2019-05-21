@@ -107,12 +107,15 @@ namespace Model.CollectionRepositories
         " ",
       };
 
-      foreach (var fieldDefinition in _searchStringCriterias)
+      if (_searchStringCriterias != null)
       {
-        bsonArray.Add($"${fieldDefinition}");
-        bsonArray.Add(" ");
+        foreach (var fieldDefinition in _searchStringCriterias)
+        {
+          bsonArray.Add($"${fieldDefinition}");
+          bsonArray.Add(" ");
+        }
       }
-
+      
       var addfields = new BsonDocument("$addFields",
         new BsonDocument("Signature",
           new BsonDocument("$concat",

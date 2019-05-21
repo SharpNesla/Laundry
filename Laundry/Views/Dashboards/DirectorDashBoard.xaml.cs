@@ -37,6 +37,28 @@ namespace Laundry.Views.Dashboards
 
     public long EmployeeCount => this.Model.Employees.GetCount();
 
+    public long AdvisorCount =>
+      this.Model.Employees.GetCount(Builders<Employee>.Filter.Eq(nameof(Employee.Profession),
+        EmployeeProfession.Advisor));
+
+    public long CourierCount =>
+      this.Model.Employees.GetCount(Builders<Employee>.Filter.Eq(nameof(Employee.Profession),
+        EmployeeProfession.Courier));
+
+    public long DriverCourierCount =>
+      this.Model.Employees.GetCount(
+        Builders<Employee>.Filter.And(
+          Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Courier),
+          Builders<Employee>.Filter.Eq(nameof(Employee.IsCourierCarDriver), true)));
+
+    public long DriverCount =>
+      this.Model.Employees.GetCount(
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Driver));
+
+    public long WasherCount =>
+      this.Model.Employees.GetCount(
+        Builders<Employee>.Filter.Eq(nameof(Employee.Profession), EmployeeProfession.Washer));
+
     #endregion
 
     public long OrdersCountByMounth => this.Model.Orders.GetCount(
@@ -47,7 +69,7 @@ namespace Laundry.Views.Dashboards
 
     public double AggregatedPriceByMounth => this.Model.Orders.GetAggregatedPrice(
       Builders<Order>.Filter.Gte(nameof(Order.ExecutionDate), DateTime.Now.AddMonths(-1)));
-    
+
     #region Св-ва относящиеся к графикам за последний месяц
 
     public SeriesCollection MoneyValues => new SeriesCollection

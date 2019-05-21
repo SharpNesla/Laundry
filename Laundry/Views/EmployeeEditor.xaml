@@ -99,8 +99,7 @@
             <StackPanel>
               <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Text="Информация о сотруднике" />
               <TextBox Name="Surname" Margin="0,16,0,12" materialDesign:HintAssist.Hint="Фамилия"
-                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                       materialDesign:ValidationAssist.Background="Transparent">
+                       Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
                   <Binding Path="Entity.Surname" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

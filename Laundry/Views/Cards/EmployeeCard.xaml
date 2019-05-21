@@ -89,7 +89,7 @@
                 </TextBlock.Text>
               </TextBlock>
               <TextBlock Margin="0,8,0,0" Text="Комментарий:" Style="{StaticResource MaterialDesignBody2TextBlock}" />
-              <TextBlock Margin="0,4,0,0" Text="{Binding Entity.Comment}"
+              <TextBlock Margin="0,4,0,0" Text="{Binding Entity.Comment}" TextWrapping="Wrap" 
                          Style="{StaticResource MaterialDesignBody1TextBlock}" />
             </StackPanel>
 
@@ -107,11 +107,13 @@
 
           <DockPanel DockPanel.Dock="Bottom" Margin="16">
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+
               <TextBlock Margin="0,0,16,0" VerticalAlignment="Center"
                          Style="{StaticResource MaterialDesignBody2TextBlock}">
                 <TextBlock.Text>
-                  <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму 0">
-                    <Binding Path="OrderDataGrid.Count" />
+                  <MultiBinding StringFormat="{}Всего заказов {0} на общую сумму {1:0.00}₽">
+                    <Binding Path="Entity.OrdersCount" />
+                    <Binding Path="Entity.OrdersPrice"/>
                   </MultiBinding>
                 </TextBlock.Text>
               </TextBlock>

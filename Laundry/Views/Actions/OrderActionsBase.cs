@@ -111,14 +111,11 @@ namespace Laundry.Views.Actions
 
       foreach (var documentTable in documentTables)
       {
-        var rowTemplate = documentTable.GetRow(1);
-
         foreach (var orderInstance in order.Instances)
         {
           try
           {
             var row = documentTable.CreateRow();
-            var rowW = new CT_Row();
 
             row.GetCell(0).SetText(orderInstance.TagNumber.ToString());
             row.GetCell(1).SetText(orderInstance.ClothKindObj.Name);

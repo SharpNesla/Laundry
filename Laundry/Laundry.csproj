@@ -659,9 +659,7 @@
   <ItemGroup>
     <Resource Include="Resources\LoginBackground.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utils\Controls\Grids\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

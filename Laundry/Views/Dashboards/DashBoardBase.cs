@@ -24,5 +24,10 @@ namespace Laundry.Views.Dashboards
       this.ActionsOrderGrid = actionsGrid;
       orderGrid.DisplaySelectionColumn = false;
     }
+    protected override void OnActivate()
+    {
+      base.OnActivate();
+      OrderGrid.IsSearchDrawerOpened = false;
+    }
   }
 }

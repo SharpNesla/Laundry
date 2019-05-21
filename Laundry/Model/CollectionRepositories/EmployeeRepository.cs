@@ -13,6 +13,95 @@ namespace Model.DatabaseClients
 {
   public class EmployeeRepository : Repository<Employee>
   {
+    private const string ProjectDefinition = @"{
+  Name:""$Name"",
+  Surname:""$Surname"",
+  Patronymic:""$Patronymic"",
+  PhoneNumber:""$PhoneNumber"",
+  DateBirth:""$DateBirth"",
+  Gender:""$Gender"",
+  House:""$House"",
+  City:""$City"",
+  Flat: ""$Flat"",
+  ZipCode:""$ZipCode"",
+  Comment:""$Comment"",
+  IsCorporative:""$IsCorporative"",
+  Profession: ""$Profession"",
+  IsCourierCarDriver:""$IsCourierCarDriver"",
+  Subsidiary:""$Subsidiary"",
+  Car:""$Car"",
+  Username: ""$Username"",
+  PassportSerial:""$PassportSerial"",
+  PassportDistributor : ""$PassportDistributor"",
+  Password:""$Password"",
+  OrdersCount :{
+    $add:[
+      {$size : ""$Orders""}
+      ]
+  },
+
+  OrdersPrice : {$sum:'$Orders.Price'}
+}";
+
+    protected override IAggregateFluent<Employee> GetAggregationFluent(bool includeDeleted = false,
+      FilterDefinition<Employee> filter = null)
+    {
+      //Вложенный pipeline для pipeline-let lookup-а заказов в аналитике филиалов
+      var pipeline = PipelineDefinition<Order, Order>.Create(new[]
+        {
+          PipelineStageDefinitionBuilder.Match<Order>(new BsonDocument("$expr",
+            new BsonDocument("$or",
+              new BsonArray
+              {
+                new BsonDocument("$eq",
+                  new BsonArray
+                  {
+                    "$InCourier",
+                    "$$kindid"
+                  }),
+                new BsonDocument("$eq",
+                  new BsonArray
+                  {
+                    "$Obtainer",
+                    "$$kindid"
+                  }),
+                new BsonDocument("$eq",
+                  new BsonArray
+                  {
+                    "$WasherCourier",
+                    "$$kindid"
+                  }),
+                new BsonDocument("$eq",
+                  new BsonArray
+                  {
+                    "$Distributor",
+                    "$$kindid"
+                  }),
+                new BsonDocument("$eq",
+                  new BsonArray
+                  {
+                    "$OutCourier",
+                    "$$kindid"
+                  })
+              })))
+        }
+      );
+
+      return base.GetAggregationFluent(includeDeleted, filter)
+        .Lookup<Order, Order, List<Order>, Employee>(
+          this.Collection.Database.GetCollection<Order>("orders"), new BsonDocument("kindid", "$_id"), pipeline,
+          "Orders")
+        .Project<Employee>(ProjectDefinition);
+    }
+
+    public override void Update(Employee entity)
+    {
+      entity.OrdersCountImpl = null;
+      entity.OrdersPriceImpl = null;
+
+      base.Update(entity);
+    }
+
     /// <summary>
     /// Set Hash of employee password with salt
     /// </summary>
@@ -67,33 +156,14 @@ namespace Model.DatabaseClients
       return user;
     }
 
-    public EmployeeRepository(IModel model, IMongoCollection<Employee> collection) 
-      : base(model, collection, new[] { nameof(Client.Name), nameof(Client.Surname), nameof(Client.Patronymic) })
+    public EmployeeRepository(IModel model, IMongoCollection<Employee> collection)
+      : base(model, collection, new[] {nameof(Client.Name), nameof(Client.Surname), nameof(Client.Patronymic)})
     {
     }
 
     public void SetSubsidiary(Employee employee, Subsidiary subsidiary)
     {
       if (subsidiary != null) employee.Subsidiary = subsidiary.Id;
-    }
-
-    public override Employee GetById(long id)
-    {
-      var byId = base.GetById(id);
-      byId.OrdersCount = Model.Orders.GetForEmployeeCount(byId);
-      return byId;
-    }
-
-    public override IReadOnlyList<Employee> Get(int offset, int limit, FilterDefinition<Employee> filter = null)
-    {
-      var basee = base.Get(offset, limit, filter);
-
-      foreach (var employee in basee)
-      {
-        employee.OrdersCount = Model.Orders.GetForEmployeeCount(employee);
-      }
-
-      return basee;
     }
     
     public void SetCar(Employee entity, Car car)
@@ -103,7 +173,7 @@ namespace Model.DatabaseClients
 
     public void UpdateTheme(Employee currentUser, bool IsDark)
     {
-      this.Collection.UpdateOne(x=>x.Id == currentUser.Id, Builders<Employee>.Update.Set(x=>x.IsDarkTheme, IsDark));
+      this.Collection.UpdateOne(x => x.Id == currentUser.Id, Builders<Employee>.Update.Set(x => x.IsDarkTheme, IsDark));
     }
   }
 }

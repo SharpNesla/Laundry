@@ -38,12 +38,12 @@
                            BorderThickness="0" VerticalAlignment="Stretch">
         <DockPanel LastChildFill="True" Margin="16">
           <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" DockPanel.Dock="Top"
-                     Text="Итоги" Margin="0,0,0,16"/>
+                     Text="Итоги" Margin="0,0,0,16" />
           <StackPanel>
-            <TextBlock Text="{Binding OrdersCountByMounth, StringFormat='Принято заказов за последний месяц: {0}'}"/>
+            <TextBlock Text="{Binding OrdersCountByMounth, StringFormat='Принято заказов за последний месяц: {0}'}" />
             <TextBlock TextWrapping="Wrap"
-              Text="{Binding AggregatedInstancesCountByMounth, StringFormat='Принято вещей за последний месяц: {0}'}"/>
-            <TextBlock Text="{Binding AggregatedPriceByMounth, StringFormat='На общую сумму: {0}₽'}"/>
+                       Text="{Binding AggregatedInstancesCountByMounth, StringFormat='Принято вещей за последний месяц: {0}'}" />
+            <TextBlock Text="{Binding AggregatedPriceByMounth, StringFormat='На общую сумму: {0}₽'}" />
           </StackPanel>
         </DockPanel>
       </materialDesign:Card>
@@ -52,9 +52,14 @@
         <ScrollViewer Padding="16" VerticalScrollBarVisibility="Auto">
           <DockPanel LastChildFill="True">
             <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" DockPanel.Dock="Top"
-                       Text="Состояние предприятия" Margin="0,0,0,16"/>
+                       Text="Состояние предприятия" Margin="0,0,0,16" />
             <StackPanel>
-              <TextBlock Text="{Binding EmployeeCount, StringFormat='Количество работников: {0} человек'}"/>
+              <TextBlock Text="{Binding EmployeeCount, StringFormat='Количество работников: {0} человек'}" />
+              <TextBlock Text="{Binding DriverCourierCount, StringFormat='Курьеров-водителей: {0} человек'}" />
+              <TextBlock Text="{Binding CourierCount, StringFormat='Курьеров: {0} человек'}" />
+              <TextBlock Text="{Binding DriverCount, StringFormat='Водителей: {0} человек'}" />
+              <TextBlock Text="{Binding AdvisorCount, StringFormat='Приёмщиков: {0} человек'}" />
+              <TextBlock Text="{Binding WasherCount, StringFormat='Прачечников: {0} человек'}" />
             </StackPanel>
           </DockPanel>
         </ScrollViewer>
