@@ -17,12 +17,13 @@
       <StackPanel Margin="16,0,16,16"
                   Visibility="{Binding IsDisplaySubtotals, Converter={StaticResource BoolVisibilityConverter}}">
         <TextBlock Margin="8,0,0,8" Text="ИТОГО" Style="{StaticResource MaterialDesignTitleTextBlock}" />
-        <Separator />
         <TextBlock Margin="8,12,81,0" TextAlignment="Left">
           <TextBlock.Text>
             <MultiBinding
-              StringFormat="{}Всего филиалов по критериям: {0}&#x0a;{}Всего заказов было принято: {0}&#x0a; На общую сумму: 2₽">
+              StringFormat="{}Всего филиалов: {0}&#x0a;Всего единиц одежды: {1}&#x0a;На общую сумму: {2:0.00}₽">
               <Binding Path="Count" />
+              <Binding Path="AggregatedInstancesCount" />
+              <Binding Path="AggregatedPrice" />
             </MultiBinding>
           </TextBlock.Text>
         </TextBlock>

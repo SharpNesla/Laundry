@@ -129,6 +129,9 @@ namespace Laundry.Utils.Controls
       return row;
     }
 
+    public string AggregatedInstancesCount => _model.Orders.GetAggregatedInstacesCount(GetDateFilters());
+    public double AggregatedPrice => _model.Orders.GetAggregatedPrice(GetDateFilters());
+
     public IReadOnlyList<SubsidiaryAggregationResult> Type => this._model.Subsidiaries.AggregateSubsidiaries(GetDateFilters());
 
     public string[] Labels => Type.Select(x=>x.Signature).ToArray();
