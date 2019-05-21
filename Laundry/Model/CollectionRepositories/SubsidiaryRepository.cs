@@ -17,8 +17,8 @@ namespace Model.CollectionRepositories
     /// <summary>
     /// Метод, получающий данные по аналитике филиалов
     /// </summary>
-    /// <returns>Ридонли лист с результатами для филиала</returns>
-    public IReadOnlyList<SubsidiaryAggregationResult> AggregateSubsidiaries()
+    /// <returns>Ридонли лист с результатами для каждого филиала</returns>
+    public IReadOnlyList<SubsidiaryAggregationResult> AggregateSubsidiaries(FilterDefinition<Order> filter = null)
     {
       var projectDef = @"{
   Price: {$sum: '$Orders.Price'},
@@ -72,7 +72,8 @@ namespace Model.CollectionRepositories
                     "$OutSubsidiary",
                     "$$kindid"
                   })
-              })))
+              }))),
+          PipelineStageDefinitionBuilder.Match(filter ?? Builders<Order>.Filter.Empty)
         }
       );
 
