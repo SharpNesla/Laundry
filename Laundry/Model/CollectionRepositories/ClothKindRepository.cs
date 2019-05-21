@@ -220,73 +220,12 @@ namespace Model.CollectionRepositories
     protected override IAggregateFluent<ClothKind> GetAggregationFluent(bool includeDeleted = false,
       FilterDefinition<ClothKind> filter = null)
     {
-      var filters =
-        filter ?? Builders<ClothKind>.Filter.Empty;
-
-      var instancesProjectDef = @"{
-  ClothKind : '$Instances.ClothKind',
-  Amount: '$Instances.Amount'
-}";
-
-      PipelineDefinition<Order, BsonDocument> innerpipeline = PipelineDefinition<Order, BsonDocument>
-        .Create(new IPipelineStageDefinition[]
-        {
-          PipelineStageDefinitionBuilder.Unwind<Order>("Instances"),
-          PipelineStageDefinitionBuilder.Project<BsonDocument>(instancesProjectDef),
-          PipelineStageDefinitionBuilder.Match<BsonDocument>(new BsonDocument("$expr",
-            new BsonDocument("$eq",
-              new BsonArray
-              {
-                "$ClothKind",
-                "$$kindid"
-              }))),
-        });
-
-      var groupDef = @"{
-  _id: ""$_id"",
-  Name :{ $first: ""$Name""},
-  MeasureKind: { $first:""$MeasureKind""},
-  Price :{ $first: ""$Price""},
-  Parent:{$first:""$Parent""},
-  Count: {
-    $sum:""$ClothInstances.Amount""
-  },
-  SumPrice:{
-    $sum: {$multiply : [""$Price"", ""$ClothInstances.Amount""]}
-  }
-}";
-
-      var projectDef = @"{
-  Name: '$Name',
-  MeasureKind: '$MeasureKind',
-  Price : '$Price',
-  Parent : '$Parent',
-  Count : '$Count',
-  SumPrice: '$SumPrice',
-  ChildrenCount : {$size: '$Children'} 
-}";
-
-      var aggregateUnwindOptions = new AggregateUnwindOptions<BsonDocument> {PreserveNullAndEmptyArrays = true};
-
-
-      return base.GetAggregationFluent(includeDeleted, filter)
-        .Lookup<Order, BsonDocument, IList<BsonDocument>, ClothKind>(
-          this.Collection.Database.GetCollection<Order>("orders"),
-          new BsonDocument("kindid", "$_id"), innerpipeline, "ClothInstances")
-        .Unwind("ClothInstances", aggregateUnwindOptions)
-        .Group(groupDef)
-        .Lookup("clothkinds", "_id", "Parent", "Children")
-        .Project(projectDef)
-        .As<ClothKind>()
-        .SortBy(x => x.Id);
+      return this.GetAggregationFluentForAggregation();
     }
 
     private IAggregateFluent<ClothKind> GetAggregationFluentForAggregation(bool includeDeleted = false,
-      FilterDefinition<ClothKind> filter = null, FilterDefinition<Order> filterorder = null)
+      FilterDefinition<ClothKind> filter = null, FilterDefinition<Order> filterOrder = null)
     {
-      var filters =
-        filter ?? Builders<ClothKind>.Filter.Empty;
-
       var instancesProjectDef = @"{
   ClothKind : '$Instances.ClothKind',
   Amount: '$Instances.Amount'
@@ -295,6 +234,7 @@ namespace Model.CollectionRepositories
       PipelineDefinition<Order, BsonDocument> innerpipeline = PipelineDefinition<Order, BsonDocument>
         .Create(new IPipelineStageDefinition[]
         {
+          PipelineStageDefinitionBuilder.Match(filterOrder ?? Builders<Order>.Filter.Empty),
           PipelineStageDefinitionBuilder.Unwind<Order>("Instances"),
           PipelineStageDefinitionBuilder.Project<BsonDocument>(instancesProjectDef),
           PipelineStageDefinitionBuilder.Match<BsonDocument>(new BsonDocument("$expr",
@@ -383,49 +323,9 @@ namespace Model.CollectionRepositories
 
       base.Remove(entity);
     }
-
-    public override long GetSearchStringCount(string searchString, FilterDefinition<ClothKind> filter)
-    {
-      var searchChunks = searchString.Split(' ');
-
-      var regex = @"^";
-
-      foreach (var searchChunk in searchChunks)
-      {
-        regex += $"(?=.*{searchChunk})";
-      }
-
-      regex += @".*$";
-
-      //Бсондокументы, описывающие стадии агрегации (экспортированы из mongo compass)
-      //(добавление поля Signature и его match по сооветствующему составляемому регулярному выражению)
-      var match = new BsonDocument("$match",
-        new BsonDocument("Signature",
-          new BsonDocument("$regex", regex)));
-      var addfields = new BsonDocument("$addFields",
-        new BsonDocument("Signature",
-          new BsonDocument("$concat",
-            new BsonArray
-            {
-              new BsonDocument("$toString", "$_id"),
-            })));
-      var filterdef = filter ?? Builders<ClothKind>.Filter.Empty;
-      try
-      {
-        var result = Collection.Aggregate()
-          .Match(filterdef)
-          .AppendStage<BsonDocument>(addfields)
-          .AppendStage<BsonDocument>(match).Count().First();
-        return result.Count;
-      }
-      catch (InvalidOperationException)
-      {
-        return 0;
-      }
-    }
-
+    
     public IReadOnlyList<AggregationResult> AggregateInstances(ChartTime time,
-      FilterDefinition<ClothKind> filter = null)
+      FilterDefinition<ClothKind> filter, FilterDefinition<Order> orderDateFilter)
     {
       var filters = Builders<ClothKind>.Filter.And(
         Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
@@ -456,13 +356,7 @@ namespace Model.CollectionRepositories
         }}
       }}
 }}";
-      var readOnlyList = this.Collection
-        .Aggregate()
-        .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
-        .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
-        .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
-        .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
-        .As<ClothKind>()
+      var readOnlyList = this.GetAggregationFluentForAggregation(false, filter, orderDateFilter)
         .Match(filters)
         .AppendStage<BsonDocument>(AggrStagesForChart[0].AsBsonDocument)
         .AppendStage<BsonDocument>(AggrStagesForChart[1].AsBsonDocument)
@@ -484,15 +378,7 @@ namespace Model.CollectionRepositories
   Count: {$sum: '$Amount'}
 }";
 
-      var aggregation =
-        this.Collection
-          .Aggregate()
-          .Match(Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
-          .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
-          .As<ClothKind>()
+      var aggregation = this.GetAggregationFluent()
           .Match(filters)
           .Group(groupDef).ToList();
 
@@ -540,14 +426,7 @@ namespace Model.CollectionRepositories
       //В случае, если при агрегации в последовательности не оказалось элементов возвращаем ноль
       try
       {
-        var doc = this.Collection
-          .Aggregate()
-          .Match(Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false))
-          .AppendStage<BsonDocument>(AggrStages[0].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[1].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[2].AsBsonDocument)
-          .AppendStage<BsonDocument>(AggrStages[3].AsBsonDocument)
-          .As<ClothKind>()
+        var doc = this.GetAggregationFluent()
           .Match(filters)
           .Group(groupDef).ToList()[0]["Price"].AsDouble;
         return doc;

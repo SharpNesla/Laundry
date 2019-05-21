@@ -36,6 +36,40 @@ namespace Laundry.Utils.Controls
   public class ClothKindTreeViewModel : EntityGrid<ClothKind, ClothKindRepository, ClothKindCardViewModel>,
     IChartable<ClothKind>
   {
+    #region Фильтры заказов по времени для аналитики
+
+    public bool IsByCreationDate { get; set; }
+    public DateTime? LowCreationDateBound { get; set; }
+    public DateTime? HighCreationDateBound { get; set; }
+
+    public bool IsByExecutionDate { get; set; }
+    public DateTime? LowExecutionDateBound { get; set; }
+    public DateTime? HighExecutionDateBound { get; set; }
+
+    public FilterDefinition<Order> GetDateFilters()
+    {
+      var filter = Builders<Order>.Filter.Empty;
+      if (this.IsByCreationDate)
+      {
+        filter = Builders<Order>.Filter.And(
+          filter,
+          Builders<Order>.Filter.Gte(nameof(Order.CreationDate), this.LowCreationDateBound ?? DateTime.MinValue),
+          Builders<Order>.Filter.Lte(nameof(Order.CreationDate), this.HighCreationDateBound ?? DateTime.MaxValue));
+      }
+
+      if (this.IsByExecutionDate)
+      {
+        filter = Builders<Order>.Filter.And(
+          filter,
+          Builders<Order>.Filter.Gte(nameof(Order.ExecutionDate), this.LowExecutionDateBound ?? DateTime.MinValue),
+          Builders<Order>.Filter.Lte(nameof(Order.ExecutionDate), this.HighExecutionDateBound ?? DateTime.MaxValue));
+      }
+
+      return filter;
+    }
+
+    #endregion
+
     #region Фильтры
 
     public bool IsByCount { get; set; }
@@ -65,7 +99,7 @@ namespace Laundry.Utils.Controls
           filter = Builders<ClothKind>.Filter.And(
             filter,
             Builders<ClothKind>.Filter.Gte(nameof(ClothKind.Count), this.LowCountBound ?? 0),
-            Builders<ClothKind>.Filter.Lte(nameof(ClothKind.Count), this.TopCountBound?? int.MaxValue));
+            Builders<ClothKind>.Filter.Lte(nameof(ClothKind.Count), this.TopCountBound ?? int.MaxValue));
         }
 
         return filter;
@@ -78,6 +112,14 @@ namespace Laundry.Utils.Controls
     private readonly IModel _model;
 
     #endregion
+
+    [AlsoNotifyFor(nameof(Labels), nameof(Values), nameof(Count))]
+    public override IReadOnlyList<ClothKind> Entities
+    {
+      get { return base.Entities; }
+
+      set { base.Entities = value; }
+    }
 
     public float NameWidth { get; set; }
     public ObservableCollection<ClothKind> EditableEntities { get; private set; }
@@ -107,8 +149,11 @@ namespace Laundry.Utils.Controls
       await DialogHostExtensions.ShowCaliburnVM(editor);
       RaiseStateChanged();
     }
+
     public override string TableSheetName => "Виды одежды";
-    public override string[] TableSheetHeader => new[] {"№", "Название", "Цена", "Единица измерения", "Единиц одежды", "Общая стоимость"};
+
+    public override string[] TableSheetHeader => new[]
+      {"№", "Название", "Цена", "Единица измерения", "Единиц одежды", "Общая стоимость"};
 
     protected override IRow PrepareEntityRow(ISheet sheet, ClothKind entity)
     {
@@ -116,10 +161,11 @@ namespace Laundry.Utils.Controls
       row.CreateCell(0).SetCellValue(entity.Id);
       row.CreateCell(1).SetCellValue(entity.Name);
       row.CreateCell(2).SetCellValue(entity.Price);
-      row.CreateCell(3).SetCellValue(_measureKindConverter.Convert(entity.MeasureKind, typeof(string), null, CultureInfo.CurrentCulture)?.ToString());
+      row.CreateCell(3).SetCellValue(_measureKindConverter
+        .Convert(entity.MeasureKind, typeof(string), null, CultureInfo.CurrentCulture)?.ToString());
       row.CreateCell(5).SetCellValue(entity.Count);
       row.CreateCell(4).SetCellValue(entity.SumPrice);
-      
+
       return row;
     }
 
@@ -134,15 +180,11 @@ namespace Laundry.Utils.Controls
           kind.Level = clothKind.Level + 1;
           this.EditableEntities.Insert(EditableEntities.IndexOf(clothKind) + 1, kind);
         }
-
-        //view.MainGrid.Columns[0].Width = new DataGridLength((clothKind.Level + 1) * 64, DataGridLengthUnitType.Pixel);
       }
 
       else
       {
         RemoveChildren(clothKind);
-
-        //view.MainGrid.Columns[0].Width = new DataGridLength((clothKind.Level) * 64 + 64, DataGridLengthUnitType.Pixel);
       }
     }
 
@@ -170,7 +212,6 @@ namespace Laundry.Utils.Controls
 
     public SeriesCollection Values
     {
-
       get
       {
         switch (this.EntityInfoType)
@@ -181,12 +222,12 @@ namespace Laundry.Utils.Controls
               new ColumnSeries
               {
                 Title = "шт",
-                Values = new ChartValues<long>(this.AggregationResults.Select(x=> x.Count))
+                Values = new ChartValues<long>(this.AggregationResults.Select(x => x.Count))
               },
               new ColumnSeries
               {
                 Title = "кг",
-                Values = new ChartValues<double>(this.AggregationResults.Select(x=> x.UnCountableCount))
+                Values = new ChartValues<double>(this.AggregationResults.Select(x => x.UnCountableCount))
               }
             };
           case EntityInfoType.Cost:
@@ -195,7 +236,7 @@ namespace Laundry.Utils.Controls
               new ColumnSeries
               {
                 Title = "₽",
-                Values = new ChartValues<double>(this.AggregationResults.Select(x=> x.Price))
+                Values = new ChartValues<double>(this.AggregationResults.Select(x => x.Price))
               }
             };
           default:
@@ -204,8 +245,8 @@ namespace Laundry.Utils.Controls
       }
     }
 
-    public IReadOnlyList<AggregationResult> AggregationResults => 
-      this.Repo.AggregateInstances(Time, Filter);
+    public IReadOnlyList<AggregationResult> AggregationResults =>
+      this.Repo.AggregateInstances(Time, Filter, GetDateFilters());
 
     public string[] Labels
     {
@@ -224,8 +265,10 @@ namespace Laundry.Utils.Controls
         }
       }
     }
+
     [AlsoNotifyFor(nameof(Labels))]
     public ChartTime Time { get; set; }
+
     public EntityInfoType EntityInfoType { get; set; }
   }
 }
