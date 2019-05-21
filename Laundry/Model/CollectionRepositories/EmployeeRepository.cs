@@ -67,7 +67,8 @@ namespace Model.DatabaseClients
       return user;
     }
 
-    public EmployeeRepository(IModel model, IMongoCollection<Employee> collection) : base(model, collection)
+    public EmployeeRepository(IModel model, IMongoCollection<Employee> collection) 
+      : base(model, collection, new[] { nameof(Client.Name), nameof(Client.Surname), nameof(Client.Patronymic) })
     {
     }
 
@@ -94,47 +95,7 @@ namespace Model.DatabaseClients
 
       return basee;
     }
-
-    public override IReadOnlyList<Employee> GetBySearchString(string searchString, FilterDefinition<Employee> filter,
-      int offset = 0, int capLimit = 10)
-    {
-      var searchChunks = searchString.Split(' ');
-
-      var regex = @"^";
-
-      foreach (var searchChunk in searchChunks)
-      {
-        regex += $"(?=.*{searchChunk})";
-      }
-
-      regex += @".*$";
-
-      //Бсондокументы, описывающие стадии агрегации (экспортированы из mongo compass)
-      //(добавление поля Signature и его match по сооветствующему составляемому регулярному выражению)
-      var match = new BsonDocument("$match",
-        new BsonDocument("Signature",
-          new BsonDocument("$regex", regex)));
-      var addfields = new BsonDocument("$addFields",
-        new BsonDocument("Signature",
-          new BsonDocument("$concat",
-            new BsonArray
-            {
-              new BsonDocument("$toString", "$_id"),
-              " ",
-              "$Name",
-              " ",
-              "$Surname"
-            })));
-      var filterdef = filter ?? Builders<Employee>.Filter.Empty;
-      return Collection.Aggregate()
-        .Match(filterdef)
-        .AppendStage<BsonDocument>(addfields)
-        .AppendStage<BsonDocument>(match)
-        .Skip(offset)
-        .Limit(capLimit)
-        .ToList().Select(x => BsonSerializer.Deserialize<Employee>(x)).ToList();
-    }
-
+    
     public void SetCar(Employee entity, Car car)
     {
       if (car != null) entity.Car = car.Id;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Caliburn.Micro;
 using Model;
@@ -7,6 +8,8 @@ using Laundry.Views;
 using Laundry.Views.Cards;
 using LiveCharts;
 using LiveCharts.Wpf;
+using MongoDB.Driver;
+using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using PropertyChanged;
 
@@ -15,6 +18,36 @@ namespace Laundry.Utils.Controls
   public class SubsidiaryGridViewModel : EntityGrid<Subsidiary, Repository<Subsidiary>, SubsidiaryCardViewModel>,
     IChartable<Subsidiary>
   {
+    public bool IsByCreationDate { get; set; }
+    public DateTime? LowCreationDateBound { get; set; }
+    public DateTime? HighCreationDateBound { get; set; }
+
+    public bool IsByExecutionDate { get; set; }
+    public DateTime? LowExecutionDateBound { get; set; }
+    public DateTime? HighExecutionDateBound { get; set; }
+
+    public FilterDefinition<Order> GetDateFilters()
+    {
+      var filter = Builders<Order>.Filter.Empty;
+      if (this.IsByCreationDate)
+      {
+        filter = Builders<Order>.Filter.And(
+          filter,
+          Builders<Order>.Filter.Gte(nameof(Order.CreationDate), this.LowCreationDateBound ?? DateTime.MinValue),
+          Builders<Order>.Filter.Lte(nameof(Order.CreationDate), this.HighCreationDateBound ?? DateTime.MaxValue));
+      }
+
+      if (this.IsByExecutionDate)
+      {
+        filter = Builders<Order>.Filter.And(
+          filter,
+          Builders<Order>.Filter.Gte(nameof(Order.ExecutionDate), this.LowExecutionDateBound ?? DateTime.MinValue),
+          Builders<Order>.Filter.Lte(nameof(Order.ExecutionDate), this.HighExecutionDateBound ?? DateTime.MaxValue));
+      }
+
+      return filter;
+    }
+
     [AlsoNotifyFor(nameof(Labels), nameof(Values), nameof(Count))]
     public override IReadOnlyList<Subsidiary> Entities
     {
@@ -96,7 +129,7 @@ namespace Laundry.Utils.Controls
       return row;
     }
 
-    public IReadOnlyList<SubsidiaryAggregationResult> Type => this._model.Subsidiaries.AggregateSubsidiaries();
+    public IReadOnlyList<SubsidiaryAggregationResult> Type => this._model.Subsidiaries.AggregateSubsidiaries(GetDateFilters());
 
     public string[] Labels => Type.Select(x=>x.Signature).ToArray();
     public string LabelsTitle => "Филиалы";

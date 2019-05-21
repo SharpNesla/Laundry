@@ -22,17 +22,31 @@ using Action = System.Action;
 namespace Laundry.Utils.Controls
 {
   /// <summary>
-  /// Interaction logic for Paginator.xaml
+  /// Пагинируемая пагинатором сущность
   /// </summary>
   public interface IPaginable
   {
+    /// <summary>
+    /// Общее количество сущностей в пагинируемом объекте
+    /// </summary>
     long Count { get; }
+    /// <summary>
+    /// Обновление сущности на конкретную страницу с количество элементов
+    /// </summary>
+    /// <param name="page">Страница</param>
+    /// <param name="elements">Количество элементов на страницу</param>
     void Refresh(int page, int elements);
+    /// <summary>
+    /// Внутреннее событие, вызываемое из сущности
+    ///  при изменении состояния оно (как правило CRUD-действия)
+    /// </summary>
     event Action StateChanged;
   }
 
-  [AddINotifyPropertyChangedInterface]
-  public class PaginatorViewModel
+  /// <summary>
+  /// View-model пагинатора, способного пагинровать любую IPaginable
+  /// </summary>
+  public class PaginatorViewModel : PropertyChangedBase
   {
     private int _currentPage;
     private long _count;

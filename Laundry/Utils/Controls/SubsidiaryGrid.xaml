@@ -32,7 +32,32 @@
       <materialDesign:DrawerHost Name="DrawerHost"
                                  IsBottomDrawerOpen="{Binding IsSearchDrawerOpened}">
         <materialDesign:DrawerHost.BottomDrawerContent>
-          <StackPanel Height="128" Background="{StaticResource MaterialDesignCardBackground}" Orientation="Horizontal" />
+          <StackPanel Background="{StaticResource MaterialDesignCardBackground}" Orientation="Horizontal">
+            <StackPanel Width="264" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+              <CheckBox IsChecked="{Binding IsByCreationDate}">
+
+                По дате приёма &#x0a;(фильтр аналитики)
+              </CheckBox>
+              <DatePicker SelectedDate="{Binding LowCreationDateBound}" materialDesign:HintAssist.Hint="Нижняя граница"
+                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                          HorizontalAlignment="Stretch" IsEnabled="{Binding IsByCreationDate}" />
+              <DatePicker SelectedDate="{Binding HighCreationDateBound}"
+                          materialDesign:HintAssist.Hint="Верхняя граница"
+                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                          HorizontalAlignment="Stretch" IsEnabled="{Binding IsByCreationDate}" />
+            </StackPanel>
+            <StackPanel Width="293" Margin="16,10,8,8" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+              <CheckBox IsChecked="{Binding IsByExecutionDate}">По дате исполнения &#x0a;(фильтр аналитики)</CheckBox>
+              <DatePicker SelectedDate="{Binding LowExecutionDateBound}"
+                          materialDesign:HintAssist.Hint="Нижняя граница"
+                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                          HorizontalAlignment="Stretch" IsEnabled="{Binding IsByExecutionDate}" />
+              <DatePicker SelectedDate="{Binding HighExecutionDateBound}"
+                          materialDesign:HintAssist.Hint="Верхняя граница"
+                          Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Margin="0,0,0,8"
+                          HorizontalAlignment="Stretch" IsEnabled="{Binding IsByExecutionDate}" />
+            </StackPanel>
+          </StackPanel>
         </materialDesign:DrawerHost.BottomDrawerContent>
 
       </materialDesign:DrawerHost>

@@ -4,6 +4,11 @@ using Laundry.Utils;
 
 namespace Laundry.Views
 {
+
+  /// <summary>
+  /// Базовый класс для карточки сущности
+  /// </summary>
+  /// <typeparam name="TEntity">Отображаемая сущность</typeparam>
   public class Card<TEntity> : Screen where TEntity : IRepositoryElement
   {
     public Visibilities Visibilities { get; }
@@ -18,7 +23,9 @@ namespace Laundry.Views
       this._editorScreen = editorScreen;
     }
 
-
+    /// <summary>
+    /// Обработчик кнопки "редактировать" в карточке
+    /// </summary>
     public virtual void Edit()
     {
       _eventAggregator.PublishOnUIThread(_editorScreen);
