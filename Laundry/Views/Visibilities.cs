@@ -8,7 +8,6 @@ using Model;
 
 namespace Laundry.Views
 {
-
   /// <summary>
   /// Класс для работы с отсечением областей видимости,
   /// принимает модель, как зависимость и читает из неё профессию текущего пользователя
@@ -17,11 +16,16 @@ namespace Laundry.Views
   {
     private readonly IModel _model;
 
-    public bool Courier => _model.CurrentUser.Profession == EmployeeProfession.Courier;
-    public bool Advisor => _model.CurrentUser.Profession == EmployeeProfession.Advisor;
-    public bool Driver => _model.CurrentUser.Profession == EmployeeProfession.Driver;
-    public bool Washer => _model.CurrentUser.Profession == EmployeeProfession.Washer;
-    public bool Director => _model.CurrentUser.Profession == EmployeeProfession.Director;
+    public bool Courier => _model.CurrentUser?.Profession == EmployeeProfession.Courier;
+    public bool Advisor => _model.CurrentUser?.Profession == EmployeeProfession.Advisor;
+    public bool Driver => _model.CurrentUser?.Profession == EmployeeProfession.Driver;
+    public bool Washer => _model.CurrentUser?.Profession == EmployeeProfession.Washer;
+    public bool Director => _model.CurrentUser?.Profession == EmployeeProfession.Director;
+
+    public bool DirectorAdvisorWasher =>
+      _model.CurrentUser?.Profession == EmployeeProfession.Director ||
+      _model.CurrentUser?.Profession == EmployeeProfession.Advisor ||
+      _model.CurrentUser?.Profession == EmployeeProfession.Washer;
 
     public bool DirectorAdvisor =>
       _model.CurrentUser.Profession == EmployeeProfession.Director ||
@@ -32,6 +36,7 @@ namespace Laundry.Views
       _model = model;
       _model.Connected += OnModelOnConnected;
     }
+
     /// <summary>
     /// Обработчик подключения к модели, необходим для
     /// сигнализации изменения visibility всего приложения

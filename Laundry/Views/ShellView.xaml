@@ -9,6 +9,7 @@
         mc:Ignorable="d"
         Title=" " Height="768" Width="1024"
         xmlns:cal="http://www.caliburnproject.org"
+        xmlns:converters="clr-namespace:Laundry.Utils.Converters"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -22,7 +23,7 @@
         <DockPanel MinWidth="212">
           <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <ListBoxItem  MinWidth="200" VerticalAlignment="Center" cal:Message.Attach="[Event Selected] = [Action ShowSelfUserCard()]" >
-              <StackPanel Margin="16,8,0,0" >
+              <StackPanel Margin="8,4,0,4" >
               <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Text="{Binding CurrentName}"/>
               <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Margin="0,4,0,0"
                          IsEnabled="False" Text="{Binding CurrentEmployee.Profession, Converter={StaticResource ProfessionConverter}}"/>
@@ -35,6 +36,9 @@
 
           </StackPanel>
           <ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16">
+            <ListBox.Resources>
+              <converters:BindingProxy x:Key="proxy" Data="{Binding}" />
+            </ListBox.Resources>
             <controls:DrawerItem Label="Обзор" Kind="ViewDashboard"
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('DASHBOARD')]" />
             <Separator />
@@ -42,13 +46,19 @@
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('ORDERDICTIONARY')]" />
 
             <controls:DrawerItem Label="Клиенты" Kind="ManMan"
+                                 
+                                 Visibility="{Binding Source={StaticResource proxy},
+                                 Path=Data.Visibilities.DirectorAdvisorWasher, Converter={StaticResource BoolVisibilityConverter}}"
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('CLIENTDICTIONARY')]" />
             <controls:DrawerItem Label="Аналитика" Kind="ChartBarStacked" 
-                                 Visibility="{Binding Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
+                                 Visibility="{Binding Source={StaticResource proxy},
+                                 Path=Data.Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('ANALYTICS')]" />
 
             <Separator />
             <controls:DrawerItem Label="Работники" Kind="AccountSupervisor"
+                                 Visibility="{Binding Source={StaticResource proxy},
+                                 Path=Data.Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('EMPLOYEEDICTIONARY')]" />
             <controls:DrawerItem Label="Филиалы" Kind="HomeVariantOutline"
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('SUBSIDIARYDICTIONARY')]" />
@@ -57,6 +67,8 @@
             <controls:DrawerItem Label="Одежда" Kind="TShirtCrew"
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('CLOTHKINDEDITOR')]" />
             <controls:DrawerItem Label="Дисконт-система" Kind="CardBulleted"
+                                 Visibility="{Binding Source={StaticResource proxy},
+                                 Path=Data.Visibilities.Director, Converter={StaticResource BoolVisibilityConverter}}"
                                  cal:Message.Attach="[Event Selected] = [Action SetScreen('DISCOUNTSYSTEM')]" />
             <Separator />
 
