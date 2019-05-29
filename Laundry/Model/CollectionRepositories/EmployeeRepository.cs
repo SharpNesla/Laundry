@@ -33,7 +33,6 @@ namespace Model.DatabaseClients
   Username: ""$Username"",
   PassportSerial:""$PassportSerial"",
   PassportDistributor : ""$PassportDistributor"",
-  Password:""$Password"",
   OrdersCount :{
     $add:[
       {$size : ""$Orders""}
@@ -92,6 +91,7 @@ namespace Model.DatabaseClients
           this.Collection.Database.GetCollection<Order>("orders"), new BsonDocument("kindid", "$_id"), pipeline,
           "Orders")
         .Project<Employee>(ProjectDefinition);
+
     }
 
     public override void Update(Employee entity)
@@ -103,10 +103,10 @@ namespace Model.DatabaseClients
     }
 
     /// <summary>
-    /// Set Hash of employee password with salt
+    /// Задать хэш пароля работника с солью
     /// </summary>
-    /// <param name="employee">Employee</param>
-    /// <param name="password">Password string</param>
+    /// <param name="employee">Работник</param>
+    /// <param name="password">Пароль</param>
     public void SetPassword(Employee employee, string password)
     {
       byte[] salt;
@@ -124,12 +124,28 @@ namespace Model.DatabaseClients
       this.Collection.UpdateOne(Builders<Employee>.Filter.Eq(x => x.Id, employee.Id),
         Builders<Employee>.Update.Set("Password", savedPasswordHash));
     }
-
+    /// <summary>
+    /// Получить хэш работника из бд
+    /// </summary>
+    /// <param name="employee">Работник</param>
+    /// <returns></returns>
     private string GetPasswordHash(Employee employee)
     {
-      return this.GetById(employee.Id).Password;
+      return this.Collection
+        .Aggregate()
+        .Match(x => x.Id == employee.Id)
+        .Project<BsonDocument>("{ Password:'$Password'} ")
+        .First()
+        .ToBsonDocument()["Password"].AsString;
     }
-
+    /// <summary>
+    /// Авторизоваться в системе и получть
+    /// </summary>
+    /// <param name="username">Имя пользователя</param>
+    /// <param name="password">Пароль</param>
+    /// <returns>Работник по данной паре логин-пароль</returns>
+    /// <exception cref="UnauthorizedAccessException">Исключение в случае
+    /// несовпадения пары логин-пароль или отсутствия пользователя с такиим логичном</exception>
     public Employee GetCurrentEmployee(string username, string password)
     {
       Employee user = null;
@@ -142,6 +158,7 @@ namespace Model.DatabaseClients
         throw new UnauthorizedAccessException();
       }
 
+      //Проверка хэша пароля на соответствие
       byte[] hashBytes = Convert.FromBase64String(GetPasswordHash(user));
       /* Get the salt */
       byte[] salt = new byte[16];
@@ -171,6 +188,11 @@ namespace Model.DatabaseClients
       if (car != null) entity.Car = car.Id;
     }
 
+    /// <summary>
+    /// Обновить тему для пользователя
+    /// </summary>
+    /// <param name="currentUser">Пользователь</param>
+    /// <param name="IsDark">Темы (true - светлая, false - тёмная)</param>
     public void UpdateTheme(Employee currentUser, bool IsDark)
     {
       this.Collection.UpdateOne(x => x.Id == currentUser.Id, Builders<Employee>.Update.Set(x => x.IsDarkTheme, IsDark));

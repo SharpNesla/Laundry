@@ -42,9 +42,7 @@ namespace Model
     {
       get { return $"{this.Id} {this.Name} {this.Surname}"; }
     }
-
-    public string Password { get; set; }
-
+    
     [BsonElement("OrdersCount")]
     internal long? OrdersCountImpl;
 
