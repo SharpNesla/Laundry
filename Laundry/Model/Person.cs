@@ -18,11 +18,8 @@ namespace Model
     Undefined
   }
 
-  public class Person : IRepositoryElement
+  public class Person : RepositoryElement
   {
-    [BsonId]
-    public long Id { get; set; }
-
     [BsonIgnoreIfNull]
     public string Name { get; set; }
 
@@ -37,7 +34,7 @@ namespace Model
 
     [BsonIgnoreIfDefault]
     public DateTime DateBirth { get; set; }
-    
+
     public Gender Gender { get; set; }
 
     [BsonIgnoreIfNull]
@@ -55,16 +52,11 @@ namespace Model
     [BsonIgnoreIfNull]
     public string ZipCode { get; set; }
 
-    [BsonIgnoreIfDefault]
-    public DateTime DeletionDate { get; set; }
-
     [BsonIgnore]
-    public virtual string Signature
+    public override string Signature
     {
       get { return $"{this.Id} {this.Name} {this.Surname}"; }
     }
-    [BsonIgnore]
-    public bool IsSelected { get; set; }
 
     public override string ToString()
     {

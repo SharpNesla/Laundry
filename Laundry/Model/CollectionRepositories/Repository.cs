@@ -10,7 +10,7 @@ namespace Model.CollectionRepositories
   /// Базовый класс для работы с коллекциями элементов типа T
   /// </summary>
   /// <typeparam name="T">Тип объекта находящегося в коллекции</typeparam>
-  public class Repository<T> where T : IRepositoryElement
+  public class Repository<T> where T : RepositoryElement
   {
     private readonly string[] _searchStringCriterias;
     protected IMongoCollection<T> Collection { get; set; }
@@ -29,7 +29,7 @@ namespace Model.CollectionRepositories
     {
       var filters = includeDeleted
         ? Builders<T>.Filter.Empty
-        : Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false);
+        : Builders<T>.Filter.Exists(nameof(RepositoryElement.DeletionDate), false);
 
       return this.Collection.Aggregate().Match(filters);
     }
@@ -64,7 +64,7 @@ namespace Model.CollectionRepositories
       try
       {
         var filters = Builders<T>.Filter.And(
-          Builders<T>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+          Builders<T>.Filter.Exists(nameof(RepositoryElement.DeletionDate), false),
           filter ?? Builders<T>.Filter.Empty);
         return Collection.CountDocuments(filters);
       }
@@ -125,7 +125,7 @@ namespace Model.CollectionRepositories
       return this.GetAggregationFluent()
         .Match(filterdef)
         .AppendStage<BsonDocument>(addfields)
-        .Match(Builders<BsonDocument>.Filter.Regex(nameof(IRepositoryElement.Signature), regex))
+        .Match(Builders<BsonDocument>.Filter.Regex(nameof(RepositoryElement.Signature), regex))
         .As<T>();
     }
 
@@ -171,7 +171,7 @@ namespace Model.CollectionRepositories
     /// <returns>Элемент коллекции</returns>
     public virtual T GetById(long id)
     {
-      return GetAggregationFluent().Match(Builders<T>.Filter.Eq(nameof(IRepositoryElement.Id), id)).First();
+      return GetAggregationFluent().Match(Builders<T>.Filter.Eq(nameof(RepositoryElement.Id), id)).First();
     }
 
     /// <summary>

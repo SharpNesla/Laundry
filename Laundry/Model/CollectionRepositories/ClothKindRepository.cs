@@ -328,7 +328,7 @@ namespace Model.CollectionRepositories
       FilterDefinition<ClothKind> filter, FilterDefinition<Order> orderDateFilter)
     {
       var filters = Builders<ClothKind>.Filter.And(
-        Builders<ClothKind>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+        Builders<ClothKind>.Filter.Exists(nameof(RepositoryElement.DeletionDate), false),
         filter ?? Builders<ClothKind>.Filter.Empty);
 
       var daysPart = time == ChartTime.Day

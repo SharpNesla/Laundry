@@ -12,7 +12,7 @@ using Laundry.Utils.Controls;
 namespace Laundry.Utils
 {
   public class DictionaryScreen< TGrid> : DrawerActivityScreen
-    where TGrid : IEntityGrid<IRepositoryElement>
+    where TGrid : IEntityGrid<RepositoryElement>
   {
     public PaginatorViewModel Paginator { get; set; }
     public TGrid EntityGrid { get; set; }

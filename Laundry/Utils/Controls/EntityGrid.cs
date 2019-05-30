@@ -21,7 +21,7 @@ using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
 {
-  public interface IEntityGrid<out TEntity> : IPaginable where TEntity : IRepositoryElement
+  public interface IEntityGrid<out TEntity> : IPaginable where TEntity : RepositoryElement
   {
     IReadOnlyList<TEntity> Entities { get; }
     TEntity SelectedEntity { get; }
@@ -36,7 +36,7 @@ namespace Laundry.Utils.Controls
   }
 
   public abstract class EntityGrid<TEntity, TRepository, TCard> : PropertyChangedBase, IEntityGrid<TEntity>
-    where TEntity : IRepositoryElement
+    where TEntity : RepositoryElement
     where TRepository : Repository<TEntity>
     where TCard : Card<TEntity>
   {

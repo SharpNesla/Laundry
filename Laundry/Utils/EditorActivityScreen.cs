@@ -12,7 +12,7 @@ using PropertyChanged;
 namespace Laundry.Utils
 {
   public class EditorScreen<TRepository, TEntity> : ActivityScreen, IHandle<TEntity>
-    where TEntity : class, IRepositoryElement, new()
+    where TEntity : RepositoryElement, new()
     where TRepository : Repository<TEntity>
   {
     [AlsoNotifyFor(nameof(EditorTitle))]

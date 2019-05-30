@@ -36,7 +36,7 @@ namespace Laundry.Views
     private readonly SubsidiaryGridViewModel _subsidiaryGrid;
     private readonly ClothKindTreeViewModel _clothKindGrid;
     private AnalyticEntityType _entityType;
-    public IChartable<IRepositoryElement> EntityGrid { get; set; }
+    public IChartable<RepositoryElement> EntityGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
 
     public string SearchHintString { get; private set; }
@@ -71,7 +71,7 @@ namespace Laundry.Views
       }
     }
 
-    private void ChangeEntity(IChartable<IRepositoryElement> repository, string elementsName)
+    private void ChangeEntity(IChartable<RepositoryElement> repository, string elementsName)
     {
       Paginator.CurrentPage = 1;
       Paginator.ClearPaginable();

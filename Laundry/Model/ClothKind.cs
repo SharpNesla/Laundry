@@ -18,7 +18,7 @@ namespace Model
   }
 
   [AddINotifyPropertyChangedInterface]
-  public class ClothKind : IRepositoryElement
+  public class ClothKind : RepositoryElement
   {
     [BsonIgnoreIfDefault]
     public long? Parent { get; set; }
@@ -34,9 +34,6 @@ namespace Model
 
     [BsonIgnoreIfNull]
     public string Comment { get; set; }
-
-    [BsonId]
-    public long Id { get; set; }
     
     public long ChildrenCount { get; internal set; }
 
@@ -45,14 +42,6 @@ namespace Model
 
     [BsonIgnore]
     public IReadOnlyList<ClothKind> Children { get; internal set; }
-
-    [BsonIgnoreIfDefault]
-    public DateTime DeletionDate { get; set; }
-
-    public string Signature { get; }
-
-    [BsonIgnore]
-    public bool IsSelected { get; set; }
 
     [BsonIgnore]
     public int Level { get; set; }

@@ -9,7 +9,7 @@ namespace Laundry.Views
   /// Базовый класс для карточки сущности
   /// </summary>
   /// <typeparam name="TEntity">Отображаемая сущность</typeparam>
-  public class Card<TEntity> : Screen where TEntity : IRepositoryElement
+  public class Card<TEntity> : Screen where TEntity : RepositoryElement
   {
     public Visibilities Visibilities { get; }
     private Screens _editorScreen;

@@ -13,7 +13,7 @@ namespace Model.CollectionRepositories
     public override IReadOnlyList<DiscountEdge> Get(int offset, int limit, FilterDefinition<DiscountEdge> filter = null)
     {
       var filters = Builders<DiscountEdge>.Filter.And(
-        Builders<DiscountEdge>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+        Builders<DiscountEdge>.Filter.Exists(nameof(RepositoryElement.DeletionDate), false),
         filter ?? Builders<DiscountEdge>.Filter.Empty);
 
       return Collection.Find(filters).Skip(offset).Limit(limit).SortBy(x => x.Edge).ToList();
@@ -27,7 +27,7 @@ namespace Model.CollectionRepositories
     {
       var client = this.Model.Clients.GetById(clientId);
       var filters = Builders<DiscountEdge>.Filter.And(
-        Builders<DiscountEdge>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+        Builders<DiscountEdge>.Filter.Exists(nameof(RepositoryElement.DeletionDate), false),
         Builders<DiscountEdge>.Filter.Lte(nameof(DiscountEdge.Edge), client.OrdersPrice));
 
       try

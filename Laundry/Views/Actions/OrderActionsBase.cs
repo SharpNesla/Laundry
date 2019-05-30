@@ -177,8 +177,6 @@ namespace Laundry.Views.Actions
 
       if (document != null)
       {
-        PrepareDocument(document, order);
-
         var dialog = new SaveFileDialog
         {
           InitialDirectory = @"~/Documents",
@@ -195,6 +193,7 @@ namespace Laundry.Views.Actions
 
           using (var fs = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
           {
+            PrepareDocument(document, order);
             document.Write(fs);
           }
         }

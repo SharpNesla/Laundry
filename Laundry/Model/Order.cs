@@ -24,10 +24,8 @@ namespace Model
   }
 
   [BsonIgnoreExtraElements]
-  public class Order : IRepositoryElement
+  public class Order : RepositoryElement
   {
-    public long Id { get; set; }
-
     [BsonIgnoreIfNull]
     public string Comment { get; set; }
 
@@ -39,18 +37,9 @@ namespace Model
 
     public OrderStatus Status { get; set; }
 
-    [BsonIgnoreIfDefault]
-    public DateTime DeletionDate { get; set; }
-
-    [BsonIgnore]
-    public string Signature { get; }
-
     [BsonIgnore]
     public DiscountEdge DiscountEdge { get; internal set; }
-
-    [BsonIgnore]
-    public bool IsSelected { get; set; }
-
+    
     public bool IsCorporative { get; set; }
 
     public bool IsDiscount { get; set; }

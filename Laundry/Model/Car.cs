@@ -9,19 +9,14 @@ namespace Model
 {
   public enum CarCategory
   {
-    [Description("A")]
-    A,
-    [Description("B")]
-    B,
-    [Description("C")]
-    C,
-    [Description("D")]
-    D,
-    [Description("E")]
-    E
+    [Description("A")] A,
+    [Description("B")] B,
+    [Description("C")] C,
+    [Description("D")] D,
+    [Description("E")] E
   }
 
-  public class Car : IRepositoryElement
+  public class Car : RepositoryElement
   {
     [BsonIgnoreIfNull]
     public string Sign { get; set; }
@@ -32,30 +27,23 @@ namespace Model
     [BsonIgnoreIfNull]
     public string VIN { get; set; }
 
-    public CarCategory Catergory { get; set; }
     [BsonIgnoreIfDefault]
     public CarCategory Category { get; set; }
-    
+
     [BsonIgnoreIfNull]
     public string BodyID { get; set; }
 
     [BsonIgnoreIfNull]
     public string Color { get; set; }
 
-    [BsonId]
-    public long Id { get; set; }
-
-    [BsonIgnoreIfDefault]
-    public DateTime DeletionDate { get; set; }
     [BsonIgnore]
-    public string Signature
+    public override string Signature
     {
       get { return $"{Id} {BrandAndModel}"; }
     }
-    [BsonIgnore]
-    public bool IsSelected { get; set; }
+
     [BsonIgnoreIfNull]
-    public short? CreationYear{ get; set; }
+    public short? CreationYear { get; set; }
 
     public string Comment { get; set; }
   }

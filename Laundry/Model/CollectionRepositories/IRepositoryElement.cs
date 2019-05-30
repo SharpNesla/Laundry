@@ -3,17 +3,17 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Model.DatabaseClients
 {
-
-  public interface IRepositoryElement
+  public class RepositoryElement
   {
     [BsonId]
-    long Id { get; set; }
+    public long Id { get; set; }
 
     [BsonIgnoreIfDefault]
-    DateTime DeletionDate { get; set; }
-    [BsonIgnore]
-    string Signature { get; }
+    public DateTime DeletionDate { get; set; }
 
-    bool IsSelected { get; set; }
+    [BsonIgnore]
+    public virtual string Signature => Id.ToString();
+
+    public bool IsSelected { get; set; }
   }
 }

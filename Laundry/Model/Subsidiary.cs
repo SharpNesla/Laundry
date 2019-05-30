@@ -9,23 +9,15 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Model
 {
   [BsonIgnoreExtraElements]
-  public class Subsidiary : IRepositoryElement
+  public class Subsidiary : RepositoryElement
   {
-    public long Id { get; set; }
-
-    [BsonIgnoreIfDefault]
-    public DateTime DeletionDate { get; set; }
-
-    public string Signature
+    public override string Signature
     {
       get { return $"{Id} {Name} {Street} {House}"; }
     }
 
     public long? MainAdvisor { get; internal set; }
-
-    [BsonIgnore]
-    public bool IsSelected { get; set; }
-
+    
     [BsonIgnoreIfNull]
     public string PhoneNumber { get; set; }
 

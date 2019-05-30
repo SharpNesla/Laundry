@@ -248,7 +248,7 @@ namespace Model.CollectionRepositories
     public IReadOnlyList<AggregationResult> AggregateOrders(ChartTime time, FilterDefinition<Order> filter = null)
     {
       var filters = Builders<Order>.Filter.And(
-        Builders<Order>.Filter.Exists(nameof(IRepositoryElement.DeletionDate), false),
+        Builders<Order>.Filter.Exists(nameof(RepositoryElement.DeletionDate), false),
         filter ?? Builders<Order>.Filter.Empty);
       var groupingDefiniton = @"
 {

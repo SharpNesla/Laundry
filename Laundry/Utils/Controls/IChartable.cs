@@ -11,7 +11,7 @@ using LiveCharts;
 namespace Laundry.Utils.Controls
 {
   public interface IChartable<out TEntity> : IEntityGrid<TEntity>, INotifyPropertyChanged
-    where TEntity : IRepositoryElement
+    where TEntity : RepositoryElement
   {
     SeriesCollection Values { get; }
     string[] Labels { get; }

@@ -21,7 +21,7 @@ namespace Laundry.Utils.Controls.EntitySearchControls
   /// <typeparam name="TEntity">Сущность, по которой ведётся поиск</typeparam>
   /// <typeparam name="TRepository">Репозиторий сущности</typeparam>
   public abstract class EntitySearchBox<TEntity, TRepository> : PropertyChangedBase, IDataErrorInfo
-    where TEntity : IRepositoryElement
+    where TEntity : RepositoryElement
     where TRepository : Repository<TEntity>
   {
     private TEntity _selectedEntity;
