@@ -9,89 +9,6 @@ namespace Model.CollectionRepositories
 {
   public class ClothKindRepository : Repository<ClothKind>
   {
-    private static readonly BsonArray AggrStages = new BsonArray
-    {
-      new BsonDocument("$lookup",
-        new BsonDocument
-        {
-          {"from", "orders"},
-          {
-            "let",
-            new BsonDocument("kindid", "$_id")
-          },
-          {
-            "pipeline",
-            new BsonArray
-            {
-              new BsonDocument("$unwind",
-                new BsonDocument("path", "$Instances")),
-              new BsonDocument("$replaceRoot",
-                new BsonDocument("newRoot", "$Instances")),
-              new BsonDocument("$match",
-                new BsonDocument("$expr",
-                  new BsonDocument("$eq",
-                    new BsonArray
-                    {
-                      "$ClothKind",
-                      "$$kindid"
-                    })))
-            }
-          },
-          {"as", "ClothInstances"}
-        }),
-      new BsonDocument("$unwind",
-        new BsonDocument
-        {
-          {"path", "$ClothInstances"},
-          {"preserveNullAndEmptyArrays", true}
-        }),
-      new BsonDocument("$group",
-        new BsonDocument
-        {
-          {"_id", "$_id"},
-          {
-            "Name",
-            new BsonDocument("$first", "$Name")
-          },
-          {
-            "MeasureKind",
-            new BsonDocument("$first", "$MeasureKind")
-          },
-          {
-            "Price",
-            new BsonDocument("$first", "$Price")
-          },
-          {
-            "Parent",
-            new BsonDocument("$first", "$Parent")
-          },
-          {
-            "Comment",
-            new BsonDocument("$first", "$Comment")
-          },
-          {
-            "WashPrice",
-            new BsonDocument("$first", "$WashPrice")
-          },
-          {
-            "Count",
-            new BsonDocument("$sum", "$ClothInstances.Amount")
-          },
-          {
-            "SumPrice",
-            new BsonDocument("$sum",
-              new BsonDocument("$multiply",
-                new BsonArray
-                {
-                  "$Price",
-                  "$ClothInstances.Amount"
-                }))
-          }
-        }),
-      new BsonDocument("$sort",
-        new BsonDocument("_id", 1))
-    };
-
     private static readonly BsonArray AggrStagesForChart = new BsonArray
     {
       new BsonDocument("$lookup",
@@ -270,7 +187,7 @@ namespace Model.CollectionRepositories
   ChildrenCount : {$size: '$Children'} 
 }";
 
-      var aggregateUnwindOptions = new AggregateUnwindOptions<BsonDocument> { PreserveNullAndEmptyArrays = true };
+      var aggregateUnwindOptions = new AggregateUnwindOptions<BsonDocument> {PreserveNullAndEmptyArrays = true};
 
 
       return base.GetAggregationFluent(includeDeleted, filter)
@@ -301,17 +218,16 @@ namespace Model.CollectionRepositories
       }
     }
 
-    public long GetChildrenCount(ClothKind clothKind)
-    {
-      return this.GetCount(Builders<ClothKind>.Filter.Eq(nameof(ClothKind.Parent), clothKind.Id));
-    }
-
     public void FetchChildren(ClothKind clothKind)
     {
       clothKind.Children =
         this.Get(0, int.MaxValue, Builders<ClothKind>.Filter.Eq(nameof(ClothKind.Parent), clothKind.Id));
     }
 
+    /// <summary>
+    /// Рекурсивно удалить всё поддерево вида одежды
+    /// </summary>
+    /// <param name="entity">Вид одежды</param>
     public override void Remove(ClothKind entity)
     {
       this.FetchChildren(entity);
@@ -323,7 +239,7 @@ namespace Model.CollectionRepositories
 
       base.Remove(entity);
     }
-    
+
     public IReadOnlyList<AggregationResult> AggregateInstances(ChartTime time,
       FilterDefinition<ClothKind> filter, FilterDefinition<Order> orderDateFilter)
     {
@@ -363,7 +279,8 @@ namespace Model.CollectionRepositories
         .Project(projectDef)
         .AppendStage<BsonDocument>(AggrStagesForChart[3].AsBsonDocument)
         .AppendStage<BsonDocument>(AggrStagesForChart[4].AsBsonDocument)
-        .As<AggregationResult>().ToList();
+        .As<AggregationResult>()
+        .SortBy(x => x.DateTime).ToList();
       return readOnlyList;
     }
 
@@ -379,8 +296,8 @@ namespace Model.CollectionRepositories
 }";
 
       var aggregation = this.GetAggregationFluent()
-          .Match(filters)
-          .Group(groupDef).ToList();
+        .Match(filters)
+        .Group(groupDef).ToList();
 
 
       int things = 0;

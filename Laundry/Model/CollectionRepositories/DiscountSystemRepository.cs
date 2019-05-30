@@ -10,15 +10,12 @@ namespace Model.CollectionRepositories
 {
   public class DiscountSystemRepository : Repository<DiscountEdge>
   {
-    public override IReadOnlyList<DiscountEdge> Get(int offset, int limit, FilterDefinition<DiscountEdge> filter = null)
+    protected override IAggregateFluent<DiscountEdge> GetAggregationFluent(bool includeDeleted = false,
+      FilterDefinition<DiscountEdge> filter = null)
     {
-      var filters = Builders<DiscountEdge>.Filter.And(
-        Builders<DiscountEdge>.Filter.Exists(nameof(RepositoryElement.DeletionDate), false),
-        filter ?? Builders<DiscountEdge>.Filter.Empty);
-
-      return Collection.Find(filters).Skip(offset).Limit(limit).SortBy(x => x.Edge).ToList();
+      return base.GetAggregationFluent(includeDeleted, filter).SortBy(x => x.Edge);
     }
-    
+
     public DiscountSystemRepository(IModel model, IMongoCollection<DiscountEdge> collection) : base(model, collection)
     {
     }
@@ -32,15 +29,13 @@ namespace Model.CollectionRepositories
 
       try
       {
-        var discountEdge = GetAggregationFluent().Match(filters).SortByDescending(x=>x.Edge).First();
+        var discountEdge = GetAggregationFluent().Match(filters).SortByDescending(x => x.Edge).First();
         return discountEdge;
       }
       catch (InvalidOperationException)
       {
         return null;
       }
-
-      
     }
   }
 }

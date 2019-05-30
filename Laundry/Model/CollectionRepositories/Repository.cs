@@ -13,8 +13,8 @@ namespace Model.CollectionRepositories
   public class Repository<T> where T : RepositoryElement
   {
     private readonly string[] _searchStringCriterias;
-    protected IMongoCollection<T> Collection { get; set; }
-    internal event Action ConnectionLost;
+    internal IMongoCollection<T> Collection { get; set; }
+    public event Action ConnectionLost;
     protected IModel Model { get; set; }
 
     public Repository(IModel model, IMongoCollection<T> collection, string[] searchStringCriterias = null)
@@ -133,7 +133,7 @@ namespace Model.CollectionRepositories
     /// Получить элементы, по поисковой строке с учётом фильтров
     /// </summary>
     /// <param name="searchString">Строка поиска</param>
-    /// <param name="filter"></param>
+    /// <param name="filter">Фильтр</param>
     /// <param name="offset">Смещение</param>
     /// <param name="capLimit">Количество элементов</param>
     /// <returns></returns>

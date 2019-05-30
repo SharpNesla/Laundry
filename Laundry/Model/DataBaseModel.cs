@@ -34,9 +34,16 @@ namespace Model
     {
       string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
 
-      MongoClient client = new MongoClient(connectionString);
-      
+
+      var fromConnectionString = MongoClientSettings.FromConnectionString(connectionString);
+      fromConnectionString.ConnectTimeout = TimeSpan.FromSeconds(1);
+
+      MongoClient client = new MongoClient(
+        fromConnectionString
+      );
+
       this._dataBase = client.GetDatabase("laundry");
+
       this._clients = _dataBase.GetCollection<Client>("clients");
       this._orders = _dataBase.GetCollection<Order>("orders");
       this._employees = _dataBase.GetCollection<Employee>("employees");

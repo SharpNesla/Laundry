@@ -151,7 +151,7 @@ namespace Model.DatabaseClients
       Employee user = null;
       try
       {
-        user = this.Collection.Find(Builders<Employee>.Filter.Eq("Username", username)).First();
+        user = this.Get(0,1,Builders<Employee>.Filter.Eq("Username", username)).First();
       }
       catch (InvalidOperationException)
       {

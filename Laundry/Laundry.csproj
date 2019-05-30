@@ -151,7 +151,7 @@
     <Compile Include="Model\DiscountEdge.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\IModel.cs" />
-    <Compile Include="Model\CollectionRepositories\IRepositoryElement.cs" />
+    <Compile Include="Model\CollectionRepositories\RepositoryElement.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Subsidiary.cs" />
