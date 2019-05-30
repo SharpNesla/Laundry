@@ -18,16 +18,37 @@ using Screen = Caliburn.Micro.Screen;
 
 namespace Laundry.Views.Actions
 {
+
+  /// <summary>
+  /// Базовый класс для действия над заказами
+  /// </summary>
   public abstract class OrderActionsBase : Screen
   {
     protected readonly OrderRepository Repository;
+
     private readonly OrderStatus _changingStatus;
     private readonly string _documentName;
+
     public OrderDataGridViewModel OrderGrid { get; set; }
+
+
     private readonly OrderStatusConverter _converter = new OrderStatusConverter();
     private readonly MeasureKindConverter _measureKindConverter = new MeasureKindConverter();
+
+
     protected IModel Model;
 
+    /// <summary>
+    /// Конструктор, принимающий зависимости, и некоторые относящиеся к работе дейтсивя параметры
+    /// </summary>
+    /// <param name="orderRepo"></param>
+    /// <param name="model"></param>
+    /// <param name="orderEmployeeInvolvement">Внешний ключ по которому ведётся отбор работника</param>
+    /// <param name="orderGrid"></param>
+    /// <param name="startStatus">Статус заказа, по которому ведётся отбор</param>
+    /// <param name="changingStatus">Статус заказа, присваиваемый по выполнению действия</param>
+    /// <param name="documentName">Название документа, относящегося к действиям и берущегося из ресурса</param>
+    /// <param name="additionalFilter">Дополнительный фильтр закаов</param>
     protected OrderActionsBase(OrderRepository orderRepo, IModel model, string orderEmployeeInvolvement,
       OrderDataGridViewModel orderGrid,
       OrderStatus startStatus, OrderStatus changingStatus, string documentName = null,

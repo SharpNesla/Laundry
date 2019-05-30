@@ -11,7 +11,13 @@ namespace Model.CollectionRepositories
 {
   public class CarRepository : Repository<Car>
   {
-    public CarRepository(IModel model, IMongoCollection<Car> collection) : base(model, collection)
+    public CarRepository(IModel model, IMongoCollection<Car> collection)
+      : base(model, collection,
+        new[]
+        {
+          nameof(Car.BrandAndModel), nameof(Car.VIN),
+          nameof(Car.BodyID), nameof(Car.Color), nameof(Car.Sign)
+        })
     {
     }
   }

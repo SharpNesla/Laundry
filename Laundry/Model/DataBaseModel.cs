@@ -30,14 +30,18 @@ namespace Model
     private IMongoCollection<Order> _orders;
     private IMongoCollection<Employee> _employees;
 
+    /// <summary>
+    /// Подключение к базе данных и формирование всех Repository для сущностей
+    /// </summary>
+    /// <param name="username">Имя пользователя</param>
+    /// <param name="password">Пароль</param>
     public void Connect(string username, string password)
     {
       string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
-
-
+      
       var fromConnectionString = MongoClientSettings.FromConnectionString(connectionString);
       fromConnectionString.ConnectTimeout = TimeSpan.FromSeconds(1);
-
+      
       MongoClient client = new MongoClient(
         fromConnectionString
       );

@@ -17,6 +17,9 @@ namespace Model.CollectionRepositories
     public event Action ConnectionLost;
     protected IModel Model { get; set; }
 
+    /// <param name="model">Модель</param>
+    /// <param name="collection">Коллекция</param>
+    /// <param name="searchStringCriterias">Список полей по которым ведётся поиск в коллекции</param>
     public Repository(IModel model, IMongoCollection<T> collection, string[] searchStringCriterias = null)
     {
       _searchStringCriterias = searchStringCriterias;
@@ -44,21 +47,14 @@ namespace Model.CollectionRepositories
     /// <returns>Readonly лист элементов</returns>
     public virtual IReadOnlyList<T> Get(int offset, int limit, FilterDefinition<T> filter = null)
     {
-      try
-      {
-        return GetAggregationFluent().Match(filter ?? Builders<T>.Filter.Empty).Skip(offset).Limit(limit).ToList();
-      }
-      catch (Exception)
-      {
-        return null;
-      }
+      return GetAggregationFluent().Match(filter ?? Builders<T>.Filter.Empty).Skip(offset).Limit(limit).ToList();
     }
 
     /// <summary>
     /// Получить количество всех элементов в коллекции с учётом фильтра
     /// </summary>
     /// <param name="filter">Фильтр</param>
-    /// <returns></returns>
+    /// <returns>Количество элементов</returns>
     public virtual long GetCount(FilterDefinition<T> filter = null)
     {
       try
@@ -75,6 +71,12 @@ namespace Model.CollectionRepositories
       }
     }
 
+    /// <summary>
+    /// Получить количество всех элементов в коллекции с учётом фильтра и поисковой строки
+    /// </summary>
+    /// <param name="searchString">Поисковая строка</param>
+    /// <param name="filter">Фильтр</param>
+    /// <returns>Количество элементов</returns>
     public virtual long GetSearchStringCount(string searchString, FilterDefinition<T> filter = null)
     {
       try
@@ -87,7 +89,7 @@ namespace Model.CollectionRepositories
         return 0;
       }
     }
-    
+
     protected IAggregateFluent<T> GetBySearchStringFluent(string searchString, FilterDefinition<T> filter)
     {
       var searchChunks = searchString.Split(' ');
@@ -115,7 +117,7 @@ namespace Model.CollectionRepositories
           bsonArray.Add(" ");
         }
       }
-      
+
       var addfields = new BsonDocument("$addFields",
         new BsonDocument("Signature",
           new BsonDocument("$concat",
