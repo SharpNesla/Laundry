@@ -11,6 +11,7 @@ namespace Laundry.Views
   /// <summary>
   /// Класс для работы с отсечением областей видимости,
   /// принимает модель, как зависимость и читает из неё профессию текущего пользователя
+  /// в зависимости от которой формирует значения свойств
   /// </summary>
   public class Visibilities : Caliburn.Micro.PropertyChangedBase
   {

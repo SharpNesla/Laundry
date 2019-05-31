@@ -13,32 +13,34 @@ namespace Laundry.Utils
   /// </summary>
   static class DialogHostExtensions
   {
-    public static DialogHost Current { get;set; }
+  
+    public static DialogHost Current { get; set; }
+    
+    /// <summary>
+    /// Метод, закрывающий активный DialogHost
+    /// </summary>
+    public static void CloseCurrent()
+    {
+      Current?.CurrentSession.Close();
+    }
 
     /// <summary>
     /// Метод для показа калибюрновских ViewModel MaterialInXaml'овским DialogHost'ом
     /// </summary>
     /// <typeparam name="T">Тип VM</typeparam>
     /// <param name="viewModel">VM</param>
-    /// 
-
-    public static void CloseCurrent()
-    {
-      Current.CurrentSession.Close();
-    }
-
     public static async Task ShowCaliburnVM<T>(T viewModel)
     {
       var view = ViewLocator.LocateForModel(viewModel, null, null);
       ViewModelBinder.Bind(viewModel, view, null);
 
-      var current = Current;
-
-      current.CurrentSession?.Close();
+      Current?.CurrentSession?.Close();
 
       await Task.Delay(400);
-
-      await current.ShowDialog(view);
+      if (Current != null)
+      {
+        await Current.ShowDialog(view);
+      }
     }
   }
 }

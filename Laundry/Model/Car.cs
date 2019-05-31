@@ -15,7 +15,7 @@ namespace Model
     [Description("D")] D,
     [Description("E")] E
   }
-
+  [BsonIgnoreExtraElements]
   public class Car : RepositoryElement
   {
     [BsonIgnoreIfNull]
@@ -27,7 +27,7 @@ namespace Model
     [BsonIgnoreIfNull]
     public string VIN { get; set; }
 
-    [BsonIgnoreIfDefault]
+
     public CarCategory Category { get; set; }
 
     [BsonIgnoreIfNull]

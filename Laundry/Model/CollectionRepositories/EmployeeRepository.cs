@@ -33,12 +33,12 @@ namespace Model.DatabaseClients
   Username: ""$Username"",
   PassportSerial:""$PassportSerial"",
   PassportDistributor : ""$PassportDistributor"",
+  IsDarkTheme: '$IsDarkTheme',
   OrdersCount :{
     $add:[
       {$size : ""$Orders""}
       ]
   },
-
   OrdersPrice : {$sum:'$Orders.Price'}
 }";
 

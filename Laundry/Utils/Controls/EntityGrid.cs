@@ -21,6 +21,12 @@ using NPOI.XSSF.UserModel;
 
 namespace Laundry.Utils.Controls
 {
+  /// <summary>
+  /// Интерфейс таблицы с сущностями
+  /// Является пагинируемой (наследует IPaginable)
+  /// Ковариантен
+  /// </summary>
+  /// <typeparam name="TEntity">Тип сущности</typeparam>
   public interface IEntityGrid<out TEntity> : IPaginable where TEntity : RepositoryElement
   {
     IReadOnlyList<TEntity> Entities { get; }
@@ -35,6 +41,12 @@ namespace Laundry.Utils.Controls
     void Refresh();
   }
 
+  /// <summary>
+  /// Базовый класс таблицы с сущностями
+  /// </summary>
+  /// <typeparam name="TEntity">Тип сущности</typeparam>
+  /// <typeparam name="TRepository">Тип repository для работы с данной сущностью</typeparam>
+  /// <typeparam name="TCard">Тип карточки, показывающей информацию о данной сущности</typeparam>
   public abstract class EntityGrid<TEntity, TRepository, TCard> : PropertyChangedBase, IEntityGrid<TEntity>
     where TEntity : RepositoryElement
     where TRepository : Repository<TEntity>
@@ -75,7 +87,8 @@ namespace Laundry.Utils.Controls
     public string SearchString { get; set; }
 
     protected EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
-      DeleteDialogViewModel removeDialog, Screens editScreen, Visibilities visibilities = null, string entityName = "объекта",
+      DeleteDialogViewModel removeDialog, Screens editScreen, Visibilities visibilities = null,
+      string entityName = "объекта",
       bool displaySelectColumn = true)
     {
       this._card = card;
@@ -213,7 +226,7 @@ namespace Laundry.Utils.Controls
 
       builder.Remove(builder.Length - 1, 1);
       builder.Append(Environment.NewLine);
-      
+
 
       foreach (var entity in entities)
       {
@@ -247,10 +260,11 @@ namespace Laundry.Utils.Controls
           //value = value.Replace(@"""", @"");
           builder.Append($@"{value}; ");
         }
+
         builder.Remove(builder.Length - 1, 1);
         builder.Append(Environment.NewLine);
       }
-      
+
       var dialog = new SaveFileDialog
       {
         InitialDirectory = @"~/Documents",

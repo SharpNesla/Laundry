@@ -32,6 +32,22 @@ namespace Model.CollectionRepositories
       return basee;
     }
 
+    public override IReadOnlyList<Order> GetBySearchString(string searchString, FilterDefinition<Order> filter, int offset = 0, int capLimit = 10)
+    {
+      var basee = base.GetBySearchString(searchString, filter, offset, capLimit);
+
+      foreach (var order in basee)
+      {
+        foreach (var instance in order.Instances)
+        {
+          instance.ClothKindObj = Model.ClothKinds.GetById(instance.ClothKind);
+        }
+
+      }
+
+      return basee;
+    }
+
     public override Order GetById(long id)
     {
       var order = base.GetById(id);
@@ -229,22 +245,7 @@ namespace Model.CollectionRepositories
     {
       return Model.Clients.GetById(order.ClientId);
     }
-
-    public long GetForEmployeeCount(Employee employee)
-    {
-      var filter = Builders<Order>.Filter.And(
-        Builders<Order>.Filter.Exists(nameof(Order.DeletionDate), false),
-        Builders<Order>.Filter.Or(
-          Builders<Order>.Filter.Eq(nameof(Order.ObtainerId), employee.Id),
-          Builders<Order>.Filter.Eq(nameof(Order.InCourierId), employee.Id),
-          Builders<Order>.Filter.Eq(nameof(Order.WasherCourierId), employee.Id),
-          Builders<Order>.Filter.Eq(nameof(Order.OutCourierId), employee.Id),
-          Builders<Order>.Filter.Eq(nameof(Order.DistributerId), employee.Id)
-        )
-      );
-      return Collection.CountDocuments(filter);
-    }
-
+    
     public IReadOnlyList<AggregationResult> AggregateOrders(ChartTime time, FilterDefinition<Order> filter = null)
     {
       var filters = Builders<Order>.Filter.And(
@@ -363,6 +364,5 @@ namespace Model.CollectionRepositories
         Collection.UpdateOne(x => x.Id == order.Id, Builders<Order>.Update.Set(x => x.Status, status));
       }
     }
-
   }
 }

@@ -10,6 +10,7 @@ using System.Windows.Data;
 
 namespace Laundry.Utils.Converters
 {
+  
   public class BoolRowDetailsVizConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -24,28 +25,12 @@ namespace Laundry.Utils.Converters
       throw new NotImplementedException();
     }
   }
-  public class BindingProxy : Freezable
-  {
-    #region Overrides of Freezable
 
-    protected override Freezable CreateInstanceCore()
-    {
-      return new BindingProxy();
-    }
-
-    #endregion
-
-    public object Data
-    {
-      get { return (object)GetValue(DataProperty); }
-      set { SetValue(DataProperty, value); }
-    }
-
-    public static readonly DependencyProperty DataProperty =
-      DependencyProperty.Register("Data", typeof(object),
-        typeof(BindingProxy));
-  }
-
+  /// <summary>
+  /// Конвертер для преобразование булевых значений в перечисление Visibility,
+  /// Часто используется для отсекания областей видимости пользователей на формах
+  /// Соответствие true - Visible, false - Collapsed
+  /// </summary>
   class BoolVisibilityConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -61,6 +46,9 @@ namespace Laundry.Utils.Converters
     }
   }
 
+  /// <summary>
+  /// Конвертер, аналогичный предыдущему, но инвертирующий булево значение
+  /// </summary>
   class BoolNotVisibilityConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

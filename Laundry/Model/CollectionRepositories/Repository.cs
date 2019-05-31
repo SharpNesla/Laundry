@@ -128,6 +128,7 @@ namespace Model.CollectionRepositories
         .Match(filterdef)
         .AppendStage<BsonDocument>(addfields)
         .Match(Builders<BsonDocument>.Filter.Regex(nameof(RepositoryElement.Signature), regex))
+        .Project<BsonDocument>(Builders<BsonDocument>.Projection.Exclude(nameof(RepositoryElement.Signature)))
         .As<T>();
     }
 

@@ -14,6 +14,7 @@ namespace Model.CollectionRepositories
     public SubsidiaryRepository(IModel model, IMongoCollection<Subsidiary> collection) : base(model, collection)
     {
     }
+
     /// <summary>
     /// Метод, получающий данные по аналитике филиалов
     /// </summary>

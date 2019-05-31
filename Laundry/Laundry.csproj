@@ -198,9 +198,11 @@
     <Compile Include="Utils\Controls\SubsidiaryGrid.xaml.cs">
       <DependentUpon>SubsidiaryGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Converters\BindingProxy.cs" />
     <Compile Include="Utils\Converters\BoolNotConverter.cs" />
     <Compile Include="Utils\Converters\BoolVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\EnumBooleanConverter.cs" />
+    <Compile Include="Utils\Converters\EnumerationExtension.cs" />
     <Compile Include="Utils\Converters\LevelToMargin.cs" />
     <Compile Include="Utils\Converters\MeasureKindConverter.cs" />
     <Compile Include="Utils\DialogHostExtensions.cs" />

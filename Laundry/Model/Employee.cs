@@ -14,8 +14,7 @@ namespace Model
     [Description("Приёмщик")] Advisor,
     [Description("Водитель")] Driver
   }
-
-  [BsonIgnoreExtraElements]
+  
   public class Employee : Person
   {
     public EmployeeProfession Profession { get; set; }
@@ -36,8 +35,7 @@ namespace Model
 
     [BsonIgnoreIfNull]
     public string Comment { get; set; }
-
-    [BsonIgnore]
+    
     public override string Signature
     {
       get { return $"{this.Id} {this.Name} {this.Surname}"; }

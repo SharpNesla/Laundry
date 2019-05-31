@@ -7,7 +7,6 @@ using PropertyChanged;
 
 namespace Model
 {
-  [BsonIgnoreExtraElements]
   public class Client : Person
   {
     [BsonIgnoreIfDefault]
@@ -15,17 +14,15 @@ namespace Model
 
     [BsonIgnoreIfNull]
     public string Comment { get; set; }
-    
+
     public bool IsCorporative { get; set; }
 
-    [BsonIgnoreIfNull]
-    [BsonElement("OrdersCount")]
+    [BsonIgnoreIfNull] [BsonElement("OrdersCount")]
     internal long? OrdersCountImpl;
 
-    [BsonIgnoreIfNull]
-    [BsonElement("OrdersPrice")]
+    [BsonIgnoreIfNull] [BsonElement("OrdersPrice")]
     internal long? OrdersPriceImpl;
-    
+
     [BsonIgnore]
     public long OrdersCount => OrdersCountImpl ?? 0;
 

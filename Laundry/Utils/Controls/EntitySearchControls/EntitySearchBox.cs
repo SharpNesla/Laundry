@@ -24,8 +24,9 @@ namespace Laundry.Utils.Controls.EntitySearchControls
     where TEntity : RepositoryElement
     where TRepository : Repository<TEntity>
   {
-    private TEntity _selectedEntity;
     protected readonly TRepository Repository;
+
+    private TEntity _selectedEntity;
     private readonly bool _isRequired;
     private string _entityText;
     private FilterDefinition<TEntity> _filter;

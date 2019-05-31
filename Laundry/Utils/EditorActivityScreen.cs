@@ -11,6 +11,11 @@ using PropertyChanged;
 
 namespace Laundry.Utils
 {
+  /// <summary>
+  /// Базовый класс экрана-редактора сущности
+  /// </summary>
+  /// <typeparam name="TRepository">Тип repository сущнсоти</typeparam>
+  /// <typeparam name="TEntity">Тип сущности</typeparam>
   public class EditorScreen<TRepository, TEntity> : ActivityScreen, IHandle<TEntity>
     where TEntity : RepositoryElement, new()
     where TRepository : Repository<TEntity>
@@ -68,6 +73,12 @@ namespace Laundry.Utils
       ChangeApplicationScreen(Screens.Context);
     }
 
+    /// <summary>
+    /// Производит UpdateSource всех textbox и combobox
+    /// в передаваемой view для обновления валидаций на полях
+    /// и проверяет их на валидность
+    /// </summary>
+    /// <param name="view"></param>
     public virtual void ApplyChanges(DependencyObject view)
     {
       var tree = FindVisualChildren<TextBox>(view);
@@ -101,7 +112,13 @@ namespace Laundry.Utils
 
       this.ApplyChanges();
     }
-
+    /// <summary>
+    /// Метод, позволяющий получить всех детей данного
+    /// элемента в визуальном дереве элементов View
+    /// </summary>
+    /// <typeparam name="T">Тип отбираемого контрола</typeparam>
+    /// <param name="depObj">View или её элемент</param>
+    /// <returns>Перечислимое всех детей данного элемент</returns>
     public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
     {
       if (depObj != null)

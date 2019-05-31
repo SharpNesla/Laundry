@@ -17,7 +17,7 @@ using MaterialDesignThemes.Wpf;
 namespace Laundry.Utils.Controls
 {
   /// <summary>
-  /// Interaction logic for DrawerItem.xaml
+  /// Контрол, представляющий из себя элемент списка в drawer'е с иконкой и подписью
   /// </summary>
   public partial class DrawerItem : ListBoxItem
   {

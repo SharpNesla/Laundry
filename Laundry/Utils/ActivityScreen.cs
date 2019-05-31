@@ -14,24 +14,25 @@ using Laundry.Views;
 namespace Laundry.Utils
 {
   /// <summary>
-  /// Базовый класс для работы с экранами в прачечной
+  /// Базовый класс для работы с экранами
   /// </summary>
   public abstract class ActivityScreen : Screen
   {
     public IEventAggregator EventAggregator { get; private set; }
     public IModel Model { get; private set; }
-    
+
 
     public Visibilities Visibilities { get; private set; }
-    public ActivityScreen Context { get; set; }  
+    public ActivityScreen Context { get; set; }
 
     protected ActivityScreen(IEventAggregator aggregator, IModel model)
     {
       this.EventAggregator = aggregator;
       this.Model = model;
-      
+
       this.Visibilities = new Visibilities(model);
     }
+
     /// <summary>
     /// Смена экрана приложения
     /// </summary>
@@ -51,6 +52,7 @@ namespace Laundry.Utils
     {
       if (button.ContextMenu != null) button.ContextMenu.IsOpen = true;
     }
+
     public void RaiseActivated()
     {
       this.OnActivate();
