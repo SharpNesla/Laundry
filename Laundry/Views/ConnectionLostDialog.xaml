@@ -5,10 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Laundry.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" Background="{StaticResource MaterialDesignPaper}" >
-  <StackPanel>
-    <TextBlock Text="Потеряно соединение с базой данных"></TextBlock>
-    <Button Name="Accept" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-            Style="{StaticResource MaterialDesignFlatButton}" Content="ПРИНЯТЬ" />
-  </StackPanel>
+             xmlns:cal="http://www.caliburnproject.org"
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="14"
+             FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+             mc:Ignorable="d"  Background="{StaticResource MaterialDesignPaper}">
+    <DockPanel Width="400">
+        <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid"
+                                  Padding="24,20,24,20">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                    <materialDesign:PackIcon Kind="Error" VerticalAlignment="Center" Height="24" Width="24" />
+                    <TextBlock
+                        Style="{StaticResource MaterialDesignTitleTextBlock}"
+                        VerticalAlignment="Center"
+                        Margin="8 0 0 0" Text="Потеряно соединение с сервером" />
+                </StackPanel>
+
+            </DockPanel>
+        </materialDesign:ColorZone>
+        <Button  Name="Remove" DockPanel.Dock="Left" MaxWidth="132"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Style="{StaticResource MaterialDesignFlatButton}" Margin="20">
+            Принять
+        </Button>
+    </DockPanel>
 </UserControl>

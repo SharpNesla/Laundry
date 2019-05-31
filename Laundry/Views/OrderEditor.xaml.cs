@@ -18,11 +18,16 @@ using PropertyChanged;
 
 namespace Laundry.Views
 {
+  /// <inheritdoc cref="EditorScreen{TRepository, TEntity}" />
   /// <summary>
-  /// Interaction logic for OrderEditor.xaml
+  /// View-модель редактирования заказа
   /// </summary>
   public class OrderEditorViewModel : EditorScreen<OrderRepository, Order>, IHandle<Client>
   {
+    /// <inheritdoc />
+    /// <summary>
+    /// 
+    /// </summary>
     public override string EditorTitle
     {
       get
@@ -62,6 +67,8 @@ namespace Laundry.Views
     public ClothDataGridViewModel ClothInstancesGrid { get; set; }
     public PaginatorViewModel Paginator { get; set; }
 
+    #region SearchView-ы работников для создания связей с заказом
+
     public EmployeeSearchViewModel ObtainerCombo { get; set; }
     public ClientSearchViewModel CorpObtainerCombo { get; set; }
     public EmployeeSearchViewModel InCourierCombo { get; set; }
@@ -69,6 +76,8 @@ namespace Laundry.Views
     public EmployeeSearchViewModel OutCourierCombo { get; set; }
     public EmployeeSearchViewModel DistributerCombo { get; set; }
     public ClientSearchViewModel CorpDistributerCombo { get; set; }
+
+    #endregion
 
     public OrderEditorViewModel(IEventAggregator aggregator, IModel model, ClothDataGridViewModel clothGrid,
       PaginatorViewModel paginator)
@@ -125,6 +134,9 @@ namespace Laundry.Views
       #endregion
     }
 
+    /// <summary>
+    /// Добавить одежду
+    /// </summary>
     public void AddCloth()
     {
       this.ClothInstancesGrid.Add();
@@ -136,7 +148,7 @@ namespace Laundry.Views
       this.NotifyOfPropertyChange(nameof(Price));
     }
 
-
+    /// <inheritdoc />
     public override void Handle(Order message)
     {
       base.Handle(message);
@@ -164,6 +176,10 @@ namespace Laundry.Views
       OutCourierCombo.SelectedEntity = Model.Employees.GetById(message.OutCourierId);
     }
 
+    /// <summary>
+    /// Обработчик посыла клиента в редактор
+    /// </summary>
+    /// <param name="message"></param>
     public void Handle(Client message)
     {
       this.ClientCombo.SelectedEntity = Model.Clients.GetById(message.Id);
@@ -204,15 +220,12 @@ namespace Laundry.Views
       };
     }
 
-    public override void ApplyChanges()
-    {
-      base.ApplyChanges();
-      if (IsNew)
-      {
-        this.WriteDocumentation();
-      }
-    }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="document"></param>
+    /// <param name="order"></param>
+    /// <returns></returns>
     public virtual Document PrepareDocument(XWPFDocument document, Order order)
     {
       foreach (var paragraph in document.Paragraphs)

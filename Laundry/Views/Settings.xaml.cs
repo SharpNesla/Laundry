@@ -18,13 +18,18 @@ using MaterialDesignThemes.Wpf;
 using Laundry.Utils;
 namespace Laundry.Views
 {
+  /// <inheritdoc />
   /// <summary>
-  /// Interaction logic for Settings.xaml
+  /// View-model настроек
+  /// Содержит в себе настройки темы (светлая/тёмная)
   /// </summary>
   public class SettingsViewModel : DrawerActivityScreen
   {
     private readonly IShell _shell;
-
+    
+    /// <summary>
+    /// Своство, привязанное к ToggleButton, определяющее тему (задаётся и читается из shell'а)
+    /// </summary>
     public bool IsChecked
     {
       get { return _shell.IsDarkTheme; }

@@ -91,6 +91,9 @@ namespace Laundry.Views.Actions
       this.Repository.SetOrdersStatus(this.OrderGrid.SelectedEntities, _changingStatus);
     }
 
+    /// <summary>
+    /// Запись документов для выбранных заказов
+    /// </summary>
     public void WriteDocumentation()
     {
       if (string.IsNullOrEmpty(_documentName))
@@ -181,6 +184,10 @@ namespace Laundry.Views.Actions
       return matchingTables;
     }
 
+    /// <summary>
+    /// Запись документа для заказа
+    /// </summary>
+    /// <param name="order">Заказ</param>
     private void WriteDocumentation(Order order)
     {
       XWPFDocument document;

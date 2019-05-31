@@ -19,8 +19,10 @@ using Laundry.Utils;
 
 namespace Laundry.Views
 {
+  
+  /// <inheritdoc />
   /// <summary>
-  /// Interaction logic for ClothEditor.xaml
+  /// Редактор вида одежды
   /// </summary>
   public class ClothKindEditorViewModel : EditorScreen<ClothKindRepository, ClothKind>
   {
@@ -41,6 +43,9 @@ namespace Laundry.Views
       }
     }
 
+    /// <summary>
+    /// Перегрузка применения изменений (для закрытия )
+    /// </summary>
     public override void ApplyChanges()
     {
       if (IsNew)

@@ -74,7 +74,6 @@ namespace Laundry.Views
     private void ChangeEntity(IChartable<RepositoryElement> repository, string elementsName)
     {
       Paginator.CurrentPage = 1;
-      Paginator.ClearPaginable();
       Paginator.RegisterPaginable(repository);
       Paginator.ElementsName = elementsName;
       

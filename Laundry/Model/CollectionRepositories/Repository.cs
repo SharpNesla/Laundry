@@ -27,6 +27,12 @@ namespace Model.CollectionRepositories
       this.Model = model;
     }
 
+    /// <summary>
+    /// Базовая цепочка агрегации лля построения проекции сущности из базы данных
+    /// </summary>
+    /// <param name="includeDeleted">Флаг, включающий удалёныые сущности из БД</param>
+    /// <param name="filter">Фильтр</param>
+    /// <returns></returns>
     protected virtual IAggregateFluent<T> GetAggregationFluent(bool includeDeleted = false,
       FilterDefinition<T> filter = null)
     {
@@ -89,9 +95,16 @@ namespace Model.CollectionRepositories
         return 0;
       }
     }
-
+    /// <summary>
+    /// Построение цепочки поиска по поисковой строке
+    /// </summary>
+    /// <param name="searchString"> </param>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     protected IAggregateFluent<T> GetBySearchStringFluent(string searchString, FilterDefinition<T> filter)
     {
+      //Построение регулярного выражения
+
       var searchChunks = searchString.Split(' ');
 
       var regex = @"^";
@@ -117,6 +130,10 @@ namespace Model.CollectionRepositories
           bsonArray.Add(" ");
         }
       }
+
+      //Цепочка агрегации, добавляющая поле,
+      //содержащее всю поисковую информацию
+      //производится отбор и исключение данного поля из проекции
 
       var addfields = new BsonDocument("$addFields",
         new BsonDocument("Signature",

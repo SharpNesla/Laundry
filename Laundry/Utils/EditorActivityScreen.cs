@@ -23,9 +23,15 @@ namespace Laundry.Utils
     [AlsoNotifyFor(nameof(EditorTitle))]
     public bool IsNew { get; set; }
 
+    /// <summary>
+    /// Создаваемая или редактируемая сущность
+    /// </summary>
     [DoNotNotify]
     public TEntity Entity { get; set; }
 
+    /// <summary>
+    /// Динамический заголовок окна, включающий в себя Id
+    /// </summary>
     public virtual string EditorTitle
     {
       get { return !IsNew ? $"Редактирование {EntityName} №{Entity.Id}" : $"Редактирование нового {EntityName}"; }
@@ -33,6 +39,9 @@ namespace Laundry.Utils
 
     protected readonly string EntityName;
 
+    /// <summary>
+    /// Repository с сущностью
+    /// </summary>
     protected TRepository EntityRepository { get; set; }
 
     public EditorScreen(IEventAggregator aggregator, IModel model, TRepository entityRepo,
@@ -47,11 +56,15 @@ namespace Laundry.Utils
       this.Entity = new TEntity();
     }
 
+    /// <summary>
+    /// Отмена и переход на предыдущий экран
+    /// </summary>
     public virtual void Discard()
     {
       ChangeApplicationScreen(Screens.Context);
     }
 
+    /// <inheritdoc />
     public virtual void Handle(TEntity message)
     {
       this.Entity = this.EntityRepository.GetById(message.Id);
@@ -59,6 +72,10 @@ namespace Laundry.Utils
       this.EventAggregator.Unsubscribe(this);
     }
 
+    /// <summary>
+    /// Применить изменения или добавить сущность
+    /// в базу данных
+    /// </summary>
     public virtual void ApplyChanges()
     {
       if (IsNew)
@@ -112,6 +129,7 @@ namespace Laundry.Utils
 
       this.ApplyChanges();
     }
+
     /// <summary>
     /// Метод, позволяющий получить всех детей данного
     /// элемента в визуальном дереве элементов View

@@ -41,6 +41,7 @@ namespace Laundry.Utils.Controls
     void Refresh();
   }
 
+  /// <inheritdoc cref="IEntityGrid{TEntity}" />
   /// <summary>
   /// Базовый класс таблицы с сущностями
   /// </summary>
@@ -73,19 +74,40 @@ namespace Laundry.Utils.Controls
 
     protected readonly DeleteDialogViewModel RemoveDialog;
 
+    /// <summary>
+    /// Базовый фильтр для таблицы, необходим для реализации 
+    /// </summary>
     protected FilterDefinition<TEntity> BaseFilter { get; private set; }
+
     public TRepository Repo { get; }
     public bool IsDisplaySubtotals { get; set; }
     public Visibilities Visibilities { get; }
 
     public virtual string[] TableSheetHeader => new[] {"№"};
     public virtual string TableSheetName => "Объекты";
+
+    /// <summary>
+    /// Св-во, к которому привязано состояние панели
+    /// фильтров (скрыта или показана)
+    /// </summary>
     public bool IsSearchDrawerOpened { get; set; }
 
     public bool DisplaySelectionColumn { get; set; }
-
+    
     public string SearchString { get; set; }
 
+    /// <summary>
+    /// Конструктор, принимающий зависимости и параметры,
+    /// определяющее поведение таблицы (часто задаются в наследниках)
+    /// </summary>
+    /// <param name="eventAggregator"></param>
+    /// <param name="card"></param>
+    /// <param name="repo">Reposutory сущности</param>
+    /// <param name="removeDialog"></param>
+    /// <param name="editScreen">Значение перечисления экрана-редактора сущности</param>
+    /// <param name="visibilities"></param>
+    /// <param name="entityName">Название сущности (используется для экспорта в таблицу)</param>
+    /// <param name="displaySelectColumn">Показывать столбец выбора с флажками</param>
     protected EntityGrid(IEventAggregator eventAggregator, TCard card, TRepository repo,
       DeleteDialogViewModel removeDialog, Screens editScreen, Visibilities visibilities = null,
       string entityName = "объекта",
@@ -117,6 +139,12 @@ namespace Laundry.Utils.Controls
       }
     }
 
+    /// <inheritdoc />
+    /// <summary>
+    /// Обновить элементы таблицы согласно текущей странице
+    /// </summary>
+    /// <param name="page">Текущая страница</param>
+    /// <param name="elements">Элементов на странице</param>
     public virtual void Refresh(int page, int elements)
     {
       if (!string.IsNullOrEmpty(SearchString))
@@ -131,6 +159,9 @@ namespace Laundry.Utils.Controls
 
     public event Action StateChanged;
 
+    /// <summary>
+    /// Показать карточку для выбранного в таблице объекта
+    /// </summary>
     public async void ShowInfoCard()
     {
       if (SelectedEntity != null)
@@ -141,6 +172,10 @@ namespace Laundry.Utils.Controls
       }
     }
 
+    /// <summary>
+    /// Показать карточку для сущности
+    /// </summary>
+    /// <param name="context">сущность</param>
     public async void ShowInfoCard(TEntity context)
     {
       if (context != null)
@@ -183,6 +218,12 @@ namespace Laundry.Utils.Controls
       RaiseStateChanged();
     }
 
+    /// <summary>
+    /// Подготовка XSSF книги excel (xlsx)
+    /// Заполнение, расставление автофильтров, автоподстройка ширины
+    /// </summary>
+    /// <param name="workbook"></param>
+    /// <returns></returns>
     protected virtual XSSFWorkbook PrepareWorkBook(XSSFWorkbook workbook)
     {
       var sheet = workbook.CreateSheet();
@@ -209,16 +250,40 @@ namespace Laundry.Utils.Controls
       }
 
       sheet.SetAutoFilter(new CellRangeAddress(0, 0, 0, TableSheetHeader.Length - 1));
+
       return workbook;
     }
 
     public void ExportToCSV()
+    {
+      var builder = MakeCSVStringFromXSSF();
+      
+      var dialog = new SaveFileDialog
+      {
+        InitialDirectory = @"~/Documents",
+        Title = $"Путь к экспортируемой таблице {EntityName}",
+        AddExtension = true,
+        Filter = "Файлы CSV (*.csv)|*.csv|Все остальные файлы (*.*)|*.*"
+      };
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        if (!File.Exists(dialog.FileName))
+        {
+          File.Delete(dialog.FileName);
+        }
+
+        File.WriteAllText(dialog.FileName, builder, Encoding.UTF8);
+      }
+    }
+
+    private string MakeCSVStringFromXSSF()
     {
       var builder = new StringBuilder();
 
       var entities = this.Repo.Get(0, int.MaxValue, Filter);
       var workbook = new XSSFWorkbook();
       var sheet = workbook.CreateSheet();
+
       foreach (var header in this.TableSheetHeader)
       {
         builder.Append($"{header};");
@@ -265,22 +330,7 @@ namespace Laundry.Utils.Controls
         builder.Append(Environment.NewLine);
       }
 
-      var dialog = new SaveFileDialog
-      {
-        InitialDirectory = @"~/Documents",
-        Title = $"Путь к экспортируемой таблице {EntityName}",
-        AddExtension = true,
-        Filter = "Файлы CSV (*.csv)|*.csv|Все остальные файлы (*.*)|*.*"
-      };
-      if (dialog.ShowDialog() == DialogResult.OK)
-      {
-        if (!File.Exists(dialog.FileName))
-        {
-          File.Delete(dialog.FileName);
-        }
-
-        File.WriteAllText(dialog.FileName, builder.ToString(), Encoding.UTF8);
-      }
+      return builder.ToString();
     }
 
     protected virtual IRow PrepareEntityRow(ISheet sheet, TEntity entity)
@@ -335,7 +385,7 @@ namespace Laundry.Utils.Controls
       }
     }
 
-    public object EntityName { get; set; }
+    public string EntityName { get; set; }
 
     public void RaiseStateChanged()
     {

@@ -30,12 +30,14 @@ namespace Laundry.Utils.Controls
     /// Общее количество сущностей в пагинируемом объекте
     /// </summary>
     long Count { get; }
+
     /// <summary>
     /// Обновление сущности на конкретную страницу с количество элементов
     /// </summary>
     /// <param name="page">Страница</param>
     /// <param name="elements">Количество элементов на страницу</param>
     void Refresh(int page, int elements);
+
     /// <summary>
     /// Внутреннее событие, вызываемое из сущности
     ///  при изменении состояния оно (как правило CRUD-действия)
@@ -43,6 +45,7 @@ namespace Laundry.Utils.Controls
     event Action StateChanged;
   }
 
+  /// <inheritdoc />
   /// <summary>
   /// View-model пагинатора, способного пагинровать любую IPaginable
   /// </summary>
@@ -72,7 +75,6 @@ namespace Laundry.Utils.Controls
       {
         _count = value;
         CheckButtons();
-        this.Changed?.Invoke(this.CurrentPage - 1, this.ElementsPerPage);
       }
     }
 
@@ -84,10 +86,8 @@ namespace Laundry.Utils.Controls
         {
           return (int) Math.Ceiling((double) Count / ElementsPerPage);
         }
-        else
-        {
-          return 1;
-        }
+
+        return 1;
       }
     }
 
@@ -117,6 +117,9 @@ namespace Laundry.Utils.Controls
 
     public event Action<int, int> Changed;
 
+    /// <summary>
+    /// Переключить на страницу вперёд
+    /// </summary>
     public void MoveNext()
     {
       this.CurrentPage++;
@@ -127,20 +130,35 @@ namespace Laundry.Utils.Controls
       this.CurrentPage = 1;
     }
 
+    /// <summary>
+    /// Переключить на страницу назад
+    /// </summary>
     public void MovePrevious()
     {
       this.CurrentPage--;
     }
 
+    /// <summary>
+    /// Проверить кнопки и заблокировать в случае
+    /// нахождения на первой или последней странице
+    /// </summary>
     private void CheckButtons()
     {
       IsMovePreviousEnabled = CurrentPage != 1;
       IsMoveNextEnabled = CurrentPage != MaxPages;
     }
 
+    /// <summary>
+    /// Привязать пагинируемую сущность (IPaginable)
+    /// к пагинатору
+    /// </summary>
+    /// <param name="paginable">Пагинируемая сущность</param>
+    /// <param name="refreshOnRegister">Флаг </param>
     public void RegisterPaginable(IPaginable paginable, bool refreshOnRegister = true)
     {
+      this.ClearPaginable();
       this.Paginable = paginable;
+
       this.Paginable.StateChanged += RefreshPaginable;
       this.Changed += Paginable.Refresh;
       if (refreshOnRegister)
@@ -151,9 +169,14 @@ namespace Laundry.Utils.Controls
 
     public void ClearPaginable()
     {
+      var paginable = this.Paginable;
+      if (paginable != null) paginable.StateChanged -= RefreshPaginable;
       this.Paginable = null;
     }
 
+    /// <summary>
+    /// Обновить пагинируемую сущность на текущую страницу
+    /// </summary>
     public void RefreshPaginable()
     {
       this.Count = Paginable.Count;
@@ -161,6 +184,7 @@ namespace Laundry.Utils.Controls
       {
         this.CurrentPage = 1;
       }
+
       Paginable.Refresh(this.CurrentPage - 1, this.ElementsPerPage);
     }
 

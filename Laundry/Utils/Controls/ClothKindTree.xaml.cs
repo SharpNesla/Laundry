@@ -169,6 +169,12 @@ namespace Laundry.Utils.Controls
       return row;
     }
 
+    /// <summary>
+    /// Свернуть или развернуть поддерево вида одежды
+    /// </summary>
+    /// <param name="button">ToggleButton данного вида одежды</param>
+    /// <param name="clothKind">Вид одежды</param>
+    /// <param name="view"></param>
     public void ShowHideDetails(ToggleButton button, ClothKind clothKind, ClothKindTreeView view)
     {
       if (button.IsChecked.Value)
@@ -188,6 +194,11 @@ namespace Laundry.Utils.Controls
       }
     }
 
+    /// <summary>
+    /// Удалить всех детей данного элемента из таблицы
+    /// (свернуть всё поддерево)
+    /// </summary>
+    /// <param name="clothKind">Вид одежды</param>
     public void RemoveChildren(ClothKind clothKind)
     {
       if (clothKind.HasChildren && clothKind.Children != null)
@@ -199,10 +210,24 @@ namespace Laundry.Utils.Controls
         }
       }
     }
+    /// <summary>
+    /// Переопределение, не позволяющее удалить корень дерева
+    /// </summary>
+    public override void Remove()
+    {
+      if (this.SelectedEntity.Id != 0)
+      {
+        base.Remove();
+      }
+    }
 
-    public string AggregatedInstancesCount => Repo.GetAggregatedInstacesCount(Filter);
-    public double AggregatedPrice => Repo.GetAggregatedPrice(Filter);
+    
 
+    /// <summary>
+    /// Переопределение, обновляющее дерево вместе с табличным представлением
+    /// </summary>
+    /// <param name="page"></param>
+    /// <param name="elements"></param>
     public override void Refresh(int page, int elements)
     {
       base.Refresh(page, elements);
@@ -245,8 +270,12 @@ namespace Laundry.Utils.Controls
       }
     }
 
+    public string AggregatedInstancesCount => Repo.GetAggregatedInstacesCount(Filter);
+    public double AggregatedPrice => Repo.GetAggregatedPrice(Filter);
+
     public IReadOnlyList<AggregationResult> AggregationResults =>
       this.Repo.AggregateInstances(Time, Filter, GetDateFilters());
+
 
     public string[] Labels
     {

@@ -13,14 +13,22 @@ using Laundry.Views.Dashboards;
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for DashBoard.xaml
+  /// Мультидашборд - контейнер для дашбордов сотрудников
   /// </summary>
   public class DashBoardViewModel : ActivityScreen
   {
+    #region View-model'и дашбордов всех сотрудник
+
     private readonly WasherDashBoardViewModel _washerDashBoard;
     private readonly AdvisorDashBoardViewModel _advisorDashBoard;
     private readonly DirectorDashBoardViewModel _directorDashBoard;
     private readonly CourierDashBoardViewModel _courierDashBoard;
+
+    #endregion
+
+    /// <summary>
+    /// Текущий дашборд, который отображается на view
+    /// </summary>
     public DashBoardBase EmployeeDashBoard { get; set; }
 
     public DashBoardViewModel(IEventAggregator aggregator, IModel model,
@@ -33,6 +41,10 @@ namespace Laundry.Views
       _directorDashBoard = directorDashBoard;
       _courierDashBoard = courierDashBoard;
     }
+
+    /// <summary>
+    /// Отображение дашборда для текущего сотрудника при активации мультидашборда
+    /// </summary>
     protected override void OnActivate()
     {
       base.OnActivate();

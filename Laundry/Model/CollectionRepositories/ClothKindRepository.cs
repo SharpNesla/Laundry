@@ -7,6 +7,9 @@ using MongoDB.Driver;
 
 namespace Model.CollectionRepositories
 {
+  /// <summary>
+  /// Repository видов одежд
+  /// </summary>
   public class ClothKindRepository : Repository<ClothKind>
   {
     private static readonly BsonArray AggrStagesForChart = new BsonArray
@@ -202,6 +205,10 @@ namespace Model.CollectionRepositories
         .SortBy(x => x.Id);
     }
 
+    /// <summary>
+    /// Получить полное дерево всех видов одежды
+    /// </summary>
+    /// <returns></returns>
     public ClothKind GetFullTree()
     {
       var root = this.GetById(0);
@@ -209,6 +216,10 @@ namespace Model.CollectionRepositories
       return root;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="subroot"></param>
     private void FetchChildrenRecursively(ClothKind subroot)
     {
       FetchChildren(subroot);
