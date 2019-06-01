@@ -30,19 +30,36 @@ namespace Laundry.Views
     [Description("Виды одежды")] ClothKind
   }
 
+  /// <summary>
+  /// Форма аналитики заказов, филиалов, видов одежды
+  /// </summary>
   public class AnalyticsViewModel : DrawerActivityScreen
   {
+    #region Таблицы сущностей
+
     private readonly OrderDataGridViewModel _orderGrid;
     private readonly SubsidiaryGridViewModel _subsidiaryGrid;
     private readonly ClothKindTreeViewModel _clothKindGrid;
+
+    #endregion
+
     private AnalyticEntityType _entityType;
+
+    /// <summary>
+    /// Отображаемая таблица
+    /// </summary>
     public IChartable<RepositoryElement> EntityGrid { get; set; }
+
     public PaginatorViewModel Paginator { get; set; }
 
     public string SearchHintString { get; private set; }
-    
+
+    #region Флаги вкладок
+
     public bool IsGridChecked { get; set; }
     public bool IsChartChecked { get; set; }
+
+    #endregion
 
     public ChartTime ChartTime
     {
@@ -50,6 +67,9 @@ namespace Laundry.Views
       set { this.EntityGrid.Time = value; }
     }
 
+    /// <summary>
+    /// Свойство-переключатель текущей сущности
+    /// </summary>
     public AnalyticEntityType EntityType
     {
       get { return _entityType; }
@@ -71,16 +91,22 @@ namespace Laundry.Views
       }
     }
 
-    private void ChangeEntity(IChartable<RepositoryElement> repository, string elementsName)
+    /// <summary>
+    /// Смена текущей сущности на другую
+    /// </summary>
+    /// <param name="chartable">Chartable таблица</param>
+    /// <param name="elementsName">Название сущности</param>
+    private void ChangeEntity(IChartable<RepositoryElement> chartable, string elementsName)
     {
       Paginator.CurrentPage = 1;
-      Paginator.RegisterPaginable(repository);
+      Paginator.RegisterPaginable(chartable);
       Paginator.ElementsName = elementsName;
-      
+
       this.SearchHintString = $"Поиск {elementsName.ToLower()}";
 
-      this.EntityGrid = repository;
+      this.EntityGrid = chartable;
     }
+
 
     protected override void OnActivate()
     {
@@ -121,5 +147,9 @@ namespace Laundry.Views
       EntityGrid.ExportToExcel();
     }
 
+    public void ExportToCSV()
+    {
+      EntityGrid.ExportToExcel();
+    }
   }
 }

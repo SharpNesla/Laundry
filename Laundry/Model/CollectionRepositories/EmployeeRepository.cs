@@ -13,6 +13,9 @@ namespace Model.DatabaseClients
 {
   public class EmployeeRepository : Repository<Employee>
   {
+    /// <summary>
+    /// Определение проекции работника
+    /// </summary>
     private const string ProjectDefinition = @"{
   Name:""$Name"",
   Surname:""$Surname"",
@@ -45,7 +48,14 @@ namespace Model.DatabaseClients
   Password: '$Password'
 }";
 
+
     /// <inheritdoc />
+    /// <summary>
+    /// Переопределение цепочки для подсчёта стоимости всех заказов и их количества для hf,jnybrf
+    /// </summary>
+    /// <param name="includeDeleted"></param>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     protected override IAggregateFluent<Employee> GetAggregationFluent(bool includeDeleted = false,
       FilterDefinition<Employee> filter = null)
     {

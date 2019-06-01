@@ -12,7 +12,9 @@ namespace Laundry.Utils
   {
     ActivityScreen GetScreen(Screens screen);
   }
-
+  /// <summary>
+  /// Фабрика порождающая экраны приложения по значению перечесления из DI контейнера
+  /// </summary>
   class ScreenFactory : IScreenFactory
   {
     private readonly SimpleContainer _container;

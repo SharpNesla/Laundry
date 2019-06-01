@@ -13,22 +13,25 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Caliburn.Micro;
+using Laundry.Utils;
 
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for ConnectionLostDialogViewModel.xaml
+  /// Окно потери соединения
   /// </summary>
   public class ConnectionLostDialogViewModel : Screen
   {
-    public ConnectionLostDialogViewModel()
+    private readonly EventAggregator _aggregator;
+
+    public ConnectionLostDialogViewModel(EventAggregator aggregator)
     {
-      
+      _aggregator = aggregator;
     }
 
     public void Accept()
     {
-
+      this._aggregator.PublishOnUIThread(Screens.Login);
     }
   }
 }

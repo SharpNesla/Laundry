@@ -60,6 +60,11 @@ namespace Model.CollectionRepositories
       return order;
     }
 
+    /// <summary>
+    /// Подсчёт общего количества (шт/кг) вещей для всех заказов с учётом фильтров
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public string GetAggregatedInstacesCount(FilterDefinition<Order> filter)
     {
       var pipeline = new BsonArray
@@ -177,6 +182,11 @@ namespace Model.CollectionRepositories
       }
     }
 
+    /// <summary>
+    /// Подсчёт цены всех заказов с учётом фильтров
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public double GetAggregatedPrice(FilterDefinition<Order> filter)
     {
       var pipeline =

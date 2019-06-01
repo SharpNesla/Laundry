@@ -4,15 +4,17 @@ using Laundry.Views;
 using Model;
 using Caliburn.Micro;
 using Laundry.Utils.Controls.EntitySearchControls;
+using Laundry.Utils.Controls;
+using Laundry.Views.Cards;
+using Laundry.Views.Dashboards;
+using Laundry.Utils;
 
 namespace Laundry
 {
-  using Laundry.Utils.Controls;
-  using Laundry.Views.Actions;
-  using Laundry.Views.Cards;
-  using Laundry.Views.Dashboards;
-  using Utils;
-
+  
+  /// <summary>
+  /// Загрущчик приложения Caliburn.Micro
+  /// </summary>
   public class AppBootstrapper : BootstrapperBase
   {
     SimpleContainer container;
@@ -22,6 +24,9 @@ namespace Laundry
       Initialize();
     }
 
+    /// <summary>
+    /// Определение DI контейнера приложения и регистрация зависимостей в нём
+    /// </summary>
     protected override void Configure()
     {
       container = new SimpleContainer();
@@ -84,7 +89,6 @@ namespace Laundry
       
       //Non-screen views like dialog views
       
-      //container.Singleton<OrderCard>();
       container.PerRequest<PaginatorViewModel>();
       container.Singleton<Visibilities>();
       container.Singleton<DeleteDialogViewModel>();

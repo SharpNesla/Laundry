@@ -9,7 +9,7 @@ using PropertyChanged;
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for CarEditor.xaml
+  /// Редактор автомобиля, содержит в себе два грида с водителями и курьерами данного транспорта
   /// </summary>
   public class CarEditorViewModel : EditorScreen<Repository<Car>, Car>
   {

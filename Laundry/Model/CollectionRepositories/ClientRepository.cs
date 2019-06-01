@@ -12,7 +12,7 @@ namespace Model.DatabaseClients
 {
   public class ClientRepository : Repository<Client>
   {
-    #region Client ProjectDef string
+    #region Определение проекции для клиента
 
     private const string ClientProjectDefinition = @"
 {
@@ -34,6 +34,13 @@ namespace Model.DatabaseClients
 
     #endregion
 
+    /// <inheritdoc />
+    /// <summary>
+    /// Переопределение цепочки для подсчёта стоимости всех заказов и их количества для клиента
+    /// </summary>
+    /// <param name="includeDeleted"></param>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     protected override IAggregateFluent<Client> GetAggregationFluent(bool includeDeleted = false,
       FilterDefinition<Client> filter = null)
     {
@@ -42,11 +49,16 @@ namespace Model.DatabaseClients
         .Project<Client>(ClientProjectDefinition);
     }
 
+    //В базовый конструктор передаются критерии поиска клиента
     public ClientRepository(IModel model, IMongoCollection<Client> collection) : base(
       model, collection, new[] {nameof(Client.Name), nameof(Client.Surname), nameof(Client.Patronymic)})
     {
     }
 
+    /// <summary>
+    /// Очистка вычисляемых в запросах полей
+    /// </summary>
+    /// <param name="entity"></param>
     public override void Update(Client entity)
     {
       entity.OrdersCountImpl = null;

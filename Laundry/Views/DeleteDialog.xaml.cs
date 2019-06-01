@@ -18,11 +18,16 @@ using Laundry.Utils;
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for ShureQuestionDialog.xaml
+  /// Диалог удаления сущности в таблице
   /// </summary>
   public class DeleteDialogViewModel : Screen
   {
     public bool IsDelete { get; set; }
+
+    /// <summary>
+    /// Показать диалог удаления и вернуть соответствующее значение
+    /// </summary>
+    /// <returns></returns>
     public async Task<bool> AskQuestion()
     {
       await DialogHostExtensions.ShowCaliburnVM(this);

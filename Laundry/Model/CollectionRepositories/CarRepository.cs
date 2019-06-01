@@ -11,6 +11,7 @@ namespace Model.CollectionRepositories
 {
   public class CarRepository : Repository<Car>
   {
+    //В базовый конструктор передаются критерии поиска автомобиля
     public CarRepository(IModel model, IMongoCollection<Car> collection)
       : base(model, collection,
         new[]

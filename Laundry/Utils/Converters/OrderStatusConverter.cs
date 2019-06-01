@@ -9,6 +9,9 @@ using Model;
 
 namespace Laundry.Utils.Converters
 {
+  /// <summary>
+  /// Конвертер статуса заказа в строку
+  /// </summary>
   class OrderStatusConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

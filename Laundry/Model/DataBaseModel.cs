@@ -14,6 +14,10 @@ using MongoDB.Driver;
 
 namespace Model
 {
+
+  /// <summary>
+  /// Реализация модели, работающей с базой данных
+  /// </summary>
   class DataBaseModel : IModel
   {
     public Employee CurrentUser { get; set; }
@@ -37,7 +41,7 @@ namespace Model
     /// <param name="password">Пароль</param>
     public void Connect(string username, string password)
     {
-      //Получаем строку подключения 
+      //Получение строку подключения из ресурсов
       string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
       
       var fromConnectionString = MongoClientSettings.FromConnectionString(connectionString);
