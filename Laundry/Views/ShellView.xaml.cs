@@ -115,9 +115,6 @@ namespace Laundry
       this.Handle(Screens.Login);
     }
 
-    public void ChangeColorScheme()
-    {
-    }
 
     public bool IsDarkTheme
     {

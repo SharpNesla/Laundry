@@ -36,22 +36,7 @@
             VerticalAlignment="Center"
             Margin="16 0 0 0" Text="{Binding EditorTitle}" />
         </StackPanel>
-        <Button Grid.Row="0" Visibility="{Binding OrderChecked, Converter={StaticResource BoolVisibilityConverter}}"
-                Grid.Column="3" DockPanel.Dock="Right"
-                Style="{StaticResource MaterialDesignToolButton}"
-                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
-                cal:Message.Attach="ShowActivityMenu($source)">
-          <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
-          <Button.ContextMenu>
-            <ContextMenu>
-              <MenuItem Header="Экспортировать как">
-                <MenuItem Header="*.csv" />
-                <MenuItem Header="*.xlsx" cal:Message.Attach="ExportToExcel()" />
-              </MenuItem>
-              <MenuItem Header="Удалить выбраное" />
-            </ContextMenu>
-          </Button.ContextMenu>
-        </Button>
+
         <RadioButton
           Style="{StaticResource MaterialDesignTabRadioButton}"
           IsChecked="{Binding InfoChecked}" Height="42" Grid.Row="1"
