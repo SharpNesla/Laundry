@@ -30,15 +30,32 @@ namespace Laundry.Utils.Controls
   public interface IEntityGrid<out TEntity> : IPaginable where TEntity : RepositoryElement
   {
     IReadOnlyList<TEntity> Entities { get; }
+    
     TEntity SelectedEntity { get; }
 
     void ExportToCSV();
     void ExportToExcel();
+    
+    /// <summary>
+    /// Добавить элемент
+    /// </summary>
     void Add();
+
+    /// <summary>
+    /// Редактирование выделенного элемента
+    /// </summary>
     void Edit();
+
+    /// <summary>
+    /// Удаление выделенного элемента
+    /// </summary>
     void Remove();
+
+    /// <summary>
+    /// Удаление выделенную группу элементов
+    /// </summary>
     void RemoveSelectedGroup();
-    void Refresh();
+   
   }
 
   /// <inheritdoc cref="IEntityGrid{TEntity}" />
@@ -56,16 +73,27 @@ namespace Laundry.Utils.Controls
     private Card<TEntity> _card;
     protected readonly IEventAggregator EventAggregator;
     private Screens _editScreen;
+
+
     public virtual IReadOnlyList<TEntity> Entities { get; set; }
     public TEntity SelectedEntity { get; set; }
 
+    /// <summary>
+    /// Компактный режим отображения таблицы (в карточках, действиях и.т.п.)
+    /// </summary>
     public bool IsCompact { get; set; }
 
+    /// <summary>
+    /// Список выделенных сущностей
+    /// </summary>
     public IReadOnlyList<TEntity> SelectedEntities
     {
       get { return this.Entities.Where(x => x.IsSelected).ToList(); }
     }
-
+    /// <summary>
+    /// Переопределяемый в наследниках конечный фильтр
+    /// Используется для реализации панели филтров в интерфейсе
+    /// </summary>
     public virtual FilterDefinition<TEntity> Filter
     {
       get { return BaseFilter; }
@@ -75,7 +103,8 @@ namespace Laundry.Utils.Controls
     protected readonly DeleteDialogViewModel RemoveDialog;
 
     /// <summary>
-    /// Базовый фильтр для таблицы, необходим для реализации 
+    /// Базовый фильтр для таблицы, необходим для реализации специальных версий таблиц
+    /// Примеры: таблица заказов для определённого клиента, таблица работников филиала и.т.п.
     /// </summary>
     protected FilterDefinition<TEntity> BaseFilter { get; private set; }
 
@@ -186,18 +215,23 @@ namespace Laundry.Utils.Controls
       }
     }
 
+
+    /// <inheritdoc />
     public virtual void Add()
     {
       EventAggregator.PublishOnUIThread(_editScreen);
       StateChanged?.Invoke();
     }
 
+
+    /// <inheritdoc />
     public virtual void Edit()
     {
       EventAggregator.PublishOnUIThread(_editScreen);
       EventAggregator.PublishOnUIThread(SelectedEntity);
     }
 
+    
     public virtual async void Remove()
     {
       var isDelete = await RemoveDialog.AskQuestion();

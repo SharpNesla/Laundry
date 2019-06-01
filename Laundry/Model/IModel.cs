@@ -6,6 +6,9 @@ using Model.DatabaseClients;
 
 namespace Model
 {
+  /// <summary>
+  /// Интерфейс модели
+  /// </summary>
   public interface IModel
   {
     Employee CurrentUser { get; }

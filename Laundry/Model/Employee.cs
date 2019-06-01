@@ -55,5 +55,7 @@ namespace Model
     public long OrdersPrice => OrdersPriceImpl ?? 0;
 
     public bool IsDarkTheme { get; set; }
+
+    public string Password { get; set; }
   }
 }

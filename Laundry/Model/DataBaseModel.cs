@@ -37,6 +37,7 @@ namespace Model
     /// <param name="password">Пароль</param>
     public void Connect(string username, string password)
     {
+      //Получаем строку подключения 
       string connectionString = ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
       
       var fromConnectionString = MongoClientSettings.FromConnectionString(connectionString);

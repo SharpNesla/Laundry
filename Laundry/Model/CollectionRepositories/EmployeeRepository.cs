@@ -22,6 +22,7 @@ namespace Model.DatabaseClients
   Gender:""$Gender"",
   House:""$House"",
   City:""$City"",
+  Street: ""$Street"",
   Flat: ""$Flat"",
   ZipCode:""$ZipCode"",
   Comment:""$Comment"",
@@ -33,15 +34,18 @@ namespace Model.DatabaseClients
   Username: ""$Username"",
   PassportSerial:""$PassportSerial"",
   PassportDistributor : ""$PassportDistributor"",
+  PassportDistributorCode : ""$PassportDistributorCode""
   IsDarkTheme: '$IsDarkTheme',
   OrdersCount :{
     $add:[
       {$size : ""$Orders""}
       ]
   },
-  OrdersPrice : {$sum:'$Orders.Price'}
+  OrdersPrice : {$sum:'$Orders.Price'},
+  Password: '$Password'
 }";
 
+    /// <inheritdoc />
     protected override IAggregateFluent<Employee> GetAggregationFluent(bool includeDeleted = false,
       FilterDefinition<Employee> filter = null)
     {
@@ -94,6 +98,7 @@ namespace Model.DatabaseClients
 
     }
 
+    /// <inheritdoc />
     public override void Update(Employee entity)
     {
       entity.OrdersCountImpl = null;
@@ -131,13 +136,9 @@ namespace Model.DatabaseClients
     /// <returns></returns>
     private string GetPasswordHash(Employee employee)
     {
-      return this.Collection
-        .Aggregate()
-        .Match(x => x.Id == employee.Id)
-        .Project<BsonDocument>("{ Password:'$Password'} ")
-        .First()
-        .ToBsonDocument()["Password"].AsString;
+      return employee.Password;
     }
+
     /// <summary>
     /// Авторизоваться в системе и получть
     /// </summary>

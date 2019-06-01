@@ -17,7 +17,10 @@ namespace Model
     Female,
     Undefined
   }
-
+  
+  /// <summary>
+  /// Класс человека
+  /// </summary>
   public class Person : RepositoryElement
   {
     [BsonIgnoreIfNull]

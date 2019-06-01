@@ -26,7 +26,7 @@ namespace Laundry.Views
   {
     /// <inheritdoc />
     /// <summary>
-    /// 
+    /// Переопределение заголовка редактора (включает дату создания)
     /// </summary>
     public override string EditorTitle
     {
@@ -306,6 +306,9 @@ namespace Laundry.Views
       return matchingTables;
     }
 
+    /// <summary>
+    /// Экспортировать документ (квитанцию или договор)
+    /// </summary>
     public void WriteDocumentation()
     {
       var documentName = Entity.IsCorporative ? "Contract.docx" : "ObtainCheck.docx";
