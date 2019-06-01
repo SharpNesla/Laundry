@@ -24,16 +24,19 @@ using PropertyChanged;
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for ClientEditor.xaml
+  /// Редактор клиента
   /// </summary>
   public class ClientEditorViewModel : EditorScreen<ClientRepository, Client>
   {
+    /// <summary>
+    /// Отсечение видимости таблицы заказов для нового клиента
+    /// </summary>
     public bool IsOrdersEnabled
     {
       get { return !IsNew; }
     }
 
-    #region TabBindings
+    #region Флаги видимости вкладок
     
     public bool InfoChecked { get; set; }
     
@@ -62,12 +65,20 @@ namespace Laundry.Views
       Paginator.RefreshPaginable();
     }
 
+    /// <summary>
+    /// Обработчик добавления заказа
+    /// </summary>
     public void AddOrder(object sender, RoutedEventArgs e)
     {
       OrderDataGrid.Add();
       EventAggregator.BeginPublishOnUIThread(Entity);
     }
 
+    /// <summary>
+    /// При получении клиента обновляем фильтр таблицы заказов
+    /// И саму таблицу через Paginator
+    /// </summary>
+    /// <param name="client">Клиент</param>
     public override void Handle(Client client)
     {
       base.Handle(client);
@@ -76,16 +87,6 @@ namespace Laundry.Views
         Builders<Order>.Filter.Eq(nameof(Order.ClientId), client.Id)
       );
       Paginator.RefreshPaginable();
-    }
-
-    public void ApplyChanges(ClientEditorView view)
-    {
-      view.PhoneNumber.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-
-      if (!Validation.GetHasError(view.PhoneNumber))
-      {
-        base.ApplyChanges();
-      }
     }
   }
 }

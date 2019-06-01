@@ -9,7 +9,7 @@ using PropertyChanged;
 namespace Laundry
 {
   /// <summary>
-  /// Логика взаимодействия для ShellView.xaml
+  /// Главное окно приложения
   /// </summary>
   public class ShellViewModel : Conductor<ActivityScreen>, IShell, IHandle<Screens>, IHandle<DrawerState>
   {
@@ -26,11 +26,18 @@ namespace Laundry
     [AlsoNotifyFor(nameof(CurrentName))]
     public Employee CurrentEmployee { get; set; }
 
+    /// <summary>
+    /// Запись текущего DialogHost в статический класс расширения хоста
+    /// </summary>
+    /// <param name="host">DialogHost</param>
     public void HostLoaded(DialogHost host)
     {
       DialogHostExtensions.Current = host;
     }
 
+    /// <summary>
+    /// ФИО текущего работника
+    /// </summary>
     public string CurrentName
     {
       get
@@ -56,6 +63,10 @@ namespace Laundry
       model.ConnectionLost += OnConnectionLost;
     }
 
+    /// <summary>
+    /// Установка цветовой темы работника при входе
+    /// </summary>
+    /// <param name="obj"></param>
     private void OnConnected(Employee obj)
     {
       this.CurrentEmployee = obj;
@@ -80,6 +91,10 @@ namespace Laundry
       this.IsDrawerOpened = message == DrawerState.Opened;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
     public void Handle(Screens message)
     {
       if (message == Screens.Context)

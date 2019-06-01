@@ -9,10 +9,14 @@ using MongoDB.Driver;
 namespace Laundry.Views
 {
   /// <summary>
-  /// Interaction logic for SubsidiaryEditor.xaml
+  /// Редактор филиалов
   /// </summary>
   public class SubsidiaryEditorViewModel : EditorScreen<Repository<Subsidiary>, Subsidiary>
   {
+    /// <summary>
+    /// Флаг, запрещающий выбор главного приёмщика
+    /// при создании нового филиала
+    /// </summary>
     public bool MainAdvisorSearchEnabled => !IsNew;
 
     public EmployeeSearchViewModel MainAdvisorSearch { get; }
@@ -34,11 +38,14 @@ namespace Laundry.Views
         ), false);
     }
 
-
+    /// <summary>
+    /// При получении филиала на редактирование производится
+    /// изменение фильтров и обновление таблицы приёмщиков филиала
+    /// </summary>
+    /// <param name="message">Филиал</param>
     public override void Handle(Subsidiary message)
     {
       base.Handle(message);
-      this.Advisors.Refresh(0, int.MaxValue);
 
       MainAdvisorSearch.Filter = Builders<Employee>.Filter.And(
         Builders<Employee>.Filter.Eq(nameof(Employee.Subsidiary), this.Entity.Id),

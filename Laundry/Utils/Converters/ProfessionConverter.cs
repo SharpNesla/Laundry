@@ -5,6 +5,9 @@ using Model;
 
 namespace Laundry.Utils.Converters
 {
+  /// <summary>
+  /// Конвертер перечисления-профессии в строку
+  /// </summary>
   class ProfessionConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

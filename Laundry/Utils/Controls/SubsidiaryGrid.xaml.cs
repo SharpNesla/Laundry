@@ -15,9 +15,14 @@ using PropertyChanged;
 
 namespace Laundry.Utils.Controls
 {
+  /// <summary>
+  /// Таблица филиалов
+  /// </summary>
   public class SubsidiaryGridViewModel : EntityGrid<Subsidiary, Repository<Subsidiary>, SubsidiaryCardViewModel>,
     IChartable<Subsidiary>
   {
+    #region Специальные фильтры дат для аналитики
+
     public bool IsByCreationDate { get; set; }
     public DateTime? LowCreationDateBound { get; set; }
     public DateTime? HighCreationDateBound { get; set; }
@@ -25,7 +30,7 @@ namespace Laundry.Utils.Controls
     public bool IsByExecutionDate { get; set; }
     public DateTime? LowExecutionDateBound { get; set; }
     public DateTime? HighExecutionDateBound { get; set; }
-
+    
     public FilterDefinition<Order> GetDateFilters()
     {
       var filter = Builders<Order>.Filter.Empty;
@@ -47,6 +52,8 @@ namespace Laundry.Utils.Controls
 
       return filter;
     }
+
+      #endregion
 
     [AlsoNotifyFor(nameof(Labels), nameof(Values), nameof(Count))]
     public override IReadOnlyList<Subsidiary> Entities
@@ -103,14 +110,17 @@ namespace Laundry.Utils.Controls
     }
 
     public override string[] TableSheetHeader => new[]
-      {"№", "Торговое название", "Город", "Улица", "Дом", "Квартира (павильон)", "Почтовый индекс", "Номер телефона", "Главный приёмщик"};
+    {
+      "№", "Торговое название", "Город", "Улица", "Дом", "Квартира (павильон)", "Почтовый индекс", "Номер телефона",
+      "Главный приёмщик"
+    };
 
     public override string TableSheetName => "Филиалы";
 
     protected override IRow PrepareEntityRow(ISheet sheet, Subsidiary entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
-      
+
       row.CreateCell(0).SetCellValue(entity.Id);
       row.CreateCell(1).SetCellValue(entity.Name);
       row.CreateCell(2).SetCellValue(entity.City);
@@ -124,17 +134,18 @@ namespace Laundry.Utils.Controls
         var mainAdvisor = this._model.Employees.GetById(entity.Id);
         row.CreateCell(8).SetCellValue(mainAdvisor.Signature);
       }
-      
+
 
       return row;
     }
 
+    public IReadOnlyList<SubsidiaryAggregationResult> Type =>
+      this._model.Subsidiaries.AggregateSubsidiaries(GetDateFilters());
+    
     public string AggregatedInstancesCount => _model.Orders.GetAggregatedInstacesCount(GetDateFilters());
     public double AggregatedPrice => _model.Orders.GetAggregatedPrice(GetDateFilters());
 
-    public IReadOnlyList<SubsidiaryAggregationResult> Type => this._model.Subsidiaries.AggregateSubsidiaries(GetDateFilters());
-
-    public string[] Labels => Type.Select(x=>x.Signature).ToArray();
+    public string[] Labels => Type.Select(x => x.Signature).ToArray();
     public string LabelsTitle => "Филиалы";
     public string ValuesTitle => "Суммы";
     public ChartTime Time { get; set; }

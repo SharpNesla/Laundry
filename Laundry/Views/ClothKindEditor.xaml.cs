@@ -44,7 +44,7 @@ namespace Laundry.Views
     }
 
     /// <summary>
-    /// Перегрузка применения изменений (для закрытия )
+    /// Переопределение применения изменений (для закрытия диалогового окна)
     /// </summary>
     public override void ApplyChanges()
     {

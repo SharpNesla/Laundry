@@ -114,7 +114,6 @@
               <DataTemplate DataType="model:ClothKind">
                 <StackPanel Orientation="Horizontal">
                   <ToggleButton
-                    Background="Transparent"
                     Name="Buttons"
                     Margin="{Binding Level, Converter={StaticResource LevelToMarginConverter}}"
                     Visibility="{Binding HasChildren, Converter={StaticResource BoolVisibilityConverter}}"

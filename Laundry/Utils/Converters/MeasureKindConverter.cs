@@ -9,6 +9,9 @@ using Model;
 
 namespace Laundry.Utils.Converters
 {
+  /// <summary>
+  /// Конвертер для конвертации в строку единиц размера
+  /// </summary>
   class MeasureKindConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

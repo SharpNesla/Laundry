@@ -43,5 +43,10 @@ namespace Laundry.Views.Dashboards
       base.OnActivate();
       OrderGrid.IsSearchDrawerOpened = false;
     }
+
+    public void AdvancedSearch()
+    {
+      this.OrderGrid.Refresh(0, int.MaxValue);
+    }
   }
 }

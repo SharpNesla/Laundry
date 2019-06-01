@@ -5,6 +5,10 @@ using System.Windows.Markup;
 
 namespace Laundry.Utils.Converters
 {
+  /// <summary>
+  /// Класс-расширение, используемый для конвертации
+  /// значений перечислений, помеченных атрибутом [Desctirption("Строка")] в строки
+  /// </summary>
   public class EnumerationExtension : MarkupExtension
   {
     private Type _enumType;

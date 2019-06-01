@@ -7,7 +7,8 @@ namespace Laundry.Views
 {
   public class SubsidiaryDictionaryViewModel : DictionaryScreen<SubsidiaryGridViewModel>
   {
-    public SubsidiaryDictionaryViewModel(IEventAggregator aggregator, IModel model, PaginatorViewModel paginator, SubsidiaryGridViewModel entityGrid) 
+    public SubsidiaryDictionaryViewModel(IEventAggregator aggregator, IModel model,
+      PaginatorViewModel paginator, SubsidiaryGridViewModel entityGrid) 
       : base(aggregator, model, paginator, entityGrid, "Филиалов")
     {
     }

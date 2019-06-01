@@ -74,6 +74,7 @@ namespace Laundry.Utils.Controls
     protected readonly IEventAggregator EventAggregator;
     private Screens _editScreen;
 
+    public string EntityName { get; set; }
 
     public virtual IReadOnlyList<TEntity> Entities { get; set; }
     public TEntity SelectedEntity { get; set; }
@@ -367,6 +368,13 @@ namespace Laundry.Utils.Controls
       return builder.ToString();
     }
 
+    /// <summary>
+    /// Подготовка строки листа экспортируемой книги Excel
+    /// (переопределяется в наследниках)
+    /// </summary>
+    /// <param name="sheet">Лист</param>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     protected virtual IRow PrepareEntityRow(ISheet sheet, TEntity entity)
     {
       var row = sheet.CreateRow(sheet.PhysicalNumberOfRows);
@@ -418,8 +426,7 @@ namespace Laundry.Utils.Controls
         }
       }
     }
-
-    public string EntityName { get; set; }
+    
 
     public void RaiseStateChanged()
     {

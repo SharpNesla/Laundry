@@ -10,174 +10,175 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="{DynamicResource MaterialDesignPaper}">
-  <DockPanel LastChildFill="True">
-    <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1" Mode="PrimaryMid">
-      <Grid
-        Margin="0,0,0,0">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="400*" />
-          <ColumnDefinition Width="400*" />
-          <ColumnDefinition Width="361*" />
-          <ColumnDefinition Width="50" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition />
-          <RowDefinition />
-        </Grid.RowDefinitions>
-        <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
-          <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
-                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
-          <TextBlock
-            Style="{StaticResource MaterialDesignTitleTextBlock}"
-            VerticalAlignment="Center"
-            Margin="16 0 0 0" Text="Обзор: прачечник" />
-        </StackPanel>
-
-        <RadioButton
-          Style="{StaticResource MaterialDesignTabRadioButton}"
-          IsChecked="{Binding IsWashOrders}" Height="42" Grid.Row="1"
-          Content="Заказы готовые к стирке" />
-        <RadioButton Grid.Column="1"
-                     IsChecked="{Binding IsApplyOrdersForDelivery}"
-                     Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
-                     Content="Заказы, ожидающие отправки" />
-        <RadioButton Grid.Column="2"
-                     IsChecked="{Binding IsRecieveOrders}"
-                     Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1" Grid.ColumnSpan="2"
-                     Content="Заказы, принимаемые на стирку" />
-        <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"
-                Style="{StaticResource MaterialDesignToolButton}"
-                Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
-                cal:Message.Attach="ShowActivityMenu($source)">
-          <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
-          <Button.Resources>
-            <converters:BindingProxy x:Key="proxy" Data="{Binding}" />
-          </Button.Resources>
-          <Button.ContextMenu>
-            <ContextMenu>
-              <MenuItem Header="Экспортировать как">
-                <MenuItem Header="*.csv"
-                          cal:Message.Attach="[Event Click] = [Action ExportToExcel()]"
-                          cal:Action.Target="{Binding Data, Source={StaticResource proxy}}" />
-                <MenuItem Header="*.xlsx" cal:Message.Attach="[Event Click] = [Action ExportToExcel()]"
-                          cal:Action.Target="{Binding Data, Source={StaticResource proxy}}" />
-              </MenuItem>
-              <Separator />
-              <MenuItem Header="Выход" />
-            </ContextMenu>
-          </Button.ContextMenu>
-        </Button>
-      </Grid>
-    </materialDesign:ColorZone>
-    <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
-      <Button Name="WashOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
-              Visibility="{Binding IsWashOrders, Converter={StaticResource BoolVisibilityConverter}}"
-              materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              ToolTip="Поставить заказы на стирку"
-              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-        <materialDesign:PackIcon Kind="WashingMachine" Height="24" Width="24" />
-      </Button>
-      <Button Name="ApplyOrdersForDelivery" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
-              Visibility="{Binding IsApplyOrdersForDelivery, Converter={StaticResource BoolVisibilityConverter}}"
-              materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              ToolTip="Отправить постиранные заказы на доставку"
-              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-        <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24" />
-      </Button>
-      <Button Name="RecieveOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
-              Visibility="{Binding IsRecieveOrders, Converter={StaticResource BoolVisibilityConverter}}"
-              materialDesign:ShadowAssist.ShadowDepth="Depth3"
-              ToolTip="Принять доставленные заказы на стирку"
-              Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
-        <materialDesign:PackIcon Kind="UserArrowLeft" Height="24" Width="24" />
-      </Button>
-      <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                Mode="PrimaryMid"
-                                Padding="16">
-        <DockPanel>
-          <StackPanel
-            Orientation="Horizontal"
-            materialDesign:RippleAssist.IsCentered="True">
-
-            <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="32" Width="32" />
-            <materialDesign:ColorZone
-              Mode="Standard"
-              Padding="8 4 8 4"
-              CornerRadius="2"
-              Panel.ZIndex="1"
-              Margin="16 0 0 0"
-              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="400">
-              <Grid>
+    <DockPanel LastChildFill="True">
+        <materialDesign:ColorZone DockPanel.Dock="Top" materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                  Mode="PrimaryMid">
+            <Grid
+                Margin="0,0,0,0">
                 <Grid.ColumnDefinitions>
-                  <ColumnDefinition
-                    Width="Auto" />
-                  <ColumnDefinition
-                    Width="*" />
-                  <ColumnDefinition
-                    Width="Auto" />
+                    <ColumnDefinition Width="400*" />
+                    <ColumnDefinition Width="400*" />
+                    <ColumnDefinition Width="361*" />
+                    <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
-                <Button
-                  Style="{DynamicResource MaterialDesignToolButton}">
-                  <materialDesign:PackIcon
-                    Kind="Magnify"
-                    Opacity="0.56" />
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Margin="16" Grid.Row="0" Orientation="Horizontal">
+                    <ToggleButton IsChecked="{Binding IsDrawerButtonChecked}"
+                                  Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="32" Width="32" />
+                    <TextBlock
+                        Style="{StaticResource MaterialDesignTitleTextBlock}"
+                        VerticalAlignment="Center"
+                        Margin="16 0 0 0" Text="Обзор: прачечник" />
+                </StackPanel>
+
+                <RadioButton
+                    Style="{StaticResource MaterialDesignTabRadioButton}"
+                    IsChecked="{Binding IsWashOrders}" Height="42" Grid.Row="1"
+                    Content="Заказы готовые к стирке" />
+                <RadioButton Grid.Column="1"
+                             IsChecked="{Binding IsApplyOrdersForDelivery}"
+                             Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
+                             Content="Заказы, ожидающие отправки" />
+                <RadioButton Grid.Column="2"
+                             IsChecked="{Binding IsRecieveOrders}"
+                             Style="{StaticResource MaterialDesignTabRadioButton}" Height="42" Grid.Row="1"
+                             Grid.ColumnSpan="2"
+                             Content="Заказы, принимаемые на стирку" />
+                <Button Grid.Row="0" Visibility="{Binding OrderGridVisibility}" Grid.Column="3" DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignToolButton}"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}" Width="33"
+                        cal:Message.Attach="ShowActivityMenu($source)">
+                    <materialDesign:PackIcon Kind="EllipsisVertical" VerticalAlignment="Center" Height="24" Width="24" />
+                    <Button.Resources>
+                        <converters:BindingProxy x:Key="proxy" Data="{Binding}" />
+                    </Button.Resources>
+                    <Button.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Экспортировать как">
+                                <MenuItem Header="*.csv"
+                                          cal:Message.Attach="[Event Click] = [Action ExportToExcel()]"
+                                          cal:Action.Target="{Binding Data, Source={StaticResource proxy}}" />
+                                <MenuItem Header="*.xlsx" cal:Message.Attach="[Event Click] = [Action ExportToExcel()]"
+                                          cal:Action.Target="{Binding Data, Source={StaticResource proxy}}" />
+                            </MenuItem>
+                        </ContextMenu>
+                    </Button.ContextMenu>
                 </Button>
-                <TextBox
-                  Grid.Column="1"
-                  Margin="8 0 0 0"
-                  materialDesign:HintAssist.Hint="{StaticResource OrderDictionary.SearchBarTitle}"
-                  materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                  BorderThickness="0"
-                  MinWidth="200"
-                  VerticalAlignment="Center" />
-              </Grid>
+            </Grid>
+        </materialDesign:ColorZone>
+        <StackPanel Panel.ZIndex="3" DockPanel.Dock="Bottom">
+            <Button Name="WashOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+                    Visibility="{Binding IsWashOrders, Converter={StaticResource BoolVisibilityConverter}}"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                    ToolTip="Поставить заказы на стирку"
+                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                <materialDesign:PackIcon Kind="WashingMachine" Height="24" Width="24" />
+            </Button>
+            <Button Name="ApplyOrdersForDelivery" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+                    Visibility="{Binding IsApplyOrdersForDelivery, Converter={StaticResource BoolVisibilityConverter}}"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                    ToolTip="Отправить постиранные заказы на доставку"
+                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                <materialDesign:PackIcon Kind="TruckDelivery" Height="24" Width="24" />
+            </Button>
+            <Button Name="RecieveOrders" Panel.ZIndex="1" HorizontalAlignment="Right" Margin="0 0 16 -32"
+                    Visibility="{Binding IsRecieveOrders, Converter={StaticResource BoolVisibilityConverter}}"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                    ToolTip="Принять доставленные заказы на стирку"
+                    Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                <materialDesign:PackIcon Kind="UserArrowLeft" Height="24" Width="24" />
+            </Button>
+            <materialDesign:ColorZone materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                      Mode="PrimaryMid"
+                                      Padding="16">
+                <DockPanel>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        materialDesign:RippleAssist.IsCentered="True">
+
+                        <materialDesign:PackIcon Kind="TShirtCrew" VerticalAlignment="Center" Height="32" Width="32" />
+                        <materialDesign:ColorZone
+                            Mode="Standard"
+                            Padding="8 4 8 4"
+                            CornerRadius="2"
+                            Panel.ZIndex="1"
+                            Margin="16 0 0 0"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="400">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition
+                                        Width="Auto" />
+                                    <ColumnDefinition
+                                        Width="*" />
+                                    <ColumnDefinition
+                                        Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Button Name="AdvancedSearch"
+                                        Style="{DynamicResource MaterialDesignToolButton}">
+                                    <materialDesign:PackIcon
+                                        Kind="Magnify"
+                                        Opacity="0.56" />
+                                </Button>
+                                <TextBox
+                                    Grid.Column="1"
+                                    Margin="8 0 0 0"
+                                    materialDesign:HintAssist.Hint="{StaticResource OrderDictionary.SearchBarTitle}"
+                                    materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                    BorderThickness="0"
+                                    MinWidth="200"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding OrderGrid.SearchString}" />
+                            </Grid>
+                        </materialDesign:ColorZone>
+                        <materialDesign:ColorZone
+                            Mode="Standard"
+                            Padding="8 4 8 4"
+                            CornerRadius="2"
+                            Panel.ZIndex="1"
+                            Margin="16 0 0 0"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="400" Height="40">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition
+                                        Width="Auto" />
+                                    <ColumnDefinition
+                                        Width="*" />
+                                    <ColumnDefinition
+                                        Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="8 0 0 0"
+                                    VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="Всего заказов: {0}, Всего вещей: {1}">
+                                            <Binding Path="OrderGrid.Count" />
+                                            <Binding Path="OrderGrid.AggregatedInstancesCount" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Grid>
+                        </materialDesign:ColorZone>
+                        <ToggleButton Margin="8,0,0,0" Visibility="Collapsed"
+                                      Style="{StaticResource MaterialDesignActionToggleButton}"
+                                      IsChecked="{Binding OrderGrid.IsSearchDrawerOpened}"
+                                      ToolTip="Расширенный поиск">
+                            <ToggleButton.Content>
+                                <materialDesign:PackIcon
+                                    Kind="Search" />
+                            </ToggleButton.Content>
+                            <materialDesign:ToggleButtonAssist.OnContent>
+                                <materialDesign:PackIcon
+                                    Kind="ArrowDown" />
+                            </materialDesign:ToggleButtonAssist.OnContent>
+                        </ToggleButton>
+                    </StackPanel>
+                </DockPanel>
             </materialDesign:ColorZone>
-            <materialDesign:ColorZone
-              Mode="Standard"
-              Padding="8 4 8 4"
-              CornerRadius="2"
-              Panel.ZIndex="1"
-              Margin="16 0 0 0"
-              materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="400" Height="40">
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition
-                    Width="Auto" />
-                  <ColumnDefinition
-                    Width="*" />
-                  <ColumnDefinition
-                    Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                  Grid.Column="1"
-                  Margin="8 0 0 0"
-                  VerticalAlignment="Center">
-                  <TextBlock.Text>
-                    <MultiBinding StringFormat="Всего заказов: {0}, Всего вещей: {1}">
-                    <Binding Path="OrderGrid.Count"/>
-                      <Binding Path="OrderGrid.AggregatedInstancesCount"/>
-                    </MultiBinding>
-                  </TextBlock.Text>
-                </TextBlock>
-              </Grid>
-            </materialDesign:ColorZone>
-            <ToggleButton Margin="8,0,0,0" Visibility="Collapsed"
-                          Style="{StaticResource MaterialDesignActionToggleButton}"
-                          IsChecked="{Binding OrderGrid.IsSearchDrawerOpened}"
-                          ToolTip="Расширенный поиск">
-              <ToggleButton.Content>
-                <materialDesign:PackIcon
-                  Kind="Search" />
-              </ToggleButton.Content>
-              <materialDesign:ToggleButtonAssist.OnContent>
-                <materialDesign:PackIcon
-                  Kind="ArrowDown" />
-              </materialDesign:ToggleButtonAssist.OnContent>
-            </ToggleButton>
-          </StackPanel>
-        </DockPanel>
-      </materialDesign:ColorZone>
-    </StackPanel>
-    <ContentControl Name="OrderGrid" Margin="0,0,0,-24" />
-  </DockPanel>
+        </StackPanel>
+        <ContentControl Name="OrderGrid" Margin="0,0,0,-24" />
+    </DockPanel>
 </UserControl>

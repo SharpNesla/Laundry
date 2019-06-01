@@ -10,6 +10,9 @@ namespace Laundry.Views
   /// </summary>
   public class ClothKindDictionaryViewModel : DictionaryScreen<ClothKindTreeViewModel>
   {
+    /// <summary>
+    /// Переключатель режима дерево-таблица
+    /// </summary>
     public bool IsTreeMode
     {
       get { return EntityGrid.IsTreeMode; }
